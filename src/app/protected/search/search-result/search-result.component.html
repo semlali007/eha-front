@@ -1,0 +1,48 @@
+<div>
+    <div>
+        <nav>
+            <div class="nav nav-tabs my-items-for-searches" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link link" *ngFor="let item  of results.elements" (click)="navigate(item)"
+                    [class.active]="isActive(item)">
+                    {{item.label}} <span class="badge">{{item.count}}</span>
+                </a>
+            </div>
+        </nav>
+        <div class="tab-content">
+            <div class="tab-pane fade" *ngFor="let item  of results.elements" [class.active]="isActive(item)"
+                [class.show]="isActive(item)">
+                <app-search-result-tenders [item]='item' *ngIf="item.code == 'tenders'"></app-search-result-tenders>
+                <app-search-result-dauphin [item]='item' *ngIf="item.code == 'dauphin'"></app-search-result-dauphin>
+                <app-search-result-contract [item]='item' *ngIf="item.code == 'contract'"></app-search-result-contract>
+                <app-search-result-provider [item]='item' *ngIf="item.code == 'provider'"></app-search-result-provider>
+                <app-search-result-item-generic [item]='item' *ngIf="item.code == 'item_generic'">
+                </app-search-result-item-generic>
+                <app-search-result-agencies [item]='item' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
+            </div>
+        </div>
+        <div class="alert alert-warning" *ngIf=" (!results.countMax  || results.countMax == 0)  && reset == false">
+            Désolé, je n'ai rien trouvé.
+        </div>
+        <div *ngIf="reset == false">
+            <p style="font-size:0.1rem">&nbsp;</p>
+            <div class="list-group my-items-for-searches">
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-1">
+                            <img src="../../../../assets/img/help.png" alt="aide" class="img-fluid">
+                        </div>
+                        <div class="col-11">
+                            <p>Vous ne trouvez pas ? Pas de panique :
+                            <p>
+                            <p>Vous pouvez <a target="_blank"
+                                    href="https://collab.intranet.edf.com/espaces/dadagrc/Lists/Liste%20des%20CAN%20et%20CAU/Par%20direction.aspx">contacter
+                                    votre interlocuteur achat dédié</a></p>
+                            <p ng-show="$ctrl.tab == 'provider'">Vous pouvez aussi <a target="_blank"
+                                    href="https://collab.intranet.edf.com/espaces/dapsi/referentiel/PublishingImages/SitePages/Gestion des fournisseurs/LE Guide Mise à disposition Frs Achat Règlement V5.pptx">consulter
+                                    le guide pour créer un nouveau fournisseur</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,19 @@
+<div class="card" style="width: 18rem;" *ngIf="list.length > 0">
+    <div class="card-header link smaller-text" (click)="isTotalCollapsed = !isTotalCollapsed"
+    [attr.aria-expanded]="!isTotalCollapsed" aria-controls="collapseTotal">
+        Statut <i class="fleche fleche-droite" [class.fleche-bas]="isTotalCollapsed == false"></i>
+    </div>
+    <div id="collapseTotal" [collapse]="isTotalCollapsed" [isAnimated]="true">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item link" *ngIf="status.value!='all'" (click)="changeFilter('all')"
+            [class.list-group-item-success]="isActive('all')">
+            Tous
+        </li>
+
+        <li class="list-group-item link" *ngFor="let item of list" (click)="changeFilter(item.code)"
+            [class.list-group-item-success]="isActive(item.code)">
+            {{item.label}} ({{item.count}})
+        </li>
+    </ul>
+    </div>
+</div>

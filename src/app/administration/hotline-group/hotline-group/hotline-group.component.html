@@ -1,0 +1,36 @@
+<h1>Gérer les groupes:</h1>
+<p>{{groups.length}} entrées :</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                label
+            </th>
+            <th>
+                living
+            </th>
+            <th>
+                Changer le statut
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let group of groups">
+            <td>
+                {{group.id}}
+            </td>
+            <td>
+                {{group.label}}
+            </td>
+            <td>
+                {{group.living}}
+            </td>
+            <td>
+                <button (click)="update(group)">Modifier</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

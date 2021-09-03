@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label for="title"><strong>Titre :</strong></label>
+    <input id="title" [formControl]="title" type="title" class="form-control" placeholder="Le titre" autocorrect="off"
+        autocomplete="off" />
+    <small *ngIf="title.errors" class="form-text text-danger">
+        <span [hidden]="!title.errors.required">
+            Titre requis.
+        </span>
+        <span [hidden]="!title.errors.minlength">
+            Titre doit faire plus de 4 caractères.
+        </span>
+    </small>
+</div>

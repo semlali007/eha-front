@@ -1,0 +1,19 @@
+<form  novalidate [formGroup]="searchForm" (ngSubmit)="submit()">
+    <div class="form-group row">
+        <label for="inputSearch" class="col-sm-12 col-form-label">
+            Saisissez un ou plusieurs mots clés :
+        </label>
+    </div>
+
+    <div class="form-group row" >
+        <app-search-form-words class="col-6 col-sm-7 offset-sm-1"  [words]="words"></app-search-form-words>
+        <div class="col-6 col-sm-3">
+            <button class="btn btn-search" type="submit" style="margin-top:0" [disabled]="!searchForm.valid">
+                &raquo; rechercher &laquo;
+            </button>
+        </div>
+    </div>
+    <app-search-form-sample class="form-group row" (resetedSearchForm)="onrResetedSearchForm()" [words]="words"></app-search-form-sample>
+    <app-search-form-line [line]="line" ></app-search-form-line>
+ 
+</form>

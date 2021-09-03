@@ -1,0 +1,18 @@
+<div class="form-group">
+    <strong>Bénéficiaires :</strong>
+    <div class="row">
+        <div class="col-sm-10">
+            <tag-input [formControl]="beneficiaries"  [placeholder]="'Entrer un bénéficiaire'" [onTextChangeDebounce]="500"
+                [secondaryPlaceholder]="'Entrer un bénéficiaire'" [onlyFromAutocomplete]="true">
+                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
+                    [identifyBy]="'code'" [displayBy]="'label'">
+                </tag-input-dropdown>
+            </tag-input>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-edf"
+            (click)="openModalWithComponent()"
+               >Bénéficiaires</button>
+        </div>
+    </div>
+</div>

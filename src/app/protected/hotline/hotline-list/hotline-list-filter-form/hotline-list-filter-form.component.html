@@ -1,0 +1,10 @@
+<form [formGroup]="hotlineFilterForm" >
+    <p>Filter sur une catégorie :
+        <select class="form-control" required [formControl]="category" (change)="changeCategory($event)">
+            <option value="" disabled>Choisissez une catégorie</option>
+            <option *ngFor="let category of categories" [value]="category.code">
+                {{category.family}} - {{category.label}}
+            </option>
+        </select>
+    </p>
+</form>

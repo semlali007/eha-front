@@ -1,0 +1,12 @@
+.my-header {
+    /* background-color: var(--my-color-darkblue); */
+    background-image: url('../../../../assets/img/bandeau2.png');
+    background-size: cover;
+    color: white;
+  }
+
+  .my-logo {
+    height: 34px;
+    width: 80px;
+    margin: 30px 40px 30px 30px;
+  }

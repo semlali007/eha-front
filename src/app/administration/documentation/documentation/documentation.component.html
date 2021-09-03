@@ -1,0 +1,12 @@
+<h1>Documentation</h1>
+<form novalidate [formGroup]="documentationForm" (ngSubmit)="submit()">
+    <div class="text-right mt-3">
+        <button type="submit" [disabled]="!documentationForm.valid" class="btn btn-success">Sauvegarder</button>
+        <button type="button" class="btn btn-primary" (click)="activate()">activer la modification</button>
+    </div>
+
+    <div class="form-group row">
+        <textarea class="form-control" [formControl]="content" style="width:100%;height:70vh"></textarea>
+    </div>
+   
+</form>

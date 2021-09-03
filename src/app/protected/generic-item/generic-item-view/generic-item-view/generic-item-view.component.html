@@ -1,0 +1,59 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center">
+	<div class="col-11 col-md-10" *ngIf="!!item && !!item.infos">
+    <h1 class="cover-heading">
+        Article <span class="text-primary">{{code}}</span>
+    </h1>
+    <h1 class="cover-heading">
+        Informations générales sur l'article :
+    </h1>
+    <table class="table table-hover">
+        <tr>
+            <td>Libellé&nbsp;court</td>
+            <td class="font-weight-bold text-primary">{{item.infos.item_label}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.item_label_long">
+            <td>Libellé long</td>
+            <td class="font-weight-bold text-primary">{{item.infos.item_label_long}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.item_notice">
+            <td>Notice</td>
+            <td class="font-weight-bold text-primary">{{item.infos.item_notice}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.item_level_1">
+            <td>Segment</td>
+            <td class="font-weight-bold text-primary">&diams; {{item.infos.item_level_1}}<br>&diams; {{item.infos.item_level_2}}<br>&diams; {{item.infos.item_level_3}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.comptes_e">
+            <td>Comptes</td>
+            <td class="font-weight-bold text-primary">
+                d'exploitation : {{item.infos.comptes_e}}<br>
+                d'investissement : {{item.infos.comptes_i}}
+            </td>
+        </tr>
+        <tr *ngIf="!!item.infos.tva">
+            <td>Taux de TVA</td>
+            <td class="font-weight-bold text-primary">{{item.infos.tva}}</td>
+        </tr>
+    </table>
+    <div *ngIf="!!item.agencies && item.agencies.length > 0">
+        <h1 class="cover-heading">
+            Agences de la Direction des Achats ayant utilisé cet article :
+        </h1>
+        <table class="table table-hover">
+            <tr>
+                <td>Code</td>
+                <td>Libellé</td>
+                <td>Poids</td>
+            </tr>
+            <tr *ngFor="let result of item.agencies">
+                <td>{{result.agency_code}}</td>
+                <td>{{result.agency_label}}</td>
+                <td>
+                    <progressbar 	 [value]="result.weight" max="100">{{result.weight}}%</progressbar>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>

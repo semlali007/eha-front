@@ -1,0 +1,14 @@
+<p *ngIf="notActiveProviders.length > 0">
+    <b>{{ notActiveProviders.length }}</b> de fournisseurs <b>sans</b> contrat actif :
+</p>
+<div class="list-group my-items-for-searches" *ngIf="notActiveProviders.length > 0">
+    <div class="list-group-item" *ngFor="let row  of notActiveProviders">
+        <small ng-if="row.distance > -1">{{row.distance}} km</small> <b> {{row.label}}</b>
+        <br>
+        {{row.zipcode}} {{row.town}}
+    </div>
+</div>
+
+<div class="alert alert-warning" *ngIf="notActiveProviders.length == 0">
+    Désolé, je n'ai trouvé aucun fournisseur sans contrat actif proche de ce code postal.
+</div>

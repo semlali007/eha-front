@@ -1,0 +1,26 @@
+<div class="container">
+	<app-breadcrumb></app-breadcrumb>
+	<div class="alert alert-info" *ngIf="message.length > 0">
+		<div class="row align-items-center">
+			<div class="col-12">
+				<div [innerHTML]="message">
+				</div>
+				<p><button type="button" class="btn btn-info"  (click)="reload()">actualiser la page</button></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<div class="col-12">
+			<p class="text-center link">
+				<a (click)="showList()" class="button">Retrouver ses demandes</a>
+			</p>
+		</div>
+		<div class="col-12 col-sm-10 col-md-8">
+			<p>Afin que nous vous répondions au mieux, veuillez préciser si besoin le numéro de contrat en rapport avec
+				votre question. Merci.</p>
+			<p>Maintenant, vous pouvez remplir le formulaire ci-après pour poser votre question :</p>
+			<app-hotline-form (loadedResponse)="onloadedResponse($event)"></app-hotline-form>
+		</div>
+	</div>
+</div>

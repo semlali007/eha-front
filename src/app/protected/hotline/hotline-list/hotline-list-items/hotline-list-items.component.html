@@ -1,0 +1,10 @@
+<div class="alert alert-warning" *ngIf="items.length == 0">
+    Aucune nouvelle demande.
+</div>
+<div class="list-group my-items-for-contacts" *ngIf="items.length > 0">
+    <a class="list-group-item link" *ngFor="let row  of items | slice:0:10" (click)="showHotline(row)">
+        <span style="color:grey; font-weight: bold;">n°{{row.id}}</span><small> le {{row.openedAt}}</small>
+        <br>
+        {{row.question}}
+    </a>
+</div>

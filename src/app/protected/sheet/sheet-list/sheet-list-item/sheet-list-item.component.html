@@ -1,0 +1,14 @@
+<div class="list-group-item" >
+    <a  (click)="onSubmittedGetSheet(id)" class="link blue_link" >
+        <div>
+            <strong>{{ title }}</strong> <br>
+        </div>
+    </a>
+        <span style="font-size:0.8em; color: black;" *ngIf="date!==createdAt"> Modifiée le
+            {{date}}</span>
+            <span style="font-size:0.8em; color: black;" *ngIf="date===createdAt"> Crée le
+                {{createdAt}}</span>
+            
+            <span *ngIf="!!user && user.hasRole('ADMIN')" class="badge {{status.code|sheetStatusColor}}"
+            style="float:right">{{status.label}}</span>
+</div>

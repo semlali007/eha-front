@@ -1,0 +1,35 @@
+<div *ngIf="section == null">
+    <p>sorry...</p>
+</div>
+<div *ngIf="section != null">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb my-items-for-trainings">
+            <li *ngFor="let row of section.breadcrumb" class="breadcrumb-item{{(row.route == null) ? ' active' : ''}} link">
+                <a (click)="navigate(row.route)" *ngIf="row.route != null" >{{row.label}}</a>
+                <span *ngIf="row.route == null">{{row.label}}</span>
+            </li>
+        </ol>
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <p>
+                {{section.header}}
+            </p>
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="alert alert-info" *ngIf="section.info != null">
+                <div [innerHtml]="section.info"></div>
+            </div>
+            <div class="alert alert-danger" *ngIf="section.warning != null">
+                <div [innerHtml]="section.warning"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="list-group my-items-for-trainings">
+                <a class="list-group-item link" *ngFor="let document of section.documents" (click)="navigate(document.link)">
+                    <span [innerHtml]="document.label"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

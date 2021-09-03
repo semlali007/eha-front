@@ -1,0 +1,86 @@
+<div class="container">
+	<app-breadcrumb></app-breadcrumb>
+		<div class="alert alert-info" *ngIf="warningMessage.length > 0">
+			<div class="row align-items-center">
+				<div class="col-12">
+					<div [innerHTML]="warningMessage"></div>
+					<p><button type="button" class="btn btn-info" (click)="reload()">actualiser la page</button></p>
+				</div>
+			</div>
+		</div>
+
+	<p class="text-center">
+		<a class="link" (click)="showList()">retour</a>
+	</p>
+	<p>Question <b>n° {{informations.id}}</b> rattachée au thème <b>{{informations.info_theme}}</b>, à la catégorie
+		<b>{{informations.info_category}}</b>, posée par <b>{{informations.email_from}}</b> de l'entité
+		<b>{{informations.info_entity}}</b>.</p>
+
+		<ul class="timeline" *ngIf="timeline.length > 0">
+			<li *ngFor="let row of timeline| slice:0:16"  [ngClass]="{'timeline-inverted' : row.is_hotline}" >
+				<div class="timeline-badge {{row.is_hotline ? 'info' : 'warning'}}">
+					<img src="../../../../assets/img/picto-{{row.nature}}_white.png" height="30px">
+				</div>
+				<div class="timeline-panel">
+					<div class="timeline-body">
+						<p *ngIf="row.nature != 'N'" >
+							{{row.message}}
+							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn-link">visualiser</a>
+						</p>
+						<p *ngIf="row.nature == 'N'">
+							<div *ngIf="row.message == 4" style="display: inline-block; background-color: green; padding: 5px;">
+								<label class="form-check-label">😃</label>
+							</div>
+							<div *ngIf="row.message == 3" style="display: inline-block; background-color: lightgreen; padding: 5px;">
+								<label class="form-check-label">😊</label>
+							</div>
+							<div *ngIf="row.message == 2" style="display: inline-block; background-color: orange; padding: 5px;">
+								<label class="form-check-label">😟</label>
+							</div>
+							<div *ngIf="row.message == 1" style="display: inline-block; background-color: red; padding: 5px;">
+								<label class="form-check-label">😠</label>
+							</div>
+					</div>
+					<div class="timeline-heading">
+						<p><small class="text-muted">{{row.quand| slice:0:10}}</small></p>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="row justify-content-end" *ngIf="isHotliner">
+			<div class="col-6">
+				<p>
+					<button type="button" class="btn btn-info btn-left"  (click)="openPostMessage()">Poster un message</button>
+					<button type="button" class="btn btn-info btn-center"  (click)="openAddFile()">Ajouter un fichier</button>
+					<button type="button" class="btn btn-info btn-right"  (click)="openForward()">Faire suivre</button>
+				</p>
+			</div>
+		</div>
+		<div class="row justify-content-start" *ngIf="isRequester">
+			<div class="col-6">
+				<p>
+					<button type="button" class="btn btn-warning btn-left"  (click)="openPostMessage()">Poster un message</button>
+					<button type="button" class="btn btn-warning btn-center"  (click)="openForward()">Faire suivre</button>
+					<button type="button" class="btn btn-warning btn-center"  (click)="openAddFile()">Ajouter un fichier</button>
+					<button type="button" class="btn btn-warning btn-right"  (click)="openCloseHotline()">Clore</button>
+				</p>
+			</div>
+		</div>
+		<div class="row justify-content-center"  *ngIf="!isHotliner &&  !isRequester && informations.closed_at == null">
+			<div class="col-6">
+				<p>Si vous êtes partie prenante dans cet échange et que vous ne disposez plus de l'adresse vous permettant de le modifier, merci de saisir votre adresse email ci-après et nous vous enverrons un lien de modification :</p>
+				<form class="form">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-9">
+								<input type="email" class="form-control" placeholder="email" #inputRecovery  required>
+							</div>
+							<div class="col-3">
+								<button class="btn btn-primary" (click)="doRecovery(inputRecovery.value)">valider</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+</div>

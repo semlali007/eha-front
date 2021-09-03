@@ -1,0 +1,7 @@
+{
+    "/api/*": {
+        "target": "https://eha-dev.aas.edf.fr",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

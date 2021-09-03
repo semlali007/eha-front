@@ -1,0 +1,90 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center">
+	<div class="col-11 col-md-10" *ngIf="!!contract && !!contract.infos">
+
+		<h1 class="cover-heading">
+			Contrat <span class="text-primary">{{contract.infos.contract_code}}</span>
+		</h1>
+		<h1 class="cover-heading">
+			Informations générales sur le contrat :
+		</h1>
+		<table class="table table-hover">
+			<tr>
+				<td>Ligne PGI</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.system}}</td>
+			</tr>
+			<tr>
+				<td>Contrat</td>
+				<td class="font-weight-bold text-primary"> {{contract.infos.contract_label}} </td>
+			</tr>
+			<tr>
+				<td>Date de début</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.contract_date_start}} </td>
+			</tr>
+			<tr>
+				<td>Date de fin</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.contract_date_end}}</td>
+			</tr>
+			<tr>
+				<td>Entité</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.entity}}</td>
+			</tr>
+			<tr>
+				<td>Organisation d'achat</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.organisation_achat}}</td>
+			</tr>
+			<tr>
+				<td>Fournisseur</td>
+				<td class="font-weight-bold text-primary">
+					<ul class="list-group my-items-for-searches">
+						<a class="list-group-item link" (click)="showProvider(contract.infos.provider_code)">
+							{{contract.infos.provider}}
+						</a>
+					</ul>
+				</td>
+			</tr>
+			<tr *ngIf="contract.sheets.length > 0">
+				<td>Fiches des marchés</td>
+				<td class="font-weight-bold text-primary">
+					<ul class="list-group my-items-for-searches" *ngFor="let sheet  of contract.sheets">
+						<a class="list-group-item link" (click)="showSheet(sheet.id)">
+							{{sheet.label}}
+						</a>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td>Agence</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.agency}}</td>
+			</tr>
+			<tr *ngIf="contract.infos.showJauge">
+				<td>Niveau d'utilisation mandant {{contract.infos.system}}<br>(consommé sur valeur cible)</td>
+				<td>
+					<progressbar *ngIf="contract.infos.jauge < 50"  [value]="contract.infos.jauge" type="success" [striped]="true">{{contract.infos.jauge}}%</progressbar>
+					<progressbar *ngIf="contract.infos.jauge >= 50  && contract.infos.jauge < 80"  	[value]="contract.infos.jauge" >{{contract.infos.jauge}}%</progressbar>
+					<progressbar *ngIf="contract.infos.jauge >= 80"  [value]="contract.infos.jauge" type="danger" [striped]="true">{{contract.infos.jauge}}%</progressbar>
+				</td>
+			</tr>
+			
+		</table>
+		<div *ngIf="contract.postes.length > 0">
+			<h1 class="cover-heading">
+				Liste des postes :
+			</h1>
+			<table class="table table-hover">
+				<tr>
+					<td>Poste</td>
+					<td>Poste libellé</td>
+					<td>Article</td>
+					<td>Article libellé</td>
+				</tr>
+				<tr *ngFor="let post  of contract.postes">
+					<td class="text-right">{{post.contract_post_code}}</td>
+					<td>{{post.contract_post_label}}</td>
+					<td>{{post.item_code}}</td>
+					<td>{{post.item_label}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

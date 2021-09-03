@@ -1,0 +1,40 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center">
+	<div class="col-11 col-md-10" *ngIf="!!dauphin && !!dauphin.info">
+
+	<h1 class="cover-heading">
+		Article sous <span class="text-primary">Dauphin</span>
+	</h1>
+	<p style="text-align:right">
+		<a href="{{dauphin.info.url}}" target="_blank" class="btn btn-primary">
+			J'ai un compte Dauphin et je veux acheter ce produit
+		</a>
+	</p>
+	<h1 class="cover-heading">
+		Informations générales :
+	</h1>
+	<table class="table table-hover">
+		<tr>
+			<td>Code</td>
+			<td class="font-weight-bold text-primary">{{dauphin.info.code}}</td>
+		</tr>
+		<tr>
+			<td>Libellé</td>
+			<td class="font-weight-bold text-primary">{{dauphin.info.label}}</td>
+		</tr>
+		<tr>
+			<td>Contrat</td>
+			<td class="font-weight-bold text-primary">{{dauphin.info.contract}}</td>
+		</tr>
+		<tr>
+			<td>Date de début du contrat</td>
+			<td class="font-weight-bold text-primary">{{dauphin.info.contract_begin_date}}</td>
+		</tr>
+		<tr>
+			<td>Date de fin du contrat</td>
+			<td class="font-weight-bold text-primary">{{dauphin.info.contract_end_date}}</td>
+		</tr>
+	</table>
+</div>
+
+</div>

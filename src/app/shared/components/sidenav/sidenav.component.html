@@ -1,0 +1,57 @@
+<div class="sticky-top">
+    <div class="nav flex-column">
+     <div class="card-header">Menu</div>
+     <ul class="list-group list-group-flush">
+      <li (click)="navigate(dashboardPath)"
+       [class.list-group-item-success]="isActive(dashboardPath)"
+       class="list-group-item">
+       Console d'administration
+      </li>
+      <li   (click)="navigate(administratorPath)"
+       [class.list-group-item-success]="isActive(administratorPath)"
+       class="list-group-item">
+       Les administrateurs
+      </li>
+      <li (click)="navigate(externalPath)"
+       [class.list-group-item-success]="isActive(externalPath)"
+       class="list-group-item">
+       les externes
+      </li>
+      <li (click)="navigate(hotlineThemePath)"
+       [class.list-group-item-success]="isActive(hotlineThemePath)"
+       class="list-group-item">
+       thèmes des hotlines
+      </li>
+      <li (click)="navigate(hotlineGroupPath)"
+       [class.list-group-item-success]="isActive(hotlineGroupPath)"
+       class="list-group-item">
+       Groupes des hotlines
+      </li>
+      <li (click)="navigate(hotlineEmailPath)"
+       [class.list-group-item-success]="isActive(hotlineEmailPath)"
+       class="list-group-item">
+       Emails des hotlines
+      </li>
+      <li (click)="navigate(documentationPath)"
+       [class.list-group-item-success]="isActive(documentationPath)"
+       class="list-group-item">
+       documentation
+      </li>
+     <li (click)="navigate(migrationDaitPath)"
+      [class.list-group-item-success]="isActive(migrationDaitPath)"
+      class="list-group-item">
+      Réprise des données DAIT
+     </li>
+     <li (click)="navigate(migrationDapiPath)"
+      [class.list-group-item-success]="isActive(migrationDapiPath)"
+      class="list-group-item">
+      Réprise des données DAPI
+     </li>
+     <li (click)="navigate(migrationDatpPath)"
+      [class.list-group-item-success]="isActive(migrationDatpPath)"
+      class="list-group-item">
+      Réprise des données DATP
+     </li>
+     </ul>
+    </div>
+   </div>

@@ -1,0 +1,35 @@
+<div class="form-group">
+    <div class="row">
+        <label for="name"><strong>{{label}}:</strong> </label>
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+
+        <div class="col-md-9" style="margin-bottom: 40px">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50%">Nom</th>
+                        <th></th>
+                    </tr>   
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of uploader.queue">
+                        <td *ngIf="!item.options || !item.options.additionalParameter || !item.options.additionalParameter.document">
+                            <strong>{{ item?.file?.name }}</strong>
+                        </td>
+
+                        <td *ngIf="!!item.options && !!item.options.additionalParameter && !!item.options.additionalParameter.document">
+                            <a (click)="download(item?.options?.additionalParameter?.document)" class="link">{{ item?.file?.name }}</a>
+                        </td>
+
+                        <td nowrap>
+                            <button type="button" class="btn btn-danger btn-xs"
+                                (click)="item.remove();onRemove(item);">
+                                <span class="glyphicon glyphicon-trash"></span> Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

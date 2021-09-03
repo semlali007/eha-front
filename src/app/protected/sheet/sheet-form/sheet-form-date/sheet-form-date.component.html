@@ -1,0 +1,29 @@
+<div class="row mb-5">
+    <div class="col-md-6 mx-auto">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="startDate" class="mr-3"><strong>Date de début part ferme :</strong></label>
+                <input bsDatepicker [formControl]="startDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
+                    class="form-control form-control-sm align-middle" />
+                    <small *ngIf="startDate.errors" class="form-text text-danger">
+                        <span [hidden]="!startDate.errors.required">  Date requise.</span>
+                        <span [hidden]="!startDate.errors.bsDate">  Date invalide.</span>
+                    </small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="endDate" class="mr-3"><strong>Date de fin part ferme :</strong></label>
+                <input bsDatepicker [formControl]="endDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
+                    class="form-control form-control-sm align-middle" />
+                    <small *ngIf="endDate.errors" class="form-text text-danger">
+                        <span [hidden]="!endDate.errors.required">  Date requise.</span>
+                        <span [hidden]="!endDate.errors.bsDate">  Date invalide.</span>
+                    </small>
+            </div>
+        </div>
+    </div>
+</div>
+

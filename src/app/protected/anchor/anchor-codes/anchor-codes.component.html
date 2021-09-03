@@ -1,0 +1,23 @@
+<div class="modal-header" style="min-width: 800px;">
+    <h5 class="modal-title">Liste des codes NACE</h5>
+    <button type="button" class="close" (click)="bsModalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div> <form [formGroup]="codesForm" >
+<div class="modal-body">
+   
+    <p>
+        <label>Filtrer sur <input [formControl]="codeFilter" type="text"></label>
+    </p>
+
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let row  of codes  | filterCode: codeFilter.value" >
+            
+            <b >{{row[0]}}</b> {{row[1]}}
+        </li>
+    </ul>
+</div>
+</form>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>

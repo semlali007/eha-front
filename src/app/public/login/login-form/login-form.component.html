@@ -1,0 +1,42 @@
+<form novalidate class="form my-form-connection" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-12">
+        <label for="nni">Votre NNI :</label>
+        <input id="nni" type="text" Required formControlName="nni" class="form-control" placeholder="NNI" autocorrect="off"
+            autocomplete="off" />
+        <small *ngIf="nni.errors && nni.dirty" class="form-text text-muted">
+            <span [hidden]="!nni.errors.required">
+                Email requis.
+            </span>
+            <span [hidden]="!nni.errors.minlength">
+                Le NNI doit faire plus de 2 caractères.
+            </span>
+            <span [hidden]="!nni.errors.maxlength">
+                Le NNI doit faire moins de 20 caractères.
+            </span>
+        </small>
+        </div>
+
+        <div class="col-12">
+            <label for="password">Votre mot de passe SESAME :</label>
+            <input id="password" type="password" Required formControlName="password" class="form-control"
+                placeholder="Votre mot de passe"  placeholder="******" />
+            <small *ngIf="password.errors && password.dirty" class="form-text text-muted">
+                <span [hidden]="!password.errors.required">
+                    Mot de passe requis.
+                </span>
+                <span [hidden]="!password.errors.maxlength">
+                    Le mot de passe doit faire moins de 20 caractères.
+                </span>
+            </small>
+        </div>
+
+        <div class="col-12">
+            <label>Et un clic pour finir :</label>
+            <button type="submit" [disabled]="!loginForm.valid" class="btn btn-secondary" >
+            se connecter
+          </button>
+        </div>
+    </div>
+   
+</form>

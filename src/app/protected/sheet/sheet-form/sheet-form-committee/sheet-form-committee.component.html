@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label for="committeeCode"><strong>Comité de Gestion de la Demande :</strong></label>
+    <select class="form-control" [formControl]="committeeCode" style="width:auto;">
+        <option value=0>Choisissez un Comité</option>
+        <option *ngFor="let item of committees" [ngValue]="item.code">
+            {{item.label}}
+        </option>
+    </select>
+</div>

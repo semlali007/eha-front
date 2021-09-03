@@ -1,0 +1,36 @@
+<h1>Gérer les thèmes :</h1>
+<p>{{themes.length}} entrées :</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                label
+            </th>
+            <th>
+                living
+            </th>
+            <th>
+                Changer le statut
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let theme of themes">
+            <td>
+                {{theme.id}}
+            </td>
+            <td>
+                {{theme.label}}
+            </td>
+            <td>
+                {{theme.living}}
+            </td>
+            <td>
+                <button (click)="update(theme)">Modifier</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

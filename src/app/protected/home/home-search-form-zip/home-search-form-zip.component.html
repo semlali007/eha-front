@@ -1,0 +1,10 @@
+<form class="my-form-for-searches" role="search" novalidate [formGroup]="homeSearchFormZip" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-12">
+            <input type="search" class="form-control" [formControl]="zipCode" id="zipCode" placeholder=" Saisir un code postal" autocorrect="off" autocomplete="off">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-search" [disabled]="!homeSearchFormZip.valid">Rechercher</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,256 @@
+
+<div class="row justify-content-center">
+
+    <div class="col-11 col-md-10">
+        <app-breadcrumb></app-breadcrumb>
+        <div class="row">
+            <div class="col-lg-10">
+                <div >
+                    <button (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
+                </div>
+            </div>
+            <div class="col-lg-2 margin-tb" *ngIf="!!user && user.hasRole('ADMIN')">
+                <div class="pull-right"  >
+                    <a (click)="modification(sheetId)"
+                        class="btn btn-edf float-left mt-n1" ><i class="fas fa-plus" ></i>
+                        Modifier</a>
+                </div>
+            </div>
+        </div>
+
+        <ul class="list-group" id="print-section">
+            <li class="list-group-item row border-right-0 border-left-0 border-top-0">
+                <h1 >
+                    <span >{{title}}</span>
+                </h1>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <h3 class="cover-heading">
+                    Informations générales sur la fiche :
+                </h3>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Titre</strong></div>
+                <div class="col-9 ">{{title}}</div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Date de début part ferme</strong></div>
+                <div class="col-9">{{startDate}}</div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Date de fin part ferme</strong></div>
+                <div class="col-9">{{endDate}}</div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Options</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let option of options;index as i;">
+                                <label>Option {{i + 1}} : du {{option.startDate}} au {{option.endDate}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Commentaires</strong></div>
+                <div [innerHTML]="comments" class="col-9">
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
+                <div class="col-9">
+                    {{dauphin | showBooleanText}}
+                    </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Marché ouvert au personnel EDF</strong></div>
+                <div class="col-9">
+                    {{edf_open | showBooleanText}}
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Stipulation pour autrui</strong></div>
+                <div class="col-9">
+                    {{stipulation_for_others | showBooleanText}}
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Partenariat de productivité</strong></div>
+                <div class="col-9">
+                    {{partnership | showBooleanText}}
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Secteur protégé</strong></div>
+                <div class="col-9">
+                    {{protected_sector | showBooleanText}}
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Fournisseurs</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let provider of providers">
+                            {{provider.label}}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Bénéficiaires</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let beneficiary of beneficiaries">
+                            {{beneficiary.label}}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+           <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Zone géographique d’application des marchés</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let area of areas">
+                            {{area.label}}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Directions opérationnelles (DOA)</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let direction of directions">
+                            {{direction.label}}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Comité de Gestion de la Demande</strong></div>
+                <div class="col-9">
+                   {{committee.label}}
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Statut</strong></div>
+                <div class="col-9">{{status}}</div>
+            </li>
+
+        <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
+            <div class="col-3"><strong>Kit de déploiement</strong> </div>
+            <div class="col-9">
+                <ul>
+                    <li *ngFor="let kit of kits">
+                        <a (click)="downloadKit(kit)" class="link">{{kit.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="list-group-item row border-right-0 border-left-0" *ngIf="privates.length > 0">
+            <div class="col-3"><strong>Contenu privé</strong></div>
+            <div class="col-9">
+                <ul>
+                    <li *ngFor="let private of privates">
+                        <a (click)="downloadKit(private)" class="link">{{private.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+
+        <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEnedis.length > 0">
+            <div class="col-3"><strong>Contenu privé (Enedis)</strong> </div>
+            <div class="col-9">
+                <ul>
+                    <li *ngFor="let privateEnedis of privatesEnedis">
+                        <a (click)="downloadKit(privateEnedis)" class="link">{{privateEnedis.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEdfEnedis.length > 0">
+            <div class="col-3"><strong>Contenu privé (Groupe EDF / Enedis)</strong> </div>
+            <div class="col-9">
+                <ul>
+                    <li *ngFor="let privateEdfEnedis of privatesEdfEnedis">
+                        <a (click)="downloadKit(privateEdfEnedis)" class="link">{{privateEdfEnedis.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+               <li class="list-group-item row border-right-0 border-left-0 border-bottom-0">
+                <div class="col-3"><strong>Contrats</strong></div>
+                <div class="col-9">
+                <accordion  [closeOthers]="true" >
+                    <accordion-group #group [isDisabled]="true" panelClass="accordion-header">
+                        <div class="row" accordion-heading>
+                            <div class="col-sm-2">
+                                Lots
+                            </div>
+                            <div class="col-sm-3">
+                                Contrat
+                            </div>
+                            <div class="col-sm-3">
+                                Fournisseur
+                            </div>
+                            <div class="col-sm-4">
+                                Contacts
+                            </div>
+
+                        </div>
+                    </accordion-group>
+                    <accordion-group #group *ngFor="let contract of contracts" (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0">
+                        <div class="row" accordion-heading >
+                            <div class="col-sm-2">
+                                <ul class="list-group list-group-horizontal">
+                                    <li *ngFor="let lot of contract.lots" class="list-group-item"> {{lot.name}} </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-3">
+                                <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)" [class.icon-minus]="isOpened(contract)"></i>{{contract.code}}</div>
+                            </div>
+                            <div class="col-sm-3">
+                                {{contract.provider}}
+                            </div>
+                            <div class="col-sm-4">
+                                {{contract.contacts}}
+                            </div>
+                        </div>
+                            <ul *ngIf="contract.systems.length>0" >
+                                <li *ngFor="let system of contract.systems" class="list-group-item">
+                                   <a class="link" (click)="showContract(contract, system.code)">{{system.label}}</a>
+                                </li>
+                            </ul>
+                    </accordion-group>
+
+                    <accordion-group #group [isDisabled]="true"  *ngIf="lots.length>0">
+                        <div class="row" accordion-heading>
+                            <ul>
+                                <li *ngFor="let lot of lots">
+                                         <strong>{{lot.name}} :</strong> {{lot.description}}
+                                 </li>
+                             </ul>
+                        </div>
+                    </accordion-group>
+
+                  </accordion>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>

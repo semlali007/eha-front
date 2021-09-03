@@ -1,0 +1,15 @@
+<div [formGroup]="sheetForm" class="form-group">
+
+        <label for="lots"><strong>Lots :</strong></label>
+
+    <div formArrayName="lots" class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3" style="max-height: 500px;">
+        <app-sheet-form-lots-item *ngFor="let lot of lots.controls;
+      index as i;" [index]="i" [lot]="lot" (removedLot)="onRemovedLot($event)">
+        </app-sheet-form-lots-item>
+    </div>
+    <div>
+        <app-sheet-form-lots-add (addedLot)="onAddedLot()">
+        </app-sheet-form-lots-add>
+    </div>
+</div>
+

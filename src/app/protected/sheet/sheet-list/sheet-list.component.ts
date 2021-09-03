@@ -1,0 +1,244 @@
+import { Component, OnInit, ViewEncapsulation, OnDestroy, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { Sheet } from 'src/app/shared/models/sheet';
+import { SheetService } from 'src/app/core/services/sheet.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { User } from 'src/app/shared/models/user';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { PreviousService } from 'src/app/core/services/previous.service';
+
+
+@Component({
+  selector: 'app-sheet-list',
+  templateUrl: './sheet-list.component.html',
+  styleUrls: ['./sheet-list.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class SheetListComponent implements OnInit, OnDestroy {
+  sheets: Sheet[] = [];
+  totalItems: number = 0;
+  itemsPerPage: number = 20;
+  paginationForm: FormGroup;
+  smallnumPages: number = 0;
+  public user: User;
+  public subscription: Subscription;
+  public searchText = '';
+  public searchProvider = '';
+  public sortBy = 'date';
+  public sortDirection = 'desc';
+  public defaultFilter: any;
+  public data:any = [];
+  public filter = {
+    beneficiaries: [],
+    edfOpen: [],
+    partnership: [],
+    sector: [],
+    dauphin: [],
+    areas: [],
+    providers: [],
+    status: [],
+    directions: [],
+    showcase: []
+  };
+
+  public params: any = {
+    page: 1,
+    perpage: this.itemsPerPage,
+    search: {
+      searchText: this.searchText,
+      searchProvider: this.searchProvider,
+      status: '',
+      edf_open: '',
+      partnership: '',
+      protected_sector: '',
+      dauphin: '',
+      beneficiaries: [],
+      areas: [],
+      providers: [],
+      directions: [],
+      showcase: ''
+    },
+    sortBy: this.sortBy,
+    sortDirection: this.sortDirection
+  };
+
+  public filterInput: any = {
+    edfOpen: '',
+    partnership: '',
+    sector: '',
+    dauphin: '',
+    beneficiaries: [],
+    providers: [],
+    directions: [],
+    status: '',
+    areas: [],
+    showcase: ''
+  };
+
+
+  constructor(
+    private fb: FormBuilder,
+    private sheetService: SheetService,
+    private router: Router,
+    private authService: AuthService,
+    private previousService: PreviousService,
+
+  ) { }
+
+  ngOnInit() {
+    this.subscription = this.authService.user$.subscribe(user => this.user = user);
+    this.paginationForm = this.fb.group({
+      'currentPage': 1,
+    });
+
+    if (this.previousService.getPreviousUrl().includes('details')) {
+      this.loadFilterFromStorage();
+    } else {
+      this.defaultFilter = this.params;
+    }
+    this.loadItems();
+  }
+
+  get currentPage() { return this.paginationForm.get('currentPage') }
+
+  public onsSubmittedSearchSheets(filter: any) {
+    this.initSortBy();
+    this.initFilterInput();
+    this.filterInput.beneficiaries = this.params.search.beneficiaries;
+    if(this.filterInput.beneficiaries) {
+      this.filterInput.beneficiaries.forEach(element => {
+        this.data.push(element);
+      });
+    }
+    this.searchText = filter.searchText;
+    this.searchProvider = filter.searchProvider;
+    if (this.currentPage.value !== 1) {
+      this.currentPage.setValue(1);
+    } else {
+      this.loadItems();
+    }
+  }
+
+  btnClick = function () {
+    this.router.navigate(['app/hotline/create'], { queryParams: { theme: 'sheet' } });
+  };
+
+
+  public onSubmittedFilterSheets(filter: any) {
+    this.filterInput[filter.type] = filter.value;
+    this.loadItems();
+  }
+
+  public onSubmittedGetSheet(id: any) {
+    localStorage.setItem('params', JSON.stringify(this.params));
+    this.router.navigate([`app/fiches/details/${id}`]);
+  }
+
+  public onChangedSort(sort: any) {
+    if (!!sort && sort.sortBy) {
+      let sortBy = sort.sortBy.split('_');
+      this.sortBy = sortBy[0];
+      this.sortDirection = sortBy[1];
+      this.loadItems();
+    }
+  }
+
+  public loadItems() {
+    let status = this.filterInput.status;
+    if (!this.user.hasRole('ADMIN')) {
+      status = 1;
+    }
+    console.log(this.searchProvider);
+    this.params = {
+      page: this.currentPage.value,
+      perpage: this.itemsPerPage,
+      search: {
+        searchText: this.searchText,
+        searchProvider: this.searchProvider,
+        status: status,
+        edf_open: this.filterInput.edfOpen,
+        partnership: this.filterInput.partnership,
+        protected_sector: this.filterInput.sector,
+        dauphin: this.filterInput.dauphin,
+        beneficiaries: this.filterInput.beneficiaries,
+        areas: this.filterInput.areas,
+        providers: this.filterInput.providers,
+        directions: this.filterInput.directions,
+        showcase: this.filterInput.showcase
+      },
+      sortBy: this.sortBy,
+      sortDirection: this.sortDirection
+    };
+
+    this.sheetService.getSheets(this.params).subscribe(
+      data => {
+        this.totalItems = data.total;
+        this.sheets = data.sheets;
+        this.filter = data.filter;
+      }
+    );
+
+    console.log(this.params);
+  }
+
+  initFilterInput() {
+    this.filterInput = {
+      edfOpen: '',
+      partnership: '',
+      sector: '',
+      dauphin: '',
+      beneficiaries: [],
+      providers: [],
+      directions: [],
+      status: '',
+      areas: [],
+      showcase: ''
+    };
+  }
+
+  initSortBy() {
+    this.sortBy = 'date';
+    this.sortDirection = 'desc';
+  }
+
+  public navigate(page: string): void {
+    if (page === 'fiche_marchee_list') {
+      this.router.navigate(['app/fiches/liste']);
+    }
+    else if (page === 'fiche_marchee') {
+      this.router.navigate(['app/fiches/creation']);
+    }
+  }
+
+  public pageChanged(event: any): void {
+    this.currentPage.setValue(event.page);
+    this.loadItems();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  public loadFilterFromStorage() {
+    this.defaultFilter = JSON.parse(localStorage.getItem('params'));
+    this.currentPage.setValue(this.defaultFilter.page);
+    this.itemsPerPage = this.defaultFilter.perpage;
+    this.searchText = this.defaultFilter.search.searchText;
+    this.searchProvider = this.defaultFilter.search.searchProvider;
+    this.sortBy = this.defaultFilter.sortBy;
+    this.sortDirection = this.defaultFilter.sortDirection;
+    this.filterInput = {
+      edfOpen: this.defaultFilter.search.edf_open,
+      partnership: this.defaultFilter.search.partnership,
+      sector: this.defaultFilter.search.protected_sector,
+      dauphin: this.defaultFilter.search.dauphin,
+      beneficiaries: this.defaultFilter.search.beneficiaries,
+      providers: this.defaultFilter.search.providers,
+      directions: this.defaultFilter.search.directions,
+      status: this.defaultFilter.search.status,
+      areas: this.defaultFilter.search.areas,
+      showcase: this.defaultFilter.search.showcase
+    };
+  }
+}

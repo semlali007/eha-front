@@ -1,0 +1,39 @@
+<div class="container">
+    <app-breadcrumb></app-breadcrumb>
+    <app-hotline-change-informations></app-hotline-change-informations>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-4">
+            <p>
+                <span>{{email}}</span>
+                <br>
+                <button type="button" class="btn btn-link" (click) = "openEdit()">Changer d'email</button>
+            </p>
+        </div>
+        <div class="col-12 col-md-8">
+            <app-hotline-list-filter-form [categories]="categories" (submittedFilter)="onsSubmittedFilter($event)"></app-hotline-list-filter-form>
+            <p>Liste de vos demandes sur les 12 derniers mois :</p>
+            <nav>
+                <div class="nav nav-tabs my-items-for-contacts" id="nav-tab">
+                    <a class="nav-item nav-link link" [ngClass]="{'active' : isActive('new')}" (click)="setActive('new')">
+                        Nouvelles demandes <span class="badge badge-primary">{{new.length}}</span>
+                    </a>
+                    <a class="nav-item nav-link link" [ngClass]="{'active' : isActive('progress') }"
+                        (click)="setActive('progress')">
+                        Demandes en cours <span class="badge badge-primary">{{progress.length}}</span>
+                    </a>
+                    <a class="nav-item nav-link link" [ngClass]="{'active' : isActive('end')}" (click)="setActive('end')">
+                        Demandes fermées <span class="badge badge-primary">{{end.length}}</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="tab-content">
+                <app-hotline-list-items [items]="new" class="tab-pane fade"
+                    [ngClass]="{show: isActive('new'), active: isActive('new')}"></app-hotline-list-items>
+                <app-hotline-list-items [items]="progress" class="tab-pane fade"
+                    [ngClass]="{show: isActive('progress'), active: isActive('progress')}"></app-hotline-list-items>
+                <app-hotline-list-items [items]="end" class="tab-pane fade"
+                    [ngClass]="{show: isActive('end'), active: isActive('end')}"></app-hotline-list-items>
+            </div>
+        </div>
+    </div>
+</div>

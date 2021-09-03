@@ -1,0 +1,13 @@
+<div>
+    <p>Date de mise à jour des informations sur les codes articles génériques : {{item.statsDate}}.</p>
+    <div class="alert alert-warning" *ngIf="item.count == 30">
+        Liste des agences achats les plus susceptibles d'utiliser ce code article.
+    </div>
+    <div class="list-group my-items-for-searches">
+        <div class="list-group-item link" *ngFor="let result  of item.items" (click)="showAgency(result)">
+            {{result.code}} <b>{{result.label}}</b>
+            <br>
+            <small>{{result.other}}</small>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdministrationComponent } from './administration.component';
-import { AuthGuard } from 'src/app/core/guards/auth.guard';
-import {  RoleGuard } from 'src/app/core/guards/role.guard';
+import {  EhaAdminRoleGuard } from 'src/app/core/guards/eha-admin-role.guard';
 const routes: Routes = [
   {
     path: 'admin',
     component: AdministrationComponent,
-    canActivateChild: [RoleGuard],
-    canActivate: [RoleGuard],
+    canActivate: [EhaAdminRoleGuard],
     children: [
       {
         path: 'dashboard',

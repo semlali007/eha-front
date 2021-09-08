@@ -1,7 +1,7 @@
 <form novalidate class="form my-form-connection" [formGroup]="loginForm" (ngSubmit)="submit()">
     <div class="row">
         <div class="col-12">
-        <label for="nni">Votre NNI :</label>
+        <label for="nni">Votre NNI 1:</label>
         <input id="nni" type="text" Required formControlName="nni" class="form-control" placeholder="NNI" autocorrect="off"
             autocomplete="off" />
         <small *ngIf="nni.errors && nni.dirty" class="form-text text-muted">

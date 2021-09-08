@@ -1,17 +1,34 @@
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Injectable, Inject, Optional } from '@angular/core';
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(
+    private authStorage: OAuthStorage,
+  ) {
+  }
 
-    if (!this.isMedia(request.url)) {
-      request = this.addContentType(request);
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (!this.isMedia(req.url)) {
+      req = this.addContentType(req);
     }
 
-    return next.handle(request);
+    if (!this.isPublicRequest(req.url)) {
+      const token = this.authStorage.getItem('id_token');
+      const accessToken = this.authStorage.getItem('access_token');
+      const header = 'Bearer ' + token + ' ' + accessToken;
+      const headers = req.headers
+        .set('Authorization', header);
+      req = req.clone({ headers });
+    }
+
+    return next.handle(req);
   }
 
   private addContentType(request: HttpRequest<any>): HttpRequest<any> {
@@ -23,12 +40,17 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private isMedia(url: string): boolean {
-    console.log(url);
     return (
        url.includes('migration/save')
       || url.includes('sheets/add')
       || url.includes('sheets/save')
       || url.includes('hotlines/upload')
+       || url.includes('websso')
     );
   }
+
+  private isPublicRequest(url: string): boolean {
+    return  url.includes('websso');
+  }
+
 }

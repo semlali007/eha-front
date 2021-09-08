@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { PublicModule } from '../public/public.module';
 import { ProtectedModule } from '../protected/protected.module';
@@ -15,6 +15,16 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CacheInterceptor } from './interceptors/cache.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AuthConfig, OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
+import { authConfig } from './auth-config';
+import { AuthGuardWithForcedLogin } from './auth-guard-with-forced-login.service';
+import { AuthGuard } from './auth-guard.service';
+import { authModuleConfig } from './auth-module-config';
+import { AuthService } from './auth.service';
+
+export function storageFactory(): OAuthStorage {
+  return localStorage;
+}
 
 @NgModule({
   declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ToastrComponent, PageNotFoundComponent],
@@ -26,9 +36,13 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserAnimationsModule,
     HttpClientModule,
     AlertModule.forRoot(),
+    OAuthModule.forRoot(),
   ],
   exports: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ToastrComponent, PageNotFoundComponent],
   providers: [
+    AuthService,
+    AuthGuard,
+    AuthGuardWithForcedLogin,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CacheInterceptor,
@@ -39,10 +53,22 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
       useClass: AuthInterceptor,
       multi: true
     }
+
   ]
 })
 
 export class CoreModule {
+  static forRoot(): ModuleWithProviders<CoreModule> {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        { provide: AuthConfig, useValue: authConfig },
+        { provide: OAuthModuleConfig, useValue: authModuleConfig },
+        { provide: OAuthStorage, useFactory: storageFactory },
+      ]
+    };
+  }
+
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded.');

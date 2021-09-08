@@ -26,7 +26,7 @@
                   </span>
 
                 </div>
-                <div class="col-3 col-sm-3" *ngIf="!!user && user.hasRole('ADMIN')">
+                <div class="col-3 col-sm-3" *ngIf="!!user && user.hasRole('EHA_ADMIN')">
                   <a (click)="navigate('fiche_marchee')" class="btn btn-sheet-search"><i class="fas fa-plus"></i>
                     Ajouter une fiche</a>
                 </div>

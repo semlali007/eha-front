@@ -5,7 +5,7 @@ import { SheetService } from 'src/app/core/services/sheet.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/auth.service';
 import { PreviousService } from 'src/app/core/services/previous.service';
 
 
@@ -21,7 +21,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   itemsPerPage: number = 20;
   paginationForm: FormGroup;
   smallnumPages: number = 0;
-  public user: User;
+  public user: User = null;
   public subscription: Subscription;
   public searchText = '';
   public searchProvider = '';
@@ -146,7 +146,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public loadItems() {
     let status = this.filterInput.status;
-    if (!this.user.hasRole('ADMIN')) {
+    console.log(this.user);
+    console.log(this.user.hasRole('EHA_ADMIN'));
+    if (!this.user.hasRole('EHA_ADMIN')) {
       status = 1;
     }
     console.log(this.searchProvider);

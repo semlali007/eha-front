@@ -7,7 +7,8 @@ import { MinWordCountValidator } from 'src/app/shared/validators/min-word-count.
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/core/services/message.service';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { User } from 'src/app/shared/models/user';
 @Component({
   selector: 'app-hotline-form',
   templateUrl: './hotline-form.component.html',
@@ -16,9 +17,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class HotlineFormComponent implements OnInit, OnDestroy {
   hotlineForm: FormGroup;
+  public user: User = null;
   themesList: HotlineTheme[] = [];
   familiesList: HotlineFamily[] = [];
   subscription: Subscription;
+  userSubscription: Subscription;
   sub: Subscription;
   message: string = '';
   defaultTheme = '';
@@ -38,6 +41,7 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
   get entity() { return this.hotlineForm.get('entity') as any; }
 
   ngOnInit(): void {
+    this.userSubscription = this.authService.user$.subscribe(user => this.user = user);
     this.hotlineService.getConfig().subscribe(
       config => {
         this.themesList = config.themes;
@@ -65,13 +69,12 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
 
   }
   createForm() {
-    console.log(this.authService.currentUser);
     return this.hotlineForm = this.fb.group({
       theme: ['', [Validators.required]],
       category: ['', [Validators.required]],
       family: ['', [Validators.required]],
       question: ['', [Validators.required, MinWordCountValidator(5)]],
-      entity: new FormControl({ value: this.authService.currentUser.direction, disabled: true }, Validators.required),
+      entity: new FormControl({ value: this.user.profil.gardianHierarchie, disabled: true }, Validators.required),
     });
   }
 
@@ -96,5 +99,7 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.sub.unsubscribe();
+    this.userSubscription.unsubscribe();
+    
    }
 }

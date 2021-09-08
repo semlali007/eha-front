@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   api: {
     auth: {
-      baseURL: '/api-v2/public/index.php?url='
+      baseURL: '/api/'
     },
     dataStore: {
-      baseURL: '/api-v2/public/index.php?url='
+      baseURL: '/api/'
     }
   }
 };

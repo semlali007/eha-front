@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from 'src/app/core/guards/auth.guard';
-import { RoleGuard } from 'src/app/core/guards/role.guard';
+import { AuthGuard } from 'src/app/core/auth-guard.service';
+import { EhaAdminRoleGuard } from 'src/app/core/guards/eha-admin-role.guard';
+import { AuthGuardWithForcedLogin } from 'src/app/core/auth-guard-with-forced-login.service';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
       {
         path: 'fiches/creation',
         loadChildren: () => import('./sheet/sheet-add/sheet-add.module').then(m => m.SheetAddModule),
-        canActivate: [RoleGuard],
+        canActivate: [EhaAdminRoleGuard],
         data: {
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
@@ -36,7 +37,7 @@ const routes: Routes = [
       {
         path: 'fiches/modification/:id',
         loadChildren: () => import('./sheet/sheet-edit/sheet-edit.module').then(m => m.SheetEditModule)
-        ,canActivate: [RoleGuard],
+        ,canActivate: [EhaAdminRoleGuard],
         data: {
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
@@ -157,8 +158,7 @@ const routes: Routes = [
         path: 'documentation/:id', loadChildren: () => import('./documentation/documentation.module').then(m => m.DocumentationModule),
       },
     ],
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    canActivate: [AuthGuardWithForcedLogin],
   },
 ];
 

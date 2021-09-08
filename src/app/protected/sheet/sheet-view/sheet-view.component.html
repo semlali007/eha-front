@@ -9,7 +9,7 @@
                     <button (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
                 </div>
             </div>
-            <div class="col-lg-2 margin-tb" *ngIf="!!user && user.hasRole('ADMIN')">
+            <div class="col-lg-2 margin-tb" *ngIf="!!user && user.hasRole('EHA_ADMIN')">
                 <div class="pull-right"  >
                     <a (click)="modification(sheetId)"
                         class="btn btn-edf float-left mt-n1" ><i class="fas fa-plus" ></i>

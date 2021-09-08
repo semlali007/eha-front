@@ -9,7 +9,7 @@
         Mentions légales
     </button>
     
-    <a *ngIf="!!user && user.hasRole('ADMIN')" class="btn btn-link btn-sm" (click)="navigate('admin/dashboard')">
+    <a *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="btn btn-link btn-sm" (click)="navigate('admin/dashboard')">
         &nbsp;|&nbsp;
         Administration
     </a>

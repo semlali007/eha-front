@@ -1,3 +1,5 @@
+import { Profil } from "./profil";
+
 export class User {
     readonly id: string; // id de l’utilisateur
     email: string; // email de l’utilisateur
@@ -5,6 +7,7 @@ export class User {
     nni: string; // nni de l’utilisateur
     direction: string;
     roles: string[] = []
+    profil: Profil ;
 
     constructor(options: {
         id?: string,
@@ -13,6 +16,7 @@ export class User {
         name?: string,
         direction?: string,
         roles?: string[],
+        profil?: Profil
     } = {}) {
         this.id = options.id || null;
         this.email = options.email || '';
@@ -20,9 +24,12 @@ export class User {
         this.nni = options.nni || '';
         this.direction = options.direction || '';
         this.roles = options.roles || [];
+        this.profil = options.profil || null;
     }
 
     hasRole(role: string): boolean {
-        return this.roles.includes(role);
+        return this.profil.roles.some(function(el) {
+            return el.name === role;
+          }); 
     }
 }

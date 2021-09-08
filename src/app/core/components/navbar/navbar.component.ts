@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
 import { Router } from '@angular/router';
@@ -30,8 +30,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
    this.subscription.unsubscribe();
   }
   
-
-  public logout() {
+  public logout() { this.authService.logout(); }
+ /* public logout() {
 
     this.authService
       .logout()
@@ -41,5 +41,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
       );
 
    }
-   
+   */
 }

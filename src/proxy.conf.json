@@ -1,7 +1,9 @@
 {
     "/api/*": {
-        "target": "https://eha-dev.aas.edf.fr",
+        "target": "http://localhost:9090",
         "secure": false,
-        "logLevel": "debug"
+        "logLevel": "debug",
+        "pathRewrite": {"^/api/": ""},
+        "changeOrigin": true
     }
 }

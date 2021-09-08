@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/core/auth.service';
 import { HotlineService } from 'src/app/core/services/hotline.service';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-email.component';
+import { User } from 'src/app/shared/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hotline-list',
@@ -11,7 +13,7 @@ import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-em
   styles: [
   ]
 })
-export class HotlineListComponent implements OnInit {
+export class HotlineListComponent implements OnInit, OnDestroy {
   new: [] = [];
   progress: [] = [];
   end: [] = [];
@@ -19,7 +21,8 @@ export class HotlineListComponent implements OnInit {
   email: string = '';
   active: string = 'new';
   bsModalRef: BsModalRef;
-
+  public user: User = null;
+  userSubscription: Subscription;
   constructor(
     private authService: AuthService,
     private hotlineService: HotlineService,
@@ -28,6 +31,8 @@ export class HotlineListComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = this.authService.currentUser.email;
+    this.userSubscription = this.authService.user$.subscribe(user => this.user = user);
+
     this.loadList();
     this.hotlineService.getConfig().subscribe(
       config => {
@@ -58,7 +63,6 @@ export class HotlineListComponent implements OnInit {
   }
 
   private loadList(filter?: any) {
-    console.log('okok');
     let params: any = { email: this.email };
     if (!!filter && !!filter.category) {
       params.category = filter.category;
@@ -86,4 +90,7 @@ export class HotlineListComponent implements OnInit {
       }
     });
   }
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+   }
 }

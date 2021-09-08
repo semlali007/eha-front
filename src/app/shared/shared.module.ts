@@ -8,7 +8,7 @@ import { FileManagerModule } from './modules/file-manager.module';
 import { PipesModule } from './modules/pipes.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-
+import { ApiService } from './api.service';
 @NgModule({
   declarations: [SidenavComponent, BreadcrumbComponent],
   imports: [
@@ -30,6 +30,9 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     PipesModule,
     SidenavComponent,
     BreadcrumbComponent
+  ],
+  providers: [
+    ApiService,
   ]
 })
 export class SharedModule { }

@@ -4,12 +4,12 @@ Eha-front  est la partie frontend de l'application Achatpédia basé sur le fram
 
 ## Logiciels requis
 
-### Node.js   **14.17+**
+### 1- Node.js   **14.17+**
 
 -  Angular nécessite une version LTS active ou LTS de maintenance de Node.js.  
 - Pour plus d'informations sur les exigences de version spécifiques, consultez la clé des moteurs dans le fichier package.json. 
    
-### Gestionnaire de paquets: npm **6.14.13+** 
+### 2- Gestionnaire de paquets: npm **6.14.13+** 
  
 - Les applications Angular, Angular CLI et Angular dépendent des packages npm pour de nombreuses fonctionnalités et fonctions. Pour télécharger et installer des packages npm, vous avez besoin d'un gestionnaire de packages npm. 
 - Ce guide utilise l'interface de ligne de commande du client npm, qui est installée avec Node.js par défaut. 

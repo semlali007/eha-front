@@ -1,15 +1,16 @@
+
 # EHA-FRONT
-Eha-front  est la partie frontend de l'application Achatpédia basé sur le framework Angular.
+Eha-front  est la partie frontend de l'application **Achatpédia** basé sur le framework Angular.
 
 
 ## Logiciels requis
 
-### 1- Node.js   **14.17+**
+### Node.js : **14.17+**
 
 -  Angular nécessite une version LTS active ou LTS de maintenance de Node.js.  
 - Pour plus d'informations sur les exigences de version spécifiques, consultez la clé des moteurs dans le fichier package.json. 
    
-### 2- Gestionnaire de paquets: npm **6.14.13+** 
+### gestionnaire de paquets npm: **6.14.13+** 
  
 - Les applications Angular, Angular CLI et Angular dépendent des packages npm pour de nombreuses fonctionnalités et fonctions. Pour télécharger et installer des packages npm, vous avez besoin d'un gestionnaire de packages npm. 
 - Ce guide utilise l'interface de ligne de commande du client npm, qui est installée avec Node.js par défaut. 
@@ -31,7 +32,10 @@ cd /appli/projects/ANGULAREHA
 ```
 npm install 
 ```
-
+**Note:** pour l'environnement de DEV  Il faut installer la dépendance `Angular/CLI` avec la commande: 
+```
+npm install -g @angular/cli
+```
 
 ## Lancer l'application localement
 Lancer l'application avec la commande suivante: 
@@ -42,7 +46,7 @@ ng serve [--ssl true] [--port 4200]...
 `ng serve --ssl true --host dsp0929522.atlas.edf.fr --disable-host-check true 
 --port 5000`
 
-## Build (environnement de Production)
+## Build
 - Build basique avec la commande : `ng build`
 - Pour configurer le output de build avec ces lignes de commande : 
 

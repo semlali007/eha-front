@@ -1,4 +1,3 @@
-
 # EHA-FRONT
 Eha-front  est la partie frontend de l'application **Achatpédia** basé sur le framework Angular.
 
@@ -10,7 +9,7 @@ Eha-front  est la partie frontend de l'application **Achatpédia** basé sur le 
 -  Angular nécessite une version LTS active ou LTS de maintenance de Node.js.  
 - Pour plus d'informations sur les exigences de version spécifiques, consultez la clé des moteurs dans le fichier package.json. 
    
-### gestionnaire de paquets npm: **6.14.13+** 
+### Gestionnaire de paquets npm: **6.14.13+** 
  
 - Les applications Angular, Angular CLI et Angular dépendent des packages npm pour de nombreuses fonctionnalités et fonctions. Pour télécharger et installer des packages npm, vous avez besoin d'un gestionnaire de packages npm. 
 - Ce guide utilise l'interface de ligne de commande du client npm, qui est installée avec Node.js par défaut. 

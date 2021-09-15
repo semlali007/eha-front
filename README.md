@@ -42,7 +42,7 @@ ng serve [--ssl true] [--port 4200]...
 `ng serve --ssl true --host dsp0929522.atlas.edf.fr --disable-host-check true 
 --port 5000`
 
-## Build
+## Build (environnement de Production)
 - Build basique avec la commande : `ng build`
 - Pour configurer le output de build avec ces lignes de commande : 
 

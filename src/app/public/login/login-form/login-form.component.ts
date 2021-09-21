@@ -36,16 +36,7 @@ export class LoginFormComponent implements OnInit {
   get password() { return this.loginForm.get('password'); }
 
   submit(): void {
-    this.authService
-      .login(this.nni.value, this.password.value)
-      .subscribe(
-        user => {
-          this.documentationService.getDocumentation({ reset: 'reset', 'cache': 'cache' }).subscribe(_ => { });
-          this.user = user;
-          this.router.navigate(['/app/accueil'])
-        },
-        _ => this.loginForm.reset()
-      );
+    
   }
 
 }

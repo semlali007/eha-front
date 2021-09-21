@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from 'src/app/core/auth-guard.service';
+import { AuthGuard } from 'src/app/core/guards/auth-guard.service';
 import { EhaAdminRoleGuard } from 'src/app/core/guards/eha-admin-role.guard';
-import { AuthGuardWithForcedLogin } from 'src/app/core/auth-guard-with-forced-login.service';
+import { AuthGuardWithForcedLogin } from 'src/app/core/guards/auth-guard-with-forced-login.service';
 
 const routes: Routes = [
   {

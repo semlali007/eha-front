@@ -11,6 +11,13 @@ export const environment = {
     dataStore: {
       baseURL: '/api/'
     }
+  },
+  sso: {
+    issuer: '',
+    clientId: '', // The "Auth Code + PKCE" client
+    redirectUri: '',
+    postLogoutRedirectUri: '',
+    dummyClientSecret:'',
   }
 };
 /*

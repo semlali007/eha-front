@@ -5,7 +5,7 @@ import { SheetService } from 'src/app/core/services/sheet.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { PreviousService } from 'src/app/core/services/previous.service';
 
 
@@ -146,9 +146,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public loadItems() {
     let status = this.filterInput.status;
-    console.log(this.user);
-    console.log(this.user.hasRole('EHA_ADMIN'));
-    if (!this.user.hasRole('EHA_ADMIN')) {
+    if (!this.user || !this.user.hasRole('EHA_ADMIN')) {
       status = 1;
     }
     console.log(this.searchProvider);

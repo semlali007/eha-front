@@ -3,17 +3,17 @@ export const environment = {
   environmentName: 'production',
   api: {
     auth: {
-      baseURL: '/eha-back/src'
+      baseURL: '/api/'
     },
     dataStore: {
-      baseURL: '/eha-back/src'
+      baseURL: '/api/'
     }
   },
   sso: {
-    issuer: 'https://rec-websso-gardian.myelectricnetwork.com:443/gardianwebsso/oauth2/multiauth/PKCE',
-    clientId: '5CEHA002', // The "Auth Code + PKCE" client
-    redirectUri: 'https://dsp0880728.atlas.edf.fr:5000',
-    postLogoutRedirectUri: 'https://dsp0880728.atlas.edf.fr:5000',
-    dummyClientSecret:'eB?7csn7Wo?+',
+    issuer: '',
+    clientId: '', // The "Auth Code + PKCE" client
+    redirectUri: '',
+    postLogoutRedirectUri: '',
+    dummyClientSecret:'',
   }
 };

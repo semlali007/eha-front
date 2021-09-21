@@ -7,7 +7,7 @@ import { Status } from 'src/app/shared/models/status';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import * as fileSaver from 'file-saver';
 import { FileService } from 'src/app/core/services/file.service';
 

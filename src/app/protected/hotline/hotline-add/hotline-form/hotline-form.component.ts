@@ -7,7 +7,7 @@ import { MinWordCountValidator } from 'src/app/shared/validators/min-word-count.
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/core/services/message.service';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/shared/models/user';
 @Component({
   selector: 'app-hotline-form',

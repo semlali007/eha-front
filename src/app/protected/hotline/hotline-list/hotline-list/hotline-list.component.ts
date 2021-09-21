@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { HotlineService } from 'src/app/core/services/hotline.service';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';

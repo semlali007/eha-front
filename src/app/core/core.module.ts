@@ -16,11 +16,11 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CacheInterceptor } from './interceptors/cache.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthConfig, OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
-import { authConfig } from './auth-config';
-import { AuthGuardWithForcedLogin } from './auth-guard-with-forced-login.service';
-import { AuthGuard } from './auth-guard.service';
-import { authModuleConfig } from './auth-module-config';
-import { AuthService } from './auth.service';
+import { authConfig } from './config/auth-config';
+import { AuthGuardWithForcedLogin } from './guards/auth-guard-with-forced-login.service';
+import { AuthGuard } from './guards/auth-guard.service';
+import { authModuleConfig } from './config/auth-module-config';
+import { AuthService } from './services/auth.service';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -53,7 +53,6 @@ export function storageFactory(): OAuthStorage {
       useClass: AuthInterceptor,
       multi: true
     }
-
   ]
 })
 

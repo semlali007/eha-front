@@ -1,85 +1,198 @@
+/* eslint-disable brace-style */
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
-import { User } from 'src/app/shared/models/user';
-import { environment } from '../../../environments/environment';
-import { HttpHeaders } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
-import { ErrorService } from './error.service';
-import { LoaderService } from './loader.service';
 import { Router } from '@angular/router';
-import { ToastrService } from './toastr.service';
-@Injectable({
-  providedIn: 'root'
-})
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { BehaviorSubject, combineLatest, Observable, ReplaySubject,of } from 'rxjs';
+import { filter, map,switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
+import { User } from 'src/app/shared/models/user';
+import { ErrorService } from 'src/app/core/services/error.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
+import { ToastrService } from 'src/app/core/services/toastr.service';
+import { Profil } from 'src/app/shared/models/profil';
+import { Role } from 'src/app/shared/models/role';
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private errors: any = {
-    '101': "La connexion LDAP a échoué.",
-    '102': "Echec de l'authentification sur GARDIAN SESAME avec le compte technique.",
-    '103': "Mot de passe SESAME vérouillé.",
-    '104': "Le compte utilisateur n'a pas été trouvé dans l'annuaire.",
-    '105': "Le DN de l'utilisateur n'est pas valide. Contacter l'administrateur.",
-    '106': "Identifiant incorrect ou mot de passe SESAME expiré.",
-    '107': "Erreur inconnue.",
-    '108': "Cet utilisateur n'existe pas.",
-    '109': "Vos identifiants sont corrects, néanmoins vous êtes identifés comme externe, votre accès à cette application est donc refusé.",
-    '110': "Votre dérogation pour accéder à ce site n'est plus valable, merci d'en demander une nouvelle.",
-    'logout': "Votre demande de déconnexion a été transmise."
-  };
-
+  
   private user: BehaviorSubject<User | null> = new BehaviorSubject(null);
   public readonly user$: Observable<User | null> = this.user.asObservable();
-  constructor(private http: HttpClient,
+  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+
+  private isDoneLoadingSubject$ = new ReplaySubject<boolean>();
+  public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
+
+  /**
+   * Publishes `true` if and only if (a) all the asynchronous initial
+   * login calls have completed or errorred, and (b) the user ended up
+   * being authenticated.
+   *
+   * In essence, it combines:
+   *
+   * - the latest known state of whether the user is authorized
+   * - whether the ajax calls for initial log in have all been done
+   */
+  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
+    this.isAuthenticated$,
+    this.isDoneLoading$
+  ]).pipe(map(values => values.every(b => b)));
+
+  private navigateToLoginPage() {
+    // TODO: Remember current URL
+    this.router.navigateByUrl('/login');
+  }
+
+  constructor(
     private loaderService: LoaderService,
     private errorService: ErrorService,
+    private oauthService: OAuthService,
     private router: Router,
-    private toastrService: ToastrService,
-  ) { }
-  public login(nni: string, password: string): Observable<User | null> {
-    this.loaderService.setLoading(true);
-    const url = `${environment.api.auth.baseURL}/authentication/login`;
+  ) {
+    // Useful for debugging:
+    this.oauthService.events.subscribe(event => {
+      if (event instanceof OAuthErrorEvent) {
+        console.error('OAuthErrorEvent Object:', event);
+      } else {
+        console.warn('OAuthEvent Object:', event);
+      }
+    });
 
-    const data = {
-      nni: nni,
-      pwd: password
-    };
+    // This is tricky, as it might cause race conditions (where access_token is set in another
+    // tab before everything is said and done there.
+    // TODO: Improve this setup. See: https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/2
+    window.addEventListener('storage', (event) => {
+      // The `key` is `null` if the event was caused by `.clear()`
+      if (event.key !== 'access_token' && event.key !== null) {
+        return;
+      }
 
+      console.warn('Noticed changes to access_token (most likely from another tab), updating isAuthenticated');
+      this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
 
-    this.loaderService.setLoading(true);
-    return this.http.post<User>(url, data).pipe(
-      switchMap((data: any) => {
-        if (data.logged == true) {
-          const nni: string = data.data.nni;
-          const direction: string = data.data.direction;
-          const userData: string = data.data;
-          let roles = [];
-          data.data.roles.forEach(role => {
-            roles.push(role);
-          });
-          let params = {
-            nni: nni,
-            userDatat: userData,
-            direction: direction,
-            email: data.data.email,
-            roles: roles
-          }
-          this.saveAuthData(params);
-          return of(this.getUser(params));
-        } else {
-          if (this.errors[data.status] === undefined) {
-            throw "Une erreur est survenue, mais alors laquelle...";
-          } else {
-            throw this.errors[data.status];
-          }
+      if (!this.oauthService.hasValidAccessToken()) {
+        this.navigateToLoginPage();
+      }
+    });
+
+    this.oauthService.events
+      .subscribe(_ => {
+        this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
+      });
+
+    this.oauthService.events
+      .pipe(filter(e => ['token_received'].includes(e.type)))
+      .subscribe(e => this.oauthService.loadUserProfile().then((data) =>
+     
+        this.autoLogin(data)
+     
+      ));
+
+    this.oauthService.events
+      .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
+      .subscribe(e => this.navigateToLoginPage());
+
+    //this.oauthService.setupAutomaticSilentRefresh();
+  }
+
+  public runInitialLoginSequence(): Promise<void> {
+    if (location.hash) {
+      console.log('Encountered hash fragment, plotting as table...');
+      console.table(location.hash.substr(1).split('&').map(kvp => kvp.split('=')));
+    }
+
+    // 0. LOAD CONFIG:
+    // First we have to check to see how the IdServer is
+    // currently configured:
+    
+    return this.oauthService.loadDiscoveryDocument()
+
+      // For demo purposes, we pretend the previous call was very slow
+      .then(() => new Promise<void>(resolve => setTimeout(() => resolve(), 1000)))
+
+      // 1. HASH LOGIN:
+      // Try to log in via hash fragment after redirect back
+      // from IdServer from initImplicitFlow:
+      .then(() => this.oauthService.tryLogin())
+
+       .then(() => {
+        if (this.oauthService.hasValidAccessToken()) {
+          return Promise.resolve();
         }
 
-      }),
-      tap(user => this.user.next(user)),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
-    );
+        // 2. SILENT LOGIN:
+        // Try to log in via a refresh because then we can prevent
+        // needing to redirect the user:
+       /*return this.oauthService.silentRefresh()
+          .then(() => Promise.resolve())
+          .catch(result => {
+            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
+            // Only the ones where it's reasonably sure that sending the
+            // user to the IdServer will help.
+            const errorResponsesRequiringUserInteraction = [
+              'interaction_required',
+              'login_required',
+              'account_selection_required',
+              'consent_required',
+            ];
+
+            if (result
+              && result.reason
+              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+
+              // 3. ASK FOR LOGIN:
+              // At this point we know for sure that we have to ask the
+              // user to log in, so we redirect them to the IdServer to
+              // enter credentials.
+              //
+              // Enable this to ALWAYS force a user to login.
+              // this.login();
+              //
+              // Instead, we'll now do this:
+              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
+              return Promise.resolve();
+            }
+
+            // We can't handle the truth, just pass on the problem to the
+            // next handler.
+            return Promise.reject(result);
+          });*/
+      })
+
+      .then(() => {
+        this.isDoneLoadingSubject$.next(true);
+
+        // Check for the strings 'undefined' and 'null' just to be sure. Our current
+        // login(...) should never have this, but in case someone ever calls
+        // initImplicitFlow(undefined | null) this could happen.
+        if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+          this.router.navigateByUrl(stateUrl);
+        }
+      })
+      .catch(() => this.isDoneLoadingSubject$.next(true));
   }
+
+  public login(targetUrl?: string) {
+    // Note: before version 9.1.0 of the library you needed to
+    // call encodeURIComponent on the argument to the method.
+    this.oauthService.initLoginFlow(targetUrl || this.router.url, {'acr_values':'sesameGROUPE'});
+  }
+
+  public logout() { this.oauthService.logOut(); }
+  public refresh() { this.oauthService.silentRefresh(); }
+  public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
+
+  // These normally won't be exposed from a service like this, but
+  // for debugging it makes sense.
+  public get accessToken() { return this.oauthService.getAccessToken(); }
+  public get refreshToken() { return this.oauthService.getRefreshToken(); }
+  public get identityClaims() { return this.oauthService.getIdentityClaims(); }
+  public get idToken() { return this.oauthService.getIdToken(); }
+  public get logoutUrl() { return this.oauthService.logoutUrl; }
 
   private getUser(params): User {
     return new User({
@@ -88,53 +201,56 @@ export class AuthService {
       name: params.name,
       direction: params.direction,
       roles: params.roles,
+      profil: new Profil(params.profil)
     });
   }
-
-  public logout(): Observable<any | null> {
-    this.loaderService.setLoading(true);
-    const url = `${environment.api.auth.baseURL}/authentication/logout`;
-
-    return this.http.get(url).pipe(
-      switchMap((response: any) => {
-        if (response.logged === false) {
-          localStorage.removeItem('expirationDate');
-          localStorage.removeItem('data');
-          localStorage.removeItem('nni');
-          localStorage.removeItem('email');
-          localStorage.removeItem('direction');
-          return of({});
-        } else {
-          throw "Vous ne devriez pas voir ce message.";
-        }
-      }),
-      tap(_ => this.toastrService.showToastr({
-        category: 'success',
-        message: 'Vous a été correctement déconnecté.'
-      })),
-      tap(user => this.user.next(null)),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
-    );
-  }
-
-
-  private saveAuthData(params) {
-    const now = new Date();
-    const expirationDate = (now.getTime() + 3600 * 1000).toString();
-    localStorage.setItem('expirationDate', expirationDate);
-    localStorage.setItem('nni', params.nni);
-    localStorage.setItem('data', params.data);
-    localStorage.setItem('direction', params.direction);
-    localStorage.setItem('email', params.email);
-  }
-
-  public autoLogin(user: User) {
-    this.user.next(user);
-    this.router.navigate(['app/accueil']);
-  }
-
+  
   get currentUser(): User {
     return this.user.getValue();
   }
+  
+  public autoLogin(dt?:any) {
+    console.log(1);
+    if (this.oauthService.hasValidAccessToken()) {
+      console.log(2);
+      let params = this.identityClaims ;
+      if(!!dt){
+         params = dt;
+      }
+      
+      const roles: Role[] = [];
+      if( !!params['isMemberOf']){
+    params['isMemberOf'].forEach(data => {
+            let roleArray = [];
+            data.split(",").forEach(r => {
+              let tt = r.split("=");
+              roleArray[tt[0]] = tt[1];
+            }
+            )
+            const role: Role = new Role({
+              name: roleArray['cn'],
+              dc: roleArray['dc'],
+              ou: roleArray['ou'],
+            });
+            roles.push(role);
+          });
+
+      }
+      
+      params['roles'] = roles;
+      this.user.next(this.getUser({
+        nni: params['sub'],
+        profil: params
+      }));
+      console.log(3);
+      console.log(this.router.url);
+      this.router.navigate([this.router.url]);
+    }
+    console.log(4);
+  }
+
+  public tryLogin() {
+    this.oauthService.tryLogin()
+  }
 }
+

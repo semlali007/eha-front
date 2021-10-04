@@ -26,12 +26,21 @@ export class HomeModalComponent implements OnInit {
     );
   }
 
-
   // Visualiser les news
   // showModal(): boolean {
   //   this.isModalShown = true;
   //   return this.isModalShown;
   // }
+
+  checkingCheck(val) {
+    let checked = val.checked;
+    this.configService.postChecks(checked).subscribe(
+      (response) => {
+        console.log(response);
+      }
+    )
+    this.hideModal();
+  }
  
   hideModal(): void {
     this.autoShownModal?.hide();

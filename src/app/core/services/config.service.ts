@@ -30,4 +30,18 @@ export class ConfigService {
         );
     }
 
+    postChecks(checked:boolean): Observable<any | null> {
+        let url = `${environment.api.auth.baseURL}/config/checkInput`;
+        this.loaderService.setLoading(true);
+        return this.http.post(url,checked).pipe(
+            switchMap((response: any) => {
+                return of(
+                    response
+                );
+            }),
+            catchError(error => this.errorService.handleError(error)),
+            finalize(() => this.loaderService.setLoading(false))
+        );
+    }
+
 }

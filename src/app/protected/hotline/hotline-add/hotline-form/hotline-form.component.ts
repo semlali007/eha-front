@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { HotlineService } from 'src/app/core/services/hotline.service';
-import { HotlineFamily } from 'src/app/shared/models/HotlineFamily';
+import { HotlineFamily } from 'src/app/shared/models/hotlineFamily';
 import { HotlineTheme } from 'src/app/shared/models/hotlineTheme';
 import { MinWordCountValidator } from 'src/app/shared/validators/min-word-count.validator';
 import { ActivatedRoute, Router } from '@angular/router';

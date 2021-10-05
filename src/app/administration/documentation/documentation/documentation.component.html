@@ -1,12 +1,41 @@
-<h1>Documentation</h1>
-<form novalidate [formGroup]="documentationForm" (ngSubmit)="submit()">
-    <div class="text-right mt-3">
-        <button type="submit" [disabled]="!documentationForm.valid" class="btn btn-success">Sauvegarder</button>
-        <button type="button" class="btn btn-primary" (click)="activate()">activer la modification</button>
-    </div>
-
-    <div class="form-group row">
-        <textarea class="form-control" [formControl]="content" style="width:100%;height:70vh"></textarea>
-    </div>
-   
-</form>
+<h1>Documentation :</h1>
+<div class="text-right mt-3">
+    <button type="button"  (click)="openAdd()" class="btn btn-primary">Ajouter</button>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Position
+            </th>
+            <th>
+                Titre
+            </th>
+            <th>
+                lien
+            </th>
+            <th>
+                Action
+            
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items">
+            <td>
+                {{item.position}}
+            </td>
+            <td>
+                {{item.label}}
+            </td>
+            <td>
+                {{item.link}}
+            </td>
+            
+            <td>
+                <button (click)="openEdit(item.id)">Modifier</button>
+                <button (click)="openEdit(item.id)">Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
-import { BehaviorSubject, combineLatest, Observable, ReplaySubject,of } from 'rxjs';
-import { filter, map,switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, ReplaySubject, of } from 'rxjs';
+import { filter, map, switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
 import { User } from 'src/app/shared/models/user';
 import { ErrorService } from 'src/app/core/services/error.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
@@ -13,7 +13,7 @@ import { Role } from 'src/app/shared/models/role';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  
+
   private user: BehaviorSubject<User | null> = new BehaviorSubject(null);
   public readonly user$: Observable<User | null> = this.user.asObservable();
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
@@ -82,9 +82,11 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile().then((data) =>
-     
-        this.autoLogin(data)
-     
+      {
+        console.log('aaaaa');
+        this.autoLogin(data);
+      }
+
       ));
 
     this.oauthService.events
@@ -103,7 +105,7 @@ export class AuthService {
     // 0. LOAD CONFIG:
     // First we have to check to see how the IdServer is
     // currently configured:
-    
+
     return this.oauthService.loadDiscoveryDocument()
 
       // For demo purposes, we pretend the previous call was very slow
@@ -114,7 +116,7 @@ export class AuthService {
       // from IdServer from initImplicitFlow:
       .then(() => this.oauthService.tryLogin())
 
-       .then(() => {
+      .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
           return Promise.resolve();
         }
@@ -122,40 +124,40 @@ export class AuthService {
         // 2. SILENT LOGIN:
         // Try to log in via a refresh because then we can prevent
         // needing to redirect the user:
-       /*return this.oauthService.silentRefresh()
-          .then(() => Promise.resolve())
-          .catch(result => {
-            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
-            // Only the ones where it's reasonably sure that sending the
-            // user to the IdServer will help.
-            const errorResponsesRequiringUserInteraction = [
-              'interaction_required',
-              'login_required',
-              'account_selection_required',
-              'consent_required',
-            ];
-
-            if (result
-              && result.reason
-              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
-
-              // 3. ASK FOR LOGIN:
-              // At this point we know for sure that we have to ask the
-              // user to log in, so we redirect them to the IdServer to
-              // enter credentials.
-              //
-              // Enable this to ALWAYS force a user to login.
-              // this.login();
-              //
-              // Instead, we'll now do this:
-              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
-              return Promise.resolve();
-            }
-
-            // We can't handle the truth, just pass on the problem to the
-            // next handler.
-            return Promise.reject(result);
-          });*/
+        /*return this.oauthService.silentRefresh()
+           .then(() => Promise.resolve())
+           .catch(result => {
+             // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
+             // Only the ones where it's reasonably sure that sending the
+             // user to the IdServer will help.
+             const errorResponsesRequiringUserInteraction = [
+               'interaction_required',
+               'login_required',
+               'account_selection_required',
+               'consent_required',
+             ];
+ 
+             if (result
+               && result.reason
+               && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+ 
+               // 3. ASK FOR LOGIN:
+               // At this point we know for sure that we have to ask the
+               // user to log in, so we redirect them to the IdServer to
+               // enter credentials.
+               //
+               // Enable this to ALWAYS force a user to login.
+               // this.login();
+               //
+               // Instead, we'll now do this:
+               console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
+               return Promise.resolve();
+             }
+ 
+             // We can't handle the truth, just pass on the problem to the
+             // next handler.
+             return Promise.reject(result);
+           });*/
       })
 
       .then(() => {
@@ -179,7 +181,7 @@ export class AuthService {
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
-    this.oauthService.initLoginFlow(targetUrl || this.router.url, {'acr_values':'sesameGROUPE'});
+    this.oauthService.initLoginFlow(targetUrl || this.router.url, { 'acr_values': 'sesameGROUPE' });
   }
 
   public logout() { this.oauthService.logOut(); }
@@ -195,6 +197,7 @@ export class AuthService {
   public get logoutUrl() { return this.oauthService.logoutUrl; }
 
   private getUser(params): User {
+    console.log('paramsu',params);
     return new User({
       email: params.email,
       nni: params.nni,
@@ -204,49 +207,40 @@ export class AuthService {
       profil: new Profil(params.profil)
     });
   }
-  
+
   get currentUser(): User {
     return this.user.getValue();
   }
-  
-  public autoLogin(dt?:any) {
-    console.log(1);
+
+  public autoLogin(dt?: any) {
     if (this.oauthService.hasValidAccessToken()) {
-      console.log(2);
-      let params = this.identityClaims ;
-      if(!!dt){
-         params = dt;
-      }
-      
+      let params = this.identityClaims;
       const roles: Role[] = [];
-      if( !!params['isMemberOf']){
-    params['isMemberOf'].forEach(data => {
-            let roleArray = [];
-            data.split(",").forEach(r => {
-              let tt = r.split("=");
-              roleArray[tt[0]] = tt[1];
-            }
-            )
-            const role: Role = new Role({
-              name: roleArray['cn'],
-              dc: roleArray['dc'],
-              ou: roleArray['ou'],
-            });
-            roles.push(role);
+      if (!!params['isMemberOf']) {
+        params['isMemberOf'].forEach(data => {
+          let roleArray = [];
+          data.split(",").forEach(r => {
+            let tt = r.split("=");
+            roleArray[tt[0]] = tt[1];
+          }
+          )
+          const role: Role = new Role({
+            name: roleArray['cn'],
+            dc: roleArray['dc'],
+            ou: roleArray['ou'],
           });
+          roles.push(role);
+        });
 
       }
-      
       params['roles'] = roles;
       this.user.next(this.getUser({
         nni: params['sub'],
         profil: params
       }));
-      console.log(3);
       console.log(this.router.url);
       this.router.navigate([this.router.url]);
     }
-    console.log(4);
   }
 
   public tryLogin() {

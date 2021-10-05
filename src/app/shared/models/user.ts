@@ -28,6 +28,8 @@ export class User {
     }
 
     hasRole(role: string): boolean {
+        //console.log('role', role);
+        //console.log('this.profil', this.profil);
         return this.profil.roles.some(function(el) {
             return el.name === role;
           }); 

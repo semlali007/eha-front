@@ -75,5 +75,41 @@ export class DocumentationService {
 
   clearCache() {
   }
+  
 
+  public getDetails(params: any): Observable<any> {
+    let url = `${environment.api.auth.baseURL}/documentations/show/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url,).pipe(
+      switchMap((listData: any) => {
+        return of(listData);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+
+  public add(params: any): Observable<any> {
+    let data = {
+      'label': params.title,
+      'link': params.url,
+      'breadcrumb': params.breadcrumb,
+      'parent': params.id,
+      'external': !!params.external,
+      'warning': params.warning,
+      'description': params.description
+    };
+
+    let url = `${environment.api.auth.baseURL}/documentations/add`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url, data).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError('Erreur de modification')),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
 }

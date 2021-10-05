@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentationService } from 'src/app/core/services/documentation.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { DocumentationAddComponent } from '../documentation-add/documentation-add.component';
 @Component({
   selector: 'app-documentation',
   templateUrl: './documentation.component.html',
@@ -9,10 +11,13 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class DocumentationComponent implements OnInit {
   documentationForm: FormGroup;
   disabledEdit : boolean = true;
-
+  bsModalRef: BsModalRef;
+  id: number = 0;
+  items: any = [];
   constructor(
     private documentationService: DocumentationService,
     private fb: FormBuilder,
+    private modalService: BsModalService
   ) { }
 
   get content() { return this.documentationForm.get('content') }
@@ -24,10 +29,12 @@ export class DocumentationComponent implements OnInit {
     this.getDocumentation();
   }
 
-  getDocumentation(){
+  getDocumentation() {
     this.documentationService
-    .getContent()
-    .subscribe(data=>this.content.setValue(data.data));
+      .getDetails({
+        id: this.id
+      })
+      .subscribe(data => this.items = data.items);
   }
 
   
@@ -42,5 +49,19 @@ export class DocumentationComponent implements OnInit {
 
   activate() {
     this.content.enable();
+  }
+
+
+
+  openAdd() {
+    const initialState = {
+      id: this.id
+    };
+
+    this.bsModalRef = this.modalService.show(DocumentationAddComponent, { initialState });
+    this.bsModalRef.content.closeBtnName = 'Fermer';
+    this.bsModalRef.content.afterAdd.subscribe(response => {
+      this.getDocumentation();
+    });
   }
 }

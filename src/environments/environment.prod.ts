@@ -1,9 +1,10 @@
+require('dotenv').config();
 export const environment = {
   production: true,
   environmentName: 'production',
   api: {
     auth: {
-      baseURL: '/api/'
+      baseURL: process.env.baseURLL
     },
     dataStore: {
       baseURL: '/api/'

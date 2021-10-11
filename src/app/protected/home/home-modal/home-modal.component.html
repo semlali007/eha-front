@@ -16,20 +16,22 @@
                 
                                                         <div *ngFor="let i of infos" class="pr-3">
                                                                 <h2>{{ i.title }}</h2>
-                                                                <p class="font-weight-light">{{ i.date }}</p>
-                                                                <p>{{ i.info }}</p>
+                                                                <p class="font-weight-light">{{ i.date | date: 'dd/MM/yyyy' }}</p>
+                                                                <p>{{ i.description }}</p>
+                                                                <input type="checkbox"  class="mr-1" (click)="check(i,$event)">
+                                                                <span class="detail">Ne plus afficher cette news.</span>
+
                                                         </div>
-                                                
-                                                        <div class="row">
-                                                                <div class="mx-auto">
-                                                                        <input type="checkbox" class="mr-1" #f>
-                                                                        <span class="detail">Ne plus afficher cette fenêtre lors de mes prochaines connexions</span>
+                                                        <div class="mx-auto">
+                                                                <div class="row">
+                                                                        <div class="col text-center mt-3">
+                                                                                <input type="checkbox" class="mr-1"  (click)="checkAll($event)">
+                                                                                <span class="detail">Ne plus afficher toute les news.</span>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                                <button class="btn text-center btn_compris mt-2 ml-3" (click)="checkingCheck(checkedTable)">J'ai compris</button>
+                                                                        </div>
                                                                 </div>
-                                                        </div>
-                                                        <div class="row">
-                                                                <p class="mx-auto">
-                                                                        <button class="btn text-center btn_compris mt-2 ml-3" (click)="checkingCheck(f)">J'ai compris</button>
-                                                                </p>
                                                         </div>
                                                 </div>
                                         </div>

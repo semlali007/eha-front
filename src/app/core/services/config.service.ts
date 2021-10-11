@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
 import { LoaderService } from './loader.service';
+import { UserNews } from 'src/app/shared/models/userNews';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ export class ConfigService {
     constructor(
         private http: HttpClient,
         private errorService: ErrorService,
-        private loaderService: LoaderService,
+        private loaderService: LoaderService
     ) { };
 
     getNews(): Observable<any | null> {
@@ -30,10 +31,10 @@ export class ConfigService {
         );
     }
 
-    postChecks(checked:boolean): Observable<any | null> {
+    postChecks(userNews:UserNews[]): Observable<any | null> {
         let url = `${environment.api.auth.baseURL}/config/checkInput`;
         this.loaderService.setLoading(true);
-        return this.http.post(url,checked).pipe(
+        return this.http.post(url,userNews).pipe(
             switchMap((response: any) => {
                 return of(
                     response

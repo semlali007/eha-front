@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit , ViewChild} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal'; 
 import { ConfigService } from 'src/app/core/services/config.service';
 import { UserNews } from 'src/app/shared/models/userNews';
@@ -15,12 +15,14 @@ export class HomeModalComponent implements OnInit {
 
   @ViewChild('autoShownModal', { static: false }) autoShownModal?: ModalDirective;
 
+  @ViewChild('f') allCheck: ElementRef;
   viewed:boolean;
   isModalShown:boolean;
-  infos:any[] = [];
+  infos:UserNews[] = [];
   checkedTable:UserNews[] = [];
 
   ngOnInit(): void {
+    console.log(this.infos);
     this.configService.getNews().subscribe(
       (response) => {
         this.isModalShown = response.length > 0;
@@ -28,46 +30,39 @@ export class HomeModalComponent implements OnInit {
         console.log(response);
       }
     );
+    console.log(this.infos);
   }
 
-  // Visualiser les news
-  // showModal(): boolean {
-  //   this.isModalShown = true;
-  //   return this.isModalShown;
-  // }
 
-  check(i:any,f:any) {
-    if(f.target.checked) {
-      this.checkedTable.push(i);
+  onCheckboxAllChange(e) {
+    this.infos.forEach(item => {
+      item.isSelected = e.target.checked == true;
+    })
+  }
+
+  onCheckboxChange(e) {
+    this.infos.forEach(item => {
+      if (e.target.value == item.id) {
+        item.isSelected = e.target.checked == true;
+      }
+    });
+    if(this.infos.every(v => v.isSelected === true )) {
+      this.allCheck.nativeElement.checked = true;
     } else {
-      this.checkedTable.forEach(
-        (element,index) => {  
-          if(i.id == element.id) {
-            this.checkedTable.splice(index, 1);
-          }
-        }
-      )
+      this.allCheck.nativeElement.checked = false;
     }
-    console.log(this.checkedTable);
   }
 
-  checkAll(f:any) {
-    if(f.target.checked) {
-      this.infos.forEach(
-        (element) => {  
-          this.checkedTable.push(element);
-        }
-      )
-    } else {
-      this.checkedTable = [];
-    }
-    console.log(this.checkedTable);
-  }
-
-  checkingCheck(val:UserNews[]) {
-    this.configService.postChecks(val).subscribe(
+  onCheckboxViewed() {
+    const selected = [];
+    this.infos.forEach(item => {
+      if (item.isSelected == true ) {
+        selected.push(item);
+      }
+    });
+    this.configService.postChecks(selected).subscribe(
       (response) => {
-        console.log(response);
+        console.log("Données correctement envoyées !\n" + response);
       }
     )
     this.hideModal();

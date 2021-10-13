@@ -21,7 +21,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public hotlineThemePath = `${this.prefix}/hotline-theme`;
   public hotlineGroupPath = `${this.prefix}/hotline-group`;
   public hotlineEmailPath = `${this.prefix}/hotline-email`;
-  public documentationPath = `${this.prefix}/documentation`;
+  public documentationPath = `${this.prefix}/documentation/0`;
   public importPath = `${this.prefix}/import`;
   public migrationDapiPath = `${this.prefix}/migration/dapi`;
   public migrationDaitPath = `${this.prefix}/migration/dait`;

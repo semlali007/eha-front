@@ -1,4 +1,4 @@
-import { Component,  EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { DocumentationService } from 'src/app/core/services/documentation.service';
@@ -9,26 +9,26 @@ import { DocumentationService } from 'src/app/core/services/documentation.servic
   ]
 })
 export class DocumentationFormComponent implements OnInit {
-  id: number = 0;
-  actualEmail: string = '';
-  editForm: FormGroup;
+
+  documentationId: number;
+  parentId: number;
+  documentationForm: FormGroup;
   public afterAdd: EventEmitter<any> = new EventEmitter();
   constructor(
-    public bsModalRef: BsModalRef,
     private fb: FormBuilder,
+    public bsModalRef: BsModalRef,
     private documentationService: DocumentationService,
   ) { }
 
-  get title() { return this.editForm.get('title') }
-  get url() { return this.editForm.get('url') }
-  get external() { return this.editForm.get('external') }
-  get description() { return this.editForm.get('description') }
-  get warning() { return this.editForm.get('warning') }
-  get breadcrumb() { return this.editForm.get('breadcrumb') }
-
+  get title() { return this.documentationForm.get('title') }
+  get url() { return this.documentationForm.get('url') }
+  get external() { return this.documentationForm.get('external') }
+  get description() { return this.documentationForm.get('description') }
+  get warning() { return this.documentationForm.get('warning') }
+  get breadcrumb() { return this.documentationForm.get('breadcrumb') }
 
   ngOnInit(): void {
-    this.editForm = this.fb.group({
+    this.documentationForm = this.fb.group({
       'title': ['', [
         Validators.required,
       ]],
@@ -36,24 +36,45 @@ export class DocumentationFormComponent implements OnInit {
       'url': '',
       'description': '',
       'warning': '',
-      'breadcrumb': '',
-
+      'breadcrumb': ['', [
+        Validators.required,
+      ]],
     });
+    if (this.documentationId) {
+      this.documentationService.getDetails({ id: this.documentationId }).subscribe(response => {
+        this.title.setValue(response.label);
+        this.external.setValue(response.external);
+        this.url.setValue(response.link);
+        this.warning.setValue(response.warning);
+        this.description.setValue(response.description);
+        this.breadcrumb.setValue(response.breadcrumb);
+      })
+    }
   }
 
   submit(): void {
     const params = {
-      id: this.id,
-      title : this.title.value,
-      external : this.external.value,
-      url : this.url.value,
-      description : this.description.value,
-      warning : this.warning.value,
-      breadcrumb : this.breadcrumb.value,
+      parent: this.parentId,
+      label: this.title.value,
+      external: this.external.value,
+      link: this.url.value,
+      description: this.description.value,
+      warning: this.warning.value,
+      breadcrumb: this.breadcrumb.value,
+      id: this.documentationId
     }
-    this.documentationService.add(params).subscribe(response => {
-      this.bsModalRef.hide();
-      this.afterAdd.emit(response);
-    })
+
+    if (this.documentationId) {
+      this.documentationService.update(params).subscribe(response => {
+        this.bsModalRef.hide();
+        this.afterAdd.emit(response);
+      })
+    }
+    else {
+      this.documentationService.add(params).subscribe(response => {
+        this.bsModalRef.hide();
+        this.afterAdd.emit(response);
+      })
+    }
   }
 }

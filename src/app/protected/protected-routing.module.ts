@@ -158,7 +158,7 @@ const routes: Routes = [
         path: 'documentation/:id', loadChildren: () => import('./documentation/documentation.module').then(m => m.DocumentationModule),
       },
     ],
-    canActivate: [AuthGuardWithForcedLogin],
+  canActivate: [AuthGuardWithForcedLogin],
   },
 ];
 

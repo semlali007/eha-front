@@ -8,9 +8,12 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./documentation.component.css']
 })
 export class DocumentationComponent implements OnInit {
-  id: string = '';
-  section: any;
-  myDocumentation: any = '';
+  id: number = 0;
+  section: any = [];
+  parents: any = [];
+  warning: string = '';
+  description: string = '';
+  myDocumentation: any = null;
   constructor(
     private route: ActivatedRoute,
     private documentationService: DocumentationService,
@@ -27,22 +30,45 @@ export class DocumentationComponent implements OnInit {
     });
   }
 
-  navigate(link: string) {
-    if (link.includes('http') == true) {
-      window.open(link, '_blank');
-    } else if (link.includes('mailto') == true) {
-      window.open(link, '_self');
-    }
-    else {
+  navigate(doc: any) {
+    if (doc.link == '#' || doc.link.length == 0) {
       this.router.navigate(
-        [link]
+        [`app/documentation/${doc.id}`]
+      );
+    } else if (doc.link.includes('http') == true) {
+      window.open(doc.link, '_blank');
+    } else if (doc.link.includes('mailto') == true) {
+      window.open(doc.link, '_self');
+    } else {
+      this.router.navigate(
+        [doc.link]
       );
     }
   }
 
+
   loadDocumentation() {
-    this.documentationService.getDocumentation({cache:'cache'}).subscribe(data => {
-      this.section = data[this.id];
+    this.section = [];
+    this.parents = [];
+    this.documentationService.getDocumentation({ cache: 'cache' }).subscribe(data => {
+      let d = data.filter(t => t.id == this.id);
+      this.description = d[0].description;
+      this.warning = d[0].warning;
+
+      data.filter(s => s.parent == this.id).forEach(element => {
+        this.section.push(element);
+      });
+      let ItemParentId: number = this.id;
+      let position = 1;
+      while (ItemParentId !== 0) {
+        let item = data.filter(s => s.id == ItemParentId).forEach(element => {
+          element.position = position;
+          position++;
+          this.parents.unshift(element);
+          ItemParentId = element.parent;
+        });
+      }
     })
   }
+
 }

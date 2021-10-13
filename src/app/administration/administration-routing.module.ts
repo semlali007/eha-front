@@ -35,7 +35,7 @@ const routes: Routes = [
         loadChildren: () => import('./hotline-email/hotline-email.module').then(m => m.HotlineEmailModule),
       },
       {
-        path: 'documentation',
+        path: 'documentation/:id',
         loadChildren: () => import('./documentation/documentation.module').then(m => m.DocumentationModule),
       },
       {

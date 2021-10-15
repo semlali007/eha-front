@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   api: {
     auth: {
-      baseURL: '/api/'
+      baseURL: '/api'
     },
     dataStore: {
-      baseURL: '/api/'
+      baseURL: '/api'
     }
   },
   sso: {

@@ -1,0 +1,41 @@
+<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+     class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+                <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                                <div class="modal-body">
+                                        <div class="row">
+                                                <div class="col-2">
+                                                        <img class="mt-3" src="../../../../assets/img/info-icon.png"/>
+                                                </div>
+                                                <div class="col-10 text-justify">
+                                                        <button type="button" class="btn-close close text-right" aria-label="Close" (click)="hideModal()">      
+                                                                <span aria-hidden="true" class="visually-hidden">&times;</span>
+                                                        </button>
+                                                        <h1 class="font-weight-bold pt-2 ">Information</h1>
+                                                        <p class="pr-3"></p>
+                
+                                                        <div *ngFor="let i of infos" class="pr-3 mb-3">
+                                                                <h2>{{ i.title }}</h2>
+                                                                <p class="font-weight-light">{{ i.date | date: 'dd/MM/yyyy' }}</p>
+                                                                <p>{{ i.description }}</p>
+                                                                <input type="checkbox"  class="mr-1" [checked]="i.isSelected" [value]="i.id" (change)="onCheckboxChange($event)" >
+                                                                <span class="detail">Ne plus afficher cette news.</span>
+
+                                                        </div>
+                                                        <div class="mx-auto">
+                                                                <div class="row">
+                                                                        <div class="col text-center mt-3">
+                                                                                <input type="checkbox" class="mr-1" #f  (change)="onCheckboxAllChange($event)">
+                                                                                <span class="detail">Ne plus afficher toute les news.</span>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                                <button class="btn text-center btn_compris mt-2 ml-3" (click)="onCheckboxViewed()">J'ai compris</button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>

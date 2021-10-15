@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';

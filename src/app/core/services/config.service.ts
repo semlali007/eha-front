@@ -31,8 +31,8 @@ export class ConfigService {
         );
     }
 
-    postChecks(userNews:UserNews[]): Observable<any | null> {
-        let url = `${environment.api.auth.baseURL}/config/checkInput`;
+    createUserNews(userNews:UserNews[]): Observable<any | null> {
+        let url = `${environment.api.auth.baseURL}/config/create-user-news`;
         this.loaderService.setLoading(true);
         return this.http.post(url,userNews).pipe(
             switchMap((response: any) => {

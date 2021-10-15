@@ -22,15 +22,12 @@ export class HomeModalComponent implements OnInit {
   checkedTable:UserNews[] = [];
 
   ngOnInit(): void {
-    console.log(this.infos);
     this.configService.getNews().subscribe(
       (response) => {
         this.isModalShown = response.length > 0;
         this.infos = response;
-        console.log(response);
       }
     );
-    console.log(this.infos);
   }
 
 
@@ -60,7 +57,7 @@ export class HomeModalComponent implements OnInit {
         selected.push(item);
       }
     });
-    this.configService.postChecks(selected).subscribe(
+    this.configService.createUserNews(selected).subscribe(
       (response) => {
         console.log("Données correctement envoyées !\n" + response);
       }

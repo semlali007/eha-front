@@ -1,12 +1,12 @@
 
 <div class="row justify-content-center">
 
-    <div class="col-11 col-md-10">
+    <div id="htmlData" class="col-11 col-md-10">
         <app-breadcrumb></app-breadcrumb>
-        <div class="row">
+        <div class="row" data-html2canvas-ignore="true">
             <div class="col-lg-10">
                 <div >
-                    <button (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
+                    <button  (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
                 </div>
             </div>
             <div class="col-lg-2 margin-tb" *ngIf="!!user && user.hasRole('EHA_ADMIN')">
@@ -252,5 +252,9 @@
             </li>
         </ul>
     </div>
+
+        <div class="w-50 text-center">
+            <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
+        </div>
 
 </div>

@@ -11,9 +11,6 @@ import { AuthService } from 'src/app/core/auth.service';
 import * as fileSaver from 'file-saver';
 import { FileService } from 'src/app/core/services/file.service';
 
-import jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
-
 @Component({
   selector: 'app-sheet-view',
   templateUrl: './sheet-view.component.html',
@@ -228,25 +225,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       };
     });
   }
-
-
-  public openPDF():void {
-    let DATA = document.getElementById('htmlData');
-        
-    html2canvas(DATA).then(canvas => {
-        
-        let fileWidth = 208;
-        let fileHeight = canvas.height * fileWidth / canvas.width;
-        
-        const FILEURI = canvas.toDataURL('image/png')
-        let PDF = new jspdf('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
-        
-        PDF.save('angular-demo.pdf');
-    });     
-    } 
-
 
   openChange(event: boolean, contractCode:string) {
     this.openedContractCode = event? contractCode: '';

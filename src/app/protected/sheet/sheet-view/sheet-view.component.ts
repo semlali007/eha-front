@@ -46,8 +46,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public openedContractCode: string = '';
   public options: Object[] = [];
 
-  @ViewChild('content') content:ElementRef; 
-
   constructor(
     private route: ActivatedRoute,
     private sheetService: SheetService,

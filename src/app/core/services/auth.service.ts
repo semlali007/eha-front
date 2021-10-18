@@ -83,7 +83,6 @@ export class AuthService {
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile().then((data) =>
       {
-        console.log('aaaaa');
         this.autoLogin(data);
       }
 
@@ -124,40 +123,40 @@ export class AuthService {
         // 2. SILENT LOGIN:
         // Try to log in via a refresh because then we can prevent
         // needing to redirect the user:
-        /*return this.oauthService.silentRefresh()
-           .then(() => Promise.resolve())
-           .catch(result => {
-             // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
-             // Only the ones where it's reasonably sure that sending the
-             // user to the IdServer will help.
-             const errorResponsesRequiringUserInteraction = [
-               'interaction_required',
-               'login_required',
-               'account_selection_required',
-               'consent_required',
-             ];
- 
-             if (result
-               && result.reason
-               && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
- 
-               // 3. ASK FOR LOGIN:
-               // At this point we know for sure that we have to ask the
-               // user to log in, so we redirect them to the IdServer to
-               // enter credentials.
-               //
-               // Enable this to ALWAYS force a user to login.
-               // this.login();
-               //
-               // Instead, we'll now do this:
-               console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
-               return Promise.resolve();
-             }
- 
-             // We can't handle the truth, just pass on the problem to the
-             // next handler.
-             return Promise.reject(result);
-           });*/
+       /*return this.oauthService.silentRefresh()
+          .then(() => Promise.resolve())
+          .catch(result => {
+            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
+            // Only the ones where it's reasonably sure that sending the
+            // user to the IdServer will help.
+            const errorResponsesRequiringUserInteraction = [
+              'interaction_required',
+              'login_required',
+              'account_selection_required',
+              'consent_required',
+            ];
+
+            if (result
+              && result.reason
+              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+
+              // 3. ASK FOR LOGIN:
+              // At this point we know for sure that we have to ask the
+              // user to log in, so we redirect them to the IdServer to
+              // enter credentials.
+              //
+              // Enable this to ALWAYS force a user to login.
+              // this.login();
+              //
+              // Instead, we'll now do this:
+              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
+              return Promise.resolve();
+            }
+
+            // We can't handle the truth, just pass on the problem to the
+            // next handler.
+            return Promise.reject(result);
+          });*/
       })
 
       .then(() => {
@@ -197,7 +196,6 @@ export class AuthService {
   public get logoutUrl() { return this.oauthService.logoutUrl; }
 
   private getUser(params): User {
-    console.log('paramsu',params);
     return new User({
       email: params.email,
       nni: params.nni,

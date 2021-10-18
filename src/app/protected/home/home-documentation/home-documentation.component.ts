@@ -21,12 +21,6 @@ export class HomeDocumentationComponent implements OnInit {
     this.loadDocumentation();
   }
 
-  /*navigate(url) {
-    this.router.navigate(
-      [url]
-    );
-  }*/
-
   navigate(doc: any) {
     if (doc.link == '#' || doc.link.length == 0) {
       this.router.navigate(
@@ -48,7 +42,6 @@ export class HomeDocumentationComponent implements OnInit {
     this.section = [];
     this.documentationService.getDocumentation({ cache: 'cache' }).subscribe(data => {
       data.filter(s => s.parent == 0).forEach(element => {
-        console.log(element);
         this.section.push(element);
       });
     })

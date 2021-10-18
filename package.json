@@ -24,7 +24,6 @@
     "@tinymce/tinymce-angular": "^4.2.2",
     "angular-oauth2-oidc": "^12.1.0",
     "bootstrap": "^4.6.0",
-    "dotenv": "^10.0.0",
     "exceljs": "^4.2.1",
     "file-saver": "^2.0.5",
     "ng2-file-upload": "^1.4.0",

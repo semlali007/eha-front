@@ -4,7 +4,7 @@ export const environment = {
   environmentName: 'production',
   api: {
     auth: {
-      baseURL: process.env.baseURLL
+      baseURL: '/api/'
     },
     dataStore: {
       baseURL: '/api/'

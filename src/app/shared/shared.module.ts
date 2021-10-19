@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgxBootstrapModule } from './modules/ngx-bootstrap.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TinymceModule } from './modules/tinymce.module';
+import { DragAndDropModule } from './modules/drag-and-drop.module';
 import { TagsModule } from './modules/tags.module';
 import { FileManagerModule } from './modules/file-manager.module';
 import { PipesModule } from './modules/pipes.module';
@@ -17,6 +18,7 @@ import { ApiService } from './api.service';
     ReactiveFormsModule,
     TinymceModule,
     TagsModule,
+    DragAndDropModule,
     FileManagerModule,
     PipesModule,
   ],
@@ -26,6 +28,7 @@ import { ApiService } from './api.service';
     ReactiveFormsModule,
     TinymceModule,
     TagsModule,
+    DragAndDropModule,
     FileManagerModule,
     PipesModule,
     SidenavComponent,

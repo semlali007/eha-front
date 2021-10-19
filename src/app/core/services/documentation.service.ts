@@ -34,14 +34,26 @@ export class DocumentationService {
     );
   }
 
+  public remove(params): Observable<any> {
+
+    let url = `${environment.api.auth.baseURL}/documentations/delete/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
   public update(params: any): Observable<any> {
-    var data = {
-      data: params.content,
-    }
-    let url = `${environment.api.auth.baseURL}/documentations/save`;
+
+    let url = `${environment.api.auth.baseURL}/documentations/update`;
     this.loaderService.setLoading(true);
 
-    return this.http.post(url, data).pipe(
+    return this.http.post(url, params).pipe(
       tap(_ => this.toastrService.showToastr({
         category: 'success',
         message: 'Vos informations ont été mises à jour !'
@@ -56,24 +68,76 @@ export class DocumentationService {
     cache?: string
   }): Observable<any> {
 
-    let header : any = {};
-    if(!!options.reset && options.reset == 'reset'){
+    let header: any = {};
+    if (!!options.reset && options.reset == 'reset') {
       header.reset = options.reset;
     }
 
-    if(!!options.cache && options.cache == 'cache'){
+    if (!!options.cache && options.cache == 'cache') {
       header.cache = options.cache;
     }
 
     const httpOptions = {
       headers: new HttpHeaders(header)
     };
+    this.loaderService.setLoading(true);
     return this.http.get(`${environment.api.auth.baseURL}/documentations`, httpOptions).pipe(
-      map(data => JSON.parse(data['data']))
+      map(data => data),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
     );
   }
 
-  clearCache() {
+
+  public getDetails(params: any): Observable<any> {
+    let url = `${environment.api.auth.baseURL}/documentations/show/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url,).pipe(
+      switchMap((listData: any) => {
+        return of(listData);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
   }
 
+  public add(params: any): Observable<any> {
+    let data = {
+      'label': params.label,
+      'link': params.link,
+      'breadcrumb': params.breadcrumb,
+      'parent': params.parent,
+      'external': !!params.external,
+      'warning': params.warning,
+      'description': params.description
+    };
+
+    let url = `${environment.api.auth.baseURL}/documentations/add`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url, data).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError('Erreur de modification')),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  public updatePositions(params: any): Observable<any> {
+
+    let url = `${environment.api.auth.baseURL}/documentations/sort`;
+    this.loaderService.setLoading(true);
+
+    return this.http.post(url, params).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError('Erreur de modification')),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  
 }

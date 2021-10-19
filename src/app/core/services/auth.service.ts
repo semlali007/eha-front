@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
-import { BehaviorSubject, combineLatest, Observable, ReplaySubject,of } from 'rxjs';
-import { filter, map,switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, ReplaySubject, of } from 'rxjs';
+import { filter, map, switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
 import { User } from 'src/app/shared/models/user';
 import { ErrorService } from 'src/app/core/services/error.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
@@ -13,7 +13,7 @@ import { Role } from 'src/app/shared/models/role';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  
+
   private user: BehaviorSubject<User | null> = new BehaviorSubject(null);
   public readonly user$: Observable<User | null> = this.user.asObservable();
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
@@ -82,9 +82,10 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile().then((data) =>
-     
-        this.autoLogin(data)
-     
+      {
+        this.autoLogin(data);
+      }
+
       ));
 
     this.oauthService.events
@@ -103,7 +104,7 @@ export class AuthService {
     // 0. LOAD CONFIG:
     // First we have to check to see how the IdServer is
     // currently configured:
-    
+
     return this.oauthService.loadDiscoveryDocument()
 
       // For demo purposes, we pretend the previous call was very slow
@@ -114,7 +115,7 @@ export class AuthService {
       // from IdServer from initImplicitFlow:
       .then(() => this.oauthService.tryLogin())
 
-       .then(() => {
+      .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
           return Promise.resolve();
         }
@@ -179,7 +180,7 @@ export class AuthService {
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
-    this.oauthService.initLoginFlow(targetUrl || this.router.url, {'acr_values':'sesameGROUPE'});
+    this.oauthService.initLoginFlow(targetUrl || this.router.url, { 'acr_values': 'sesameGROUPE' });
   }
 
   public logout() { this.oauthService.logOut(); }
@@ -204,49 +205,40 @@ export class AuthService {
       profil: new Profil(params.profil)
     });
   }
-  
+
   get currentUser(): User {
     return this.user.getValue();
   }
-  
-  public autoLogin(dt?:any) {
-    console.log(1);
+
+  public autoLogin(dt?: any) {
     if (this.oauthService.hasValidAccessToken()) {
-      console.log(2);
-      let params = this.identityClaims ;
-      if(!!dt){
-         params = dt;
-      }
-      
+      let params = this.identityClaims;
       const roles: Role[] = [];
-      if( !!params['isMemberOf']){
-    params['isMemberOf'].forEach(data => {
-            let roleArray = [];
-            data.split(",").forEach(r => {
-              let tt = r.split("=");
-              roleArray[tt[0]] = tt[1];
-            }
-            )
-            const role: Role = new Role({
-              name: roleArray['cn'],
-              dc: roleArray['dc'],
-              ou: roleArray['ou'],
-            });
-            roles.push(role);
+      if (!!params['isMemberOf']) {
+        params['isMemberOf'].forEach(data => {
+          let roleArray = [];
+          data.split(",").forEach(r => {
+            let tt = r.split("=");
+            roleArray[tt[0]] = tt[1];
+          }
+          )
+          const role: Role = new Role({
+            name: roleArray['cn'],
+            dc: roleArray['dc'],
+            ou: roleArray['ou'],
           });
+          roles.push(role);
+        });
 
       }
-      
       params['roles'] = roles;
       this.user.next(this.getUser({
         nni: params['sub'],
         profil: params
       }));
-      console.log(3);
       console.log(this.router.url);
       this.router.navigate([this.router.url]);
     }
-    console.log(4);
   }
 
   public tryLogin() {

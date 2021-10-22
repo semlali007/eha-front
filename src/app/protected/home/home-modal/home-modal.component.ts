@@ -1,35 +1,59 @@
-import { Component, ElementRef, OnInit , ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit , ViewChild, OnDestroy} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal'; 
 import { ConfigService } from 'src/app/core/services/config.service';
 import { UserNews } from 'src/app/shared/models/userNews';
+import { MessageService } from 'src/app/core/services/message.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-modal',
   templateUrl: './home-modal.component.html',
   styleUrls: ['./home-modal.component.css']
 })
-export class HomeModalComponent implements OnInit {
+export class HomeModalComponent implements OnInit, OnDestroy {
 
-  constructor(private configService: ConfigService) { }
-
+  constructor(private configService: ConfigService,
+              private messageService: MessageService
+  ) { }
 
   @ViewChild('autoShownModal', { static: false }) autoShownModal?: ModalDirective;
-
   @ViewChild('f') allCheck: ElementRef;
-  viewed:boolean;
+  isViewed:boolean;
   isModalShown:boolean;
   infos:UserNews[] = [];
   checkedTable:UserNews[] = [];
+  cache:boolean;
+  subscription: Subscription;
+  subscription2: Subscription;
+  bSubject = new BehaviorSubject("a");
+
 
   ngOnInit(): void {
-    this.configService.getNews().subscribe(
-      (response) => {
-        this.isModalShown = response.length > 0;
-        this.infos = response;
+    this.subscription2 = this.messageService.getMessage().subscribe(
+      (data) => {
+        if (!!data && !!data.modalStateHome && (data.modalStateHome == true)) {
+          this.subscription = this.configService.isViewed$.subscribe(
+            isViewed => {
+              this.isViewed = isViewed;
+              console.log('this.isViewed', this.isViewed);
+              if (!this.isViewed) {
+                this.configService.getNews().subscribe(
+                (response) => {
+                  this.isModalShown = response.length > 0;
+                  this.infos = response;
+                }
+              );
+            }
+        }); 
+        }
       }
     );
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
+  }
 
   onCheckboxAllChange(e) {
     this.infos.forEach(item => {
@@ -57,20 +81,22 @@ export class HomeModalComponent implements OnInit {
         selected.push(item);
       }
     });
-    this.configService.createUserNews(selected).subscribe(
-      (response) => {
-        console.log("Données correctement envoyées !\n" + response);
-      }
-    )
+    if(selected.length !== 0 ) {
+      this.configService.createUserNews(selected).subscribe(
+        (response) => {
+          console.log("Données correctement envoyées !\n" + response);
+        }
+      )
+    }
     this.hideModal();
   }
  
   hideModal(): void {
+    this.configService.tagModalViewed(true);
     this.autoShownModal?.hide();
   }
  
   onHidden(): void {
     this.isModalShown = false;
   }
-
 }

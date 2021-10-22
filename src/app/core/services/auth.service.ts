@@ -10,6 +10,7 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 import { ToastrService } from 'src/app/core/services/toastr.service';
 import { Profil } from 'src/app/shared/models/profil';
 import { Role } from 'src/app/shared/models/role';
+import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
@@ -46,6 +47,7 @@ export class AuthService {
     private loaderService: LoaderService,
     private errorService: ErrorService,
     private oauthService: OAuthService,
+    private messageService: MessageService,
     private router: Router,
   ) {
     // Useful for debugging:
@@ -170,6 +172,7 @@ export class AuthService {
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
+          this.messageService.sendMessage({modalStateHome:true});
           console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
           this.router.navigateByUrl(stateUrl);
         }

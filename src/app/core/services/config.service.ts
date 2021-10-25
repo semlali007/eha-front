@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
@@ -16,6 +16,14 @@ export class ConfigService {
         private errorService: ErrorService,
         private loaderService: LoaderService
     ) { };
+
+    private isViewed: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    public readonly isViewed$: Observable<boolean> = this.isViewed.asObservable(); 
+
+    public tagModalViewed(state:boolean) {
+        console.log('tagModalViewed', state);
+        this.isViewed.next(state);
+    }
 
     getNews(): Observable<any | null> {
         let url = `${environment.api.auth.baseURL}/config/news`;

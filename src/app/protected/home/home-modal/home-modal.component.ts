@@ -3,7 +3,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { UserNews } from 'src/app/shared/models/userNews';
 import { MessageService } from 'src/app/core/services/message.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-modal',
@@ -22,17 +22,15 @@ export class HomeModalComponent implements OnInit, OnDestroy {
   isModalShown:boolean;
   infos:UserNews[] = [];
   checkedTable:UserNews[] = [];
-  cache:boolean;
-  subscription: Subscription;
-  subscription2: Subscription;
-  bSubject = new BehaviorSubject("a");
+  subscriptionViewed: Subscription;
+  subscriptionMessage: Subscription;
 
 
   ngOnInit(): void {
-    this.subscription2 = this.messageService.getMessage().subscribe(
+    this.subscriptionMessage = this.messageService.getMessage().subscribe(
       (data) => {
         if (!!data && !!data.modalStateHome && (data.modalStateHome == true)) {
-          this.subscription = this.configService.isViewed$.subscribe(
+          this.subscriptionViewed = this.configService.isViewed$.subscribe(
             isViewed => {
               this.isViewed = isViewed;
               console.log('this.isViewed', this.isViewed);
@@ -51,8 +49,8 @@ export class HomeModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.subscription2.unsubscribe();
+    this.subscriptionViewed.unsubscribe();
+    this.subscriptionMessage.unsubscribe();
   }
 
   onCheckboxAllChange(e) {

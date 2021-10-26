@@ -11,6 +11,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import * as fileSaver from 'file-saver';
 import { FileService } from 'src/app/core/services/file.service';
 
+import jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-sheet-view',
   templateUrl: './sheet-view.component.html',
@@ -45,6 +48,8 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public showcase: any;
   public openedContractCode: string = '';
   public options: Object[] = [];
+
+  @ViewChild('content') content:ElementRef; 
 
   constructor(
     private route: ActivatedRoute,
@@ -131,7 +136,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     });
 
     sheet.options.forEach(op => {
-      console.log(op);
       this.options.push({
         startDate: this.dateService.getDisplayDate(new Date(op.startdate)),
         endDate: this.dateService.getDisplayDate(new Date(op.enddate)),
@@ -223,6 +227,32 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       };
     });
   }
+
+  public openPDF():void {
+      let DATA = document.getElementById('htmlData');
+      html2canvas(DATA).then(canvas => {
+        const imgData = canvas.toDataURL('image/png', 1.0)
+
+        var imgWidth = 210; 
+        var pageHeight = 295;  
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+        var doc = new jspdf('p', 'mm');
+        var position = 0;
+        
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        doc.save( 'file.pdf');    
+
+      });     
+  } 
 
   openChange(event: boolean, contractCode:string) {
     this.openedContractCode = event? contractCode: '';

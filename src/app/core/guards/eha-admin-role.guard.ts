@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { CanActivateChild } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -30,6 +30,6 @@ export class User {
     hasRole(role: string): boolean {
         return this.profil.roles.some(function(el) {
             return el.name === role;
-          }); 
+          });
     }
 }

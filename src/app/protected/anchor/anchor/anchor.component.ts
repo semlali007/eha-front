@@ -18,12 +18,10 @@ export class AnchorComponent implements OnInit {
 
   }
 
-  onSubmittedSearchAnchor(filter) {
+  onSubmittedSearchAnchor(filter: any) {
     this.filter = filter;
-    console.log(filter);
     this.anchorService.search(filter).subscribe(data => {
       this.anchor = data;
-      console.log(data);
     });
   }
 

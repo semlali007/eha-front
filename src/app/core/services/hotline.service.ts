@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
 import { HotlineTheme } from 'src/app/shared/models/hotlineTheme';
+import { HotlineFamily } from 'src/app/shared/models/hotlineFamily';
 import { HotlineCategory } from 'src/app/shared/models/hotlineCategory';
-import { HotlineFamily } from 'src/app/shared/models/HotlineFamily';
 import { LoaderService } from './loader.service';
 
 @Injectable({

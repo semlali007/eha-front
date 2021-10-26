@@ -12,19 +12,16 @@ export const environment = {
       baseURL: '/api'
     }
   },
-  sso: {
-        issuer: 'https://rec-websso-gardian.myelectricnetwork.com:443/gardianwebsso/oauth2/multiauth/PKCE',
-        clientId: '5CEHA002',  // The "Auth Code + PKCE" client
-        redirectUri: 'https://dsp0995466.atlas.edf.fr:5000',
-        postLogoutRedirectUri: 'https://dsp0995466.atlas.edf.fr:5000',
-        dummyClientSecret:'eB?7csn7Wo?+',
-      } 
+  sso: {
+    issuer: '',
+    clientId: '', // The "Auth Code + PKCE" client
+    redirectUri: '',
+    postLogoutRedirectUri: '',
+    dummyClientSecret:'',
+  }
 };
 /*
  * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

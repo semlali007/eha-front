@@ -136,7 +136,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     });
 
     sheet.options.forEach(op => {
-      console.log(op);
       this.options.push({
         startDate: this.dateService.getDisplayDate(new Date(op.startdate)),
         endDate: this.dateService.getDisplayDate(new Date(op.enddate)),
@@ -229,19 +228,31 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  public openPDF():void {
+      let DATA = document.getElementById('htmlData');
+      html2canvas(DATA).then(canvas => {
+        const imgData = canvas.toDataURL('image/png', 1.0)
 
-  public openPDF():void {
-    let DATA = document.getElementById('htmlData');
-        
-      html2canvas(DATA).then(canvas => {
-        const FILEURI = canvas.toDataURL('image/png', 1.0)
-        let PDF = new jspdf('p', 'mm', 'a4');
-        PDF.addImage(FILEURI, 'JPEG', 5, 5, 180, 220);
-        
-        PDF.save('angular-demo.pdf');
-      });     
-    } 
+        var imgWidth = 210; 
+        var pageHeight = 295;  
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+        var doc = new jspdf('p', 'mm');
+        var position = 0;
+        
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        doc.save( 'file.pdf');    
 
+      });     
+  } 
 
   openChange(event: boolean, contractCode:string) {
     this.openedContractCode = event? contractCode: '';

@@ -233,18 +233,13 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public openPDF():void {
     let DATA = document.getElementById('htmlData');
         
-    html2canvas(DATA).then(canvas => {
-        
-        let fileWidth = 208;
-        let fileHeight = canvas.height * fileWidth / canvas.width;
-        
-        const FILEURI = canvas.toDataURL('image/png')
+      html2canvas(DATA).then(canvas => {
+        const FILEURI = canvas.toDataURL('image/png', 1.0)
         let PDF = new jspdf('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+        PDF.addImage(FILEURI, 'JPEG', 5, 5, 180, 220);
         
         PDF.save('angular-demo.pdf');
-    });     
+      });     
     } 
 
 

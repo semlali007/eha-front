@@ -49,8 +49,13 @@ export class HomeModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptionViewed.unsubscribe();
-    this.subscriptionMessage.unsubscribe();
+    if (this.subscriptionViewed) {
+      this.subscriptionViewed.unsubscribe();
+    }
+
+    if (this.subscriptionMessage) {
+      this.subscriptionMessage.unsubscribe();
+    }
   }
 
   onCheckboxAllChange(e) {

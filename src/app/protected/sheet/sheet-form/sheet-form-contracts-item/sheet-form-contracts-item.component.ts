@@ -26,7 +26,7 @@ export class SheetFormContractsItemComponent implements OnInit {
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    console.log(this.actualState + " " + this.index);
+
   }
 
 

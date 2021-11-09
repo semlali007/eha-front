@@ -41,6 +41,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public navigate(page: string): void {
     this.router.navigate([page]);
   }
+  
   public isActive(page: string): boolean {
     return this.router.isActive(page, true);
   }

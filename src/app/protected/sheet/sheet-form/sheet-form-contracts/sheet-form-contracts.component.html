@@ -1,12 +1,12 @@
 <div [formGroup]="sheetForm" class="form-group">
     <label for="lots"><strong>Contrats :</strong></label>
     <div formArrayName="contracts" class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3" style="max-height: 500px;">
-        <app-sheet-form-contracts-item [lotsListForContract]="lotsList.value" *ngFor="let contract of contracts.controls;
-          index as i;" [index]="i" [contract]="contract" (removedContract)="onRemovedContract($event)">
+        <app-sheet-form-contracts-item [actualState]="obj" [lotsListForContract]="lotsList.value" *ngFor="let contract of contracts.controls;
+          index as i;" [index]="i" [contract]="contract" [isActive]="isActive(i)"  (openClose)="onOpenClose($event)" (removedContract)="onRemovedContract($event)" >
         </app-sheet-form-contracts-item>
     </div>
     <div class="text">
-        <app-sheet-form-contracts-add (addedContract)="onAddedContract()">
+        <app-sheet-form-contracts-add  (addedContract)="onAddedContract()"  >
         </app-sheet-form-contracts-add>
     </div>
 </div>

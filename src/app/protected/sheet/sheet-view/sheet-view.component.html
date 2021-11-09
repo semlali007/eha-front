@@ -227,8 +227,7 @@
                             <div class="col-sm-3">
                                 {{contract.provider}}
                             </div>
-                            <div class="col-sm-4">
-                                {{contract.contacts}}
+                            <div class="col-sm-4" [innerHTML]="contract.contacts">
                             </div>
                         </div>
                             <ul *ngIf="contract.systems.length>0" >

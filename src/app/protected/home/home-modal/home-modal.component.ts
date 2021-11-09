@@ -49,10 +49,11 @@ export class HomeModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.subscriptionViewed){
+    if (this.subscriptionViewed) {
       this.subscriptionViewed.unsubscribe();
     }
-    if(this.subscriptionMessage){
+
+    if (this.subscriptionMessage) {
       this.subscriptionMessage.unsubscribe();
     }
   }

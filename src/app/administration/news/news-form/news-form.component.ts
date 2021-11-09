@@ -1,15 +1,15 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { NewsService } from 'src/app/core/services/news.service';
 
 
 @Component({
-  selector: 'app-news-add',
-  templateUrl: './news-add.component.html',
-  styleUrls: ['./news-add.component.css']
+  selector: 'app-news-form',
+  templateUrl: './news-form.component.html',
+  styleUrls: ['./news-form.component.css']
 })
-export class NewsAddComponent implements OnInit {
+export class NewsFormComponent implements OnInit {
 
   NewsAddForm: FormGroup;
 

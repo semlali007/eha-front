@@ -1,11 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NewsService } from 'src/app/core/services/news.service';
-import { Observable, pipe } from 'rxjs';
-import {NewsAddComponent} from 'src/app/administration/news/news-add/news-add.component';
-import { NewsDeleteComponent } from '../news-delete/news-delete.component';
+import { Observable} from 'rxjs';
+import {NewsFormComponent} from 'src/app/administration/news/news-form/news-form.component';
+
  
 
 @Component({
@@ -24,32 +22,18 @@ export class NewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    console.log(this.newsService.getDate());
-
   }
   openAdd(id?: number) {
-    console.log('id',id);
     const initialState = {
       id: id,
     };
-    this.bsModalRef = this.modalService.show(NewsAddComponent, {initialState});
+    this.bsModalRef = this.modalService.show(NewsFormComponent, {initialState});
     this.bsModalRef.content.closeBtnName = 'Fermer';
     this.bsModalRef.content.afterAdd.subscribe(response => {
       this.loadData();
     });
   }
 
-  openRemove(id?: number) {
-    console.log('id',id);
-    const initialState = {
-      id: id,
-    };
-    this.bsModalRef = this.modalService.show(NewsDeleteComponent, {initialState});
-    this.bsModalRef.content.closeBtnName = 'Fermer';
-    this.bsModalRef.content.afterAdd.subscribe(response => {
-      this.loadData();
-    });
-  }
 
   loadData(){
     this.news$ = this.newsService.getList();

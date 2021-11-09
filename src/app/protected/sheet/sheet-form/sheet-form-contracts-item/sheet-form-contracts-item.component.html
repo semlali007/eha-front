@@ -1,14 +1,17 @@
 <div [formGroup]="contract" class="form-group row">
+    {{isActive}}
     <div class="col-2">
-        <input formControlName="code" type="text" class="form-control" [placeholder]="'Code contrat'">
+        <input [readonly]="!isActive" formControlName="code" type="text" class="form-control" [placeholder]="'Code contrat'">
     </div>
-    <div class="col-3">
-        <textarea formControlName="provider" class="form-control" [placeholder]="'Fournisseur'"></textarea>
+    <div class="col-2">
+        <textarea [readonly]="!isActive" formControlName="provider" class="form-control" [placeholder]="'Fournisseur'"></textarea>
     </div>
-    <div class="col-3">
-        <textarea formControlName="contacts" class="form-control" [placeholder]="'Contacts'"></textarea>
+    <div class="col-5">
+        <editor *ngIf ="isActive" formControlName="contacts" id="contact{{index}}" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link image lists charmap print preview table',branding: false}"></editor>
+        <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>
     </div>
-    <div class="col-3">
+
+    <div class="col-2">
         <tag-input formControlName="lots" [onlyFromAutocomplete]="false" [placeholder]="'Entrer un lot'"
             [secondaryPlaceholder]="'Entrer un lot'" [onlyFromAutocomplete]="true">
             <tag-input-dropdown [showDropdownIfEmpty]="false" [dynamicUpdate]="false" [focusFirstElement]="false"
@@ -20,8 +23,12 @@
         </tag-input>
     </div>
     <div class="col">
-        <button class="remove" (click)="confirmation(template)" type="button">-</button>
+        <div class="row">
+            <button class="remove col" (click)="confirmation(template)" type="button">-</button>
+            <button class="edit col" (click)="changeState(index)" type="button"><i>&#9998;</i></button>
+        </div> 
     </div>
+
 </div>
 
 <br><br>

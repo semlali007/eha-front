@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import tinymce from 'tinymce';
 
 
 @Component({
@@ -12,16 +13,28 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 export class SheetFormContractsItemComponent implements OnInit {
   @Input() contract: FormGroup;
   @Input() index: number;
+  @Input() actualState: boolean;
+  
+  @Input() isActive: boolean;
   @Input() lotsListForContract: FormControl;
+
   @Output() removedContract = new EventEmitter<number>();
+  @Output() openClose = new EventEmitter<{index:number}>();
 
   modalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
+    console.log(this.actualState + " " + this.index);
   }
 
+
+  changeState(index): void {
+    this.openClose.emit({index:index});
+  }
+
+ 
   confirmation(template: TemplateRef<any>) {
 		this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
 	}

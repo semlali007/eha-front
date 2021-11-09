@@ -11,9 +11,20 @@ export class SheetFormContractsComponent implements OnInit {
   @Input() contracts: FormArray;
   @Input() sheetForm: FormGroup;
   @Input() lotsList: FormControl;
+  currentIndex:number;
+  
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+
+  }
+
+  onOpenClose(data:any) {
+    if(data.index == this.currentIndex) {
+      this.currentIndex = -1;
+    } else {
+      this.currentIndex = data.index;
+    }
   }
 
   onAddedContract() {
@@ -29,5 +40,9 @@ export class SheetFormContractsComponent implements OnInit {
    onRemovedContract(index: number) {
     this.contracts.removeAt(index);
    }
+
+   isActive(index):boolean {
+    return index == this.currentIndex;
+  }
 
 }

@@ -52,6 +52,11 @@
       class="list-group-item">
       Réprise des données DATP
      </li>
+     <li (click)="navigate(newsPath)"
+     [class.list-group-item-success]="isActive(newsPath)"
+     class="list-group-item">
+      News
+     </li>
      </ul>
     </div>
    </div>

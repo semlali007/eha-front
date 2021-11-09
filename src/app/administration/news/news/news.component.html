@@ -1,0 +1,59 @@
+<h1>Administration des news</h1>
+
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Titre
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let new of news$ | async">
+            <td>
+                {{new.id}}
+            </td>
+
+            <td [innerHtml]="new.title">
+            </td>
+
+            <td [innerHtml]="new.description">
+            </td>
+
+            <td>
+                {{new.date}}
+            </td>
+
+            <td>
+                <button class="btn btn-primary" (click)="openAdd(new.id)">Modifier</button>
+                <button class="btn btn-danger" (click)="openModal(template, new.id)" >Supprimer</button>
+            </td>
+        </tr> 
+
+    </tbody>
+</table>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

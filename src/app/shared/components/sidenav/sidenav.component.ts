@@ -26,6 +26,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public migrationDapiPath = `${this.prefix}/migration/dapi`;
   public migrationDaitPath = `${this.prefix}/migration/dait`;
   public migrationDatpPath = `${this.prefix}/migration/datp`;
+  public newsPath = `${this.prefix}/news`;
   public subscription: Subscription;
 	public user: User;
   constructor(

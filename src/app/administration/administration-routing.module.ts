@@ -42,6 +42,10 @@ const routes: Routes = [
         path: 'migration/:type',
         loadChildren: () => import('./migration/migration.module').then(m => m.MigrationModule),
       },
+      {
+        path: 'news',
+        loadChildren: () => import('./news/news.module').then(m => m.NewsModule),
+      },
     ]
   }
 ];

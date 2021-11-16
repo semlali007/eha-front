@@ -10,7 +10,7 @@
             <div class="row">
                 
                 <div class="ml-auto">
-                    <button type="button" class="btn btn-edf float-left" (click)='cancel()' [disabled]="sheetForm.invalid">
+                    <button type="button" class="btn btn-edf float-left" (click)='cancel()' >
                         Annuler
                     </button>
                 </div>
@@ -21,8 +21,8 @@
                     </button>
                 </div>
 
-                <div class="ml-auto">
-                    <button type="button" class="btn btn-danger"  (click)="openModal(template)">
+                <div class="ml-auto" *ngIf="!!sheetId && !!user && user.hasRole('EHA_ADMIN')">
+                    <button type="button" class="btn btn-danger"  (click)="openModal(template)" >
                         Supprimer
                     </button>
                 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -12,6 +12,8 @@ import { Committee } from 'src/app/shared/models/committee';
 import { Option } from 'src/app/shared/models/option';
 import { customValidator } from '../customValidator';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { User } from 'src/app/shared/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sheet-form',
@@ -20,7 +22,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   ]
 })
 
-export class SheetFormComponent implements OnInit {
+export class SheetFormComponent implements OnInit, OnDestroy{
   sheetForm: FormGroup;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
@@ -30,6 +32,8 @@ export class SheetFormComponent implements OnInit {
   bsModalRef?: BsModalRef;
   bsConfirmModalRef?: BsModalRef;
   private deletedFiles: Document[];
+  public user: User;
+  public subscription: Subscription;
 
 
   constructor(private fb: FormBuilder,
@@ -44,6 +48,7 @@ export class SheetFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.init();
   }
 
@@ -375,17 +380,16 @@ export class SheetFormComponent implements OnInit {
     this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
-  remove(): void{
-
-    // this.sheetService
-    //   .remove({
-    //     id: this.sheetId
-    //   })
-    //   .subscribe(response => this.list());
-    window.alert(this.sheetId);
-    this.list();
-
+  remove(): void {
+    this.sheetService
+      .remove({
+        id: this.sheetId
+      })
+      .subscribe(response => this.list());
   }
 
+  ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 }
 

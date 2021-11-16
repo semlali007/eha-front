@@ -423,4 +423,18 @@ export class SheetService {
   }
 
 
+  public remove(params): Observable<any> {
+    let url = `${environment.api.auth.baseURL}/sheets/remove/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
 }
+

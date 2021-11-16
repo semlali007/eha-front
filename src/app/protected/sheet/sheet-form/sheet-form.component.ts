@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -11,6 +11,9 @@ import { Document } from 'src/app/shared/models/document';
 import { Committee } from 'src/app/shared/models/committee';
 import { Option } from 'src/app/shared/models/option';
 import { customValidator } from '../customValidator';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { User } from 'src/app/shared/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sheet-form',
@@ -19,14 +22,18 @@ import { customValidator } from '../customValidator';
   ]
 })
 
-export class SheetFormComponent implements OnInit {
+export class SheetFormComponent implements OnInit, OnDestroy{
   sheetForm: FormGroup;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
   privateEnedisUploader: FileUploader;
   privateEdfEnedisUploader: FileUploader;
   sheetId: string;
+  bsModalRef?: BsModalRef;
+  bsConfirmModalRef?: BsModalRef;
   private deletedFiles: Document[];
+  public user: User;
+  public subscription: Subscription;
 
 
   constructor(private fb: FormBuilder,
@@ -35,11 +42,13 @@ export class SheetFormComponent implements OnInit {
     private sheetService: SheetService,
     private uploaderService: UploaderService,
     private route: ActivatedRoute,
-    private dateService: DateService
+    private dateService: DateService,
+    private modalService: BsModalService
   ) {
   }
 
   ngOnInit() {
+    this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.init();
   }
 
@@ -358,4 +367,29 @@ export class SheetFormComponent implements OnInit {
     return medias;
   }
 
+  confirm(): void {
+    this.remove();
+    this.bsConfirmModalRef?.hide();    
+  }
+ 
+  decline(): void {
+    this.bsConfirmModalRef?.hide();  
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  remove(): void {
+    this.sheetService
+      .remove({
+        id: this.sheetId
+      })
+      .subscribe(response => this.list());
+  }
+
+  ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 }
+

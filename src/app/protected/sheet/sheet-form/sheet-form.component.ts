@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -11,6 +11,7 @@ import { Document } from 'src/app/shared/models/document';
 import { Committee } from 'src/app/shared/models/committee';
 import { Option } from 'src/app/shared/models/option';
 import { customValidator } from '../customValidator';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-sheet-form',
@@ -26,6 +27,8 @@ export class SheetFormComponent implements OnInit {
   privateEnedisUploader: FileUploader;
   privateEdfEnedisUploader: FileUploader;
   sheetId: string;
+  bsModalRef?: BsModalRef;
+  bsConfirmModalRef?: BsModalRef;
   private deletedFiles: Document[];
 
 
@@ -35,7 +38,8 @@ export class SheetFormComponent implements OnInit {
     private sheetService: SheetService,
     private uploaderService: UploaderService,
     private route: ActivatedRoute,
-    private dateService: DateService
+    private dateService: DateService,
+    private modalService: BsModalService
   ) {
   }
 
@@ -358,4 +362,30 @@ export class SheetFormComponent implements OnInit {
     return medias;
   }
 
+  confirm(): void {
+    this.remove();
+    this.bsConfirmModalRef?.hide();    
+  }
+ 
+  decline(): void {
+    this.bsConfirmModalRef?.hide();  
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  remove(): void{
+
+    // this.sheetService
+    //   .remove({
+    //     id: this.sheetId
+    //   })
+    //   .subscribe(response => this.list());
+    window.alert(this.sheetId);
+    this.list();
+
+  }
+
 }
+

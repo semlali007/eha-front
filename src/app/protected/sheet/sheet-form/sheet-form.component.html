@@ -1,13 +1,14 @@
 <form novalidate [formGroup]="sheetForm" (ngSubmit)="submit()">
 
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-9">
             <div>
                 <button (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
             </div>
         </div>
-        <div class="col-lg-2 margin-tb">
+        <div class="col-lg-3 margin-tb">
             <div class="row">
+                
                 <div class="ml-auto">
                     <button type="button" class="btn btn-edf float-left" (click)='cancel()' [disabled]="sheetForm.invalid">
                         Annuler
@@ -19,6 +20,13 @@
                         Enregistrer
                     </button>
                 </div>
+
+                <div class="ml-auto">
+                    <button type="button" class="btn btn-danger"  (click)="openModal(template)">
+                        Supprimer
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -65,3 +73,11 @@
         </div>
     </div>
 </form>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

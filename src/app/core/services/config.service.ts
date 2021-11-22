@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -12,6 +12,7 @@ import { UserNews } from 'src/app/shared/models/userNews';
 })
 export class ConfigService {
     constructor(
+        private appConfigService: AppConfigService,
         private http: HttpClient,
         private errorService: ErrorService,
         private loaderService: LoaderService
@@ -26,7 +27,7 @@ export class ConfigService {
     }
 
     getNews(): Observable<any | null> {
-        let url = `${environment.api.auth.baseURL}/config/news`;
+        let url = `${this.appConfigService.basePath}/config/news`;
         this.loaderService.setLoading(true);
         return this.http.get(url).pipe(
             switchMap((response: any) => {
@@ -40,7 +41,7 @@ export class ConfigService {
     }
 
     createUserNews(userNews:UserNews[]): Observable<any | null> {
-        let url = `${environment.api.auth.baseURL}/config/create-user-news`;
+        let url = `${this.appConfigService.basePath}/config/create-user-news`;
         this.loaderService.setLoading(true);
         return this.http.post(url,userNews).pipe(
             switchMap((response: any) => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -11,6 +11,7 @@ import { LoaderService } from './loader.service';
 })
 export class DirectionService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private loaderService: LoaderService,
@@ -18,7 +19,7 @@ export class DirectionService {
 
 
   public requestAutocompleteItems(text: string): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/groups/autocomplete/${text}`;
+    const url = `${this.appConfigService.basePath}/groups/autocomplete/${text}`;
 
     return this.http
       .get<any>(url)
@@ -41,7 +42,7 @@ export class DirectionService {
 
 
   public getList(params: any): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/groups/search`;
+    const url = `${this.appConfigService.basePath}/groups/search`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
@@ -67,7 +68,7 @@ export class DirectionService {
   }
 
   public add(direction: Direction): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/groups/add`;
+    const url = `${this.appConfigService.basePath}/groups/add`;
     const data =  {"name":direction.label,"action":"add"};
 
 

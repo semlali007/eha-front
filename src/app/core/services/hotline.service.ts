@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -14,13 +14,14 @@ import { LoaderService } from './loader.service';
 })
 export class HotlineService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private loaderService: LoaderService,
   ) { };
 
   public getConfig(): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/hotlines/configuration`;
+    const url = `${this.appConfigService.basePath}/hotlines/configuration`;
     return this.http.get(url).pipe(
       switchMap((listData: any) => {
         const themes: HotlineTheme[] = [];
@@ -65,7 +66,7 @@ export class HotlineService {
   }
 
   public createHotline(params): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotlines/create`;
+    let url = `${this.appConfigService.basePath}/hotlines/create`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((listData: any) => {
@@ -78,7 +79,7 @@ export class HotlineService {
 
 
   getHotlineByUser(params): any {
-    const url = `${environment.api.auth.baseURL}/hotlines`;
+    const url = `${this.appConfigService.basePath}/hotlines`;
 
     this.loaderService.setLoading(true);
     return this.http.post(url,params).pipe(
@@ -130,7 +131,7 @@ export class HotlineService {
 
   getHotline(params): Observable<any | null> {
     const id = encodeURIComponent(params.id);
-    let url = `${environment.api.auth.baseURL}/hotlines/get/${id}`;
+    let url = `${this.appConfigService.basePath}/hotlines/get/${id}`;
 
     if (!!params.sha && params.sha.length > 0) {
       url += '/sha/' + encodeURIComponent(params.sha);
@@ -151,7 +152,7 @@ export class HotlineService {
   }
 
   public postMessage(params): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotlines/post`;
+    let url = `${this.appConfigService.basePath}/hotlines/post`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((listData: any) => {
@@ -163,7 +164,7 @@ export class HotlineService {
   }
 
   public forward(params): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotlines/forward`;
+    let url = `${this.appConfigService.basePath}/hotlines/forward`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((listData: any) => {
@@ -175,7 +176,7 @@ export class HotlineService {
   }
 
   public addFile(params) {
-    let url = `${environment.api.auth.baseURL}/hotlines/upload`;
+    let url = `${this.appConfigService.basePath}/hotlines/upload`;
     var formData = new FormData();
     formData.append('file', params.file);
     formData.append('name', params.name);
@@ -192,7 +193,7 @@ export class HotlineService {
   }
 
   public close(params): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotlines/close`;
+    let url = `${this.appConfigService.basePath}/hotlines/close`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((listData: any) => {

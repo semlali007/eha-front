@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -12,6 +12,7 @@ import { LoaderService } from './loader.service';
 })
 export class BeneficiaryService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private toastrService: ToastrService,
@@ -19,7 +20,7 @@ export class BeneficiaryService {
     ) { };
 
   public requestAutocompleteItems(text: string): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/beneficiaries/autocomplete/${text}`;
+    const url = `${this.appConfigService.basePath}/beneficiaries/autocomplete/${text}`;
 
     return this.http
       .get<any>(url)
@@ -42,7 +43,7 @@ export class BeneficiaryService {
 
 
   public getList(params: any): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/beneficiaries/search`;
+    const url = `${this.appConfigService.basePath}/beneficiaries/search`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
@@ -68,7 +69,7 @@ export class BeneficiaryService {
   }
 
   public add(beneficiary: Beneficiary): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/beneficiaries/add`;
+    const url = `${this.appConfigService.basePath}/beneficiaries/add`;
     const data =  {"name":beneficiary.label,"action":"add"};
     this.loaderService.setLoading(true);
 

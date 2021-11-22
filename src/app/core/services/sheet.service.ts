@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { Sheet } from 'src/app/shared/models/sheet'; // On importe notre modèle métier Workday.
 import { Contract } from 'src/app/shared/models/contract';
 import { Provider } from 'src/app/shared/models/provider';
@@ -24,6 +24,7 @@ import { Option } from 'src/app/shared/models/option';
 export class SheetService {
 
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private toastrService: ToastrService,
     private errorService: ErrorService,
@@ -32,7 +33,7 @@ export class SheetService {
   ) { }
 
   save(sheet: Sheet, files: any) {
-    const url = `${environment.api.auth.baseURL}/sheets/add`;
+    const url = `${this.appConfigService.basePath}/sheets/add`;
     const data = this.getSheetForApi(sheet);
     this.loaderService.setLoading(true);
     let fd = this.addMediasToFormData(files);
@@ -71,7 +72,7 @@ export class SheetService {
     deletedFiles: Document[]
   }) {
 
-    const url = `${environment.api.auth.baseURL}/sheets/save`;
+    const url = `${this.appConfigService.basePath}/sheets/save`;
     const data = this.getSheetForApi(sheet);
     data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
     data.id = sheet.id;
@@ -217,7 +218,7 @@ export class SheetService {
   }
 
   getSheets(params: any): any {
-    const url = `${environment.api.auth.baseURL}/sheets`;
+    const url = `${this.appConfigService.basePath}/sheets`;
     this.loaderService.setLoading(true);
     let options: any = {};
 
@@ -285,7 +286,7 @@ export class SheetService {
   }
 
   getSheet(id: any): Observable<Sheet | null> {
-    const url = `${environment.api.auth.baseURL}/sheets/show/${id}`;
+    const url = `${this.appConfigService.basePath}/sheets/show/${id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
 
@@ -424,7 +425,7 @@ export class SheetService {
 
 
   public remove(params): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/sheets/remove/${params.id}`;
+    let url = `${this.appConfigService.basePath}/sheets/remove/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -435,6 +436,5 @@ export class SheetService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
-
 }
 

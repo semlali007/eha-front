@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { PublicModule } from '../public/public.module';
 import { ProtectedModule } from '../protected/protected.module';
@@ -15,16 +15,20 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CacheInterceptor } from './interceptors/cache.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AuthConfig, OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
-import { authConfig } from './config/auth-config';
+import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthGuardWithForcedLogin } from './guards/auth-guard-with-forced-login.service';
 import { AuthGuard } from './guards/auth-guard.service';
-import { authModuleConfig } from './config/auth-module-config';
 import { AuthService } from './services/auth.service';
-
+import { AppConfigService } from './services/app-config.service';
+import { authConfigFactory } from  './config/auth-config-factory';
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
+const appInitializerFn = (appConfig: AppConfigService) => {
+  return () => {
+      return appConfig.loadAppConfig();
+  }
+};
 
 @NgModule({
   declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ToastrComponent, PageNotFoundComponent],
@@ -37,9 +41,17 @@ export function storageFactory(): OAuthStorage {
     HttpClientModule,
     AlertModule.forRoot(),
     OAuthModule.forRoot(),
+    
   ],
   exports: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ToastrComponent, PageNotFoundComponent],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFn,
+      deps: [AppConfigService],
+      multi: true,
+    },
+    AppConfigService,
     AuthService,
     AuthGuard,
     AuthGuardWithForcedLogin,
@@ -52,7 +64,9 @@ export function storageFactory(): OAuthStorage {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    { provide: AuthConfig, useFactory: authConfigFactory ,deps: [AppConfigService],},
+    { provide: OAuthStorage, useFactory: storageFactory },
   ]
 })
 
@@ -61,9 +75,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        { provide: AuthConfig, useValue: authConfig },
-        { provide: OAuthModuleConfig, useValue: authModuleConfig },
-        { provide: OAuthStorage, useFactory: storageFactory },
       ]
     };
   }

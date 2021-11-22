@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -11,6 +11,7 @@ import { LoaderService } from './loader.service';
 })
 export class HotlineThemeService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private toastrService: ToastrService,
@@ -18,7 +19,7 @@ export class HotlineThemeService {
   ) { };
 
   public getList(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotline-themes`;
+    let url = `${this.appConfigService.basePath}/hotline-themes`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((listData: any) => {
@@ -30,7 +31,7 @@ export class HotlineThemeService {
   }
 
   public update(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotline-themes/save`;
+    let url = `${this.appConfigService.basePath}/hotline-themes/save`;
     this.loaderService.setLoading(true);
     return this.http.post(url, { id: params.id }).pipe(
       tap(_ => this.toastrService.showToastr({

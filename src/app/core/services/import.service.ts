@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -12,6 +12,7 @@ import { of } from 'rxjs';
 })
 export class ImportService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private loaderService: LoaderService,
@@ -20,7 +21,7 @@ export class ImportService {
 
 
   public addFile(params) {
-    let url = `${environment.api.auth.baseURL}/import/upload`;
+    let url = `${this.appConfigService.basePath}/import/upload`;
     var formData = new FormData();
     formData.append('table_name', params.tableName);
     formData.append('file', params.file);

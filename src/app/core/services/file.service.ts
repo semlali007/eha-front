@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { catchError, finalize, switchMap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { ErrorService } from './error.service';
 import { LoaderService } from './loader.service';
 
@@ -11,6 +11,7 @@ import { LoaderService } from './loader.service';
 export class FileService {
 
     constructor(
+        private appConfigService: AppConfigService,
         private http: HttpClient,
         private errorService: ErrorService,
         private loaderService: LoaderService,
@@ -18,7 +19,7 @@ export class FileService {
 
 
     export(params: any): Observable<any> {
-        const url = `${environment.api.auth.baseURL}/sheets/export`;
+        const url = `${this.appConfigService.basePath}/sheets/export`;
 
         this.loaderService.setLoading(true);
         let options: any = {};
@@ -48,7 +49,7 @@ export class FileService {
     }
 
     sheetDocument(params: any): Observable<any> {
-        const url = `${environment.api.auth.baseURL}/sheets/download`;
+        const url = `${this.appConfigService.basePath}/sheets/download`;
         this.loaderService.setLoading(true);
         return this.http.post(url, {file:params.url},{ responseType: 'blob' })
             .pipe(

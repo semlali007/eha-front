@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 })
 export class MigrationService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private loaderService: LoaderService,
@@ -18,7 +19,7 @@ export class MigrationService {
   ) { };
 
   public uploadData(params) {
-    let url = `${environment.api.auth.baseURL}/migration/save`;
+    let url = `${this.appConfigService.basePath}/migration/save`;
 
     const data =  {"content":params.content, "type":params.type};
 
@@ -31,7 +32,7 @@ export class MigrationService {
 
 
   public getList(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/migration/list`;
+    let url = `${this.appConfigService.basePath}/migration/list`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((listData: any) => {
@@ -51,7 +52,7 @@ export class MigrationService {
 
 
   public migrateDait(params) {
-    let url = `${environment.api.auth.baseURL}/migration/migrate`;
+    let url = `${this.appConfigService.basePath}/migration/migrate`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((data: any) => {
@@ -71,7 +72,7 @@ export class MigrationService {
   }
 
   public migrateDapi(params) {
-    let url = `${environment.api.auth.baseURL}/migration/migrate`;
+    let url = `${this.appConfigService.basePath}/migration/migrate`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((data: any) => {
@@ -91,7 +92,7 @@ export class MigrationService {
   }
 
   public migrateDatp(params) {
-    let url = `${environment.api.auth.baseURL}/migration/migrate`;
+    let url = `${this.appConfigService.basePath}/migration/migrate`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       switchMap((data: any) => {

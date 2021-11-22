@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
 import { LoaderService } from './loader.service';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { ToastrService } from './toastr.service';
 import { DatePipe } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -16,6 +16,7 @@ registerLocaleData(localeFr, 'fr');
 })
 export class NewsService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private loaderService: LoaderService,
@@ -23,7 +24,7 @@ export class NewsService {
 ) { };
 
   getList(): Observable<any | null> {
-    let url = `${environment.api.auth.baseURL}/config/news/list`;
+    let url = `${this.appConfigService.basePath}/config/news/list`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((response: any) => {
@@ -38,7 +39,7 @@ export class NewsService {
 
 
   public addNews(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/config/news/add`;
+    let url = `${this.appConfigService.basePath}/config/news/add`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -52,7 +53,7 @@ export class NewsService {
 
   public getElement(params: any)
   {
-    let url = `${environment.api.auth.baseURL}/config/news/edit/${params.id}`;
+    let url = `${this.appConfigService.basePath}/config/news/edit/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((response: any) => {
@@ -68,7 +69,7 @@ export class NewsService {
 
 
   public updateNews(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/config/news/update`;
+    let url = `${this.appConfigService.basePath}/config/news/update`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -82,7 +83,7 @@ export class NewsService {
 
   public remove(params): Observable<any> {
 
-    let url = `${environment.api.auth.baseURL}/config/news/delete/${params.id}`;
+    let url = `${this.appConfigService.basePath}/config/news/delete/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       tap(_ => this.toastrService.showToastr({

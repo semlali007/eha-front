@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 @Injectable({
   providedIn: 'root'
 })
 export class UploaderService {
   uploader: FileUploader;
-  constructor() {
+  constructor(private appConfigService: AppConfigService,) {
   }
 
   public initKit():  FileUploader{
     return new FileUploader({
-      url: `${environment.api.auth.baseURL}/sheet/upload.php`,
+      url: `${this.appConfigService.basePath}/sheet/upload.php`,
       disableMultipart: true,
       formatDataFunctionIsAsync: true,
       formatDataFunction: async (item) => {

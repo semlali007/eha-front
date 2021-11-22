@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { ErrorService } from './error.service';
 import { LoaderService } from './loader.service';
 import { tap, catchError, finalize, switchMap } from 'rxjs/operators'; // ajouter switchMap
@@ -11,13 +11,14 @@ import { of, Observable } from 'rxjs';
 })
 export class SearchService {
     constructor(
+        private appConfigService: AppConfigService,
         private http: HttpClient,
         private errorService: ErrorService,
         private loaderService: LoaderService,
     ) { }
 
     search(params: any): any {
-        const url = `${environment.api.auth.baseURL}/search`;
+        const url = `${this.appConfigService.basePath}/search`;
         this.loaderService.setLoading(true);
         return this.http.post(url, params).pipe(
             switchMap((data: any) => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
+import { HttpClient } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
 import { Area } from 'src/app/shared/models/area';
@@ -11,14 +11,16 @@ import { LoaderService } from './loader.service';
 })
 export class AreaService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient, 
     private errorService: ErrorService,
     private loaderService: LoaderService,
-    ) { };
+    ) {
+     };
 
 
   public requestAutocompleteItems(text: string): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/areas/autocomplete/${text}`;
+    const url = `${this.appConfigService.basePath}/areas/autocomplete/${text}`;
     return this.http
       .get<any>(url)
       .pipe(
@@ -40,7 +42,7 @@ export class AreaService {
 
   
   public getList(params: any): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/areas/search`;
+    const url = `${this.appConfigService.basePath}/areas/search`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
@@ -67,7 +69,7 @@ export class AreaService {
 
   public add(area: Area): Observable<any> {
    
-    const url = `${environment.api.auth.baseURL}/areas/add`;
+    const url = `${this.appConfigService.basePath}/areas/add`;
     const data =  {"name":area.label,"action":"add"};
     return this.http.post(url, data).pipe(
       tap(_ => console.log('success')),

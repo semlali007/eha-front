@@ -4,21 +4,7 @@
 
 export const environment = {
   production: false,
-  api: {
-    auth: {
-      baseURL: '/api'
-    },
-    dataStore: {
-      baseURL: '/api'
-    }
-  },
-  sso: {
-    issuer: '',
-    clientId: '', // The "Auth Code + PKCE" client
-    redirectUri: '',
-    postLogoutRedirectUri: '',
-    dummyClientSecret:'',
-  }
+  appVersion: require('../../package.json').version + '-dev'
 };
 /*
  * For easier debugging in development mode, you can import the following file

@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { switchMap, tap, catchError, finalize, delay } from 'rxjs/operators';
 import { User } from 'src/app/shared/models/user';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { ErrorService } from './error.service';
@@ -13,10 +13,13 @@ import { Router } from '@angular/router';
 })
 export class UsersService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private appConfigService: AppConfigService,
+    ) { }
 
   get(nni: string): Observable<User | null> {
-    const url = `${environment.api.auth.baseURL}/user.php?action=details&nni=${nni}`;
+    const url = `${this.appConfigService.basePath}/user.php?action=details&nni=${nni}`;
 
     return this.http.get(url).pipe(
       switchMap((data: any) => {

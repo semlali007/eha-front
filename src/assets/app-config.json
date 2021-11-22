@@ -1,0 +1,15 @@
+{
+  "production": false,
+  "api": {
+    "host": {
+      "baseURL": "/api"
+    }
+  },
+  "sso": {
+    "issuer": "",
+    "clientId": "",
+    "redirectUri": "",
+    "postLogoutRedirectUri": "",
+    "dummyClientSecret": ""
+  }
+}

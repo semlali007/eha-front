@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, finalize} from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -13,6 +13,7 @@ import { ToastrService } from './toastr.service';
 })
 export class ProviderService {
   constructor(
+    private appConfigService: AppConfigService,
      private http: HttpClient,
      private errorService: ErrorService,
      private loaderService: LoaderService,
@@ -22,7 +23,7 @@ export class ProviderService {
 
 
   public requestAutocompleteItems(text: string): Observable<any> {
-    const url = `${environment.api.auth.baseURL}/providers/autocomplete/${text}`;
+    const url = `${this.appConfigService.basePath}/providers/autocomplete/${text}`;
     return this.http
       .get<any>(url)
       .pipe(
@@ -43,7 +44,7 @@ export class ProviderService {
   }
 
   getProviders(params: any): any {
-    const url = `${environment.api.auth.baseURL}/providers/search`;
+    const url = `${this.appConfigService.basePath}/providers/search`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
@@ -69,7 +70,7 @@ export class ProviderService {
   }
 
   get(params): Observable<any | null> {
-    let url = `${environment.api.auth.baseURL}/providers/show/${params.code}`;
+    let url = `${this.appConfigService.basePath}/providers/show/${params.code}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
         switchMap((response: any) => {

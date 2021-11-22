@@ -46,6 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
       || url.includes('sheets/save')
       || url.includes('hotlines/upload')
        || url.includes('websso')
+       || url.includes('assets')
     );
   }
 

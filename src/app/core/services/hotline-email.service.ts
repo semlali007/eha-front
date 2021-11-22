@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -11,6 +11,7 @@ import { LoaderService } from './loader.service';
 })
 export class HotlineEmailService {
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private toastrService: ToastrService,
@@ -19,7 +20,7 @@ export class HotlineEmailService {
 
   public getList(params: any): Observable<any> {
 
-    let url = `${environment.api.auth.baseURL}/hotline-emails`;
+    let url = `${this.appConfigService.basePath}/hotline-emails`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((listData: any) => {
@@ -30,7 +31,7 @@ export class HotlineEmailService {
     );
   }
   public update(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/hotline-emails/living-save`;
+    let url = `${this.appConfigService.basePath}/hotline-emails/living-save`;
 
     this.loaderService.setLoading(true);
     return this.http.post(url, { id: params.id }).pipe(
@@ -49,7 +50,7 @@ export class HotlineEmailService {
       id: params.id
     }
 
-    let url = `${environment.api.auth.baseURL}/hotline-emails/save`;
+    let url = `${this.appConfigService.basePath}/hotline-emails/save`;
     this.loaderService.setLoading(true);
     return this.http.post(url,data).pipe(
       tap(_ => this.toastrService.showToastr({

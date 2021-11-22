@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -11,6 +11,7 @@ import { LoaderService } from './loader.service';
 })
 export class ContractService {
     constructor(
+        private appConfigService: AppConfigService,
         private http: HttpClient,
         private errorService: ErrorService,
         private loaderService: LoaderService,
@@ -18,7 +19,7 @@ export class ContractService {
 
     get(params): Observable<any | null> {
         const code = encodeURIComponent(params.code);
-        let url = `${environment.api.auth.baseURL}/contracts/show/${code}`;
+        let url = `${this.appConfigService.basePath}/contracts/show/${code}`;
         this.loaderService.setLoading(true);
         return this.http.get(url).pipe(
             switchMap((response: any) => {
@@ -42,7 +43,7 @@ export class ContractService {
 
     search(params): Observable<any | null> {
         const code = encodeURIComponent(params.q);
-        let url = `${environment.api.auth.baseURL}/contracts/search/${code}`;
+        let url = `${this.appConfigService.basePath}/contracts/search/${code}`;
         this.loaderService.setLoading(true);
         return this.http.get(url).pipe(
             switchMap((response: any) => {

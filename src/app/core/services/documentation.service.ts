@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { ToastrService } from './toastr.service';
 import { LoaderService } from './loader.service';
 import { map, publishReplay, refCount } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { map, publishReplay, refCount } from 'rxjs/operators';
 export class DocumentationService {
 
   constructor(
+    private appConfigService: AppConfigService,
     private http: HttpClient,
     private errorService: ErrorService,
     private toastrService: ToastrService,
@@ -23,7 +24,7 @@ export class DocumentationService {
 
   public getContent(): Observable<any> {
 
-    let url = `${environment.api.auth.baseURL}/documentations/edit`;
+    let url = `${this.appConfigService.basePath}/documentations/edit`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((listData: any) => {
@@ -36,7 +37,7 @@ export class DocumentationService {
 
   public remove(params): Observable<any> {
 
-    let url = `${environment.api.auth.baseURL}/documentations/delete/${params.id}`;
+    let url = `${this.appConfigService.basePath}/documentations/delete/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -50,7 +51,7 @@ export class DocumentationService {
 
   public update(params: any): Observable<any> {
 
-    let url = `${environment.api.auth.baseURL}/documentations/update`;
+    let url = `${this.appConfigService.basePath}/documentations/update`;
     this.loaderService.setLoading(true);
 
     return this.http.post(url, params).pipe(
@@ -81,7 +82,7 @@ export class DocumentationService {
       headers: new HttpHeaders(header)
     };
     this.loaderService.setLoading(true);
-    return this.http.get(`${environment.api.auth.baseURL}/documentations`, httpOptions).pipe(
+    return this.http.get(`${this.appConfigService.basePath}/documentations`, httpOptions).pipe(
       map(data => data),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))
@@ -90,7 +91,7 @@ export class DocumentationService {
 
 
   public getDetails(params: any): Observable<any> {
-    let url = `${environment.api.auth.baseURL}/documentations/show/${params.id}`;
+    let url = `${this.appConfigService.basePath}/documentations/show/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url,).pipe(
       switchMap((listData: any) => {
@@ -112,7 +113,7 @@ export class DocumentationService {
       'description': params.description
     };
 
-    let url = `${environment.api.auth.baseURL}/documentations/add`;
+    let url = `${this.appConfigService.basePath}/documentations/add`;
     this.loaderService.setLoading(true);
     return this.http.post(url, data).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -126,7 +127,7 @@ export class DocumentationService {
 
   public updatePositions(params: any): Observable<any> {
 
-    let url = `${environment.api.auth.baseURL}/documentations/sort`;
+    let url = `${this.appConfigService.basePath}/documentations/sort`;
     this.loaderService.setLoading(true);
 
     return this.http.post(url, params).pipe(

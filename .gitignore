@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 # local config
-/src/assets/app-config-dev.json
+/src/assets/config-dev.json

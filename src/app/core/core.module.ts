@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BannerComponent } from './components/banner/banner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -15,20 +15,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CacheInterceptor } from './interceptors/cache.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
+import { AuthConfig, OAuthModule, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthGuardWithForcedLogin } from './guards/auth-guard-with-forced-login.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { getAuthConfig } from  './config/auth-config-factory';
 import { AppConfigService } from './services/app-config.service';
-import { authConfigFactory } from  './config/auth-config-factory';
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
-const appInitializerFn = (appConfig: AppConfigService) => {
-  return () => {
-      return appConfig.loadAppConfig();
-  }
-};
 
 @NgModule({
   declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ToastrComponent, PageNotFoundComponent],
@@ -41,16 +36,9 @@ const appInitializerFn = (appConfig: AppConfigService) => {
     HttpClientModule,
     AlertModule.forRoot(),
     OAuthModule.forRoot(),
-    
   ],
   exports: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ToastrComponent, PageNotFoundComponent],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFn,
-      deps: [AppConfigService],
-      multi: true,
-    },
     AppConfigService,
     AuthService,
     AuthGuard,
@@ -65,7 +53,7 @@ const appInitializerFn = (appConfig: AppConfigService) => {
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: AuthConfig, useFactory: authConfigFactory ,deps: [AppConfigService],},
+    { provide: APP_INITIALIZER, useFactory: getAuthConfig, deps: [HttpClient, OAuthService, AppConfigService], multi: true },
     { provide: OAuthStorage, useFactory: storageFactory },
   ]
 })

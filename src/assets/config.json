@@ -1,15 +1,15 @@
 {
-  "production": false,
-  "api": {
-    "host": {
-      "baseURL": "/api"
-    }
-  },
-  "sso": {
+  "production": true,
+  "authConfig": {
     "issuer": "",
     "clientId": "",
     "redirectUri": "",
     "postLogoutRedirectUri": "",
     "dummyClientSecret": ""
+  },
+  "appConfig": {
+    "api": {
+      "host": ""
+    }
   }
 }

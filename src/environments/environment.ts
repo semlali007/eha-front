@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  appVersion: require('../../package.json').version + '-dev'
+  appVersion: require('../../package.json').version + '-dev',
+  configPath: '/assets/config-dev.json'
 };
 /*
  * For easier debugging in development mode, you can import the following file

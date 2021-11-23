@@ -1,5 +1,5 @@
-
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-purchase-result',
   templateUrl: './purchase-result.component.html',
@@ -7,12 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
   ]
 })
 export class PurchaseResultComponent implements OnInit {
-  @Input() results: any = [];
-  @Input() reset: boolean ;
-
+  @Input() purchases$: Observable<any>;
   constructor() { }
-
   ngOnInit() {
   }
-
 }

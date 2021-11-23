@@ -1,11 +1,10 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="row justify-content-center">
+    <h1>
+        Ma situation achat/Liste des demandes d'achat
+    </h1>
     <div class="col-11">
-        <div class="list-group my-items-for-searches">
-            <div class="list-group-item">
-                <app-purchase-form (loadedResults)="onLoadedResults($event)" (resetedSearchForm)="onResetedSearchForm()"></app-purchase-form>
-            </div>
-        </div>
-        <app-purchase-result [results]="results" [reset]='reset'></app-purchase-result>
+        <app-purchase-form (submittedForm)="onSubmittedForm($event)"></app-purchase-form>
+        <app-purchase-result [purchases$]="purchases$"></app-purchase-result>
     </div>
 </div>

@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { PurchaseService } from 'src/app/core/services/purchase.service';
 @Component({
   selector: 'app-search',
   templateUrl: './purchase.component.html',
   styleUrls: ['./purchase.component.css']
 })
 export class PurchaseComponent implements OnInit {
-  searchText: string;
-  reset: boolean = false;
-  results:any = [];
-  homePath = 'app/accueil';
-  constructor(private router: Router,
+  purchases$: Observable<any>;
+  constructor(
+    private purchaseService: PurchaseService
   ) {
   }
 
@@ -18,21 +17,12 @@ export class PurchaseComponent implements OnInit {
 
   }
 
-  search() {
-
+  onSubmittedForm(params: any) {
+    this.loadData(params);
   }
 
-  onLoadedResults(results) {
-    this.reset = false; 
-    this.results = results;
+  loadData(params: any) {
+    this.purchases$ = this.purchaseService.search(params);
   }
 
-  onResetedSearchForm() {
-    this.reset = true;
-    this.results = [];
-  }
-
-  navigate(path:string){
-    this.router.navigate([path]);
-  }
 }

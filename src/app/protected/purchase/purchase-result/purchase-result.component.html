@@ -1,6 +1,40 @@
-<div>
-    <div>
-        <div class="tab-content">
-                <app-purchase-result-items  ></app-purchase-result-items>
-        </div>
-    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Section
+            </th>
+            <th>
+                Nature
+            </th>
+            <th>
+                Identifiant
+            </th>
+            <th>
+                Evénement
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of purchases$ | async">
+            <td>
+                {{item.sectionLabel}}
+            </td>
+            <td>
+                {{item.nature}}
+            </td>
+            <td>
+                {{item.identifiant}}
+            </td>
+            <td>
+                {{item.eventLabel}}
+            </td>
+            <td>
+                {{item.eventDate | date: 'dd/MM/yyyy'}}
+            </td>
+        </tr>
+    </tbody>
+</table>

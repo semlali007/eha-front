@@ -1,24 +1,17 @@
-import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MessageService } from 'src/app/core/services/message.service';
-import { SearchService } from 'src/app/core/services/search.service';
-import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-purchase-form',
   templateUrl: './purchase-form.component.html',
   styles: [
   ]
 })
-export class PurchaseFormComponent implements OnInit, OnDestroy {
+export class PurchaseFormComponent implements OnInit {
   searchForm: FormGroup;
-  subscription: Subscription;
 
-  @Output() loadedResults = new EventEmitter<any>();
-  @Output() resetedSearchForm = new EventEmitter<any>();
+  @Output() submittedForm = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
-    private messageService: MessageService,
-    private searchService: SearchService
   ) { }
 
   ngOnInit(): void {
@@ -35,22 +28,6 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
 
   submit() {
     let params: any = { words: this.words.value };
-    this.searchService
-      .search(params)
-      .subscribe(
-        result => {
-          this.loadedResults.emit(result);
-        }
-      )
+    this.submittedForm.emit(params);
   }
-
-  onrResetedSearchForm() {
-    this.searchForm.reset();
-    this.createSearchForm();  
-    this.resetedSearchForm.emit();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-   }
 }

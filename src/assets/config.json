@@ -1,15 +1,15 @@
 {
   "production": true,
   "authConfig": {
-    "issuer": "https://rec-websso-gardian.myelectricnetwork.com:443/gardianwebsso/oauth2/multiauth/PKCE",
-    "clientId": "5CEHA002",
-    "redirectUri": "https://dsp0880728.atlas.edf.fr:5000",
-    "postLogoutRedirectUri": "https://dsp0880728.atlas.edf.fr:5000",
-    "dummyClientSecret": "eB?7csn7Wo?+"
+    "issuer": "",
+    "clientId": "",
+    "redirectUri": "",
+    "postLogoutRedirectUri": "",
+    "dummyClientSecret": ""
   },
   "appConfig": {
     "api": {
-      "host": "/api"
+      "host": ""
     }
   }
 }

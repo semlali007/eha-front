@@ -158,6 +158,16 @@ const routes: Routes = [
       {
         path: 'documentation/:id', loadChildren: () => import('./documentation/documentation.module').then(m => m.DocumentationModule),
       },
+      {
+        path: 'ma-situation-achat',
+        loadChildren: () => import('./purchase/purchase.module').then(m => m.PurchaseModule),
+        data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: null, label: "Rechercher" },
+          ]
+        },
+      },
     ],
    canActivate: [AuthGuardWithForcedLogin],
   },

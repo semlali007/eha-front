@@ -1,0 +1,11 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center">
+    <div class="col-11">
+        <div class="list-group my-items-for-searches">
+            <div class="list-group-item">
+                <app-purchase-form (loadedResults)="onLoadedResults($event)" (resetedSearchForm)="onResetedSearchForm()"></app-purchase-form>
+            </div>
+        </div>
+        <app-purchase-result [results]="results" [reset]='reset'></app-purchase-result>
+    </div>
+</div>

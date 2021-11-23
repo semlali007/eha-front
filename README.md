@@ -46,14 +46,5 @@ ng serve [--ssl true] [--port 4200]...
 --port 5000`
 
 ## Build
-- Build basique avec la commande : `ng build`
-- Pour configurer le output de build avec ces lignes de commande : 
-
-**Option1**
-```
-ng build -op dist/example 
-```
-**Option2**
-```
-ng build --output-path=dist/example
-```
+- npm run build -- achatpedia --configuration=production --output-path=dist  --outputHashing=all
+- Avant de déployer remplacer les variables de configuration dans le fichier assets/config.json

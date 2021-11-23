@@ -1,0 +1,10 @@
+<form novalidate [formGroup]="searchForm" (ngSubmit)="submit()">
+    <div class="form-group row">
+        <app-purchase-form-words class="col-6 col-sm-7" [words]="words"></app-purchase-form-words>
+        <div class="col-6 col-sm-3">
+            <button class="btn btn-primary" type="submit" style="margin-top:0" [disabled]="!searchForm.valid">
+                &raquo; rechercher &laquo;
+            </button>
+        </div>
+    </div>
+</form>

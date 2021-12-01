@@ -39,6 +39,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     providers: [],
     status: [],
     directions: [],
+    committees: [],
     showcase: []
   };
 
@@ -57,6 +58,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       areas: [],
       providers: [],
       directions: [],
+      committees: [],
       showcase: ''
     },
     sortBy: this.sortBy,
@@ -71,6 +73,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     beneficiaries: [],
     providers: [],
     directions: [],
+    committees: [],
     status: '',
     areas: [],
     showcase: ''
@@ -127,6 +130,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public onSubmittedFilterSheets(filter: any) {
     this.filterInput[filter.type] = filter.value;
+    console.log('cccc',filter);
     this.loadItems();
   }
 
@@ -165,6 +169,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
         areas: this.filterInput.areas,
         providers: this.filterInput.providers,
         directions: this.filterInput.directions,
+        committees: this.filterInput.committees,
         showcase: this.filterInput.showcase
       },
       sortBy: this.sortBy,
@@ -191,6 +196,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       beneficiaries: [],
       providers: [],
       directions: [],
+      committees: [],
       status: '',
       areas: [],
       showcase: ''
@@ -236,6 +242,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       beneficiaries: this.defaultFilter.search.beneficiaries,
       providers: this.defaultFilter.search.providers,
       directions: this.defaultFilter.search.directions,
+      committees: this.defaultFilter.search.committees,
       status: this.defaultFilter.search.status,
       areas: this.defaultFilter.search.areas,
       showcase: this.defaultFilter.search.showcase

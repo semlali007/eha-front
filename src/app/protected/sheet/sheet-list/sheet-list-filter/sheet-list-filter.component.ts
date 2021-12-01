@@ -24,7 +24,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
     providers:[],
     status:[],
     directions:[],
-    showcase: []
+    showcase: [],
+    committees: []
   };
   public subscription: Subscription;
   @Output() submittedFilterSheets = new EventEmitter<Object>();
@@ -44,6 +45,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   get directions() { return this.sheetFilterForm.get('directions') }
   get status() { return this.sheetFilterForm.get('status') }
   get showcase() { return this.sheetFilterForm.get('showcase') }
+  get committees() { return this.sheetFilterForm.get('committees') }
   
   ngOnInit(): void {
     this.initForm();
@@ -66,6 +68,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'areas': [this.defaultFilter.areas],
       'providers': [this.defaultFilter.providers],
       'directions': [this.defaultFilter.directions],
+      'committees': [this.defaultFilter.committees],
       'status': [(this.defaultFilter.status === '') ? 'all' : this.defaultFilter.status],
       'showcase': [(this.defaultFilter.showcase === '') ? 'all' : this.defaultFilter.showcase]
     });
@@ -81,6 +84,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'areas': [[]],
       'providers': [[]],
       'directions': [[]],
+      'committees': [[]],
       'status': ['all'],
       'showcase': ['all']
     });

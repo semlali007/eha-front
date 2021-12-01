@@ -17,6 +17,7 @@ import { SheetListFilterBeneficiaryComponent } from './sheet-list-filter-benefic
 import { SheetListFilterAreaComponent } from './sheet-list-filter-area/sheet-list-filter-area.component';
 import { SheetListFilterProviderComponent } from './sheet-list-filter-provider/sheet-list-filter-provider.component';
 import { SheetListFilterDirectionComponent } from './sheet-list-filter-direction/sheet-list-filter-direction.component';
+import { SheetListFilterCommitteeComponent } from './sheet-list-filter-committee/sheet-list-filter-committee.component';
 import { SheetListFilterStatusComponent } from './sheet-list-filter-status/sheet-list-filter-status.component';
 import { SheetListSortComponent } from './sheet-list-sort/sheet-list-sort.component';
 import { SheetListExportComponent } from './sheet-list-export/sheet-list-export.component';
@@ -41,6 +42,7 @@ defineLocale('fr', frLocale);
     SheetListFilterAreaComponent,
     SheetListFilterProviderComponent,
     SheetListFilterDirectionComponent,
+    SheetListFilterCommitteeComponent,
     SheetListSortComponent,
     SheetListExportComponent,
     SheetListFilterShowcaseComponent,

@@ -30,4 +30,8 @@
     <app-sheet-list-filter-dauphin [dauphin]='dauphin' [list]="filter.dauphin"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-dauphin>
+
+    <app-sheet-list-filter-committee [committees]='committees' [list]="filter.committees"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-committee>
 </form>

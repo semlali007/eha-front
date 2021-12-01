@@ -275,6 +275,7 @@ export class SheetService {
             areas: sheetData.filter.areas,
             providers: sheetData.filter.providers,
             directions: sheetData.filter.directions,
+            committees: sheetData.filter.committees,
             showcase: sheetData.filter.showcase
           }
         });

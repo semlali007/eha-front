@@ -1,28 +1,27 @@
 <table class="table">
     <thead>
         <tr>
+           
             <th>
-                Section
+                Origine de la demande
+
             </th>
             <th>
-                Nature
+                N° DA / EB 
+
             </th>
             <th>
-                Identifiant
+                Statut de la DA 
+
             </th>
             <th>
-                Evénement
-            </th>
-            <th>
-                Date
+                Date de création 
+
             </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let item of purchases$ | async">
-            <td>
-                {{item.sectionLabel}}
-            </td>
             <td>
                 {{item.nature}}
             </td>

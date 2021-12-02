@@ -12,10 +12,11 @@ import { SearchResultDauphinComponent } from './search-result/search-result-daup
 import { SearchResultProviderComponent } from './search-result/search-result-provider/search-result-provider.component';
 import { SearchResultItemGenericComponent } from './search-result/search-result-item-generic/search-result-item-generic.component';
 import { SearchResultAgenciesComponent } from './search-result/search-result-agencies/search-result-agencies.component';
+import { ModalInfoComponent } from 'src/app/core/components/modal-info/modal-info.component';
 import {SearchRoutingModule} from './search-routing.module';
 
 @NgModule({
-  declarations: [SearchComponent, SearchFormComponent, SearchResultComponent, SearchFormWordsComponent, SearchFormLineComponent, SearchFormSampleComponent, SearchResultTendersComponent, SearchResultContractComponent, SearchResultDauphinComponent, SearchResultProviderComponent, SearchResultItemGenericComponent, SearchResultAgenciesComponent],
+  declarations: [SearchComponent, SearchFormComponent, SearchResultComponent, SearchFormWordsComponent, SearchFormLineComponent, SearchFormSampleComponent, SearchResultTendersComponent, SearchResultContractComponent, SearchResultDauphinComponent, SearchResultProviderComponent, SearchResultItemGenericComponent, SearchResultAgenciesComponent, ModalInfoComponent],
   imports: [
     SharedModule,
     SearchRoutingModule

@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/cor
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message.service';
 import { SearchService } from 'src/app/core/services/search.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalInfoComponent } from 'src/app/core/components/modal-info/modal-info.component';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-search-form',
@@ -12,13 +14,15 @@ import { Subscription } from 'rxjs';
 export class SearchFormComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   subscription: Subscription;
-
+  bsModalRef: BsModalRef;
   @Output() loadedResults = new EventEmitter<any>();
   @Output() resetedSearchForm = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private modalInfoComponent: ModalInfoComponent,
+    private modalService: BsModalService,
   ) { }
 
   ngOnInit(): void {
@@ -50,9 +54,18 @@ export class SearchFormComponent implements OnInit, OnDestroy {
       .search(params)
       .subscribe(
         result => {
+          console.log(result);
           this.loadedResults.emit(result);
+        },
+        error=>{
+          const initialState = {
+            error: error,
+          };
+
+          this.bsModalRef = this.modalService.show(ModalInfoComponent, { initialState });
+
         }
-      )
+      );
   }
 
   onrResetedSearchForm() {

@@ -214,7 +214,7 @@
 
                         </div>
                     </accordion-group>
-                    <accordion-group #group *ngFor="let contract of contracts" (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0">
+                    <accordion-group #group *ngFor="let contract of contracts" (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0" (click)="showContract(contract)" class="blue_link">
                         <div class="row" accordion-heading >
                             <div class="col-sm-2">
                                 <ul class="list-group list-group-horizontal">
@@ -230,20 +230,15 @@
                             <div class="col-sm-4" [innerHTML]="contract.contacts">
                             </div>
                         </div>
-                            <ul *ngIf="contract.systems.length>0" >
-                                <li *ngFor="let system of contract.systems" class="list-group-item">
-                                   <a class="link" (click)="showContract(contract, system.code)">{{system.label}}</a>
-                                </li>
-                            </ul>
                     </accordion-group>
 
-                    <accordion-group #group [isDisabled]="true"  *ngIf="lots.length>0">
+                    <accordion-group #group [isDisabled]="true" *ngIf="lots.length>0">
                         <div class="row" accordion-heading>
                             <ul>
                                 <li *ngFor="let lot of lots">
-                                         <strong>{{lot.name}} :</strong> {{lot.description}}
-                                 </li>
-                             </ul>
+                                    <strong>{{lot.name}} :</strong> {{lot.description}}
+                                </li>
+                            </ul>
                         </div>
                     </accordion-group>
 

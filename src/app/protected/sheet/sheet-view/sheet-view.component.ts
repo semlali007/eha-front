@@ -205,9 +205,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  public showContract(contract, system) {
+  public showContract(contract) {
     this.router.navigate(
-      [ `app/contrat/details/${contract.code}-${system}`]
+      [ `app/contrat/details/${contract.code}`]
     );
   }
 

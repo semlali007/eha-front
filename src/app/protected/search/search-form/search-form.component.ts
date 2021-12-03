@@ -12,13 +12,12 @@ import { Subscription } from 'rxjs';
 export class SearchFormComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   subscription: Subscription;
-
   @Output() loadedResults = new EventEmitter<any>();
   @Output() resetedSearchForm = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private searchService: SearchService
+    private searchService: SearchService,
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +51,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
         result => {
           this.loadedResults.emit(result);
         }
-      )
+      );
   }
 
   onrResetedSearchForm() {

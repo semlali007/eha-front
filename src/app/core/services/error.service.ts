@@ -12,21 +12,21 @@ export class ErrorService {
 
 
   public handleError(error) {
-  
-    if(!!error && !!error.error && !!error.error.source && error.error.source == 'HLK'){
+
+    if (!!error && !!error.error && !!error.error.source && error.error.source == 'HLK') {
       this.modalService.showModal({
         status: error.error.status,
         message: error.error.error
       });
+    } else {
+      error = (typeof error === 'string') ? error : 'Une erreur est survenue, essayez plus tard.'
+      this.toastrService.showToastr({
+        category: 'danger',
+        message: error
+      });
+
       return throwError(error);
     }
-
-    error = (typeof error === 'string')?error:'Une erreur est survenue, essayez plus tard.'
-    this.toastrService.showToastr({
-      category: 'danger',
-      message: error
-    });
-    return throwError(error);
   }
 
 }

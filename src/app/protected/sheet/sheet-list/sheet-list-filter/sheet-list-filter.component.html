@@ -1,5 +1,5 @@
 <form novalidate [formGroup]="sheetFilterForm">
-    <app-sheet-list-filter-status *ngIf="!!user && user.hasRole('ADMIN')" [status]='status' [list]="filter.status"
+    <app-sheet-list-filter-status *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status' [list]="filter.status"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-status>
     <app-sheet-list-filter-beneficiary [beneficiaries]='beneficiaries' [list]="filter.beneficiaries"

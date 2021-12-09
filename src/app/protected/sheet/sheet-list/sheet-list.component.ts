@@ -150,7 +150,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public loadItems() {
     let status = this.filterInput.status;
-    if (!this.user || !this.user.hasRole('EHA_ADMIN')) {
+    if (!this.user || !(this.user.hasRole('EHA_ADMIN') || this.user.hasRole('EHA_GESTIONNAIRE')) ) {
       status = 1;
     }
     console.log(this.searchProvider);

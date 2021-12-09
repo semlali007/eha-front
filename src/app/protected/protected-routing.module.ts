@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/core/guards/auth-guard.service';
 import { EhaAdminRoleGuard } from 'src/app/core/guards/eha-admin-role.guard';
 import { AuthGuardWithForcedLogin } from 'src/app/core/guards/auth-guard-with-forced-login.service';
+import {EhaGestionnaireRoleGuard} from 'src/app/core/guards/eha-gestionnaire-role.guard' ;
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
       {
         path: 'fiches/creation',
         loadChildren: () => import('./sheet/sheet-add/sheet-add.module').then(m => m.SheetAddModule),
-        // canActivate: [EhaAdminRoleGuard],
+        canActivate: [EhaGestionnaireRoleGuard],
         data: {
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
@@ -36,9 +37,8 @@ const routes: Routes = [
       },
       {
         path: 'fiches/modification/:id',
-        loadChildren: () => import('./sheet/sheet-edit/sheet-edit.module').then(m => m.SheetEditModule)
-        // ,canActivate: [EhaAdminRoleGuard]
-        ,
+        loadChildren: () => import('./sheet/sheet-edit/sheet-edit.module').then(m => m.SheetEditModule),
+        canActivate: [EhaGestionnaireRoleGuard] ,
         data: {
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },

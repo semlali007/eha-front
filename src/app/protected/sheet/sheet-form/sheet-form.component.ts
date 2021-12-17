@@ -222,11 +222,18 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         });
       });
       const contractField: FormGroup = this.fb.group({
-        code: contract.code,
+        code: [contract.code, [
+          Validators.required,
+          Validators.minLength(9),
+          Validators.maxLength(10),
+          Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
+        ]],
         provider: contract.provider,
         contacts: contract.contacts,
         lots: [contractLots]
-      });
+      }
+      );
+
       this.contracts.push(contractField);
     });
 

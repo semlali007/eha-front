@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-
+import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-sheet-form-contracts',
   templateUrl: './sheet-form-contracts.component.html',
@@ -29,11 +28,19 @@ export class SheetFormContractsComponent implements OnInit {
 
   onAddedContract() {
     const contractGroup = this.fb.group({
-      'code': '',
+      'code': ['', [
+				Validators.required,
+				Validators.minLength(9),
+				Validators.maxLength(10),
+			  Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
+			]],
       'provider': '',
       'lots': [[]],
-      'contacts': ''
-    });
+      'contacts': '',
+      
+    },
+    
+   );
     this.contracts.push(contractGroup);
   }
 

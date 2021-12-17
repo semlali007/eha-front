@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import tinymce from 'tinymce';
 
@@ -12,6 +12,7 @@ import tinymce from 'tinymce';
 })
 export class SheetFormContractsItemComponent implements OnInit {
   @Input() contract: FormGroup;
+  
   @Input() index: number;
   @Input() actualState: boolean;
   
@@ -25,10 +26,9 @@ export class SheetFormContractsItemComponent implements OnInit {
 
   constructor(private modalService: BsModalService) { }
 
+
   ngOnInit(): void {
-
   }
-
 
   changeState(index): void {
     this.openClose.emit({index:index});
@@ -47,4 +47,7 @@ export class SheetFormContractsItemComponent implements OnInit {
 	decline(): void {
 		this.modalRef.hide();
 	}
+
+  get code() { return this.contract.get('code'); }
+
 }

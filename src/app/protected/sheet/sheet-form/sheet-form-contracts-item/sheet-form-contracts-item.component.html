@@ -1,6 +1,12 @@
 <div [formGroup]="contract" class="form-group row">
     <div class="col-2">
         <input [readonly]="!isActive" formControlName="code" type="text" class="form-control" [placeholder]="'Code contrat'">
+        <small *ngIf="code.errors" class="form-text text-danger">
+            <span [hidden]="!code.errors.required">Code requis.</span>
+            <span [hidden]="!code.errors.minlength">Le code doit faire plus de 9 caractères.</span>
+            <span [hidden]="!code.errors.maxlength">Le code doit faire moins de 10 caractères.</span>
+            <span [hidden]="!code.errors.pattern">Le code doit commencer par un 'C'.</span>
+          </small>
     </div>
     <div class="col-2">
         <textarea [readonly]="!isActive" formControlName="provider" class="form-control" [placeholder]="'Fournisseur'"></textarea>

@@ -10,11 +10,13 @@ import { DocumentationService } from 'src/app/core/services/documentation.servic
 })
 export class HomeDocumentationComponent implements OnInit {
   subscription: Subscription;
+  sheetPath ="app/fiches/liste" ;
+
   section: any = [];
   constructor(
     private router: Router,
     private documentationService: DocumentationService,
-
+   
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,9 @@ export class HomeDocumentationComponent implements OnInit {
     }
   }
 
+  call(path:any){
+    this.router.navigate([path]) ;
+  }
 
   loadDocumentation() {
     this.section = [];

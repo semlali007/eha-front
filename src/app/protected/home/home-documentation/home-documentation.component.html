@@ -1,3 +1,5 @@
+
+<!----------------   Se documenter   --------------------->
 <div class="my-title-for-trainings">
     Se documenter
 </div>
@@ -6,4 +8,20 @@
     <a *ngFor="let document of section" class="list-group-item link" (click)="navigate(document)">
         <span [innerHtml]="document.label"></span>
     </a>
+</div>
+<!--------------     Vitrine de l'offre ------------------>
+<div class="my-title-for-trainings">
+    Vitrine de l'offre
+</div>
+
+<div class="list-group my-items-for-trainings">
+    <div class="list-group-item link" >
+        <ul >
+            <li>
+                <a (click)="call(sheetPath)" class="disable-deco" >
+                <span class="title">Vitrine de l'offre </span> <span class="text">des marchés portés par la Directions Achats et Groupe</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

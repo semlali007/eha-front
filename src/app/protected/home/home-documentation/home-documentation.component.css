@@ -1,0 +1,13 @@
+.title {
+    font-weight: bold;
+    color: var(--my-color-orange);
+    
+}
+
+.disable-deco{
+    Text-Decoration: None !important; 
+}
+
+.text{
+    color:#000;
+}

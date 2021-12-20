@@ -58,4 +58,16 @@ export class ContractService {
             finalize(() => this.loaderService.setLoading(false))
         );
     }
+
+    isCodeTaken(code): Observable<any | null> {
+        let url = `${this.appConfigService.basePath}/contracts/show/${code}`;
+        return this.http.get(url).pipe(
+            switchMap((response: any) => {
+                return of(
+                    (!!response && !!response.infos)?response.infos:null
+                );
+            }),
+            catchError(error => {this.errorService.handleError(error); return of(null);})
+        );
+    }
 }

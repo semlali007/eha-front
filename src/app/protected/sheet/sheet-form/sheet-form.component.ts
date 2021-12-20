@@ -14,6 +14,8 @@ import { customValidator } from '../customValidator';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
+import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
+import { ContractService } from 'src/app/core/services/contract.service';
 
 @Component({
   selector: 'app-sheet-form',
@@ -43,7 +45,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     private uploaderService: UploaderService,
     private route: ActivatedRoute,
     private dateService: DateService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private contractService: ContractService
   ) {
   }
 
@@ -227,7 +230,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
           Validators.minLength(9),
           Validators.maxLength(10),
           Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
-        ]],
+        ],
+        [invalidContractCodeValidator(this.contractService)]],
         provider: contract.provider,
         contacts: contract.contacts,
         lots: [contractLots]

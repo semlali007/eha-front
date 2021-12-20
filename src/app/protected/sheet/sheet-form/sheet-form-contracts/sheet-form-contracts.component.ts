@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
+import { ContractService } from 'src/app/core/services/contract.service';
 @Component({
   selector: 'app-sheet-form-contracts',
   templateUrl: './sheet-form-contracts.component.html',
@@ -12,7 +14,7 @@ export class SheetFormContractsComponent implements OnInit {
   @Input() lotsList: FormControl;
   currentIndex:number;
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
   ngOnInit(): void {
 
@@ -33,7 +35,9 @@ export class SheetFormContractsComponent implements OnInit {
 				Validators.minLength(9),
 				Validators.maxLength(10),
 			  Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
-			]],
+			],
+      [invalidContractCodeValidator(this.contractService)]
+    ],
       'provider': '',
       'lots': [[]],
       'contacts': '',

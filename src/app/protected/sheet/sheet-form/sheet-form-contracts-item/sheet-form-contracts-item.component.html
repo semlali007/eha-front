@@ -1,11 +1,18 @@
 <div [formGroup]="contract" class="form-group row">
     <div class="col-2">
         <input [readonly]="!isActive" formControlName="code" type="text" class="form-control" [placeholder]="'Code contrat'">
-        <small *ngIf="code.errors" class="form-text text-danger">
-            <span [hidden]="!code.errors.required">Code requis.</span>
-            <span [hidden]="!code.errors.minlength">Le code doit faire plus de 9 caractères.</span>
-            <span [hidden]="!code.errors.maxlength">Le code doit faire moins de 10 caractères.</span>
-            <span [hidden]="!code.errors.pattern">Le code doit commencer par un 'C'.</span>
+        <div class="spinner-border text-primary" role="status" *ngIf="code.pending">
+            <span class="sr-only">Loading...</span>
+          </div>
+        <small *ngIf="code.errors && isActive" class="form-text text-danger">
+            <span [hidden]="!code.errors.required">- Code requis.<br></span>
+            <span [hidden]="!code.errors.minlength">- Le code doit faire plus de 9 caractères.<br></span>
+            <span [hidden]="!code.errors.maxlength">- Le code doit faire moins de 10 caractères.<br></span>
+            <span [hidden]="!code.errors.pattern">- Le code doit commencer par un 'C'.<br></span>
+            <span [hidden]="!code?.errors?.invalidContractCode">- Le code n'existe pas.<br></span>
+          </small>
+          <small *ngIf="!code.errors && isActive && !code.pending" class="form-text text-success">
+            <span [hidden]="!!code?.errors">- Votre code contrat est valide.<br></span>
           </small>
     </div>
     <div class="col-2">

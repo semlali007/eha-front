@@ -15,3 +15,11 @@
 </p>
 <app-home-search-form-zip></app-home-search-form-zip>
 
+<div class="my-title-for-searches">
+    Ma situation Achat
+</div>
+
+<div class="list-group-item link"  [hidden]="!page?.active">
+            <span class="badge badge-primary my-title-for-searches">NOUVEAU</span>
+            <span (click)="openModalWithComponent()"> <img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 20px;margin-left: 5px;color:RGB(80,158,47) ;" /> en savoir plus</span>
+</div>

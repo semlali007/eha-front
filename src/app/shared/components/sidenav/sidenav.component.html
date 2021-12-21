@@ -57,6 +57,17 @@
      class="list-group-item">
       News
      </li>
+     <li (click)="navigate(sheetPage)"
+     [class.list-group-item-success]="isActive(sheetPage)"
+     class="list-group-item">
+      Nouveautés(Vitrine de l'offre)
+     </li>
+     <li (click)="navigate(purchasePage)"
+     [class.list-group-item-success]="isActive(purchasePage)"
+     class="list-group-item">
+      Nouveautés(Ma situation achat)
+     </li>
      </ul>
+
     </div>
    </div>

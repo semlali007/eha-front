@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
 import { ContractService } from 'src/app/core/services/contract.service';
@@ -20,6 +20,8 @@ export class SheetFormContractsComponent implements OnInit {
 
   }
 
+  
+
   onOpenClose(data:any) {
     if(data.index == this.currentIndex) {
       this.currentIndex = -1;
@@ -36,7 +38,6 @@ export class SheetFormContractsComponent implements OnInit {
 				Validators.maxLength(10),
 			  Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
 			],
-      [invalidContractCodeValidator(this.contractService)]
     ],
       'provider': '',
       'lots': [[]],

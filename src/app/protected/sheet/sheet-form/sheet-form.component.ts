@@ -231,7 +231,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
           Validators.maxLength(10),
           Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
         ],
-        [invalidContractCodeValidator(this.contractService)]],
+       // [invalidContractCodeValidator(this.contractService)]
+      ],
         provider: contract.provider,
         contacts: contract.contacts,
         lots: [contractLots]

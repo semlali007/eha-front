@@ -5,8 +5,13 @@
         <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
       </div>
       <div class="col-10 col-sm-10">
-        <p><b>Achatpédia</b>&nbsp;<small>Votre espace de documentation, de recherche, et de contacts sur les achats</small>
-      </p>
+        <table width="96%" border="0">
+          <tr>
+            <td><b>Achatpédia</b>&nbsp;<small>Votre espace de documentation, de recherche, et de contacts sur les achats</small></td>
+            <td *ngIf="user" ><a (click)="logout()" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png">&nbsp;Se déconnecter</a></td>
+          </tr>
+        </table>
+        
       </div>
     </div>
   </div>

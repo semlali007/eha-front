@@ -5,6 +5,10 @@
     color: white;
   }
 
+  .logout-icon{
+    width:12%
+  }
+
   .my-logo {
     height: 34px;
     width: 80px;

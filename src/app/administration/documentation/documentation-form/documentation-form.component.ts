@@ -22,6 +22,7 @@ export class DocumentationFormComponent implements OnInit {
 
   get title() { return this.documentationForm.get('title') }
   get url() { return this.documentationForm.get('url') }
+  get shortdescription() { return this.documentationForm.get('shortdescription') }
   get external() { return this.documentationForm.get('external') }
   get description() { return this.documentationForm.get('description') }
   get warning() { return this.documentationForm.get('warning') }
@@ -32,6 +33,7 @@ export class DocumentationFormComponent implements OnInit {
       'title': ['', [
         Validators.required,
       ]],
+      'shortdescription': '',
       'external': false,
       'url': '',
       'description': '',
@@ -43,6 +45,7 @@ export class DocumentationFormComponent implements OnInit {
     if (this.documentationId) {
       this.documentationService.getDetails({ id: this.documentationId }).subscribe(response => {
         this.title.setValue(response.label);
+        this.shortdescription.setValue(response.shortdescription);
         this.external.setValue(response.external);
         this.url.setValue(response.link);
         this.warning.setValue(response.warning);
@@ -56,6 +59,7 @@ export class DocumentationFormComponent implements OnInit {
     const params = {
       parent: this.parentId,
       label: this.title.value,
+      shortdescription: this.shortdescription.value,
       external: this.external.value,
       link: this.url.value,
       description: this.description.value,

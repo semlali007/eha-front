@@ -10,7 +10,7 @@
         <li class="breadcrumb-item">
             <a  (click)="showSubItems(0)"  class="blue_link"><span>Accueil</span></a>
         </li>
-
+        
         <li *ngFor="let row of parents" class="breadcrumb-item{{(row.id == id) ? ' active' : ''}} link">
             <a (click)="showSubItems(row.id)" *ngIf="row.id != id" class="blue_link"><span
                 [innerHtml]="row.breadcrumb"></span></a>
@@ -44,6 +44,9 @@
                 Titre
             </th>
             <th>
+                Description courte
+            </th>
+            <th>
                 lien
             </th>
             <th>
@@ -55,6 +58,9 @@
         <tr *ngFor="let item of items; let i = index" class="draggable" [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)" (dragstart)="onDragStart(i)"
         (drop)="onDrop($event, i)">
             <td [innerHtml]="item.label">
+            </td>
+            <td>
+                {{item.shortdescription}}
             </td>
             <td>
                 {{item.link}}

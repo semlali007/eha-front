@@ -19,7 +19,17 @@
                     </span>
                 </small>
             </div>
-            
+            <div class="form-group">
+                <label for="shortdescription"><strong>Description courte :</strong></label>
+                <!--<input type="text" class="form-control" placeholder="titre" [formControl]="title">-->
+                <textarea class="form-control"  type="text" [formControl]="shortdescription" name="shortdescription" id="shortdescription" >
+                </textarea>
+                <small *ngIf="shortdescription.errors" class="form-text text-danger">
+                    <span [hidden]="!shortdescription.errors.required">
+                        shortdescription requis.
+                    </span>
+                </small>
+            </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-12">

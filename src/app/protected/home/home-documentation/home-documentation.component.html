@@ -5,7 +5,7 @@
 </div>
 
 <div class="list-group my-items-for-trainings">
-    <div *ngFor="let document of section" class="text list-group-item" >
+    <div *ngFor="let document of section" class="text list-group-item no-space" >
         <ul class="color-or" >
             <li>
                 <p class="item" [innerHtml]="document.label" (click)="navigate(document)"></p>
@@ -22,7 +22,7 @@
 </div>
 
 <div class="list-group my-items-for-trainings">
-    <div class="list-group-item link" >
+    <div class="list-group-item link no-space" >
         <div [hidden]="!page?.active">
             <span  (click)="openModalWithComponent()" ><span class="badge badge-primary my-title-for-trainings"  [hidden]="!page?.active">NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-orange.png" style="width: 20px;margin-left: 5px;padding-bottom: 11px !important;" /> en savoir plus</span>
         </div>

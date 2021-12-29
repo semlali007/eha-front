@@ -1,0 +1,12 @@
+.text-item{
+    color:#000;
+    margin-bottom:5px;
+}
+
+.list-item{
+    margin-bottom: 5px;
+}
+
+.bleue-edf{
+    color: var(--my-color-blue)
+}

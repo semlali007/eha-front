@@ -5,26 +5,40 @@
 </div>
 
 <div class="list-group my-items-for-trainings">
-    <a *ngFor="let document of section" class="list-group-item link" (click)="navigate(document)">
-        <span [innerHtml]="document.label"></span>
-    </a>
+    <div class="list-group-item" style="color:black">Accès limité aux collaborateurs d'EDF </div>
+    <div *ngFor="let document of section" class="text list-group-item no-space" >
+        <ul class="color-or" >
+            <li>
+                <p class="item" [innerHtml]="document.label" (click)="navigate(document)"></p>
+            </li>
+        </ul>
+        <p>
+            {{document.shortdescription}}
+        </p>
+    </div>
 </div>
 <!--------------     Vitrine de l'offre ------------------>
 <div class="my-title-for-trainings">
     Vitrine de l'offre
 </div>
 
+
 <div class="list-group my-items-for-trainings">
-    <div class="list-group-item link" >
-        <ul style="list-style: none;" >
-            <li [hidden]="!page?.active">
-                <span  (click)="openModalWithComponent()" ><span class="badge badge-primary my-title-for-trainings"  [hidden]="!page?.active">NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-orange.png" style="width: 20px;margin-left: 5px;padding-bottom: 11px !important;" /> en savoir plus</span>
-            </li>
+<<<<<<< HEAD
+    <div class="list-group-item link no-space" >
+=======
+    <div class="list-group-item link">
+>>>>>>> develop
+        <div [hidden]="!page?.active">
+            <span  (click)="openModalWithComponent()" ><span class="badge badge-primary my-title-for-trainings"  [hidden]="!page?.active">NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-orange.png" style="width: 20px;margin-left: 5px;padding-bottom: 11px !important;" /> en savoir plus</span>
+        </div>
+        <ul>
             <li>
                 <a (click)="call(sheetPath)" class="disable-deco" >
                 <span class="title">Vitrine de l'offre </span> <span class="text">des marchés portés par la Directions Achats et Groupe</span>
                 </a>
             </li>
         </ul>
+        
     </div>
 </div>

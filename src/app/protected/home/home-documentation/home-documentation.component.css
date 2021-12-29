@@ -1,13 +1,25 @@
 .title {
     font-weight: bold;
     color: var(--my-color-orange);
-    
 }
 
 .disable-deco{
     Text-Decoration: None !important; 
 }
 
+.color-or{
+    color: var(--my-color-orange)!important;
+}
+
+.item{
+    margin-bottom:-16px!important ;
+    cursor: pointer;
+}
+
 .text{
     color:#000;
+}
+
+.no-space{
+    padding-bottom: 0px;
 }

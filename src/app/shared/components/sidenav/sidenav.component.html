@@ -67,6 +67,11 @@
      class="list-group-item">
       Nouveautés(Ma situation achat)
      </li>
+     <li (click)="navigate(informationPath)"
+     [class.list-group-item-success]="isActive(informationPath)"
+     class="list-group-item">
+      Nouveautés (Page Accueil)
+     </li>
      </ul>
 
     </div>

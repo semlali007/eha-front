@@ -50,6 +50,10 @@ const routes: Routes = [
         path: 'page/:page',
         loadChildren: () => import('./page/page.module').then(m => m.PageModule),
       },
+      {
+        path: 'information/:type',
+        loadChildren: () => import('./information/information.module').then(m => m.InformationModule),
+      },
     ]
   }
 ];

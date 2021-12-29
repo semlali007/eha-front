@@ -1,0 +1,34 @@
+.link{
+    cursor:pointer ;
+    color: var(--my-color-darkblue);
+}
+
+.icone-info{
+    width: 70%;
+    margin-left: 5px; 
+    padding-bottom: 11px !important;
+}
+.description{
+    
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    margin-top:2%;
+    /* Bleu fonce (Charte) */
+    color: #001A70; ;
+
+}
+.title{
+    padding-left: 6px;
+}
+.global{
+    border: 2px solid #001A70;
+        box-sizing: border-box;
+        height:73px;
+        border-radius: 3px; margin-right: 0px;
+        margin-left: 0px; padding-top: 5px;
+}

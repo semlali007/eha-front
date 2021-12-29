@@ -19,3 +19,7 @@
 .text{
     color:#000;
 }
+
+.no-space{
+    padding-bottom: 0px;
+}

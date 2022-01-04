@@ -40,8 +40,11 @@ export class HomeInformationComponent implements OnInit {
         title: 'test',
         list:[],
         page: {
-          content:this.data.long_description
-        }
+          content:this.data.long_description,
+          type: 'home_page',
+          id: this.data.id
+        },
+        checkboxValidation: true
     };
     this.bsModalRef = this.modalService.show(ModalPageComponent, {initialState});
     this.bsModalRef.content.closeBtnName = 'Close';

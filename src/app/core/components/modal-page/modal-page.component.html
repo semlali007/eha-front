@@ -6,7 +6,18 @@
         <div class="col-9 text-justify" >
             <div [innerHTML]="page.content" style="margin-top: 50px;">
             </div>
-            <div class="mx-auto">
+            <div class="mx-auto"  *ngIf="checkboxValidation" >
+                <div class="row">
+                    <div class="col-10">
+                        <input type="checkbox" class="mr-1" #f (change)="onCheckboxAllChange($event)">
+                        <span class="detail">Ne plus afficher toutes les informations.</span>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn text-center btn-edf mt-2 ml-3"  (click)="onCheckboxViewed()">J'ai compris</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mx-auto" *ngIf="!checkboxValidation" >
                 <div class="row">
                     <div class="col-12">
                         <button class="btn text-center btn-edf mt-2 ml-3" (click)="bsModalRef.hide()">J'ai compris (fermer cette fenêtre)</button>

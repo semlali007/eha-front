@@ -153,7 +153,7 @@ const routes: Routes = [
             { route: null, label: "Article" }
           ]
         },
-      
+
       },
       {
         path: 'documentation/:id', loadChildren: () => import('./documentation/documentation.module').then(m => m.DocumentationModule),
@@ -169,7 +169,7 @@ const routes: Routes = [
         },
       },
     ],
-   canActivate: [AuthGuardWithForcedLogin],
+   canActivate: [AuthGuard],
   },
 ];
 

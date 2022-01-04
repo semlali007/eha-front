@@ -214,3 +214,13 @@ body {
 .btn-center { margin:0 0.2rem; }
 .btn-left { margin-right:0.2rem; }
 .btn-right { margin-left:0.2rem; }
+.my-btn-login:hover, 
+.my-btn-login {
+  text-align: center;
+  color: white;
+  background-color: var(--my-color-orange);
+  margin-top: 100px;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 30%;
+}

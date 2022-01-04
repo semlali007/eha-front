@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdministrationComponent } from './administration.component';
 import {  EhaAdminRoleGuard } from 'src/app/core/guards/eha-admin-role.guard';
 import { AuthGuardWithForcedLogin } from 'src/app/core/guards/auth-guard-with-forced-login.service';
+import { AuthGuard } from 'src/app/core/guards/auth-guard.service';
 
 const routes: Routes = [
   {
     path: 'admin',
     component: AdministrationComponent,
-    canActivate: [AuthGuardWithForcedLogin],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',

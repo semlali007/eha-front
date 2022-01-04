@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
- 
+
 const routes: Routes = [
   {
    path: 'login',
@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'version.html',
     loadChildren: () => import('./version/version.module').then(m => m.VersionModule)
+   },
+   {
+    path: 'logout',
+    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule)
    },
  ];
 @NgModule({

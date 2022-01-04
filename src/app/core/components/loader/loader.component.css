@@ -33,7 +33,7 @@
     height: 100%;
     left: 0px;
     top: 0px;
-
+    z-index: 9999;
     background: rgba(0, 0, 0, 0.85);
 
 }
@@ -44,7 +44,7 @@
     height: 40px;
     left: 38%;
     top: 60%;
-
+    z-index: 9999;
     font-family: Segoe UI;
     font-style: normal;
     font-weight: normal;
@@ -59,4 +59,5 @@
     top: 50%;
     width: 46px;
     height: 46px;
+    z-index: 9999;
 }

@@ -24,15 +24,18 @@ export class ModalPageComponent implements OnInit {
 
 
   onCheckboxAllChange(e) {
+
       this.isSelected = e.target.checked == true;
   }
 
   onCheckboxViewed() {
+    if(this.isSelected){
       this.configService.createUserNews({type: 'home_page', items: [{id:this.page.id}]}).subscribe(
         (response) => {
           console.log("Données correctement envoyées !\n" + response);
         }
       )
+    }
       this.bsModalRef.hide();
   }
 

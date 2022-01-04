@@ -85,7 +85,7 @@ export class HomeModalComponent implements OnInit, OnDestroy {
       }
     });
     if(selected.length !== 0 ) {
-      this.configService.createUserNews(selected).subscribe(
+      this.configService.createUserNews({type:'news',items:selected}).subscribe(
         (response) => {
           console.log("Données correctement envoyées !\n" + response);
         }

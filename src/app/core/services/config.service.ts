@@ -40,10 +40,10 @@ export class ConfigService {
         );
     }
 
-    createUserNews(userNews:UserNews[]): Observable<any | null> {
+    createUserNews(data): Observable<any | null> {
         let url = `${this.appConfigService.basePath}/config/create-user-news`;
         this.loaderService.setLoading(true);
-        return this.http.post(url,userNews).pipe(
+        return this.http.post(url,data).pipe(
             switchMap((response: any) => {
                 return of(
                     response

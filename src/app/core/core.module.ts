@@ -11,6 +11,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { ModalInfoComponent } from './components/modal-info/modal-info.component';
+import { ModalPageComponent } from './components/modal-page/modal-page.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -27,7 +28,7 @@ export function storageFactory(): OAuthStorage {
 }
 
 @NgModule({
-  declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ToastrComponent, PageNotFoundComponent],
+  declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ToastrComponent, PageNotFoundComponent, ModalPageComponent],
   imports: [
     SharedModule,
     PublicModule,
@@ -38,7 +39,7 @@ export function storageFactory(): OAuthStorage {
     AlertModule.forRoot(),
     OAuthModule.forRoot(),
   ],
-  exports: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ToastrComponent, PageNotFoundComponent],
+  exports: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ToastrComponent, PageNotFoundComponent, ModalPageComponent],
   providers: [
     AppConfigService,
     AuthService,

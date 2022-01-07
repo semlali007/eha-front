@@ -30,14 +30,14 @@
                         <div class="active">
                             <div>
                                 <div class="list-group my-items-for-trainings">
-                                    <a class="list-group-item" *ngFor="let item of items">
+                                    <div class="list-group-item" *ngFor="let item of items">
                                         <div>
                                             <strong>{{ item.label }}</strong>
                                             <span style="float:right"> <button
                                                     class="btn btn-edf" (click)="addItemToList(item)">Sélectionner</button>
                                             </span>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

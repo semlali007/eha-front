@@ -10,6 +10,7 @@
   "appConfig": {
     "api": {
       "host": ""
-    }
+    },
+    "loaderToStart": 0 
   }
 }

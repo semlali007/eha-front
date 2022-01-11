@@ -230,7 +230,7 @@ export class SheetService {
 
     switch (params.sortBy) {
       case 'date':
-        options.order_by = 'created_at';
+        options.order_by = 'updated_at';
         break;
       case 'title':
         options.order_by = 'label';

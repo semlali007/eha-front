@@ -30,9 +30,7 @@ export class HomeInformationComponent implements OnInit {
 
 
   loadInformation() {
-    this.configService.getNews({ cache: 'cache', type: 'home_page' }).subscribe(data => {
-      this.list = data;
-    })
+
     this.pageService.getPage({ cache: 'cache', page: 'home_page' }).subscribe(data => {
       this.data = data;
     })
@@ -44,17 +42,21 @@ export class HomeInformationComponent implements OnInit {
     );
   }
   openModalWithComponent() {
-    const initialState = {
+    this.configService.getNews({ type: 'home_page' }).subscribe(data => {
+      this.list = data;
+      const initialState = {
         title: 'test',
-        list:this.list,
+        list: this.list,
         page: {
-          content:this.data.content,
+          content: this.data.content,
           type: 'home_page',
         },
         checkboxValidation: true
-    };
-    this.bsModalRef = this.modalService.show(ModalNewsComponent, {initialState});
-    this.bsModalRef.content.closeBtnName = 'Close';
+      };
+      this.bsModalRef = this.modalService.show(ModalNewsComponent, { initialState });
+      this.bsModalRef.content.closeBtnName = 'Close';
+    })
+
   }
 
 }

@@ -60,11 +60,12 @@ export class ModalNewsComponent implements OnInit {
   }
  
   hideModal(): void {
-    this.configService.tagModalViewed(true);
+    this.bsModalRef?.hide();
   }
  
   onHidden(): void {
   }
 
+  
 
 }

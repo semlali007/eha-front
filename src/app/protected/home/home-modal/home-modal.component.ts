@@ -35,7 +35,7 @@ export class HomeModalComponent implements OnInit, OnDestroy {
               this.isViewed = isViewed;
               console.log('this.isViewed', this.isViewed);
               if (!this.isViewed) {
-                this.configService.getNews().subscribe(
+                this.configService.getNews({ type: 'after_connexion' }).subscribe(
                 (response) => {
                   this.isModalShown = response.length > 0;
                   this.infos = response;

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InformationService } from 'src/app/core/services/information.service';
-import { ModalPageComponent } from 'src/app/core/components/modal-page/modal-page.component';
+import { ModalNewsComponent } from 'src/app/core/components/modal-news/modal-news.component';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { PageService } from 'src/app/core/services/page.service';
+import { Observable} from 'rxjs';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-home-information',
@@ -14,9 +16,12 @@ export class HomeInformationComponent implements OnInit {
   data:any={};
   bsModalRef?: BsModalRef;
   subscription: Subscription;
+  list: [];
   constructor(private router: Router,
-              private informationService: InformationService,
+              private configService: ConfigService,
+              private pageService: PageService,
               private modalService: BsModalService,
+              
               ) { }
 
   ngOnInit(): void {
@@ -25,8 +30,11 @@ export class HomeInformationComponent implements OnInit {
 
 
   loadInformation() {
-    this.informationService.getInformation({ cache: 'cache' , type:'home_page'}).subscribe(data => {
-    this.data = data;
+    this.configService.getNews({ cache: 'cache', type: 'home_page' }).subscribe(data => {
+      this.list = data;
+    })
+    this.pageService.getPage({ cache: 'cache', page: 'home_page' }).subscribe(data => {
+      this.data = data;
     })
   }
 
@@ -38,15 +46,14 @@ export class HomeInformationComponent implements OnInit {
   openModalWithComponent() {
     const initialState = {
         title: 'test',
-        list:[],
+        list:this.list,
         page: {
-          content:this.data.long_description,
+          content:this.data.content,
           type: 'home_page',
-          id: this.data.id
         },
         checkboxValidation: true
     };
-    this.bsModalRef = this.modalService.show(ModalPageComponent, {initialState});
+    this.bsModalRef = this.modalService.show(ModalNewsComponent, {initialState});
     this.bsModalRef.content.closeBtnName = 'Close';
   }
 

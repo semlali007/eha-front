@@ -26,17 +26,31 @@ export class ConfigService {
         this.isViewed.next(state);
     }
 
-    getNews(): Observable<any | null> {
-        let url = `${this.appConfigService.basePath}/config/news`;
-        this.loaderService.setLoading(true);
-        return this.http.get(url).pipe(
+    getNews(options: {
+        type?: string,
+        reset?: string,
+        cache?: string
+    }): Observable<any | null> {
+        let header: any = {};
+        if (!!options.reset && options.reset == 'reset') {
+            header.reset = options.reset;
+        }
+
+        if (!!options.cache && options.cache == 'cache') {
+            header.cache = options.cache;
+        }
+
+        const httpOptions = {
+            headers: new HttpHeaders(header)
+        };
+        let url = `${this.appConfigService.basePath}/config/news/${options.type}`;
+        return this.http.get(url, httpOptions).pipe(
             switchMap((response: any) => {
                 return of(
                     response
                 );
             }),
             catchError(error => this.errorService.handleError(error)),
-            finalize(() => this.loaderService.setLoading(false))
         );
     }
 

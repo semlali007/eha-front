@@ -15,6 +15,7 @@ export class NewsFormComponent implements OnInit {
 
   public afterAdd: EventEmitter<any> = new EventEmitter();
   id:number;
+  type:string='';
   get title() { return this.NewsAddForm.get('title') }
   get description() { return this.NewsAddForm.get('description') }
 
@@ -54,6 +55,7 @@ export class NewsFormComponent implements OnInit {
       'description': this.description.value,
       'id': null,
       'date': this.newsService.getDate(),
+      'type':this.type
     }
     if (!!this.id) {
 

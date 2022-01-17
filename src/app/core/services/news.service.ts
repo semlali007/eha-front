@@ -23,8 +23,8 @@ export class NewsService {
     private toastrService: ToastrService,
 ) { };
 
-  getList(): Observable<any | null> {
-    let url = `${this.appConfigService.basePath}/config/news/list`;
+  getList(type): Observable<any | null> {
+    let url = `${this.appConfigService.basePath}/config/news/list/${type}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((response: any) => {

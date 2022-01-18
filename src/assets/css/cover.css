@@ -146,6 +146,22 @@ body {
   color: var(--my-color-green);
   border: 1px solid var(--my-color-green);
 }
+
+.border-orange {
+  color: var(--my-color-orange);
+  border: 1px solid var(--my-color-orange);
+  }
+
+.border-bleu {
+  color: var(--my-color-blue);
+  border: 1px solid var(--my-color-blue);
+  }
+
+.border-green {
+  color: var(--my-color-green);
+  border: 1px solid var(--my-color-green);
+  }
+
 .btn-search {
   margin-top: 10px;
   background: white;

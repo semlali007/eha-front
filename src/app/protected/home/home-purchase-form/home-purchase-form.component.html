@@ -1,0 +1,22 @@
+
+
+
+<div class="my-title-for-searches">
+    Ma situation Achat
+</div>
+
+<div class="list-group-item link"  [hidden]="!page?.active">
+            <span class="badge badge-primary my-title-for-searches" >NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 20px;margin-left: 5px;color:RGB(80,158,47) ;padding-bottom: 11px !important;" /> <span (click)="openModalWithComponent()" style="color:RGB(80,158,47)"> en savoir plus</span>
+</div>
+
+<form class="my-form-for-searches" role="search" novalidate [formGroup]="homePurchaseForm" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-12">
+            <input type="search" class="form-control" [formControl]="searchText"
+                placeholder=" Saisir un ou plusieurs mots clés" id="searchText" autocorrect="off" autocomplete="off">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-search" [disabled]="!homePurchaseForm.valid">Rechercher</button>
+        </div>
+    </div>
+</form>

@@ -4,7 +4,7 @@
     <div id="htmlData" class="col-11 col-md-10">
         <app-breadcrumb data-html2canvas-ignore="true"></app-breadcrumb>
         <div class="row" data-html2canvas-ignore="true">
-            <div class="col-lg-10">
+            <div class="col-lg-8">
                 <div >
                     <button  (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
                 </div>
@@ -12,10 +12,16 @@
             <div class="col-lg-2 margin-tb" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
                 <div class="pull-right"  >
                     <a (click)="modification(sheetId)"
-                        class="btn btn-edf float-left mt-n1" ><i class="fas fa-plus" ></i>
+                        class="btn btn-edf float-left" ><i class="fas fa-plus" ></i>
                         Modifier
                     </a>
+                    
                 </div>
+            </div>
+            <div class="col-lg-2 margin-tb ml-auto" *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
+                <button type="button" class="btn btn-danger float-left"  (click)="openModal(template)" >
+                    Supprimer
+                </button>
             </div>
         </div>
 
@@ -251,3 +257,12 @@
             <button class="btn btn-edf btn-block" (click)="openPDF()">Exporter</button>
         </div>
 </div>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+</ng-template>
+
+

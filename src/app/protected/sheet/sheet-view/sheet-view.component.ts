@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy,TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
 import { DateService } from 'src/app/core/services/date.service';
 import { Status } from 'src/app/shared/models/status';
 import { environment } from 'src/environments/environment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -30,7 +31,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public privates: Object[] = [];
   public privatesEnedis: Object[] = [];
   public privatesEdfEnedis: Object[] = [];
-   
+  public bsConfirmModalRef?: BsModalRef;
   public comments: any;
   public dauphin: any;
   public edf_open: any;
@@ -56,6 +57,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     private sheetService: SheetService,
     private dateService: DateService,
     private router: Router,
+    private modalService: BsModalService,
     private authService: AuthService,
     private fileService: FileService,
   ) { }
@@ -203,6 +205,27 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.router.navigate(
       ['app/fiches/liste']
     );
+  }
+
+  confirm(): void {
+    this.remove();
+    this.bsConfirmModalRef?.hide();    
+  }
+ 
+  decline(): void {
+    this.bsConfirmModalRef?.hide();  
+  }
+
+  remove(): void {
+    this.sheetService
+      .remove({
+        id: this.sheetId
+      })
+      .subscribe(response => this.list());
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   public showContract(contract) {

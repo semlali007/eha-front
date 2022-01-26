@@ -20,13 +20,6 @@
                         Enregistrer
                     </button>
                 </div>
-
-                <div class="ml-auto" *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) && sheetForm?.value?.status == 0">
-                    <button type="button" class="btn btn-danger"  (click)="openModal(template)" >
-                        Supprimer
-                    </button>
-                </div>
-
             </div>
         </div>
     </div>

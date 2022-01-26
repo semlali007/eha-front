@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, switchMap, finalize} from 'rxjs/operators';
+import { catchError, switchMap, finalize, tap} from 'rxjs/operators';
 import { ErrorService } from './error.service';
 import { Provider } from 'src/app/shared/models/provider';
 import { LoaderService } from './loader.service';
@@ -81,5 +81,20 @@ export class ProviderService {
         catchError(error => this.errorService.handleError(error)),
         finalize(() => this.loaderService.setLoading(false))
     );
+}
+
+public add(provider: Provider): Observable<any> {
+  const url = `${this.appConfigService.basePath}/providers/add`;
+  const data =  {"provider_label":provider.label,"action":"add"};
+  this.loaderService.setLoading(true);
+
+  return this.http.post(url, data).pipe(
+    tap(_ => this.toastrService.showToastr({
+      category: 'success',
+      message: 'Votre fournisseur a été enregistré avec succès.'
+    })),
+    catchError(error => this.errorService.handleError(error)),
+    finalize(() => this.loaderService.setLoading(false))
+  );
 }
 }

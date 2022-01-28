@@ -11,13 +11,13 @@
         <div class="tab-content">
             <div class="tab-pane fade" *ngFor="let item  of results.elements" [class.active]="isActive(item)"
                 [class.show]="isActive(item)">
-                <app-search-result-tenders [item]='item' *ngIf="item.code == 'tenders'"></app-search-result-tenders>
-                <app-search-result-dauphin [item]='item' *ngIf="item.code == 'dauphin'"></app-search-result-dauphin>
-                <app-search-result-contract [item]='item' *ngIf="item.code == 'contract'"></app-search-result-contract>
-                <app-search-result-provider [item]='item' *ngIf="item.code == 'provider'"></app-search-result-provider>
-                <app-search-result-item-generic [item]='item' *ngIf="item.code == 'item_generic'">
+                <app-search-result-tenders [item]='item'  *ngIf="item.code == 'tenders'"></app-search-result-tenders>
+                <app-search-result-dauphin [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'dauphin'"></app-search-result-dauphin>
+                <app-search-result-contract [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'contract'"></app-search-result-contract>
+                <app-search-result-provider [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'provider'"></app-search-result-provider>
+                <app-search-result-item-generic [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'item_generic'">
                 </app-search-result-item-generic>
-                <app-search-result-agencies [item]='item' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
+                <app-search-result-agencies [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
             </div>
         </div>
         <div class="alert alert-warning" *ngIf=" (!results.countMax  || results.countMax == 0)  && reset == false">

@@ -1,5 +1,5 @@
     <div>
-        <p>Date de mise à jour des informations sur Dauphin : {{item.statsDate}}. <a href="https://dauphin.ivalua.com/page.aspx/fr/buy/homepage/dau_all" target="_blank">Accéder à DAUPHIN</a></p>
+        <p>Date de mise à jour: J-1 : {{updatedDate | date:'dd/MM/YYYY'}}.</p>
         <div class="alert alert-warning" *ngIf="item.count == 30">
             Seuls les 30 premiers résultats sont affichés, vous devriez affiner votre recherche. En rajoutant un mot ?
         </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { DateService } from 'src/app/core/services/date.service';
 import { Status } from 'src/app/shared/models/status';
+import { SheetService } from 'src/app/core/services/sheet.service';
 
 @Component({
   selector: 'app-sheet-list-item',
@@ -16,12 +17,14 @@ export class SheetListItemComponent implements OnInit {
   @Input() createdAt: String;
   @Input() statusCode: number;
   @Input() id: String;
+  @Input() subscribed: Boolean;
   @Input() user: any = {};
   status: Status;
 
   constructor(
     private router: Router,
     private dateService: DateService,
+    private sheetService: SheetService,
   ) { }
 
   ngOnInit() {
@@ -38,4 +41,30 @@ export class SheetListItemComponent implements OnInit {
     this.submittedGetSheet.emit(id);
   }
 
+
+  subscribe(sheetId: number){
+    console.log(sheetId);
+    this.sheetService
+      .sheetSubscribe({
+        sheet: sheetId,
+        user: this.user.nni
+      }).subscribe((response: any) => {
+        this.subscribed = true;
+      });
+
+
+}
+unsubscribe(sheetId: number){
+
+  this.sheetService
+    .sheetUnsubscribe({
+      sheet: sheetId,
+      user: this.user.nni
+    }).subscribe((response: any) => {
+
+      this.subscribed = false;
+    });
+
+
+}
 }

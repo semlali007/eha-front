@@ -49,8 +49,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public showcase: any;
   public openedContractCode: string = '';
   public options: Object[] = [];
+  public subscribed: Boolean = false;
 
-  @ViewChild('content') content:ElementRef; 
+  @ViewChild('content') content:ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,6 +84,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       }
     })
 
+    this.subscribed = sheet.subscribed;
     this.comments = sheet.comments;
     this.title = sheet.title;
     this.committee = sheet.committee;
@@ -152,7 +154,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
           description: contractlot.description,
         });
       });
-      
+
       let systems = [];
       contract.systems.forEach(
         system => {
@@ -175,7 +177,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       };
       this.contracts.push(contractField);
     });
-   
+
     sheet.documents.forEach((document) => {
       switch (document.type) {
         case 1:
@@ -209,11 +211,11 @@ export class SheetViewComponent implements OnInit, OnDestroy {
 
   confirm(): void {
     this.remove();
-    this.bsConfirmModalRef?.hide();    
+    this.bsConfirmModalRef?.hide();
   }
- 
+
   decline(): void {
-    this.bsConfirmModalRef?.hide();  
+    this.bsConfirmModalRef?.hide();
   }
 
   remove(): void {
@@ -275,7 +277,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
         doc.save( 'file.pdf');    
 
       });     
-  } 
+  }
 
   openChange(event: boolean, contractCode:string) {
     this.openedContractCode = event? contractCode: '';
@@ -284,4 +286,31 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   isOpened(contract) {
     return this.openedContractCode == contract.code ;
   }
+
+  subscribe(sheetId: number){
+
+      this.sheetService
+        .sheetSubscribe({
+          sheet: sheetId,
+          user: this.user.nni
+        }).subscribe((response: any) => {
+          this.subscribed = true;
+        });
+
+
+  }
+  unsubscribe(sheetId: number){
+
+    this.sheetService
+      .sheetUnsubscribe({
+        sheet: sheetId,
+        user: this.user.nni
+      }).subscribe((response: any) => {
+
+        this.subscribed = false;
+      });
+
+
+}
+
 }

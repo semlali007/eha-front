@@ -31,6 +31,7 @@ export class Sheet {
     showcase: boolean;
     options: Option[];
     createdAt: string;
+    subscribed: boolean;
 
     constructor(options: {
         id?: string,
@@ -55,7 +56,8 @@ export class Sheet {
         committee?: Committee,
         showcase?: boolean,
         options?: Option[],
-        created_at?: string
+        created_at?: string,
+        subscribed?:boolean
 
     } = {}) {
         this.id = options.id || null;
@@ -81,6 +83,7 @@ export class Sheet {
         this.showcase = options.showcase || false;
         this.options = options.options || [new Option()];
         this.createdAt = options.created_at || '';
+        this.subscribed = options.subscribed || false;
     }
 
 }

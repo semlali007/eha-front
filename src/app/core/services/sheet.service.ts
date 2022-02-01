@@ -224,7 +224,7 @@ export class SheetService {
 
     options.page = params.page || 1;
     options.perpage = params.perpage || 1;
-    
+
     options.search = params.search || { searchText: '', status: '', searchProvider:'' };
     options.search.providers = !!options.search.providers? options.search.providers: [];
 
@@ -306,6 +306,7 @@ export class SheetService {
       updated_at: fields.updated_at,
       created_at: !!fields.created_at ? fields.created_at : '',
       status: fields.status,
+      subscribed: fields.subscribed,
     });
   };
 
@@ -420,7 +421,8 @@ export class SheetService {
       updated_at: fields.updated_at,
       committee: committee,
       showcase: fields.showcase,
-      options: options
+      options: options,
+      subscribed: fields.subscribed
     });
   }
 
@@ -437,5 +439,24 @@ export class SheetService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+    public sheetSubscribe(params): Observable<any> {
+    const url = `${this.appConfigService.basePath}/sheets/subscribe`;
+    return this.http.post(url, params).pipe(
+      tap(_ => console.log('success')),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => console.log('ok'))
+    );
+  }
+
+  public sheetUnsubscribe(params): Observable<any> {
+    const url = `${this.appConfigService.basePath}/sheets/unsubscribe`;
+    return this.http.post(url, params).pipe(
+      tap(_ => console.log('success')),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => console.log('ok'))
+    );
+  }
+
 }
 

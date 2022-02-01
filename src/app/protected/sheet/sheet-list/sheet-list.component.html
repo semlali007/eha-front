@@ -47,11 +47,11 @@
                   <div>
                     <div class="list-group my-items-for-trainings" *ngIf="sheets">
                       <app-sheet-list-item *ngFor="let sheet of sheets" [sheet]="sheet" [comments]="sheet.comments"
-                        [title]="sheet.title" [date]="sheet.updatedAt" [createdAt]="sheet.createdAt" [statusCode]="sheet.status" [id]="sheet.id"
+                        [title]="sheet.title" [date]="sheet.updatedAt" [createdAt]="sheet.createdAt" [statusCode]="sheet.status" [id]="sheet.id" [subscribed]="sheet.subscribed"
                         (sheetRemoved)="onSheetRemoved(sheet)" class="list-group my-items-for-trainings" (submittedGetSheet)="onSubmittedGetSheet($event)"  [user]='user'>
                       </app-sheet-list-item>
                       <div class="row">
-                       
+
                         <form class="col-xs-12 col-12" [formGroup]="paginationForm">
                           <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
                             [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"

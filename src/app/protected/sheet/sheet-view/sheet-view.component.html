@@ -9,7 +9,7 @@
                     <button  (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
                 </div>
             </div>
-            <div class="col-lg-2 margin-tb" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
+            <div class="col-lg-1 margin-tb" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
                 <div class="pull-right"  >
                     <a (click)="modification(sheetId)"
                         class="btn btn-edf float-left" ><i class="fas fa-plus" ></i>
@@ -18,7 +18,7 @@
                     
                 </div>
             </div>
-            <div class="col-lg-2 margin-tb ml-auto" *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
+            <div class="col-lg-2" style="display:initial!important" *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
                 <button type="button" class="btn btn-danger float-left"  (click)="openModal(template)" >
                     Supprimer
                 </button>

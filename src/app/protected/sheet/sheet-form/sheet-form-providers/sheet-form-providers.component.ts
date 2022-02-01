@@ -66,6 +66,16 @@ export class SheetFormProvidersComponent implements OnInit {
         this.providers.setValue(res.data.value);
       });
 
+      this.bsModalRef.content.addElementEvent.subscribe(res => {
+        this.providerService.add(new Provider({ label: res.data.value })).subscribe(t =>
+          this.providerService.getProviders({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
+            this.bsModalRef.content.items = data.providers;
+            this.bsModalRef.content.total = data.total;
+          })
+        );
+      });
+
+
       this.bsModalRef.content.eventPaginate.subscribe(res => {
         this.providerService.getProviders({
           page: res.data.page,

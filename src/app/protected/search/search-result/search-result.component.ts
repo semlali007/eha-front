@@ -9,12 +9,14 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class SearchResultComponent implements OnInit, OnChanges {
   @Input() results: any = [];
   @Input() reset: boolean ;
+  updatedDate:Date= new Date();
 
   private active = '';
   maxCount = 0;
   constructor() { }
 
   ngOnInit() {
+    this.updatedDate.setDate(this.updatedDate.getDate() - 1);
   }
   ngOnChanges(): void {
     this.reloadData();

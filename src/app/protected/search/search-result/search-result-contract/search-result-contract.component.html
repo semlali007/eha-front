@@ -1,5 +1,5 @@
     <div>
-        <p>Date de mise à jour des informations sur les contrats : {{item.statsDate}} (source Entrepôt SI Finance).</p>
+        <p>Date de mise à jour: {{updatedDate | date:'dd/MM/YYYY'}}, source : DataLake.</p>
         <div class="alert alert-warning" *ngIf="item.count == 30">
             Seuls les 30 premiers résultats sont affichés, vous devriez affiner votre recherche. En rajoutant un mot ?
         </div>

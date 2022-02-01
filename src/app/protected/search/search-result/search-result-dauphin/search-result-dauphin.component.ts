@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class SearchResultDauphinComponent implements OnInit {
   @Input() item: any;
+  @Input() updatedDate: any;
   constructor(private router: Router) { }
 
   ngOnInit(): void {

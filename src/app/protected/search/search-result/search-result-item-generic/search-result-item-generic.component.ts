@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SearchResultItemGenericComponent implements OnInit {
   @Input() item: any;
+  @Input() updatedDate: any;
   constructor(private router: Router) { }
 
   ngOnInit(): void {

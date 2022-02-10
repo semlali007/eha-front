@@ -24,7 +24,7 @@ export class NewsService {
 ) { };
 
   getList(type): Observable<any | null> {
-    let url = `${this.appConfigService.basePath}/config/news/list/${type}`;
+    let url = `${this.appConfigService.basePath}/news/list/${type}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((response: any) => {
@@ -39,7 +39,7 @@ export class NewsService {
 
 
   public addNews(params: any): Observable<any> {
-    let url = `${this.appConfigService.basePath}/config/news/add`;
+    let url = `${this.appConfigService.basePath}/news/add`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -53,7 +53,7 @@ export class NewsService {
 
   public getElement(params: any)
   {
-    let url = `${this.appConfigService.basePath}/config/news/edit/${params.id}`;
+    let url = `${this.appConfigService.basePath}/news/edit/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((response: any) => {
@@ -69,7 +69,7 @@ export class NewsService {
 
 
   public updateNews(params: any): Observable<any> {
-    let url = `${this.appConfigService.basePath}/config/news/update`;
+    let url = `${this.appConfigService.basePath}/news/update`;
     this.loaderService.setLoading(true);
     return this.http.post(url, params).pipe(
       tap(_ => this.toastrService.showToastr({
@@ -83,7 +83,7 @@ export class NewsService {
 
   public remove(params): Observable<any> {
 
-    let url = `${this.appConfigService.basePath}/config/news/delete/${params.id}`;
+    let url = `${this.appConfigService.basePath}/news/delete/${params.id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       tap(_ => this.toastrService.showToastr({

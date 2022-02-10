@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AppConfigService {
     appConfig: (any | undefined) = undefined;
+    authConfig: (any | undefined) = undefined;
     constructor() { }
 
     get config() {

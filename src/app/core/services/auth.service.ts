@@ -184,7 +184,7 @@ export class AuthService {
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
-    this.oauthService.initLoginFlow(targetUrl || this.router.url, { 'acr_values': 'sesameGROUPE' });
+    this.oauthService.initLoginFlow(null, { 'acr_values': 'sesameGROUPE' });
   }
 
   public logout() { this.oauthService.logOut(); }

@@ -43,7 +43,7 @@ export class ConfigService {
         const httpOptions = {
             headers: new HttpHeaders(header)
         };
-        let url = `${this.appConfigService.basePath}/config/news/${options.type}`;
+        let url = `${this.appConfigService.basePath}/news/${options.type}`;
         return this.http.get(url, httpOptions).pipe(
             switchMap((response: any) => {
                 return of(
@@ -55,7 +55,7 @@ export class ConfigService {
     }
 
     createUserNews(data): Observable<any | null> {
-        let url = `${this.appConfigService.basePath}/config/create-user-news`;
+        let url = `${this.appConfigService.basePath}/create-user-news`;
         this.loaderService.setLoading(true);
         return this.http.post(url,data).pipe(
             switchMap((response: any) => {

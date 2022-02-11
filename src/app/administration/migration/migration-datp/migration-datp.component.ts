@@ -49,6 +49,7 @@ export class MigrationDatpComponent implements OnInit {
   }
 
   getList() {
+    console.log("-----------------------------------------------");
     this.migrationService.getList({ type: 'datp' }).subscribe(response => {
       this.list = response;
       console.log(this.list);

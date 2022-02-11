@@ -17,9 +17,9 @@
             <td>{{ data.id }}</td>
             <td>{{ data.titre }}</td>
             <td *ngIf="type === 'datp'">{{ data.datpb.titre }}</td>
-            <td>{{ data.type_d_element }}</td>
+            <td>{{ data.datpb.type_d_element }}</td>
             <td>
-                <label>{{data.chemin_d_acces}}</label>
+                <label>{{data.datpb.chemin_d_acces}}</label>
             </td>
         </tr>
     </tbody>

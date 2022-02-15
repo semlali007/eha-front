@@ -1,5 +1,5 @@
 <div class="form-group">
-    <strong>Fournisseurs :</strong>
+    <strong>Fournisseurs :</strong><span class="required">*</span>
     <div class="row">
         <div class="col-sm-10">
             <tag-input [formControl]="providers"  [placeholder]="'Entrer un fournisseur'" [onTextChangeDebounce]="500"
@@ -15,4 +15,10 @@
                >Fournisseurs</button>
         </div>
     </div>
+    <small *ngIf="providers.errors" class="form-text text-danger">
+        <span [hidden]="!providers.errors.required">
+            Fournisseurs requis.
+        </span>
+       
+    </small>
 </div>

@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="title"><strong>Titre :</strong></label>
+    <label for="title" ><strong>Titre :</strong><span class="required">*</span></label>
     <input id="title" [formControl]="title" type="title" class="form-control" placeholder="Le titre" autocorrect="off"
         autocomplete="off" />
     <small *ngIf="title.errors" class="form-text text-danger">

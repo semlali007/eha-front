@@ -116,7 +116,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         Validators.required,
         Validators.minLength(4),
       ]],
-      'contracts': this.fb.array([]),
+      'contracts': this.fb.array([], [
+				Validators.required,
+			]),
       'lots': this.fb.array([]),
       'comments': '',
       'dauphin': false,
@@ -124,10 +126,18 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'stipulation_for_others': false,
       'partnership': false,
       'protected_sector': false,
-      'providers': [],
-      'beneficiaries': [],
-      'areas': [],
-      'directions': [],
+      'providers':[[], [
+				Validators.required,
+			]],
+      'beneficiaries': [[], [
+				Validators.required,
+			]],
+      'areas': [[], [
+				Validators.required,
+			]],
+      'directions': [[], [
+				Validators.required,
+			]],
       'status': 0,
       'committeeCode': 0,
       'kits': this.fb.array([File]),

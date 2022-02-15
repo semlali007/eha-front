@@ -71,6 +71,12 @@ export class SheetFormProvidersComponent implements OnInit {
           this.providerService.getProviders({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
             this.bsModalRef.content.items = data.providers;
             this.bsModalRef.content.total = data.total;
+            this.bsModalRef.content.addItemToList({
+              code: t.element.provider_code,
+              label:  t.element.provider_label,
+              display:t.element.provider_label,
+              value: t.element.provider_label,
+            })
           })
         );
       });

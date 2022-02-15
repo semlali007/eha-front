@@ -1,5 +1,5 @@
 <div class="form-group">
-    <strong>Bénéficiaires :</strong>
+    <strong>Bénéficiaires :</strong><span class="required">*</span>
     <div class="row">
         <div class="col-sm-10">
             <tag-input [formControl]="beneficiaries"  [placeholder]="'Entrer un bénéficiaire'" [onTextChangeDebounce]="500"
@@ -15,4 +15,10 @@
                >Bénéficiaires</button>
         </div>
     </div>
+    <small *ngIf="beneficiaries.errors" class="form-text text-danger">
+        <span [hidden]="!beneficiaries.errors.required">
+            Bénéficiaires requis.
+        </span>
+       
+    </small>
 </div>

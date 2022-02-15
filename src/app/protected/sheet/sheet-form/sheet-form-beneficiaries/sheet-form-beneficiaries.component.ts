@@ -74,6 +74,12 @@ export class SheetFormBeneficiariesComponent implements OnInit {
           this.beneficiaryService.getList({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
             this.bsModalRef.content.items = data.beneficiaries;
             this.bsModalRef.content.total = data.total;
+            this.bsModalRef.content.addItemToList({
+              code: t.element.id,
+              label:  t.element.name,
+              display:t.element.name,
+              value: t.element.name,
+            })
           })
         );
       });
@@ -89,4 +95,6 @@ export class SheetFormBeneficiariesComponent implements OnInit {
       });
     });
   }
+
+  
 }

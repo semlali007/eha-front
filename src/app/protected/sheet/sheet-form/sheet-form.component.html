@@ -23,9 +23,11 @@
             </div>
         </div>
     </div>
-    <span *ngIf="!sheetForm.valid" class="form-text text-danger">
-        Veuillez remplir tous les champs requis
+
+    <span class="form-text">
+        Les champs avec une étoile doivent obligatoirement être remplis.
     </span>
+   
 
     <app-sheet-form-title [title]="title"></app-sheet-form-title>
     <app-sheet-form-date [startDate]="startDate" [endDate]="endDate"></app-sheet-form-date>

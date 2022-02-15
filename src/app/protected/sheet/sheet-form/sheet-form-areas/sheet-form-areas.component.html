@@ -1,5 +1,5 @@
 <div class="form-group">
-    <strong>Zones :</strong>
+    <strong>Zones :</strong><span class="required">*</span>
     <div class="row">
         <div class="col-sm-10">
             <tag-input [formControl]="areas"  [placeholder]="'Entrer une zone'" [onTextChangeDebounce]="500"
@@ -15,4 +15,10 @@
                >Zones</button>
         </div>
     </div>
+    <small *ngIf="areas.errors" class="form-text text-danger">
+        <span [hidden]="!areas.errors.required">
+            Zones requis.
+        </span>
+       
+    </small>
 </div>

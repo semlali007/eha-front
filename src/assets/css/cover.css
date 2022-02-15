@@ -251,4 +251,6 @@ color: var(--my-color-orange);
 background: white;
 color: black;
 }
-
+.required {
+  color: red;
+}

@@ -16,6 +16,7 @@ import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
 import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
 import { ContractService } from 'src/app/core/services/contract.service';
+import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
 
 @Component({
   selector: 'app-sheet-form',
@@ -142,7 +143,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'committeeCode': 0,
       'kits': this.fb.array([File]),
       'showcase': false
-    });
+    },{ validators : customValidator });
   }
 
   initEditForm(sheet: Sheet): void {
@@ -295,6 +296,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         id: option.id,
         startDate: [startdate, [
           Validators.required,
+          Validators.required, MinDateValidator(this.endDate)
         ]],
         endDate: [enddate, [
           Validators.required

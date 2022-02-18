@@ -36,6 +36,14 @@
             "allowedCommonJsDependencies": ["file-saver"]
           },
           "configurations": {
+            "development": {
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                           "buildOptimizer": false,
+                            "sourceMap": true,
+                            "optimization": false,
+                            "namedChunks": true
+                          },
             "local": {
               "fileReplacements": [
                 {
@@ -71,12 +79,13 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "achatpedia:build",
+            "browserTarget": "achatpedia:build:development",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {

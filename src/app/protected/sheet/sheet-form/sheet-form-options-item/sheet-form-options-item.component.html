@@ -14,6 +14,20 @@
         [bsConfig]="{ containerClass: 'theme-dark-blue' }"
         bsDatepicker>
     </div>
+    <small *ngIf="startDate.errors" class="form-text text-danger">
+      <span [hidden]="!startDate.errors.required">
+        Date de début requis.
+      </span>
+      <span [hidden]="!startDate.errors?.minDateNotValid">
+        Date de début est postérieur à la date de fin du marché.
+      </span>
+  </small>
+  <small *ngIf="option?.errors" class="form-text text-danger">
+    <span [hidden]="!option.errors?.customValidator">
+      Date de début est antérieure à la date de fin.
+    </span>
+  </small>
+
   </div>
 
   <div class="col-sm-4">
@@ -26,12 +40,16 @@
         [bsConfig]="{ containerClass: 'theme-dark-blue' }"
         bsDatepicker>
     </div>
+    <small *ngIf="endDate.errors" class="form-text text-danger">
+      <span [hidden]="!endDate.errors.required">
+        Date de fin requis.
+      </span>
+  </small>
   </div>
   <div class="col-sm-1">
     <button class="remove" (click)="confirmation(template)">-</button>
   </div>
-  <p style="margin-left:51%" [hidden]="!option.errors?.customValidator">Date invalide</p>  
- 
+  
 </form>
 
 <ng-template #template>

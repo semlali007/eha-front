@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
 import { customValidator } from '../../customValidator';
 
-
 @Component({
 	selector: 'app-sheet-form-options',
 	templateUrl: './sheet-form-options.component.html',

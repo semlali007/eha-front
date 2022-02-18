@@ -143,7 +143,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'committeeCode': 0,
       'kits': this.fb.array([File]),
       'showcase': false
-    });
+    },{ validators : customValidator });
   }
 
   initEditForm(sheet: Sheet): void {

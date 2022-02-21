@@ -102,7 +102,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
   cancel() {
     this.init();
-    return ;
   }
 
   createsheetForm(): FormGroup {

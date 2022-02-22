@@ -1,0 +1,17 @@
+{
+    "production": false,
+    "authConfig": {
+      "issuer": "https://rec-websso-gardian.myelectricnetwork.com:443/gardianwebsso/oauth2/multiauth/PKCE",
+      "clientId": "5CEHA002",
+      "redirectUri": "https://dsp0880728.atlas.edf.fr:5000",
+      "postLogoutRedirectUri": "logout",
+      "dummyClientSecret": "eB?7csn7Wo?+",
+      "scope": "gardianSesameProfil mail gardianSesameDroit openid gardianGroupID givenName cn uid employeeType gardianHierarchie departmentNumber name isMemberOf sn email"
+    },
+    "appConfig": {
+      "api": {
+        "host": "/api"
+      },
+      "loaderToStart": 100
+    }
+  }

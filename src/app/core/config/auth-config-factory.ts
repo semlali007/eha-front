@@ -8,10 +8,16 @@ export function getAuthConfig(http: HttpClient, oAuthService: OAuthService, conf
   return (): Promise<void> => {
     return new Promise<void>((resolve) => {
       const url = `${environment.configPath}`;
-      http.get(url)
+      http.get(url, {responseType: 'text'})
     .subscribe((config: any) => {
-      const vault = new Vault({ password: environment.encryptionKey });
-      vault.decrypt(config.data).then(dataResponse=>{
+      console.log('config0',config);
+      const vault = new Vault({ password: `${environment.encryptionKey}` });
+     
+      vault.decrypt(`${environment.encryptionHead}${config}`).then(dataResponse=>{
+        console.log('config', dataResponse);
+        console.log(process.env);
+        console.log(process.env.encryptionKey);
+         
        const data = JSON.parse(dataResponse);
        const cfg = {
          issuer: data.authConfig.issuer,

@@ -14,7 +14,7 @@ export class ToastrService {
   constructor() { }
 
   public showToastr(toastr: Toastr): void {
-    timer(0, 4000).pipe(take(2)).subscribe(i => {
+    timer(0, 6000).pipe(take(2)).subscribe(i => {
       if (i === 0) {
         this.toastr.next(toastr);
       } else {

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { ToastrService } from './toastr.service';
 import { ModalService } from './modal.service';
 import { Error } from 'src/app/shared/models/error';
@@ -8,7 +10,7 @@ import { Error } from 'src/app/shared/models/error';
 })
 export class ErrorService {
 
-  constructor(private toastrService: ToastrService, private modalService: ModalService) { }
+  constructor(private router: Router,private toastrService: ToastrService, private modalService: ModalService) { }
 
 
   public handleError(error) {
@@ -18,7 +20,18 @@ export class ErrorService {
         status: error.error.status,
         message: error.error.error
       });
-    } else {
+    }
+    else if(error instanceof HttpErrorResponse){
+      if(error.status==504){
+        this.toastrService.showToastr({
+          category: 'danger',
+          message: "Votre session a expiré, essayez de se connecter a nouveau !"
+        });
+
+        this.router.navigate(['/login']);
+      }
+    } 
+    else {
       error = (typeof error === 'string') ? error : 'Une erreur est survenue, essayez plus tard.'
       this.toastrService.showToastr({
         category: 'danger',
@@ -28,5 +41,6 @@ export class ErrorService {
       return throwError(error);
     }
   }
+
 
 }

@@ -144,8 +144,6 @@ export class DocumentationService {
 
     let url = `${this.appConfigService.basePath}/documentations/import`;
 
-    // const data =  {"content":params.content, "type":params.type};
-
     return this.http.post(url, params).pipe(
       tap(_ => console.log('success')),
       catchError(error => this.errorService.handleError(error)),

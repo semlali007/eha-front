@@ -12,9 +12,7 @@ import { ExcelService } from 'src/app/core/services/excel.service';
 })
 export class DocumentationComponent implements OnInit {
   fileForm: FormGroup;
-  data = [];
   requestData :any;
-
   documentationForm: FormGroup;
   disabledEdit : boolean = true;
   bsModalRef?: BsModalRef;
@@ -176,7 +174,6 @@ export class DocumentationComponent implements OnInit {
   export(){
     this.documentationService.export().subscribe(
       data=>{
-        console.log('data', data);
         this.excelService.generateExcel(data, {sheet:'documentations', name:'export_documentations'});
       }
     )

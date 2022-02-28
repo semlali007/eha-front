@@ -140,5 +140,29 @@ export class DocumentationService {
     );
   }
 
-  
+  public import(params:any): Observable<any>{
+
+    let url = `${this.appConfigService.basePath}/documentations/import`;
+
+    return this.http.post(url, params).pipe(
+      tap(_ => console.log('success')),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => console.log('ok'))
+    );
+  }
+
+  public export(): Observable<any>{
+
+    let url = `${this.appConfigService.basePath}/documentations/export`;
+    this.loaderService.setLoading(true);
+
+    return this.http.get(url).pipe(
+      switchMap((listData: any) => {
+        return of(listData);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
 }

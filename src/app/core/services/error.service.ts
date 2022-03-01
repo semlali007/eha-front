@@ -25,13 +25,14 @@ export class ErrorService {
       if(error.status==504){
         this.toastrService.showToastr({
           category: 'danger',
-          message: "Votre session a expiré, essayez de se connecter a nouveau !"
+          message: "Votre session a expiré, veuillez vous reconnecter !"
         });
 
         this.router.navigate(['/login']);
       }
     } 
     else {
+      console.log(error) ;
       error = (typeof error === 'string') ? error : 'Une erreur est survenue, essayez plus tard.'
       this.toastrService.showToastr({
         category: 'danger',

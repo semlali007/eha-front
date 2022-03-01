@@ -69,7 +69,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'providers': [this.defaultFilter.providers],
       'directions': [this.defaultFilter.directions],
       'committees': [this.defaultFilter.committees],
-      'status': [(this.defaultFilter.status === '') ? 'all' : this.defaultFilter.status],
+      'status': [this.defaultFilter.status],
       'showcase': [(this.defaultFilter.showcase === '') ? 'all' : this.defaultFilter.showcase]
     });
   }
@@ -85,7 +85,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'providers': [[]],
       'directions': [[]],
       'committees': [[]],
-      'status': ['all'],
+      'status': [[]],
       'showcase': ['all']
     });
   }

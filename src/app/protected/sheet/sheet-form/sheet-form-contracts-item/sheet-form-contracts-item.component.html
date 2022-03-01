@@ -20,7 +20,7 @@
     </div>
     <div class="col-5">
         <editor *ngIf ="isActive" formControlName="contacts" id="contact{{index}}" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
-        <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>20831979
+        <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>
     </div>
 
     <div class="col-2">

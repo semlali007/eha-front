@@ -15,7 +15,6 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private currentUrl  ;
   private user: BehaviorSubject<User | null> = new BehaviorSubject(null);
   public readonly user$: Observable<User | null> = this.user.asObservable();
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
@@ -241,7 +240,7 @@ export class AuthService {
         profil: params
       }));
       console.log(this.router.url);
-      this.router.navigate(["/app/accueil"]);
+      this.router.navigate([this.router.url]);
     }
   }
 

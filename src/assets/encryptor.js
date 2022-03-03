@@ -10,6 +10,6 @@ v.encrypt(appConfig).then(result => {
     lines.splice(0,1);
 // join the array back into a single string
     let newText = lines.join('\n');
-    fs.writeFileSync('src/assets/e-config-dev.json', newText);
+    fs.writeFileSync('src/assets/e_config-dev.json', newText);
   }
 )

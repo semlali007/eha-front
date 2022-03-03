@@ -10,14 +10,8 @@ export function getAuthConfig(http: HttpClient, oAuthService: OAuthService, conf
       const url = `${environment.configPath}`;
       http.get(url, {responseType: 'text'})
     .subscribe((config: any) => {
-      console.log('config0',config);
       const vault = new Vault({ password: `${environment.encryptionKey}` });
-     
-      vault.decrypt(`${environment.encryptionHead}${config}`).then(dataResponse=>{
-        console.log('config', dataResponse);
-        console.log(process.env);
-        console.log(process.env.encryptionKey);
-         
+      vault.decrypt(`${environment.encryptionHead}${config}`, undefined).then(dataResponse=>{
        const data = JSON.parse(dataResponse);
        const cfg = {
          issuer: data.authConfig.issuer,
@@ -35,12 +29,10 @@ export function getAuthConfig(http: HttpClient, oAuthService: OAuthService, conf
          useHttpBasicAuth: true,
          nonceStateSeparator: '-'
        } as AuthConfig;
-
        oAuthService.configure(cfg);
        configService.appConfig = data.appConfig;
        configService.authConfig = data.authConfig;
        resolve();
-
       });
       });
     });

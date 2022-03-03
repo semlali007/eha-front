@@ -49,7 +49,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     search: {
       searchText: this.searchText,
       searchProvider: this.searchProvider,
-      status: '',
+      status:  [],
       edf_open: '',
       partnership: '',
       protected_sector: '',
@@ -74,7 +74,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     providers: [],
     directions: [],
     committees: [],
-    status: '',
+    status:  [],
     areas: [],
     showcase: ''
   };
@@ -160,7 +160,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       search: {
         searchText: this.searchText,
         searchProvider: this.searchProvider,
-        status: status,
+        status: this.filterInput.status,
         edf_open: this.filterInput.edfOpen,
         partnership: this.filterInput.partnership,
         protected_sector: this.filterInput.sector,
@@ -197,7 +197,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       providers: [],
       directions: [],
       committees: [],
-      status: '',
+      status:  [],
       areas: [],
       showcase: ''
     };

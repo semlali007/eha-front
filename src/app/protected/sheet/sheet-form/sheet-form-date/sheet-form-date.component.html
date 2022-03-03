@@ -1,4 +1,5 @@
 <div class="row mb-5">
+    
     <div class="col-md-6 mx-auto">
         <div class="form-inline">
             <div class="form-group">
@@ -9,8 +10,14 @@
                         <span [hidden]="!startDate.errors.required">  Date requise.</span>
                         <span [hidden]="!startDate.errors.bsDate">  Date invalide.</span>
                     </small>
+                    
             </div>
         </div>
+        <small *ngIf="sheetForm?.errors" class="form-text text-danger">
+            <span [hidden]="!sheetForm.errors?.customValidator">
+              Date de début est antérieure à la date de fin.
+            </span>
+          </small>
     </div>
     <div class="col-md-6 mx-auto">
         <div class="form-inline">

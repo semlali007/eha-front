@@ -4,12 +4,15 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DocumentationFormComponent } from '../documentation-form/documentation-form.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ExcelService } from 'src/app/core/services/excel.service';
 @Component({
   selector: 'app-documentation',
   templateUrl: './documentation.component.html',
   styleUrls: ['./documentation.component.css']
 })
 export class DocumentationComponent implements OnInit {
+  fileForm: FormGroup;
+  requestData :any;
   documentationForm: FormGroup;
   disabledEdit : boolean = true;
   bsModalRef?: BsModalRef;
@@ -27,11 +30,18 @@ export class DocumentationComponent implements OnInit {
     private modalService: BsModalService,
     private route: ActivatedRoute,
     private router: Router,
+    private excelService: ExcelService,
   ) { }
 
   get content() { return this.documentationForm.get('content') }
+  get file() { return this.fileForm.get('file') }
 
   ngOnInit(): void {
+    this.fileForm = this.fb.group({
+      file: new FormControl('', [Validators.required]),
+      fileSource: new FormControl('', [Validators.required])
+    });
+
     this.route.params.subscribe(params => {
       if (!!params.id) {
         this.id = params.id;
@@ -139,6 +149,50 @@ export class DocumentationComponent implements OnInit {
     .subscribe(response=>{
       this.getDocumentation();
     });
+  }
+
+  import(){
+    let params = [];
+    this.requestData.forEach((DataValue,DataKey)=>{
+      if(DataKey == 0){
+        return;
+      }
+      let line = {};
+      this.requestData[0].forEach((value,key)  => {
+        line[value] = DataValue[key]
+      });
+      params.push(line);
+    })
+
+    this.documentationService
+    .import({fields: this.requestData.length>0?this.requestData[0]:[], data:params})
+    .subscribe(response=>{
+      this.getDocumentation();
+    });
+  }
+
+  export(){
+    this.documentationService.export().subscribe(
+      data=>{
+        this.excelService.generateExcel(data, {sheet:'documentations', name:'export_documentations'});
+      }
+    )
+  }
+
+  onFileChange(event) {
+    let promise = new Promise((resolve, reject) => {
+    let data = this.excelService.readExcel(event);
+      resolve(data);
+    });
+    promise.then(response => {
+      this.requestData = response;
+      if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        this.fileForm.patchValue({
+          fileSource: file
+        });
+      }
+    })
   }
 
   openModal(template: TemplateRef<any>, id: number) {

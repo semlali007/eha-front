@@ -7,12 +7,10 @@ export const environment = {
     appVersion: require('../../package.json').version + '-dev',
     encryptionKey: 'qqq',
     encryptionHead: '$ANSIBLE_VAULT;1.1;AES256\n',
-    appENv: process.env.APP_ENV1,
     configPath: '/assets/toto.json'
-  };  
+  };
   /*
    * For easier debugging in development mode, you can import the following file
    * This import should be commented out in production mode because it will have a negative impact
    * on performance if an error is thrown.
    */
-  

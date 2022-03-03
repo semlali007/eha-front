@@ -15,7 +15,6 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-
   private user: BehaviorSubject<User | null> = new BehaviorSubject(null);
   public readonly user$: Observable<User | null> = this.user.asObservable();
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);

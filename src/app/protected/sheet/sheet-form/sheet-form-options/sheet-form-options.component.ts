@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
 import { customValidator } from '../../customValidator';
-
 
 @Component({
 	selector: 'app-sheet-form-options',
@@ -24,6 +24,7 @@ export class SheetFormOptionsComponent implements OnInit {
 			'id': [''],
 			'startDate': ['', [
 			  Validators.required,
+			  Validators.required, MinDateValidator(this.sheetForm.get('endDate'))
 			]],
 			'endDate': ['', [
 			  Validators.required
@@ -31,7 +32,7 @@ export class SheetFormOptionsComponent implements OnInit {
 		  },
 		  { validators : customValidator });
 	}
-
+	
 	onAddedTask() {
 		const option = this.createTaskForm();
 		this.options.push(option);

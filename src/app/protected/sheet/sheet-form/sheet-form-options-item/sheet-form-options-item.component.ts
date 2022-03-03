@@ -15,7 +15,6 @@ export class SheetFormOptionsItemComponent implements OnInit{
 	@Input() isFirst: boolean;
 	@Input() isLast: boolean;
 	@ViewChild('template') template : ElementRef;
-	@Output() startDate = new EventEmitter<any>();
 	@Output() removedTask = new EventEmitter<number>();
 
 	modalRef: BsModalRef;
@@ -26,11 +25,12 @@ export class SheetFormOptionsItemComponent implements OnInit{
 	ngOnInit() {
 
 	}
-
+	get startDate() { return this.option.get('startDate') as any; }
+	get endDate() { return this.option.get('endDate') as any; }
 	confirmation(template: TemplateRef<any>) {
 		this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
 	}
-	 
+
 	confirm(): void {
 		this.removedTask.emit(this.index);
 		this.modalRef.hide();

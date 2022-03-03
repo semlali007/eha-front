@@ -10,7 +10,7 @@
             <div class="row">
                 
                 <div class="ml-auto">
-                    <button type="button" class="btn btn-edf float-left" (click)='cancel()' >
+                    <button type="button" class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();' >
                         Annuler
                     </button>
                 </div>
@@ -30,7 +30,7 @@
    
 
     <app-sheet-form-title [title]="title"></app-sheet-form-title>
-    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate"></app-sheet-form-date>
+    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate" [sheetForm]="sheetForm"></app-sheet-form-date>
     <app-sheet-form-options [sheetForm]="sheetForm" [options]="options"></app-sheet-form-options>
     <app-sheet-form-comments [comments]="comments"></app-sheet-form-comments>
     <app-sheet-form-dauphin [dauphin]="dauphin"></app-sheet-form-dauphin>
@@ -54,7 +54,7 @@
         <div class="col-lg-2">
             <div class="row">
                 <div class="ml-auto">
-                    <button class="btn btn-edf float-left" (click)='cancel()' [disabled]="sheetForm.invalid">
+                    <button class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();' [disabled]="sheetForm.invalid">
                         Annuler
                     </button>
                 </div>

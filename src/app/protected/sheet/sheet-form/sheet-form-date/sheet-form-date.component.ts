@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 @Component({
   selector: 'app-sheet-form-date',
@@ -10,8 +10,10 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 export class SheetFormDateComponent implements OnInit {
   @Input() startDate: FormControl;
   @Input() endDate: FormControl;
+  @Input() sheetForm: FormGroup;
   constructor(private localeService: BsLocaleService) { }
   ngOnInit(): void {
     this.localeService.use('fr');
   }
+
 }

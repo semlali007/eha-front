@@ -47,4 +47,4 @@ Thumbs.db
 
 # local config
 /src/assets/config-dev.json
-/src/assets/config-dev.json
+/src/assets/config.json

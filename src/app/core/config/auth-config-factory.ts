@@ -12,9 +12,7 @@ export function getAuthConfig(http: HttpClient, oAuthService: OAuthService, conf
     .subscribe((config: any) => {
       const vault = new Vault({ password: `${environment.encryptionKey}` });
       vault.decrypt(`${environment.encryptionHead}${config}`, undefined).then(dataResponse=>{
-        console.log('dataResponse',dataResponse);
        const data = JSON.parse(dataResponse);
-       console.log('data',data);
        const cfg = {
          issuer: data.authConfig.issuer,
          clientId: data.authConfig.clientId, // The "Auth Code + PKCE" client

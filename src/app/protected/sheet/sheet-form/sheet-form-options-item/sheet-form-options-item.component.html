@@ -19,12 +19,12 @@
         Date de début requis.
       </span>
       <span [hidden]="!startDate.errors?.minDateNotValid || startDate.errors.required ">
-        Date de début est postérieur à la date de fin du marché.
+        La date de début de l'option ne doit pas être antérieure à la date de fin du marché.
       </span>
   </small>
   <small *ngIf="option?.errors" class="form-text text-danger">
     <span [hidden]="!option.errors?.customValidator ||startDate.errors?.required || endDate.errors?.required">
-      Date de début est antérieure à la date de fin.
+      La date de début ne doit pas être postérieure à la date de fin.
     </span>
   </small>
 

@@ -15,7 +15,7 @@
         </div>
         <small *ngIf="sheetForm?.errors" class="form-text text-danger">
             <span [hidden]="!sheetForm.errors?.customValidator">
-              Date de début est antérieure à la date de fin.
+            La date de début ne doit pas être postérieure à la date de fin.
             </span>
           </small>
     </div>

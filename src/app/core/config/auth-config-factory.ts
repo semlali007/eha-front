@@ -23,10 +23,11 @@ export function getAuthConfig(http: HttpClient, oAuthService: OAuthService, conf
          useSilentRefresh: false, // Needed for Code Flow to suggest using iframe-based refreshes
          timeoutFactor: 0.25, // For faster testing
          sessionChecksEnabled: true,
-         showDebugInformation: true, // Also requires enabling "Verbose" level in devtools
+         showDebugInformation: false, // Also requires enabling "Verbose" level in devtools
          clearHashAfterLogin: false, // https://github.com/manfredsteyer/angular-oauth2-oidc/issues/457#issuecomment-431807040,
          dummyClientSecret: data.authConfig.dummyClientSecret,
          useHttpBasicAuth: true,
+         revocationEndpoint:data.authConfig.issuer+'/token/revoke',
          nonceStateSeparator: '-'
        } as AuthConfig;
        oAuthService.configure(cfg);

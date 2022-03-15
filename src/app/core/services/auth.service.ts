@@ -93,87 +93,28 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.navigateToLoginPage());
-
-    //this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh();
   }
 
   public runInitialLoginSequence(): Promise<void> {
-    if (location.hash) {
-      console.log('Encountered hash fragment, plotting as table...');
-      console.table(location.hash.substr(1).split('&').map(kvp => kvp.split('=')));
-    }
-
-    // 0. LOAD CONFIG:
-    // First we have to check to see how the IdServer is
-    // currently configured:
-
     return this.oauthService.loadDiscoveryDocument()
-
-      // For demo purposes, we pretend the previous call was very slow
-      .then(() => new Promise<void>(resolve => setTimeout(() => resolve(), 1000)))
-
-      // 1. HASH LOGIN:
-      // Try to log in via hash fragment after redirect back
-      // from IdServer from initImplicitFlow:
       .then(() => this.oauthService.tryLogin())
-
       .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
           return Promise.resolve();
+        }else{
+          return Promise.reject(false);
         }
-
-        // 2. SILENT LOGIN:
-        // Try to log in via a refresh because then we can prevent
-        // needing to redirect the user:
-       /*return this.oauthService.silentRefresh()
-          .then(() => Promise.resolve())
-          .catch(result => {
-            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
-            // Only the ones where it's reasonably sure that sending the
-            // user to the IdServer will help.
-            const errorResponsesRequiringUserInteraction = [
-              'interaction_required',
-              'login_required',
-              'account_selection_required',
-              'consent_required',
-            ];
-
-            if (result
-              && result.reason
-              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
-
-              // 3. ASK FOR LOGIN:
-              // At this point we know for sure that we have to ask the
-              // user to log in, so we redirect them to the IdServer to
-              // enter credentials.
-              //
-              // Enable this to ALWAYS force a user to login.
-              // this.login();
-              //
-              // Instead, we'll now do this:
-              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
-              return Promise.resolve();
-            }
-
-            // We can't handle the truth, just pass on the problem to the
-            // next handler.
-            return Promise.reject(result);
-          });*/
       })
-
       .then(() => {
         this.isDoneLoadingSubject$.next(true);
-
-        // Check for the strings 'undefined' and 'null' just to be sure. Our current
-        // login(...) should never have this, but in case someone ever calls
-        // initImplicitFlow(undefined | null) this could happen.
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
           let stateUrl = this.oauthService.state;
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
+          
           this.messageService.sendMessage({modalStateHome:true});
-          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
           this.router.navigateByUrl(stateUrl);
         }
       })
@@ -186,9 +127,15 @@ export class AuthService {
     this.oauthService.initLoginFlow(null, { 'acr_values': 'sesameGROUPE' });
   }
 
-  public logout() { this.oauthService.logOut(); }
+  public logout() { this.oauthService.logOut(true); }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
+  public revokeTokenAndLogout() {
+    this.oauthService.revokeTokenAndLogout({
+      client_id: this.oauthService.clientId,
+      returnTo: this.oauthService.postLogoutRedirectUri
+    }, false);
+  }
 
   // These normally won't be exposed from a service like this, but
   // for debugging it makes sense.
@@ -197,7 +144,7 @@ export class AuthService {
   public get identityClaims() { return this.oauthService.getIdentityClaims(); }
   public get idToken() { return this.oauthService.getIdToken(); }
   public get logoutUrl() { return this.oauthService.logoutUrl; }
-
+  public stopAutomaticRefresh() { return this.oauthService.stopAutomaticRefresh(); }
   private getUser(params): User {
     return new User({
       email: params.email,
@@ -239,7 +186,6 @@ export class AuthService {
         nni: params['sub'],
         profil: params
       }));
-      console.log(this.router.url);
       this.router.navigate([this.router.url]);
     }
   }

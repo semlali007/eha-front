@@ -15,6 +15,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    
      if(req.url.includes('.well-known/openid-configuration')){
       let body ={
         "response_types_supported": [

@@ -27,7 +27,7 @@ export class NotificationService {
   getUserNotification(options: {
     nni?: string,
   }): Observable<any | null> {
-    let url = `${this.appConfigService.basePath}/notifications/${options.nni}`;
+    let url = `${this.appConfigService.basePath}/notifications/list/${options.nni}`;
     return this.http.get(url).pipe(
       switchMap((response: any) => {
         return of(

@@ -3,13 +3,15 @@ import { Injectable, Inject, Optional } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { AppConfigService } from 'src/app/core/services/app-config.service';
-
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { tap } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private authStorage: OAuthStorage,
     private appConfigService: AppConfigService,
+    private notificationService: NotificationService,
   ) {
   }
 
@@ -118,7 +120,21 @@ export class AuthInterceptor implements HttpInterceptor {
       req = req.clone({ headers });
     }
 
-    return next.handle(req);
+    return next.handle(req).pipe(
+      tap(stateEvent => {
+        if (stateEvent instanceof HttpResponse) {
+          if(!!stateEvent.headers && !!stateEvent.headers.get('total_notification')){
+            console.log(stateEvent.headers.get('total_notification'));
+            this.notificationService.showNotification({
+              category: 'success',
+              count: stateEvent.headers.get('total_notification')
+            });
+          }
+        }
+      })
+    )
+
+   // return next.handle(req);
   }
 
   private addContentType(request: HttpRequest<any>): HttpRequest<any> {

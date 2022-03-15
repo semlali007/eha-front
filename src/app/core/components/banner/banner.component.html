@@ -8,9 +8,13 @@
             <td style="width:13%">
               <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
             </td>
-
             <td><b>Achatpédia</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>Votre espace de documentation, de recherche, et de contacts sur les achats</small></td>
-            <td *ngIf="user" ><a (click)="logout()" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png">&nbsp;Se déconnecter</a></td>
+            <td *ngIf="user" ><a (click)="logout()" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png">&nbsp;Se déconnecter</a>
+              <span *ngIf="(notification$ | async) as notification" (click)="openModal()" style="cursor:pointer">
+                <img class="mt-1" src="../../../../assets/img/icone-notification-vert.png" style="cursor:pointer;width: 39px;margin-left: 5px;color:RGB(80,158,47) ;padding-bottom: 11px !important;" /> 
+              <span  *ngIf="notification.count > 0" style="color:RGB(80,158,47)">  {{ notification.count }}</span>
+            </span>
+            </td>
           </tr>
         </table>
         

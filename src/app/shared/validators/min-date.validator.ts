@@ -3,7 +3,7 @@ export function MinDateValidator(minDate: any): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 
         if (!control.value || !minDate.value) {
-            return { "minDateNotValid": true };
+            return null;
         }
 
         return minDate.value < control.value ? null : { "minDateNotValid": true };

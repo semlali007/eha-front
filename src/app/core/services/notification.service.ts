@@ -37,4 +37,17 @@ export class NotificationService {
       catchError(error => this.errorService.handleError(error)),
     );
 }
+
+
+putViewed(id): Observable<any | null> {
+  let url = `${this.appConfigService.basePath}/notifications/update`;
+  return this.http.post(url,{id:id}).pipe(
+      switchMap((response: any) => {
+          return of(
+              response
+          );
+      }),
+      catchError(error => this.errorService.handleError(error)),
+  );
+}
 }

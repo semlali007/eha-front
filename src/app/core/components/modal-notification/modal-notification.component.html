@@ -15,7 +15,7 @@
           <ul *ngIf="list?.length > 0;else ngelse">
           <tr *ngFor="let i of list">
             <td> 
-              <li><p class="font-weight-light">La fiche marché <strong>{{ i.label}}</strong > a été modifiée le <strong style="color:var(--my-color-green)">{{ i.updated_at | date:
+              <li (click)="putViewed(i.id)"><p class="font-weight-light">La fiche marché <strong>{{ i.label}}</strong > a été modifiée le <strong style="color:var(--my-color-green)">{{ i.updated_at | date:
                 'dd/MM/yyyy' }}</strong></p></li> 
             </td>
           </tr> 

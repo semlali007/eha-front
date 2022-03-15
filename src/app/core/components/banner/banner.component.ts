@@ -30,6 +30,8 @@ export class BannerComponent implements OnInit {
     this.router.navigate([page]);
   }
 
-  public logout() { this.authService.logout(); }
+  public logout() { 
+    this.authService.revokeTokenAndLogout();
+   }
 
 }

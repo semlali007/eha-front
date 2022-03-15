@@ -23,7 +23,6 @@ export class Profil {
         givenName?: string,
         roles?: Role[]
     } = {}) {
-        console.log(options);
         this.gardianGroupID = options.gardianGroupID || '';
         this.auditTrackingId = options.auditTrackingId || '';
         this.cn = options.cn || '';

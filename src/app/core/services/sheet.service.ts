@@ -458,5 +458,18 @@ export class SheetService {
     );
   }
 
+  public sheetValidate(params): any
+  { 
+    if(params.get('options') != null)
+    {
+      Object.keys(params.get('options').controls).forEach(option => {
+        Object.keys(params.get('options').get(option).controls).forEach(elem =>{
+          let control = params.get('options').get(option).get(elem);
+          control.updateValueAndValidity();
+        })
+      })
+    }
+  }
+
 }
 

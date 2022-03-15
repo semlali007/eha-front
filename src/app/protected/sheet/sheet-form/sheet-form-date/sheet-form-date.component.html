@@ -23,8 +23,8 @@
         <div class="form-inline">
             <div class="form-group">
                 <label for="endDate" class="mr-3"><strong>Date de fin part ferme :</strong><span class="required">*</span></label>
-                <input bsDatepicker [formControl]="endDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
-                    class="form-control form-control-sm align-middle" />
+                <input bsDatepicker (bsValueChange)="onValueChange($event)" [formControl]="endDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
+                    class="form-control form-control-sm align-middle" (change)="onChange($event)" />
                     <small *ngIf="endDate.errors" class="form-text text-danger">
                         <span [hidden]="!endDate.errors.required">  Date requise.</span>
                         <span [hidden]="!endDate.errors.bsDate">  Date invalide.</span>

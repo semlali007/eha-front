@@ -3,24 +3,38 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Subscription } from 'rxjs';
-
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { ModalNotificationComponent } from 'src/app/core/components/modal-notification/modal-notification.component';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { ConfigService } from 'src/app/core/services/config.service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
-  homePath = 'app/accueil'
+  public notification$: Observable<any|null>;
+  homePath = 'app/accueil';
   public user: User;
+  bsModalRef?: BsModalRef;
+  data:any={};
+  list: [];
   private subscription: Subscription;
-  constructor( private authService: AuthService,private router: Router) { }
+  constructor( 
+    private authService: AuthService,
+    private router: Router,
+    private modalService: BsModalService,
+    private configService: ConfigService,
+    private notificationService: NotificationService
+    ) { }
   ngOnInit() {
-    this.subscription = 
-    this.authService.user$.subscribe(user =>{
-     this.user = user;
- 
-    } );
-   }
+    this.notification$ = this.notificationService.notification$;
+    this.subscription =
+      this.authService.user$.subscribe(user => {
+        this.user = user;
+      });
+  }
 
    ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -34,4 +48,21 @@ export class BannerComponent implements OnInit {
     this.authService.revokeTokenAndLogout();
    }
 
+   openModal() {
+    this.notificationService.getUserNotification({nni:this.user.nni}).subscribe(data => {
+      this.list = data;
+      const initialState = {
+        title: 'test',
+        list: this.list,
+        page: {
+          content: this.data.content,
+          type: 'home_page',
+        },
+        checkboxValidation: true
+      };
+      this.bsModalRef = this.modalService.show(ModalNotificationComponent, { initialState });
+      this.bsModalRef.content.closeBtnName = 'Close';
+    })
+
+  }
 }

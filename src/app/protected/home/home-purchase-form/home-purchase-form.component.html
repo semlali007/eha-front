@@ -5,8 +5,13 @@
     Ma situation Achat
 </div>
 
-<div class="list-group-item link border-green"  [hidden]="!page?.active">
-            <span class="badge badge-primary my-title-for-searches" >NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 20px;margin-left: 5px;color:RGB(80,158,47) ;padding-bottom: 11px !important;" /> <span (click)="openModalWithComponent()" style="color:RGB(80,158,47)"> en savoir plus</span>
+<div class="list-group-item border-green"  [hidden]="!page?.active">
+            <span class="badge badge-primary my-title-for-searches" >NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 15.83px;margin-left: 10px;color:RGB(80,158,47) ;padding-bottom: 7.16px !important;" /> <span (click)="openModalWithComponent()" style="color:RGB(80,158,47)"> en savoir plus</span>
+
+            <ul style="padding-left: 25px;">
+                <li><strong (click)="show()" style="cursor: pointer;">Afficher toutes mes demandes d'achat</strong></li>
+                <li style="color: #333333; margin-top: 10px;">Ou rechercher :</li>
+            </ul>
 
             <form class="my-form-for-searches" role="search" novalidate [formGroup]="homePurchaseForm" (ngSubmit)="submit()">
                 <div class="row">

@@ -65,4 +65,8 @@ export class HomePurchaseFormComponent implements OnInit {
     this.bsModalRef = this.modalService.show(ModalPageComponent, {initialState});
     this.bsModalRef.content.closeBtnName = 'Close';
   }
+
+  show() {
+    this.router.navigate(['/app/ma-situation-achat']);
+  }
 }

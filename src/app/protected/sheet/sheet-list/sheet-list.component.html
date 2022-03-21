@@ -2,12 +2,8 @@
   <app-breadcrumb></app-breadcrumb>
   <div class="row sidenav">
     <div class="col-md-3">
-      <div class="sticky-top">
-        <div class="nav flex-column">
           <app-sheet-list-filter (submittedFilterSheets)="onSubmittedFilterSheets($event)" [filter]="filter" [defaultFilter]='defaultFilter.search' [user]='user' [data]="data">
           </app-sheet-list-filter>
-        </div>
-      </div>
     </div>
     <div class="mt-5 col-md-9">
       <div class="row justify-content-center">

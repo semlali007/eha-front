@@ -1,0 +1,101 @@
+.row{
+    height:56px ;
+}
+
+.hr{
+    width: 100%;
+    height: 0px;
+    left: 0px;
+    top: 1px;
+    /* Noir (Charte) */
+    border: 1px solid #000000;
+}
+
+.t-key{
+height: 22px;
+left: 0px;
+right: 26px;
+top: 0px;
+
+font-family: 'Segoe UI';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 22px;
+
+/* identical to box height, or 138% */
+
+/* Noir (Charte) */
+color: #000000;
+}
+.img-left{
+    left: 77%;
+    right: 55.81%;
+    top: 0.5%;
+    bottom: 0%;
+    width: 7px;
+    height: 15px;
+    position: absolute;
+}
+
+.img-left-label{
+    left: 78%;
+    right: 55.81%;
+    top: 0.5%;
+    bottom: 0%;
+    width: 7px;
+    height: 15px;
+    position: absolute;
+}
+
+.tri-icon{
+    left: 77%;
+    right: 55.81%;
+    top: 0.5%;
+    bottom: 0%;
+    height: 15px;
+    position: absolute;
+    height: 13.629621505737305px;
+    width: 15.98965072631836px; 
+}
+
+.img{
+    left: 79%;
+    right: 55.81%;
+    top: 0.5%;
+    bottom: 0%;
+    width: 7px;
+    height: 15px;
+    position: absolute;
+}
+.text-field-filter{
+    position: absolute;
+    height: 34px;
+    left: 11px;
+    right: 22px;
+    top: calc(120% - 40px/2);
+    background: #FFFFFF;
+    border: 1px solid #333333;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 85%;
+}
+.ligne-table{
+    width: 95%;
+    border: 1px solid #DADADA;
+}
+
+.text{
+    font-family: Segoe UI;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.element{
+    left: 1696px;
+    top: 599px;
+    border-radius: 0px;
+}

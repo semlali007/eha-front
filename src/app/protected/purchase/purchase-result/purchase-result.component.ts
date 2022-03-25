@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-purchase-result',
   templateUrl: './purchase-result.component.html',
-  styles: [
-  ]
+  styleUrls: ['./purchase-result.component.css']
 })
 export class PurchaseResultComponent implements OnInit {
   @Input() purchases$: Observable<any>;

@@ -46,9 +46,9 @@ export class SheetListFilterProviderComponent implements OnInit, OnChanges {
   }
 
 
-  removeFromList(elemment) {
+  removeFromList(element) {
     let result = this.list.find(obj => {
-      return obj.code === elemment.code
+      return obj.code === element.code
     });
     if (result && this.list.indexOf(result) >= 0) {
       this.list.splice(this.list.indexOf(result), 1);

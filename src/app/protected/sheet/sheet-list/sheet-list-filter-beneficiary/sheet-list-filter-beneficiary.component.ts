@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 
@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   ]
 })
 
-export class SheetListFilterBeneficiaryComponent implements OnInit {
+export class SheetListFilterBeneficiaryComponent implements OnInit, OnChanges {
 
   @Input() beneficiaries: any = [];
   @Input() data: any;
@@ -24,21 +24,33 @@ export class SheetListFilterBeneficiaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+   
     this.myForm = this.fb.group({
       'state': [''],
     });
   }
 
-  OnChange(change:SimpleChange): void {
-    console.log(change);
-    if(this.data.length > 0) {
-      this.data.forEach(element => {
-        this.beneficiaries.value.push(element);
-        console.log("test");
-      });
-    }
+  ngOnChanges(): void {
+    this.beneficiaries.value.forEach((item, key) => {
+      let removed = this.removeFromList(item);
+      if(!!removed){
+        this.beneficiaries.value[key]=removed;
+      }
+    })
   }
 
+
+  removeFromList(element) {
+    let result = this.list.find(obj => {
+      return obj.code === element.code
+    });
+    if (result && this.list.indexOf(result) >= 0) {
+      this.list.splice(this.list.indexOf(result), 1);
+      return result;
+    }
+    return null;
+  }
+  
   onSelect(event) {
     let code = event.item.code;
     let exist = false;
@@ -57,6 +69,11 @@ export class SheetListFilterBeneficiaryComponent implements OnInit {
       value: this.beneficiaries.value
     });
 
+          this.list.value.forEach((element, index) => {
+        if (element.code === code) {
+          this.list.value.splice(index, 1);
+        }
+      });
     console.log(this.data)
 
   }

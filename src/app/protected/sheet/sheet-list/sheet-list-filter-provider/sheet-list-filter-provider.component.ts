@@ -58,17 +58,7 @@ export class SheetListFilterProviderComponent implements OnInit, OnChanges {
   }
 
   onSelect(event) {
-    let code = event.item.code;
-    let exist = false;
-    this.providers.value.forEach(element => {
-      if (element.code === code) {
-        exist = true;
-      }
-    });
-
-    if (exist === false) {
-      this.providers.value.push(event.item);
-    }
+    this.providers.value.push(event.item);
     this.myForm.reset();
     this.changedFilter.emit({
       type: 'providers',

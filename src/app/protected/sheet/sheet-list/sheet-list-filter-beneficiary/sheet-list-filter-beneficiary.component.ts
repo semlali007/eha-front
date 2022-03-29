@@ -50,32 +50,15 @@ export class SheetListFilterBeneficiaryComponent implements OnInit, OnChanges {
     }
     return null;
   }
-  
-  onSelect(event) {
-    let code = event.item.code;
-    let exist = false;
-    this.beneficiaries.value.forEach(element => {
-      if (element.code === code) {
-        exist = true;
-      }
-    });
 
-    if (exist === false) {
-      this.beneficiaries.value.push(event.item);
-    }
+  onSelect(event) {
+
+    this.beneficiaries.value.push(event.item);
     this.myForm.reset();
     this.changedFilter.emit({
       type: 'beneficiaries',
       value: this.beneficiaries.value
     });
-
-          this.list.value.forEach((element, index) => {
-        if (element.code === code) {
-          this.list.value.splice(index, 1);
-        }
-      });
-    console.log(this.data)
-
   }
 
   deleteOneBeneficiary(providerCode: any) {

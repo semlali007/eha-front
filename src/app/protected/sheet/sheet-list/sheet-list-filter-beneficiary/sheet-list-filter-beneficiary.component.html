@@ -1,3 +1,6 @@
+<ng-template #customItemTemplate let-model="item">
+    {{model.name}} ({{ model.count }})
+  </ng-template>
 <div class="card" style="width: 18rem;" *ngIf="list.length > 0">
     <div class="card-header link smaller-text" (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed" aria-controls="collapseTotal">
@@ -10,14 +13,14 @@
                 [typeahead]="list"
                 [typeaheadOptionsLimit]="7"
                 [typeaheadMinLength]="0"
-                typeaheadOptionField="name"
                 (typeaheadOnSelect)="onSelect($event)"
+                [typeaheadItemTemplate]="customItemTemplate"
                 placeholder="Entrer un bénéficiaire"
                 class="form-control">
         </form>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor='let item of beneficiaries?.value' >
-                {{item.name}}<i style="float: right; cursor:pointer" (click)="deleteOneBeneficiary(item.code)" >&#10005;</i>
+                {{item.name}} ({{item.count}})<i style="float: right; cursor:pointer" (click)="deleteOneBeneficiary(item.code)" >&#10005;</i>
             </li>
         </ul>
     </div>

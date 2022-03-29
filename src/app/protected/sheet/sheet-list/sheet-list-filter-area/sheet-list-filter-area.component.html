@@ -10,7 +10,7 @@
                 Tous
             </li>
 
-            <li class="list-group-item link" *ngFor="let item of list|slice:0:4" (click)="changeFilter(item.code)"
+            <li class="list-group-item link" *ngFor="let item of list|slice:0:5" (click)="changeFilter(item.code)"
                 [class.list-group-item-success]="isActive(item.code)">
                 {{item.name}} ({{item.count}})
             </li>

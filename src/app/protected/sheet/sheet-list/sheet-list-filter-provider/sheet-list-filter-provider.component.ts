@@ -37,20 +37,28 @@ export class SheetListFilterProviderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    this.providers.value.forEach((item, key) => {
+      let removed = this.removeFromList(item);
+      if(!!removed){
+        this.providers.value[key]=removed;
+      }
+    })
+  }
+
+
+  removeFromList(element) {
+    let result = this.list.find(obj => {
+      return obj.code === element.code
+    });
+    if (result && this.list.indexOf(result) >= 0) {
+      this.list.splice(this.list.indexOf(result), 1);
+      return result;
+    }
+    return null;
   }
 
   onSelect(event) {
-    let code = event.item.code;
-    let exist = false;
-    this.providers.value.forEach(element => {
-      if (element.code === code) {
-        exist = true;
-      }
-    });
-
-    if (exist === false) {
-      this.providers.value.push(event.item);
-    }
+    this.providers.value.push(event.item);
     this.myForm.reset();
     this.changedFilter.emit({
       type: 'providers',

@@ -422,7 +422,10 @@ export class SheetService {
       committee: committee,
       showcase: fields.showcase,
       options: options,
-      subscribed: fields.subscribed
+      subscribed: fields.subscribed,
+      netachatId: fields.netachat_id,
+      netachatType: fields.netachat_type,
+      content: fields.content,
     });
   }
 
@@ -459,7 +462,7 @@ export class SheetService {
   }
 
   public sheetValidate(params): any
-  { 
+  {
     if(params.get('options') != null)
     {
       Object.keys(params.get('options').controls).forEach(option => {

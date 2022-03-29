@@ -32,6 +32,9 @@ export class Sheet {
     options: Option[];
     createdAt: string;
     subscribed: boolean;
+    netachatId: number;
+    content: string;
+    netachatType: string;
 
     constructor(options: {
         id?: string,
@@ -57,7 +60,10 @@ export class Sheet {
         showcase?: boolean,
         options?: Option[],
         created_at?: string,
-        subscribed?:boolean
+        subscribed?:boolean,
+        netachatId?: number,
+        content?: string,
+        netachatType?: string;
 
     } = {}) {
         this.id = options.id || null;
@@ -84,6 +90,9 @@ export class Sheet {
         this.options = options.options || [new Option()];
         this.createdAt = options.created_at || '';
         this.subscribed = options.subscribed || false;
+        this.netachatId = options.netachatId || 0;
+        this.netachatType = options.netachatType || '';
+        this.content = options.content || '';
     }
 
 }

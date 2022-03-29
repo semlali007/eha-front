@@ -19,6 +19,7 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    
     this.createSearchForm();
     this.subscription = this.messageService.getMessage().subscribe((searchData) => {
       if (!!searchData && !!searchData.type && (searchData.type == 'purchase')) {

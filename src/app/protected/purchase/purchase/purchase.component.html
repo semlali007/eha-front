@@ -1,10 +1,12 @@
 <app-breadcrumb></app-breadcrumb>
-<div class="row justify-content-center">
-    <h1>
-        Ma situation achat/ Histoire d'une demande d'achat
+<div class="row">
+    <h1 class="titre">
+        Ma situation achat
     </h1>
-    <div class="col-11">
+    <div class="col-12">
         <app-purchase-form (submittedForm)="onSubmittedForm($event)"></app-purchase-form>
-        <app-purchase-result [purchases$]="purchases$"></app-purchase-result>
+        <hr class="hr" >
+         <app-purchase-filter></app-purchase-filter> 
+        <app-purchase-result [purchases$]="purchases$" [params]="params"></app-purchase-result>
     </div>
 </div>

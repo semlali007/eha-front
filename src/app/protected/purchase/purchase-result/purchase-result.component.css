@@ -1,0 +1,45 @@
+.row{
+    height:56px ;
+}
+
+.hr{
+    width: 100%;
+    height: 0px;
+    left: 0px;
+    top: 1px;
+    /* Noir (Charte) */
+    border: 1px solid #000000;
+}
+
+ 
+.ligne-table{
+    width: 95%;
+    border: 1px solid #DADADA;
+}
+
+.no-content{
+    height: 110px;
+    /* Gris tres clair (AAA, Cultured) */
+    background: #F5F5F5;
+    /* Gris fonce + (AA, Sonic Silver) */
+    border: 1px solid #737679;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.p-no-content{
+    left: 313px;
+    top: 342px;
+    margin-top:5px ;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 29px;
+    /* Noir (Charte) */
+    color: #000000;
+}
+
+.icon-no-content{
+    margin: 33px 20px 8px 8px ;
+}

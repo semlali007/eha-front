@@ -1,10 +1,19 @@
 <form novalidate [formGroup]="searchForm" (ngSubmit)="submit()">
-    <div class="form-group row">
-        <app-purchase-form-words class="col-6 col-sm-7" [words]="words"></app-purchase-form-words>
-        <div class="col-6 col-sm-3">
-            <button class="btn btn-primary" type="submit" style="margin-top:0" [disabled]="!searchForm.valid">
-                &raquo; rechercher &laquo;
+    <div class="form-group row" style="margin-left:0 !important">
+        <div class="serch-text no-mr">
+            Rechercher
+        </div>
+        <div> 
+            <app-purchase-form-words class="col-7" [words]="words"></app-purchase-form-words>
+        </div>
+         <div>
+            <button class="btn not-flex btn-edf" style="background: #001A70!important;" type="submit" >
+                Rechercher
             </button>
+        </div>        
+        
+        <div class="col-md-5">
+            <a class="titre-listing" style="color: #001A70!important">Afficher toutes mes demandes d'achat</a>
         </div>
     </div>
 </form>

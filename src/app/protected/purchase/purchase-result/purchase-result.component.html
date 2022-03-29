@@ -1,39 +1,29 @@
-<table class="table">
-    <thead>
-        <tr>
-           
-            <th>
-                Origine de la demande
-
-            </th>
-            <th>
-                N° DA / EB 
-
-            </th>
-            <th>
-                Statut de la DA 
-
-            </th>
-            <th>
-                Date de création 
-
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of purchases$ | async">
-            <td>
-                {{item.nature}}
-            </td>
-            <td>
-                {{item.identifiant}}
-            </td>
-            <td>
-                {{item.eventLabel}}
-            </td>
-            <td>
-                {{item.eventDate | date: 'dd/MM/yyyy'}}
-            </td>
-        </tr>
-    </tbody>
-</table>
+<app-purchase-result-header></app-purchase-result-header>
+    <br>
+    <div *ngIf="purchases$ | async as purchases">
+        <div class="col-11 no-content" *ngIf="purchases.length<=0">
+            <table>
+                <tr>
+                    <td><img class="icon-no-content" src="../../../../assets/img/no-content.png"></td>
+                    <td>
+                        <p class="p-no-content">Nous sommes désolés, nous n’avons pas trouvé de demande d’achat avec le numéro que vous avez saisi : <br>
+                            {{params?.words}}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" *ngFor="let item of (purchases$|async)">  
+        <hr class="ligne-table">
+        <div class="col-2"><p><img src="../../../../assets/img/element-table.png">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}</p></div>
+        <div class="col-4"><p class="text">{{item.purchase_demand_label}}</p></div>
+        <div class="col-2"><p class="text">{{item.purchase_created_date}}</p></div>
+        <div class="col-2" [ngSwitch]="item.last_status_event">
+            <p *ngSwitchCase="1"><img src="../../../../assets/img/icon-cree.png">&nbsp;<strong> Crée</strong></p>
+            <p *ngSwitchCase="2"><img src="../../../../assets/img/icone-valide.png">&nbsp;<strong> Validée</strong></p>
+        </div>
+            <div class="col-2"><p class="text">{{item.last_status_date}}</p></div>
+    </div> 
+     
+<hr class="hr">

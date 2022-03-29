@@ -3,12 +3,19 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-purchase-result',
   templateUrl: './purchase-result.component.html',
-  styles: [
-  ]
+  styleUrls: ['./purchase-result.component.css']
 })
 export class PurchaseResultComponent implements OnInit {
   @Input() purchases$: Observable<any>;
-  constructor() { }
+  @Input() params: any;
+
+ // purshasesData = [] ;
+  constructor() { 
+  }
+
   ngOnInit() {
+    this.purchases$.subscribe(data=>{
+    //  this.purshasesData = data ;
+    })
   }
 }

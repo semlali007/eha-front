@@ -14,36 +14,30 @@ export class PurchaseService {
      private http: HttpClient,
      private errorService: ErrorService,
      private loaderService: LoaderService,
-
      ) { };
 
 
 
-  search(params: any): Observable<any | null> {
-    const url = `${this.appConfigService.basePath}/purchases/search`;
-    this.loaderService.setLoading(true);
-    return this.http.post(url, {
-        words: params.words,
-    }).pipe(
-      switchMap((data: any) => {
-        const purchases: any = [];
-        data.purchases.forEach(data => {
-          const p = {
-            section: data.section,
-            identifiant: data.identifiant,
-            nature: data.nature,
-            eventLabel: data.event_label,
-            eventDate: data.event_date,
-            sectionLabel: (data.section == 1) ? "PGI" : (data.section == 2) ? "PHA" : data.section,
-          };
-          purchases.push(p);
-        });
-
-        return of(purchases);
-      }),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
-    );
-  }
+     search(params): Observable<any | null> {
+      // params = A97609
+      const url = `${this.appConfigService.basePath}/purchases/list`;
+      console.log(params) ;
+      this.loaderService.setLoading(true);
+      return this.http.post(url, {
+          words: params.words,
+          offset: 0
+      }).pipe(
+        switchMap((data: any) => {
+          const purchases: any = [];
+         data.purchases.forEach(data => {
+            purchases.push(data);
+          });
+          return of(purchases);
+        }),
+        catchError(error => this.errorService.handleError(error)),
+        finalize(() => this.loaderService.setLoading(false))
+      );
+  
+    }
 
 }

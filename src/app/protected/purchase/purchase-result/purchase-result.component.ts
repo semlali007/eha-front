@@ -7,7 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class PurchaseResultComponent implements OnInit {
   @Input() purchases$: Observable<any>;
-  constructor() { }
+  @Input() params: any;
+
+ // purshasesData = [] ;
+  constructor() { 
+  }
+
   ngOnInit() {
+    this.purchases$.subscribe(data=>{
+    //  this.purshasesData = data ;
+    })
   }
 }

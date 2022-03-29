@@ -10,6 +10,62 @@
     margin-bottom: 20px;
 }
 
+.titre-result{ 
+    width: 1110px;
+    height: 36px;
+    left: 0px;
+    top: 1px;
+    
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 29px;
+    
+    /* Noir (Charte) */
+    color: #000000; 
+}
+
+.open-da{
+    width: 100%;
+    height: 21px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    /* Bleu fonce (Charte) */
+    color: #001A70;
+}
+
+.text-simple{
+    position: static;
+left: 0px;
+right: 80px;
+top: 0px;
+
+font-family: 'Segoe UI';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 22px;
+
+/* or 138% */
+display: flex;
+align-items: center;
+text-align: right;
+
+/* Noir (Charte) */
+color: #000000;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+margin: 0px 10px;
+}
+
 .hr{ 
     width: 100%;
     height: 0px;

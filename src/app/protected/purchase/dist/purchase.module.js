@@ -12,6 +12,7 @@ var shared_module_1 = require("src/app/shared/shared.module");
 var purchase_component_1 = require("./purchase/purchase.component");
 var purchase_form_component_1 = require("./purchase-form/purchase-form.component");
 var purchase_result_component_1 = require("./purchase-result/purchase-result.component");
+var purchase_result_header_component_1 = require("./purchase-result/purchase-result-header/purchase-result-header.component");
 var purchase_form_words_component_1 = require("./purchase-form/purchase-form-words/purchase-form-words.component");
 var purchase_filter_component_1 = require("./purchase/purchase-filter/purchase-filter.component");
 var purchase_routing_module_1 = require("./purchase-routing.module");
@@ -20,7 +21,7 @@ var PurchaseModule = /** @class */ (function () {
     }
     PurchaseModule = __decorate([
         core_1.NgModule({
-            declarations: [purchase_component_1.PurchaseComponent, purchase_form_component_1.PurchaseFormComponent, purchase_result_component_1.PurchaseResultComponent, purchase_form_words_component_1.PurchaseFormWordsComponent, purchase_filter_component_1.PurchaseFilterComponent],
+            declarations: [purchase_component_1.PurchaseComponent, purchase_form_component_1.PurchaseFormComponent, purchase_result_component_1.PurchaseResultComponent, purchase_form_words_component_1.PurchaseFormWordsComponent, purchase_filter_component_1.PurchaseFilterComponent, purchase_result_header_component_1.PurchaseResultHeaderComponent],
             imports: [
                 shared_module_1.SharedModule,
                 purchase_routing_module_1.PurchaseRoutingModule

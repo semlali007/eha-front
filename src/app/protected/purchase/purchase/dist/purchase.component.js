@@ -11,10 +11,13 @@ var core_1 = require("@angular/core");
 var PurchaseComponent = /** @class */ (function () {
     function PurchaseComponent(purchaseService) {
         this.purchaseService = purchaseService;
+        this.params = { words: "", offset: 0 };
     }
     PurchaseComponent.prototype.ngOnInit = function () {
+        this.loadData({ words: "", offset: 0 });
     };
     PurchaseComponent.prototype.onSubmittedForm = function (params) {
+        this.params = params;
         this.loadData(params);
     };
     PurchaseComponent.prototype.loadData = function (params) {

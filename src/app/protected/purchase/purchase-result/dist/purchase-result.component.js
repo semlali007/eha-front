@@ -9,13 +9,20 @@ exports.__esModule = true;
 exports.PurchaseResultComponent = void 0;
 var core_1 = require("@angular/core");
 var PurchaseResultComponent = /** @class */ (function () {
+    // purshasesData = [] ;
     function PurchaseResultComponent() {
     }
     PurchaseResultComponent.prototype.ngOnInit = function () {
+        this.purchases$.subscribe(function (data) {
+            //  this.purshasesData = data ;
+        });
     };
     __decorate([
         core_1.Input()
     ], PurchaseResultComponent.prototype, "purchases$");
+    __decorate([
+        core_1.Input()
+    ], PurchaseResultComponent.prototype, "params");
     PurchaseResultComponent = __decorate([
         core_1.Component({
             selector: 'app-purchase-result',

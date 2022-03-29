@@ -7,6 +7,6 @@
         <app-purchase-form (submittedForm)="onSubmittedForm($event)"></app-purchase-form>
         <hr class="hr" >
          <app-purchase-filter></app-purchase-filter> 
-        <app-purchase-result [purchases$]="purchases$"></app-purchase-result>
+        <app-purchase-result [purchases$]="purchases$" [params]="params"></app-purchase-result>
     </div>
 </div>

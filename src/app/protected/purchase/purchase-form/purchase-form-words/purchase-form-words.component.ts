@@ -10,7 +10,6 @@ import { FormControl } from '@angular/forms';
 export class PurchaseFormWordsComponent implements OnInit {
   @Input() words: FormControl;
   
-  
   ngOnInit(): void {
     console.log(this.words);
   }

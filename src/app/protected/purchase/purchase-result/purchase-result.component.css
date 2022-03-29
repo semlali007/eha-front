@@ -11,91 +11,35 @@
     border: 1px solid #000000;
 }
 
-.t-key{
-height: 22px;
-left: 0px;
-right: 26px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 22px;
-
-/* identical to box height, or 138% */
-
-/* Noir (Charte) */
-color: #000000;
-}
-.img-left{
-    left: 77%;
-    right: 55.81%;
-    top: 0.5%;
-    bottom: 0%;
-    width: 7px;
-    height: 15px;
-    position: absolute;
-}
-
-.img-left-label{
-    left: 78%;
-    right: 55.81%;
-    top: 0.5%;
-    bottom: 0%;
-    width: 7px;
-    height: 15px;
-    position: absolute;
-}
-
-.tri-icon{
-    left: 77%;
-    right: 55.81%;
-    top: 0.5%;
-    bottom: 0%;
-    height: 15px;
-    position: absolute;
-    height: 13.629621505737305px;
-    width: 15.98965072631836px; 
-}
-
-.img{
-    left: 79%;
-    right: 55.81%;
-    top: 0.5%;
-    bottom: 0%;
-    width: 7px;
-    height: 15px;
-    position: absolute;
-}
-.text-field-filter{
-    position: absolute;
-    height: 34px;
-    left: 11px;
-    right: 22px;
-    top: calc(120% - 40px/2);
-    background: #FFFFFF;
-    border: 1px solid #333333;
-    box-sizing: border-box;
-    border-radius: 5px;
-    width: 85%;
-}
+ 
 .ligne-table{
     width: 95%;
     border: 1px solid #DADADA;
 }
 
-.text{
-    font-family: Segoe UI;
-    font-size: 16px;
+.no-content{
+    height: 110px;
+    /* Gris tres clair (AAA, Cultured) */
+    background: #F5F5F5;
+    /* Gris fonce + (AA, Sonic Silver) */
+    border: 1px solid #737679;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.p-no-content{
+    left: 313px;
+    top: 342px;
+    margin-top:5px ;
+    font-family: 'Segoe UI';
     font-style: normal;
     font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
+    font-size: 22px;
+    line-height: 29px;
+    /* Noir (Charte) */
+    color: #000000;
 }
-.element{
-    left: 1696px;
-    top: 599px;
-    border-radius: 0px;
+
+.icon-no-content{
+    margin: 33px 20px 8px 8px ;
 }

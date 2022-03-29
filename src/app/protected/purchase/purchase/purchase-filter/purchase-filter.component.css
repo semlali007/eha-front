@@ -58,8 +58,6 @@ margin: 0px 10px;
     height: 37px;
     left: 0px;
     right: 0px;
-    top: calc(50% - 37px/2);
-    
     /* Blanc (Charte) */
     background: #FFFFFF;
     
@@ -67,4 +65,5 @@ margin: 0px 10px;
     border: 1px solid #000000;
     box-sizing: border-box;
     border-radius: 5px;
+    text-align:left;
 }

@@ -50,6 +50,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public openedContractCode: string = '';
   public options: Object[] = [];
   public subscribed: Boolean = false;
+  public fullContent: any;
+  public netachatId: any;
+  public netachatType: any;
 
   @ViewChild('content') content:ElementRef;
 
@@ -94,6 +97,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.partnership = sheet.partnership;
     this.protected_sector = sheet.protectedSector;
     this.dauphin = sheet.dauphin;
+    this.fullContent = sheet.content;
+    this.netachatId = sheet.netachatId;
+    this.netachatType = sheet.netachatType;
     this.startDate = this.dateService.getDisplayDate(new Date(sheet.startDate));
     this.endDate = this.dateService.getDisplayDate(new Date(sheet.endDate));
     sheet.providers.forEach(provider => {

@@ -36,7 +36,7 @@
                     </a>
                 </div>
             </div>
-        
+
             <div class="col-lg-2" *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
                 <button type="button" class="btn btn-danger float-left initial"  (click)="openModal(template)" >
                     Supprimer
@@ -220,9 +220,19 @@
                 </ul>
             </div>
         </li>
+          <li class="list-group-item row border-right-0 border-left-0" *ngIf="!!netachatId">
+            <div class="col-3"><strong>NetAchat</strong></div>
+            <div  class="col-9">
+              <a href="https://netachat.edf.fr/Lists/Fiches_{{netachatType}}/item_{{netachatType}}.aspx?ID={{netachatId}}" target="_blanck"> Fiche netachat</a>
+            </div>
+          </li>
+
                <li class="list-group-item row border-right-0 border-left-0 border-bottom-0">
                 <div class="col-3"><strong>Contrats</strong></div>
-                <div class="col-9">
+                 <div class="col-9" [innerHTML]="fullContent | safe: 'html'"  *ngIf="!!netachatId && contracts.length==0">
+
+                 </div>
+                <div class="col-9" *ngIf="contracts.length>0">
                 <accordion  [closeOthers]="true" >
                     <accordion-group #group [isDisabled]="true" panelClass="accordion-header">
                         <div class="row" accordion-heading>

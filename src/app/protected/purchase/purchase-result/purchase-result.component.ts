@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./purchase-result.component.css']
 })
 export class PurchaseResultComponent implements OnInit {
-  @Input() purchases$: Observable<any>;
+  @Input() purchases: any;
   @Input() params: any;
 
  // purshasesData = [] ;
@@ -14,8 +14,6 @@ export class PurchaseResultComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.purchases$.subscribe(data=>{
-    //  this.purshasesData = data ;
-    })
+   
   }
 }

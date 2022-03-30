@@ -6,7 +6,9 @@
     <div class="col-12">
         <app-purchase-form (submittedForm)="onSubmittedForm($event)"></app-purchase-form>
         <hr class="hr" >
-         <app-purchase-filter></app-purchase-filter> 
-        <app-purchase-result [purchases$]="purchases$" [params]="params"></app-purchase-result>
+        <div>
+            <app-purchase-filter [purchases]="purchases"></app-purchase-filter> 
+            <app-purchase-result [purchases]="purchases" [params]="params"></app-purchase-result>
+        </div>
     </div>
 </div>

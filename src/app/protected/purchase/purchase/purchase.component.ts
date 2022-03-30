@@ -8,6 +8,7 @@ import { PurchaseService } from 'src/app/core/services/purchase.service';
 })
 export class PurchaseComponent implements OnInit {
   purchases$: Observable<any>;
+  purchases: any = [];
   params:any  = {words:"",offset:0};
 
   constructor(
@@ -25,7 +26,18 @@ export class PurchaseComponent implements OnInit {
   }
 
   loadData(params: any) {
-    this.purchases$ =  this.purchaseService.search(params) ;
+    this.purchaseService.search(params).subscribe(response=>
+      {
+        this.purchases = [];
+        if(params.words){
+          let result = response.find(obj => {
+            return obj.purchase_demand_id == params.words
+          });
+          this.purchases.push(result);
+        }else{
+          this.purchases = response;
+        }
+      }) 
   }
 
 }

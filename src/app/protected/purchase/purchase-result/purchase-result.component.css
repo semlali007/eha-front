@@ -2,6 +2,26 @@
     height:56px ;
 }
 
+.row:hover{
+    background-color: #F1F3F9;
+}
+
+.row:hover .text {
+    color: #001A70;
+}
+
+.row:hover .dark-blue{
+    display: none;
+}
+
+.row:hover .light-blue{
+    display:inline;
+}
+
+.light-blue{
+    display: none;
+}
+
 .hr{
     width: 100%;
     height: 0px;
@@ -15,6 +35,7 @@
 .ligne-table{
     width: 95%;
     border: 1px solid #DADADA;
+    margin-top: 0px;
 }
 
 .no-content{

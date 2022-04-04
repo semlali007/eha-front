@@ -1,0 +1,24 @@
+<div class="col-2">
+    <p><img src="../../../../assets/img/element-table.png">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}
+    </p>
+</div>
+<div class="col-4">
+    <p class="text">{{item.purchase_demand_label}}</p>
+</div>
+<div class="col-2">
+    <p class="text">{{item.purchase_created_date|customDate}}</p>
+</div>
+<div class="col-2" [ngSwitch]="item.last_status_event">
+    <p *ngSwitchCase="1"><img src="../../../../assets/img/icon-cree.png">&nbsp;<strong> Crée</strong>
+    </p>
+    <p *ngSwitchCase="2"><img src="../../../../assets/img/icone-valide.png">&nbsp;<strong>
+            Validée</strong></p>
+    <p *ngSwitchCase="3"><img src="../../../../assets/img/icon-cree.png">&nbsp;<strong> en
+            instruction</strong></p>
+    <p *ngSwitchCase="4"><img src="../../../../assets/img/icone-valide.png">&nbsp;<strong>
+            Refusée</strong></p>
+
+</div>
+<div class="col-2">
+    <p class="text">{{item.last_status_date|customDate}}</p>
+</div>

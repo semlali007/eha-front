@@ -1,0 +1,16 @@
+<app-purchase-no-result [purchases]="purchases" [params]="params"></app-purchase-no-result>
+<accordion *ngIf="purchases.length>0">
+    <accordion-group #group *ngFor="let item of purchases| slice:this.startItem:this.endItem" [isOpen]="isOpen">
+        <app-purchases-list-item-header class="row" [item]="item" accordion-heading>
+        </app-purchases-list-item-header>
+         <app-purchases-list-item-body  [purchase]="item" >
+        </app-purchases-list-item-body>
+    </accordion-group>
+</accordion>
+<form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="purchases.length>0">
+    <pagination [boundaryLinks]="true" [totalItems]='purchases.length' [itemsPerPage]="itemsPerPage"
+        [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+        (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;">
+    </pagination>
+</form>

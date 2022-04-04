@@ -31,7 +31,7 @@
     border: 1px solid #000000;
 }
 
- 
+
 .ligne-table{
     width: 95%;
     border: 1px solid #DADADA;
@@ -65,3 +65,21 @@
 .icon-no-content{
     margin: 33px 20px 8px 8px ;
 }
+
+::ng-deep .card.customClass,
+::ng-deep .card.customClass .card-header,
+::ng-deep .panel.customClass {
+  background-color: #fff;
+  border: 0.5px solid rgba(0, 0, 0, 0.125);
+}
+/*
+::ng-deep .panel.customClass .panel-body {
+  background-color: #337aa7;
+}*/
+::ng-deep .card.customClass .card-header {
+    padding: 0.5rem 0.25rem;
+    margin-bottom: 0;
+    /*background-color: rgba(0, 0, 0, 0.03);*/
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+

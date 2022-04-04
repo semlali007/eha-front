@@ -1,1056 +1,117 @@
-/* Frame 277 */
-
-/* Auto layout */
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 30px;
-
-position: absolute;
-width: 1110px;
-height: 313px;
-left: 0px;
-top: 147px;
-
-/* Gris tres clair (AAA, Cultured) */
-background: #F5F5F5;
-
-
-/* Frame 284 */
-
-/* Auto layout */
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 0px;
-
-position: static;
-width: 1050px;
-height: 253px;
-left: 30px;
-top: 30px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 10px 0px;
-
-
-/* Lorem ipsum dolor sit amet, consectetur nesta adipiscing elit lectus nunc commodo in at ultricies id faucibus sit platea faucibus */
-
-position: static;
-width: 1030px;
-height: 24px;
-left: 0px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height, or 150% */
-display: flex;
-align-items: center;
-
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 20px 0px;
-
-
-/* Frame 269 */
-
-/* Auto layout */
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-padding: 0px;
-
-position: static;
-width: 1050px;
-height: 135px;
-left: 0px;
-top: 44px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
-margin: 20px 0px;
-
-
-/* Group 273 */
-
-position: static;
-width: 193px;
-height: 135px;
-left: 0px;
-top: 0px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 0px 24px;
-
-
-/* Rectangle 92 */
-
-position: absolute;
-width: 182px;
-height: 135px;
-left: 0px;
-top: 0px;
-
-/* Blanc (Charte) */
-background: #FFFFFF;
-/* Gris fonce + (AA, Sonic Silver) */
-border: 1px solid #737679;
-box-sizing: border-box;
-
-
-/* Polygon 3 */
-
-position: absolute;
-width: 40px;
-height: 15px;
-right: 817px;
-top: calc(50% - 15px/2 - 12px);
-
-/* Gris fonce + (AA, Sonic Silver) */
-background: #737679;
-transform: rotate(90deg);
-
-
-/* Tableau - Ligne - Statut */
-
-position: absolute;
-width: 162px;
-height: 24px;
-left: 10px;
-top: 10px;
-
-
-
-/* Crée */
-
-position: absolute;
-height: 50px;
-left: 34px;
-right: 0px;
-top: calc(50% - 50px/2);
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* or 150% */
-display: flex;
-align-items: center;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Icone - Initialisée */
-
-position: absolute;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Vector */
-
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-/* Gris fonce + (AA, Sonic Silver) */
-background: #737679;
-
-
-/* Le 05/01/2022 */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 10px;
-top: 39px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Par Laurent Hautefeuille */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 10px;
-top: 63px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Source : PGI */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 10px;
-top: 106px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Gris fonce + (AA, Sonic Silver) */
-color: #737679;
-
-
-
-/* Group 272 */
-
-position: static;
-width: 193px;
-height: 135px;
-left: 217px;
-top: 0px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
-margin: 0px 24px;
-
-
-/* Rectangle 92 */
-
-position: absolute;
-width: 182px;
-height: 135px;
-left: 217px;
-top: 0px;
-
-background: #EBFBF1;
-/* Green 1 */
-border: 1px solid #219653;
-box-sizing: border-box;
-
-
-/* Polygon 3 */
-
-position: absolute;
-width: 40px;
-height: 15px;
-right: 600px;
-top: calc(50% - 15px/2 - 12px);
-
-/* Green 1 */
-background: #219653;
-transform: rotate(90deg);
-
-
-/* Tableau - Ligne - Statut */
-
-position: absolute;
-width: 162px;
-height: 24px;
-left: 227px;
-top: 10px;
-
-
-
-/* Validée */
-
-position: absolute;
-height: 50px;
-left: 34px;
-right: 0px;
-top: calc(50% - 50px/2);
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-/* or 150% */
-display: flex;
-align-items: center;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Icone - Terminé */
-
-position: absolute;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Exclude */
-
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-/* Green 1 */
-background: #219653;
-
-
-/* Le 05/01/2022 */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 227px;
-top: 39px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Par Laurent Hautefeuille */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 227px;
-top: 63px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Source : PHA */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 227px;
-top: 106px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Green 1 */
-color: #219653;
-
-
-
-/* Group 274 */
-
-position: static;
-width: 193px;
-height: 135px;
-left: 434px;
-top: 0px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 2;
-flex-grow: 0;
-margin: 0px 24px;
-
-
-/* Rectangle 92 */
-
-position: absolute;
-width: 182px;
-height: 135px;
-left: 434px;
-top: 0px;
-
-/* Blanc (Charte) */
-background: #FFFFFF;
-/* Gris fonce + (AA, Sonic Silver) */
-border: 1px solid #737679;
-box-sizing: border-box;
-
-
-/* Polygon 3 */
-
-position: absolute;
-width: 40px;
-height: 15px;
-right: 383px;
-top: calc(50% - 15px/2 - 12px);
-
-/* Gris fonce + (AA, Sonic Silver) */
-background: #737679;
-transform: rotate(90deg);
-
-
-/* Tableau - Ligne - Statut */
-
-position: absolute;
-width: 162px;
-height: 24px;
-left: 444px;
-top: 10px;
-
-
-
-/* Transmise */
-
-position: absolute;
-height: 50px;
-left: 34px;
-right: 0px;
-top: calc(50% - 50px/2);
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* or 150% */
-display: flex;
-align-items: center;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Icone - En cours */
-
-position: absolute;
-visibility: hidden;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Icone - En attente */
-
-position: absolute;
-visibility: hidden;
-width: 24px;
-height: 24px;
-left: 0px;
-top: 13px;
-
-
-
-/* Icone - EB retransferée */
-
-position: absolute;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Exclude */
-
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-/* Gris fonce + (AA, Sonic Silver) */
-background: #737679;
-
-
-/* Frame 1 */
-
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-
-
-/* Ellipse 1 */
-
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-/* Noir (Charte) */
-background: #000000;
-
-
-/* Vector */
-
-position: absolute;
-left: 20%;
-right: 20%;
-top: 34%;
-bottom: 30%;
-
-background: #000000;
-
-
-/* Group */
-
-position: absolute;
-left: 0%;
-right: nan%;
-top: 0%;
-bottom: nan%;
-
-
-
-/* Vector */
-
-position: absolute;
-visibility: hidden;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-background: #000000;
-
-
-/* Le 05/01/2022 */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 444px;
-top: 39px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* A la DOA FTYU Lyon Donzé Lorem Ipsum */
-
-position: absolute;
-width: 162px;
-height: 38px;
-left: 444px;
-top: 63px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Source : PHA */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 444px;
-top: 106px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Gris fonce + (AA, Sonic Silver) */
-color: #737679;
-
-
-
-/* Group 275 */
-
-position: static;
-width: 193px;
-height: 135px;
-left: 651px;
-top: 0px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 3;
-flex-grow: 0;
-margin: 0px 24px;
-
-
-/* Rectangle 92 */
-
-position: absolute;
-width: 182px;
-height: 135px;
-left: 651px;
-top: 0px;
-
-/* Blanc (Charte) */
-background: #FFFFFF;
-/* Gris fonce + (AA, Sonic Silver) */
-border: 1px solid #737679;
-box-sizing: border-box;
-
-
-/* Polygon 3 */
-
-position: absolute;
-width: 40px;
-height: 15px;
-right: 166px;
-top: calc(50% - 15px/2 - 12px);
-
-/* Gris fonce + (AA, Sonic Silver) */
-background: #737679;
-transform: rotate(90deg);
-
-
-/* Tableau - Ligne - Statut */
-
-position: absolute;
-width: 162px;
-height: 24px;
-left: 661px;
-top: 10px;
-
-
-
-/* En instruction */
-
-position: absolute;
-height: 50px;
-left: 34px;
-right: 0px;
-top: calc(50% - 50px/2);
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* or 150% */
-display: flex;
-align-items: center;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Icone - En cours */
-
-position: absolute;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Exclude */
-
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-
-/* Gris fonce + (AA, Sonic Silver) */
-background: #737679;
-
-
-/* Icone - En attente */
-
-position: absolute;
-visibility: hidden;
-width: 24px;
-height: 24px;
-left: 0px;
-top: 13px;
-
-
-
-/* Le 05/01/2022 */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 661px;
-top: 39px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Par Laurent Hautefeuille */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 661px;
-top: 63px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Source : PHA */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 661px;
-top: 106px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Gris fonce + (AA, Sonic Silver) */
-color: #737679;
-
-
-
-/* Group 276 */
-
-position: static;
-width: 182px;
-height: 135px;
-left: 868px;
-top: 0px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 4;
-flex-grow: 0;
-margin: 0px 24px;
-
-
-/* Rectangle 92 */
-
-position: absolute;
-width: 182px;
-height: 135px;
-left: 868px;
-top: 0px;
-
-background: #EBFBF1;
-/* Green 1 */
-border: 1px solid #219653;
-box-sizing: border-box;
-
-
-/* Tableau - Ligne - Statut */
-
-position: absolute;
-width: 162px;
-height: 24px;
-left: 878px;
-top: 10px;
-
-
-
-/* Finalisée */
-
-position: absolute;
-height: 50px;
-left: 34px;
-right: 0px;
-top: calc(50% - 50px/2);
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-/* or 150% */
-display: flex;
-align-items: center;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Icone - En cours */
-
-position: absolute;
-visibility: hidden;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Icone - Terminé */
-
-position: absolute;
-visibility: hidden;
-width: 24px;
-height: 24px;
-left: 0px;
-top: 13px;
-
-
-
-/* ant-design:file-done-outlined */
-
-position: absolute;
-visibility: hidden;
-width: 24px;
-height: 24px;
-left: 0px;
-top: 13px;
-
-
-
-/* ic:round-create-new-folder */
-
-position: absolute;
-width: 24px;
-height: 24px;
-left: 0px;
-top: calc(50% - 24px/2);
-
-
-
-/* Vector */
-
-position: absolute;
-left: 8.33%;
-right: 8.33%;
-top: 16.67%;
-bottom: 16.67%;
-
-/* Green 1 */
-background: #219653;
-
-
-/* Le 05/01/2022 */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 878px;
-top: 39px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Par Laurent Hautefeuille */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 878px;
-top: 63px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-
-/* Source : PGI */
-
-position: absolute;
-width: 162px;
-height: 19px;
-left: 878px;
-top: 106px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 19px;
-/* identical to box height */
-
-/* Green 1 */
-color: #219653;
-
-
-
-/* Frame 283 */
-
-/* Auto layout */
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 0px;
-
-position: static;
-width: 596px;
-height: 54px;
-left: 0px;
-top: 199px;
-
-
-/* Inside auto layout */
-flex: none;
-order: 2;
-flex-grow: 0;
-margin: 20px 0px;
-
-
-/* Numéro(s) de contrat : */
-
-position: static;
-height: 22px;
-left: 0px;
-right: 282px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height, or 138% */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 10px 0px;
-
-
-/* Information non disponible. Merci de vous rapprocher de l’Acheteur. */
-
-position: static;
-height: 22px;
-left: 0px;
-right: 0px;
-top: 32px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height, or 138% */
-
-/* Noir (Charte) */
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
-margin: 10px 0px;
+/************ Items ******/
+
+.cadre-item-purchase {
+    /* Auto layout */
+    display: flex;
+    align-items: flex-start;
+    padding: 30px;
+    width: 100%;
+    left: 0px;
+    top: 294px;
+    /* Gris tres clair (AAA, Cultured) */
+    background: #F5F5F5;
+}
+
+
+
+ 
+
+.text-flow-source-green{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    /* Gris fonce + (AA, Sonic Silver) */
+    color: #219653;
+    margin-left: 9px;
+}
+
+.text-flow-source{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    /* Gris fonce + (AA, Sonic Silver) */
+    color: #737679;
+    margin-left: 9px;
+}
+
+.text-flow-content{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    /* Noir (Charte) */
+    color: #000000;
+    margin-left:9px;
+}
+
+.title{
+    margin-top: 8px;
+    margin-left: 4px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    /* or 150% */
+    display: flex;
+    align-items: center;
+
+    /* Noir (Charte) */
+    color: #000000;
+}
+
+.flow-grey {
+    width: 182px;
+    height: 135px;
+    left: 0px;
+    top: 0px;
+    /* Blanc (Charte) */
+    background: #FFFFFF;
+    margin-right: -3px;
+    /* Gris fonce + (AA, Sonic Silver) */
+    border: 1px solid #737679;
+    box-sizing: border-box;
+}
+
+.flow-green {
+    width: 182px;
+    height: 135px;
+    left: 0px;
+    top: 0px;
+    /* Blanc (Charte) */
+    background: #EBFBF1;
+    margin-right: -3px;
+    /* Gris fonce + (AA, Sonic Silver) */
+    border: 1px solid #219653;
+    box-sizing: border-box;
+}
+
+
+.text {
+    position: static;
+    width: 100%; 
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+    display: flex;
+    align-items: center;
+    color: #000000;
+
+    margin-bottom: 5px;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0; 
+}

@@ -24,7 +24,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadData({ words: "", offset: 0 });
+ 
   }
 
 
@@ -78,6 +78,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if(!!this.subscription)
     this.subscription.unsubscribe();
   }
 }

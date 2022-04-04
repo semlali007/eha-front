@@ -23,8 +23,8 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
     this.subscription = this.messageService.getMessage().subscribe((searchData) => {
       if (!!searchData && !!searchData.type && (searchData.type == 'purchase')) {
         this.words.setValue(searchData.searchText);
-        this.submit();
       }
+      this.submit();
     });
   }
 
@@ -40,6 +40,12 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
     let params: any = { words: this.words.value };
     this.submittedForm.emit(params);
   }
+
+  showAll() {
+    this.words.setValue('');
+    this.submit();
+  }
+  
 ngOnDestroy(): void {
   if(this.subscription)
   this.subscription.unsubscribe();

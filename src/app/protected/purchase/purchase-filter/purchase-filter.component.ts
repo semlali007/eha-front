@@ -104,4 +104,16 @@ export class PurchaseFilterComponent implements OnInit {
   changePerPage(number:number){
     this.itemsPerPageChanged.emit(number);
   }
+
+  isFiltered(){
+
+    return(!!this.filterCode.value 
+      || !!this.filterLabel.value 
+      || !!this.validated.value
+      || !!this.created.value
+      || !!this.instructed.value
+      || !!this.refused.value
+      
+      )
+  }
 }

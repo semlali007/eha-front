@@ -1,19 +1,24 @@
 <div class="row">
-    <div class="col-5" (click)="clearFilter()">
+    <div class="col-2" >
         <h1 class="titre-result">
-            {{filteredlist.length}} demandes d'achat</h1>
+            {{filteredlist.length}} demandes d'achat</h1>  
     </div>
+    <div class="col-3" >
+        <p *ngIf="isFiltered()" >&nbsp;avec vos critères de recherche</p>
+         </div>
+        <div class="col-2" >
+            <a *ngIf="isFiltered()" class="open-da" (click)="clearFilter()">Supprimer mes critères</a>
+            </div>
     <div class="col-2" *ngIf='isOpen!=true'>
         <a class="open-da" (click)="open()"><img src="../../../../assets/img/icon-list-da.png">&nbsp;Ouvrir toutes les DA</a>
         </div>
     <div class="col-2" *ngIf='isOpen==true'>
         <a class="open-da" (click)="close()"><img src="../../../../assets/img/icon-list-da.png">&nbsp;Fermer toutes les DA</a>
     </div>
-    <div>
+    <div >
         <p class="text-simple">DA par page</p>
     </div>
     <div class="col-1">
-
         <div class="btn-group" dropdown style="width:100px">
             <button id="button-basic" dropdownToggle type="button"
                 class="btn btn-default ddown-per-page dropdown-toggle"

@@ -1,7 +1,7 @@
 <app-purchase-no-result [purchases]="purchases" [params]="params"></app-purchase-no-result>
 <accordion *ngIf="purchases.length>0">
-    <accordion-group #group *ngFor="let item of purchases| slice:this.startItem:this.endItem" [isOpen]="isOpen">
-        <app-purchases-list-item-header class="row" [item]="item" accordion-heading>
+    <accordion-group #group *ngFor="let item of purchases| slice:this.startItem:this.endItem" [isOpen]="isOpen" panelClass="customClass">
+        <app-purchases-list-item-header  [item]="item" accordion-heading panelClass="customClass">
         </app-purchases-list-item-header>
          <app-purchases-list-item-body  [purchase]="item" >
         </app-purchases-list-item-body>

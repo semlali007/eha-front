@@ -15,6 +15,7 @@ export class PurchaseListComponent implements OnInit,OnChanges {
   startItem : number = 0;
   @Input() isOpen:boolean = false;
   endItem :number = 5;
+  customClass = 'customClass';
  
   constructor(private fb: FormBuilder) {
    

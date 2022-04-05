@@ -31,8 +31,7 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
       'currentPage': [1],
     });
     this.subscription = this.messageService.getMessage().subscribe((data) => {
-      console.log('data', data);
-      if (data.type == 'purchases') {
+      if (data.source == 'filter' && data.type == 'purchases') {
         switch (data.changed) {
           case 'purchases':
             this.purchases = data.purchases;
@@ -49,16 +48,12 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
             this.resetPagination();
             break;
         }
-
       }
-
-
     });
-
-
   }
   get currentPage() { return this.paginationForm.get('currentPage') }
   ngOnDestroy() {
+    if(this.subscription)
     this.subscription.unsubscribe();
   }
 

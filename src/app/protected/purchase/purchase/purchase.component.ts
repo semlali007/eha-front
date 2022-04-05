@@ -57,7 +57,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     this.loadData(params);
   }
   ngOnDestroy() {
-    if(!!this.subscription)
+    if(this.subscription)
     this.subscription.unsubscribe();
   }
 }

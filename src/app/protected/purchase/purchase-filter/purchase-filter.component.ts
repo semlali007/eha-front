@@ -1,19 +1,21 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { FilterAllPropertyPipe } from 'src/app/shared/pipes/filter-all-property.pipe';
 import { FiltermultiPipe } from 'src/app/shared/pipes/filtermulti.pipe';
 import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-purchase-filter',
   templateUrl: './purchase-filter.component.html',
   styleUrls: ['./purchase-filter.component.css']
 })
-export class PurchaseFilterComponent implements OnInit {
+export class PurchaseFilterComponent implements OnInit, OnDestroy {
   @Input() purchases: any;
   @Input() isOpen: boolean;
   @Input() itemsPerPage: any = 10;
   @Input() filteredlist: any;
+  subscription: Subscription;
 
   filterForm: FormGroup;
   get filterCode() { return this.filterForm.get('filterCode') as any; }
@@ -37,6 +39,12 @@ export class PurchaseFilterComponent implements OnInit {
       'refused': '',
       'instructed': '',
       'created': '',
+    });
+
+    this.subscription = this.messageService.getMessage().subscribe((data) => {
+      if (data.source == 'form' && data.action=='get_all') {
+        this.filterForm.reset();
+      }
     });
   }
 
@@ -90,7 +98,6 @@ export class PurchaseFilterComponent implements OnInit {
       (this.instructed.value == true) ? 3 : "", (this.refused.value == true) ? 4 : ""]
     }]);
     this.notifyList('purchases');
-
   }
 
   open() {
@@ -120,6 +127,7 @@ export class PurchaseFilterComponent implements OnInit {
 
   notifyList(changed) {
     let search = {
+       source:'filter',
        type:'purchases',
        changed: changed,
       'purchases': this.filteredlist,
@@ -129,6 +137,11 @@ export class PurchaseFilterComponent implements OnInit {
       }
     }
     this.messageService.sendMessage(search);
+  }
+
+  ngOnDestroy() {
+    if(this.subscription)
+    this.subscription.unsubscribe();
   }
   
 }

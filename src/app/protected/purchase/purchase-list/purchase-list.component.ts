@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
+import { PurchaseService } from 'src/app/core/services/purchase.service';
 import { Subscription } from 'rxjs';
+import { Observable} from 'rxjs';
 @Component({
   selector: 'app-purchase-list',
   templateUrl: './purchase-list.component.html',
@@ -19,9 +21,13 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   endItem: number = 10;
   customClass = 'customClass';
+  element:any={};
+  purchase$: Observable<any>;
+  data :any = {};
   constructor(
     private fb: FormBuilder,
     private messageService: PurchaseMessageService,
+    private purchaseService: PurchaseService,
   ) {
 
   }
@@ -54,6 +60,10 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   }
   get currentPage() { return this.paginationForm.get('currentPage') }
   get totalPage() { return  Math.ceil(this.purchases.length/this.itemsPerPage)}
+  
+ 
+
+
   ngOnDestroy() {
     if(this.subscription)
     this.subscription.unsubscribe();
@@ -72,5 +82,12 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     this.endItem = dataFilter.itemsPerPage;
   }
 
- 
+  loadItem(event: boolean, item: any) {
+    if(event == true){
+      this.purchase$= this.purchaseService.getPurchase({'num_da':item.purchase_demand_id});
+      this.data[item.purchase_demand_id]=this.purchase$;
+    }
+  }
+
+    
 }

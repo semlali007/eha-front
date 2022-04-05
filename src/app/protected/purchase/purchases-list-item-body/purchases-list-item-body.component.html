@@ -1,105 +1,26 @@
-<!---{{purchase|json}} --->
+
+
 <div class="row cadre-item-purchase">
-    <p class="text">Lorem ipsum dolor sit amet, consectetur nesta adipiscing elit lectus nunc commodo in at ultricies id faucibus sit platea faucibus</p>
-    <div class="col-12">&nbsp;</div>
-    <!------- Step 1 Crée ------>
-    <div class="col-2">
-        <table>
-            <tr>
-                <td>
-                    <div class="flow-grey">
-                        <p class="title"><img src=" ../../../../../assets/img/icon-cree.png">&nbsp;&nbsp;Crée</p>
-                        <p class="text-flow-content">Le 05/01/2022<br> Par laurent Hautefeuille</p>
-                        <p class="text-flow-source">Source: PGI</p>
-                    </div>
-                </td>
-                <td>
-                  <img src=" ../../../../../assets/img/polygon-first.png "> 
-                </td>
-            </tr>
-        </table>
+    <div *ngFor="let item of purchase$|async">
+        <p class="text">{{purchase.purchase_demand_label}}</p>
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  [ngClass]="{'flow-grey' : item.status == 1 || item.status == 2 , 'flow-green' : item.status == 3 || item.status == 4|| item.status == 5}" >
+                            <p class="title">
+                                <img src='{{ "../../../../../assets/img/" + status[item.status].icon + ".png" }}'>&nbsp;&nbsp;{{status[item.status].label}}</p>
+                            <p class="text-flow-content">Le {{item.date|customDate}}<br>{{item.lastItem.purchase_validator_name}}</p>
+                            <p class="text-flow-source">Source: {{item.lastItem.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                      <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> 
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
     </div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-    <!------- Step 2 Validée ------>
-    <div class="col-2">
-        <table>
-            <tr>
-                <td>
-                    <div class="flow-green">
-                        <p class="title"><img src=" ../../../../../assets/img/icone-valide.png">&nbsp;&nbsp;Validée</p>
-                        <p class="text-flow-content">Le 05/01/2022<br> Par laurent Hautefeuille</p>
-                        <p class="text-flow-source-green">Source: PHA</p>
-                    </div>
-                </td>
-                <td>
-                  <img src=" ../../../../../assets/img/Polygon-green.png "> 
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-<!------- Step 3 Transmise ------>
-    <div class="col-2">
-        <table>
-            <tr>
-                <td>
-                    <div class="flow-grey">
-                        <p class="title"><img src=" ../../../../../assets/img/icon-transmise.png">&nbsp;&nbsp;Transmise</p>
-                        <p class="text-flow-content">Le 05/01/2022<br> Par laurent Hautefeuille</p>
-                        <p class="text-flow-source">Source: PGI</p>
-                    </div>
-                </td>
-                <td>
-                  <img src=" ../../../../../assets/img/polygon-first.png "> 
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-    <!------- Step 3 en instruction ------>
-    <div class="col-2">
-        <table>
-            <tr>
-                <td>
-                    <div class="flow-grey">
-                        <p class="title"><img src=" ../../../../../assets/img/icon-en-instruction.png">&nbsp;&nbsp;En instruction</p>
-                        <p class="text-flow-content">Le 05/01/2022<br> Par laurent Hautefeuille</p>
-                        <p class="text-flow-source">Source: PGI</p>
-                    </div>
-                </td>
-                <td>
-                  <img src=" ../../../../../assets/img/polygon-first.png "> 
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <div class="col-2">
-        <table>
-            <tr>
-                <td>
-                    <div class="flow-green">
-                        <p class="title"><img src=" ../../../../../assets/img/icone-valide.png">&nbsp;&nbsp;Finalisée</p>
-                        <p class="text-flow-content">Le 05/01/2022<br> Par laurent Hautefeuille</p>
-                        <p class="text-flow-source-green">Source: PGI</p>
-                    </div>
-                </td>
-                <td>
-                  <img src=" ../../../../../assets/img/Polygon-green.png "> 
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-12">&nbsp;</div>
-    <p class="text">Numéro(s) de commande (6) :</p>
-    <ul>
-        <li>616515HT5487FTE </li>
-        <li>FETHD58452DETF </li>
-        <li>616515HT5487FTE </li>
-        <li>FETHD58452DETF </li>
-        <li>616515HT5487FTE </li>
-        <li>FETHD58452DETF </li>
-    </ul>
 </div>

@@ -40,4 +40,60 @@ export class PurchaseService {
   
     }
 
+  getPurchase(params): Observable<any | null> {
+    // params = A97609
+    const url = `${this.appConfigService.basePath}/purchases/search`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url, {
+      num_da: params.num_da,
+    }).pipe(
+      switchMap((data: any) => {
+
+        let purchases: any = [];
+
+        data.purchase.forEach(data => {
+          let sData = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data.items);
+          let sData1 = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items);
+          purchases.push({
+            status: (data.statut == '-1') ? 5 : data.statut,
+            items: sData,
+            lastItem: sData[0] || null,
+            date: sData1[0]['event_date'],
+          });
+        });
+        return of(this.sort({ 'column': 'status', 'direction': 'asc' }, purchases));
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+
+  }
+
+  sort(params,data) {
+    if (params.direction == 'asc') {
+      data.sort((a, b) => {
+        return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
+      });
+    } else {
+      data.sort((a, b) => {
+        return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
+      }
+      );
+    }
+    return data;
+  }
+    sortDate(params, data) {
+      if (params.direction == 'asc') {
+        data.sort((a, b) => {
+          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
+        });
+      } else {
+        data.sort((a, b) => {
+          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
+        }
+        );
+      }
+      return data;
+    }
+
 }

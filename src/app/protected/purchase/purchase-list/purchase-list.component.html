@@ -1,10 +1,10 @@
 <app-purchase-no-result [purchases]="purchases" [params]="params"></app-purchase-no-result>
 
 <accordion *ngIf="purchases.length>0">
-    <accordion-group #group *ngFor="let item of purchases| slice:startItem:endItem" [isOpen]="isOpen" panelClass="customClass">
-        <app-purchases-list-item-header  [item]="item" accordion-heading panelClass="customClass">
+    <accordion-group #group *ngFor="let item of purchases| slice:startItem:endItem; index as i" [isOpen]="isOpen" panelClass="customClass" (isOpenChange)="loadItem($event,item)">
+        <app-purchases-list-item-header  [item]="item" accordion-heading panelClass="customClass" >
         </app-purchases-list-item-header>
-         <app-purchases-list-item-body  [purchase]="item" >
+         <app-purchases-list-item-body  [purchase$]="data[item.purchase_demand_id]" [purchase]="item" >
         </app-purchases-list-item-body>
     </accordion-group>
 </accordion>

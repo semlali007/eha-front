@@ -11,10 +11,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class PurchaseComponent implements OnInit, OnDestroy {
   purchases: any = [];
-  filtredPurchases: any = [];
-  itemsPerPage: number = 5;
-  isOpen: boolean = false;
-  currentPage:number = 1;
   params: any = { words: "", offset: 0 };
   private subscription: Subscription;
 
@@ -26,8 +22,6 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
  
   }
-
-
 
   loadData(params: any) {
     this.subscription = this.purchaseService.search(params).subscribe(response => {
@@ -55,7 +49,6 @@ export class PurchaseComponent implements OnInit, OnDestroy {
           }
         );
       });
-      this.filtredPurchases = this.purchases;
     })
   }
 
@@ -63,20 +56,6 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     this.params = params;
     this.loadData(params);
   }
-
-  onPurchasesChanged(e) {
-    this.filtredPurchases = e.purchases;
-    this.currentPage = 1;
-  }
-
-  onOpenCloseChanged(e) {
-    this.isOpen = !!e.isOpen;
-  }
-  
-  onItemsPerPageChanged(e) {
-    this.itemsPerPage = e;
-  }
-
   ngOnDestroy() {
     if(!!this.subscription)
     this.subscription.unsubscribe();

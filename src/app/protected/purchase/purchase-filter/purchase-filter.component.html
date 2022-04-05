@@ -26,7 +26,6 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
             </button>
             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(5)">5</a></li>
                 <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
                 <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
                 <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
@@ -37,32 +36,32 @@
 <div class="row">
     <div class="col-2">
         <p class="t-key element">Numéro <img
-                (click)="sort({'column':'purchase_demand_id', 'direction':'desc', 'data':purchases})" class="img-left"
+                (click)="sort({'column':'purchase_demand_id', 'direction':'desc'})" class="img-left"
                 src="../../../../assets/img/flech-down.png"><img class="img"
                 src="../../../../assets/img/flech-up.png"
-                (click)="sort({'column':'purchase_demand_id', 'direction':'asc', 'data':purchases})"> </p>
+                (click)="sort({'column':'purchase_demand_id', 'direction':'asc'})"> </p>
         <input type="text" class="form-control text-field-filter" [formControl]="filterCode" (keyup)="filter()"
             placeholder="Saisir pour filtrer la liste">
     </div>
     <div class="col-4">
         <p class="t-key element">Libellé <img class="img-left-label" src="../../../../assets/img/flech-down.png"
-                (click)="sortText({'column':'purchase_demand_label', 'direction':'desc', 'data':purchases})"><img
+                (click)="sortText({'column':'purchase_demand_label', 'direction':'desc'})"><img
                 class="img" src="../../../../assets/img/flech-up.png"
-                (click)="sortText({'column':'purchase_demand_label', 'direction':'asc', 'data':purchases})"></p>
+                (click)="sortText({'column':'purchase_demand_label', 'direction':'asc'})"></p>
         <input type="text" class="form-control text-field-filter" placeholder="Saisir pour filtrer la liste"
             [formControl]="filterLabel" (keyup)="filter()">
     </div>
     <div class="col-2">
         <p class="t-key element">Crée le <img class="img-left" src="../../../../assets/img/flech-down.png"
-                (click)="sortDate({'column':'purchase_created_date', 'direction':'desc', 'data':purchases})"><img
+                (click)="sortDate({'column':'purchase_created_date', 'direction':'desc'})"><img
                 class="img" src="../../../../assets/img/flech-up.png"
-                (click)="sortDate({'column':'purchase_created_date', 'direction':'asc', 'data':purchases})"> </p>
+                (click)="sortDate({'column':'purchase_created_date', 'direction':'asc'})"> </p>
     </div>
     <div class="col-2">
         <p class="t-key element">Statut <img class="img-left" src="../../../../assets/img/flech-down.png"
-                (click)="sort({'column':'last_status_event', 'direction':'desc', 'data':purchases})"><img class="img"
+                (click)="sort({'column':'last_status_event', 'direction':'desc'})"><img class="img"
                 src="../../../../assets/img/flech-up.png"
-                (click)="sort({'column':'last_status_event', 'direction':'asc', 'data':purchases})"> </p>
+                (click)="sort({'column':'last_status_event', 'direction':'asc'})"> </p>
         <div class="btn-group" dropdown [insideClick]="true">
             <button id="button-basic" dropdownToggle type="button"
                 class="btn btn-default ddown-per-page dropdown-toggle" aria-controls="dropdown-basic">
@@ -90,6 +89,6 @@
     </div>
     <div class="col-2">
         <p class="t-key element">Statut modifié le <img class="tri-icon" src="../../../../assets/img/tri-icon.png"
-                (click)="sortDate({'column':'last_status_date', 'direction':'desc', 'data':purchases})"></p>
+                (click)="sortDate({'column':'last_status_date', 'direction':'desc'})"></p>
     </div>
 </div>

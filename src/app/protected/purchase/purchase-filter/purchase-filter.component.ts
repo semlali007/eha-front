@@ -1,21 +1,19 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { FilterAllPropertyPipe } from  'src/app/shared/pipes/filter-all-property.pipe';
-import { FiltermultiPipe } from  'src/app/shared/pipes/filtermulti.pipe';
+import { FilterAllPropertyPipe } from 'src/app/shared/pipes/filter-all-property.pipe';
+import { FiltermultiPipe } from 'src/app/shared/pipes/filtermulti.pipe';
+import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
 @Component({
   selector: 'app-purchase-filter',
   templateUrl: './purchase-filter.component.html',
   styleUrls: ['./purchase-filter.component.css']
 })
 export class PurchaseFilterComponent implements OnInit {
-  @Output() purchasesChanged = new EventEmitter<any>();
-  @Output() openCloseChanged = new EventEmitter<any>();
-  @Output() itemsPerPageChanged = new EventEmitter<any>();
-  @Input() purchases: any ;
-  @Input() isOpen:boolean;
-  @Input() itemsPerPage:any = 5;
-  @Input() filteredlist : any;
+  @Input() purchases: any;
+  @Input() isOpen: boolean;
+  @Input() itemsPerPage: any = 10;
+  @Input() filteredlist: any;
 
   filterForm: FormGroup;
   get filterCode() { return this.filterForm.get('filterCode') as any; }
@@ -25,13 +23,13 @@ export class PurchaseFilterComponent implements OnInit {
   get instructed() { return this.filterForm.get('instructed') as any; }
   get created() { return this.filterForm.get('created') as any; }
   constructor(private fb: FormBuilder
-    ,private filterAllProperty: FilterAllPropertyPipe
-    ,private filtermultiPipe: FiltermultiPipe
-    ) {
-    
+    , private filterAllProperty: FilterAllPropertyPipe
+    , private filtermultiPipe: FiltermultiPipe
+    , private messageService: PurchaseMessageService
+  ) {
+
   }
   ngOnInit() {
-    
     this.filterForm = this.fb.group({
       'filterCode': '',
       'filterLabel': '',
@@ -58,7 +56,7 @@ export class PurchaseFilterComponent implements OnInit {
       }
       );
     }
-    this.purchasesChanged.emit({'purchases':this.filteredlist});
+    this.notifyList('purchases');
   }
 
   sortText(params) {
@@ -67,7 +65,7 @@ export class PurchaseFilterComponent implements OnInit {
     } else {
       this.filteredlist.sort((a, b) => b[params['column']].localeCompare(a[params['column']]));
     }
-    this.purchasesChanged.emit({'purchases':this.filteredlist});
+    this.notifyList('purchases');
   }
   sortDate(params) {
     if (params.direction == 'asc') {
@@ -80,40 +78,57 @@ export class PurchaseFilterComponent implements OnInit {
       }
       );
     }
-    this.purchasesChanged.emit({'purchases':this.filteredlist});
+    this.notifyList('purchases');
   }
 
   public filter() {
     this.filteredlist = this.purchases;
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterCode.value, ["purchase_demand_id"], "start");
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterLabel.value, ["purchase_demand_label"], "like");
-    this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{'last_status_event': [(this.validated.value == true) ? 2 : "", (this.created.value == true) ? 1 : "",
+    this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{
+      'last_status_event': [(this.validated.value == true) ? 2 : "", (this.created.value == true) ? 1 : "",
       (this.instructed.value == true) ? 3 : "", (this.refused.value == true) ? 4 : ""]
     }]);
-    this.purchasesChanged.emit({'purchases':this.filteredlist});
+    this.notifyList('purchases');
+
   }
 
-  open(){
-    this.openCloseChanged.emit({'isOpen':true});
+  open() {
     this.isOpen = true;
+    this.notifyList('isOpen');
   }
-  close(){
-    this.openCloseChanged.emit({'isOpen':false});
+  close() {
     this.isOpen = false;
+    this.notifyList('isOpen');
   }
-  changePerPage(number:number){
-    this.itemsPerPageChanged.emit(number);
+  changePerPage(number: number) {
+    this.itemsPerPage = number;
+    this.notifyList('itemsPerPage');
   }
 
-  isFiltered(){
+  isFiltered() {
 
-    return(!!this.filterCode.value 
-      || !!this.filterLabel.value 
+    return (!!this.filterCode.value
+      || !!this.filterLabel.value
       || !!this.validated.value
       || !!this.created.value
       || !!this.instructed.value
       || !!this.refused.value
-      
-      )
+
+    )
   }
+
+  notifyList(changed) {
+    let search = {
+       type:'purchases',
+       changed: changed,
+      'purchases': this.filteredlist,
+      'filter': {
+        'itemsPerPage': this.itemsPerPage,
+        'isOpen': this.isOpen
+      }
+    }
+    this.messageService.sendMessage(search);
+  }
+  
 }

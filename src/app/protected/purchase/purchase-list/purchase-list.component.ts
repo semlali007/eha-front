@@ -50,8 +50,10 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
         }
       }
     });
+
   }
   get currentPage() { return this.paginationForm.get('currentPage') }
+  get totalPage() { return  Math.ceil(this.purchases.length/this.itemsPerPage)}
   ngOnDestroy() {
     if(this.subscription)
     this.subscription.unsubscribe();
@@ -62,10 +64,13 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     this.endItem = event.page * event.itemsPerPage;
     this.currentPage.setValue(event.page);
   }
+
   resetPagination(dataFilter?) {
     this.currentPage.setValue(1);
     this.itemsPerPage = dataFilter.itemsPerPage;
     this.startItem = 0;
     this.endItem = dataFilter.itemsPerPage;
   }
+
+ 
 }

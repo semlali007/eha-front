@@ -1,6 +1,7 @@
 <app-purchase-no-result [purchases]="purchases" [params]="params"></app-purchase-no-result>
+
 <accordion *ngIf="purchases.length>0">
-    <accordion-group #group *ngFor="let item of purchases| slice:this.startItem:this.endItem" [isOpen]="isOpen" panelClass="customClass">
+    <accordion-group #group *ngFor="let item of purchases| slice:startItem:endItem" [isOpen]="isOpen" panelClass="customClass">
         <app-purchases-list-item-header  [item]="item" accordion-heading panelClass="customClass">
         </app-purchases-list-item-header>
          <app-purchases-list-item-body  [purchase]="item" >
@@ -9,7 +10,7 @@
 </accordion>
 <hr class="hr">
 <div class="row">
-    <p class="pageText">Page {{ this.currentPage.value }} sur {{ this.totalPage.value }}</p>
+    <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
     <form  [formGroup]="paginationForm" *ngIf="purchases.length>0">
         <pagination [totalItems]='purchases.length' [itemsPerPage]="itemsPerPage"
         [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"

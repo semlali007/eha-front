@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message.service';
+import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-purchase-form',
@@ -16,6 +17,7 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
+   private purchaseMessageService: PurchaseMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -23,8 +25,9 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
     this.subscription = this.messageService.getMessage().subscribe((searchData) => {
       if (!!searchData && !!searchData.type && (searchData.type == 'purchase')) {
         this.words.setValue(searchData.searchText);
-        this.submit();
-      }
+    }
+    console.log('searchData',searchData)
+      this.submit();
     });
   }
 
@@ -40,10 +43,16 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
     let params: any = { words: this.words.value };
     this.submittedForm.emit(params);
   }
+
+  showAll() {
+    this.searchForm.reset();
+    this.purchaseMessageService.sendMessage({'source':'form','action':'get_all'});
+    this.submit();
+  }
+  
 ngOnDestroy(): void {
   if(this.subscription)
   this.subscription.unsubscribe();
 }
-
 
 }

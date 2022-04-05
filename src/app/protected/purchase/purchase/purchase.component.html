@@ -7,14 +7,10 @@
         <app-purchase-form (submittedForm)="onSubmittedForm($event)"></app-purchase-form>
         <hr class="hr">
         <div>
-            <app-purchase-filter (purchasesChanged)="onPurchasesChanged($event)" [purchases]="purchases" 
-                [filteredlist]="purchases"  [itemsPerPage]="itemsPerPage"
-                 (openCloseChanged)="onOpenCloseChanged($event)" 
-                 (itemsPerPageChanged)="onItemsPerPageChanged($event)" 
-                 [isOpen]="isOpen"
-                 ></app-purchase-filter>
+            <app-purchase-filter [purchases]="purchases" [filteredlist]="purchases"></app-purchase-filter>
             <br>
-            <app-purchase-list [purchases]="filtredPurchases"  [isOpen]="isOpen" [params]="params" [itemsPerPage]="itemsPerPage"></app-purchase-list>
+            <app-purchase-list [params]="params" [purchases]="purchases"></app-purchase-list>
+            <hr class="hr">
         </div>
     </div>
 </div>

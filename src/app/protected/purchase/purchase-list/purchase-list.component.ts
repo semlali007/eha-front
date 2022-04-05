@@ -21,15 +21,20 @@ export class PurchaseListComponent implements OnInit,OnChanges {
    
   }
   get currentPage() { return this.paginationForm.get('currentPage') }
+  get totalPage() { return this.paginationForm.get('totalPage') }
+
   ngOnInit() {
     this.paginationForm = this.fb.group({
       'currentPage': 1,
+      'totalPage' : 1,
     });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if(!!this.paginationForm && !!changes.itemsPerPage && (changes.itemsPerPage.currentValue !== changes.itemsPerPage.previousValue))
       this.changePerPage(changes.itemsPerPage.currentValue);
+
+      this.changeTotalPage();
   }
 
   public pageChanged(event: any): void {
@@ -43,6 +48,10 @@ export class PurchaseListComponent implements OnInit,OnChanges {
     this.itemsPerPage = number;
     this.startItem = 0;
     this.endItem = number;
+  }
+
+  changeTotalPage(){
+    this.totalPage.setValue(Math.ceil(this.purchases.length/this.itemsPerPage));
   }
 
   onPurchasesChanged(e){

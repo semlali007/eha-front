@@ -7,10 +7,32 @@
         </app-purchases-list-item-body>
     </accordion-group>
 </accordion>
-<form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="purchases.length>0">
-    <pagination [boundaryLinks]="true" [totalItems]='purchases.length' [itemsPerPage]="itemsPerPage"
+<hr class="hr">
+<div class="row">
+    <p class="pageText">Page {{ this.currentPage.value }} sur {{ this.totalPage.value }}</p>
+    <form  [formGroup]="paginationForm" *ngIf="purchases.length>0">
+        <pagination [totalItems]='purchases.length' [itemsPerPage]="itemsPerPage"
         [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-        (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-        lastText="&raquo;">
-    </pagination>
-</form>
+        (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+        </pagination>
+    </form>
+</div>
+
+
+<ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+    <ng-container *ngIf="!disabled">
+        <img src="../../../../assets/img/pagination-activated.png">
+    </ng-container>
+    <ng-container *ngIf="disabled">
+        <img src="../../../../assets/img/pagination-disabled.png" class="reversed">
+    </ng-container>
+  </ng-template>
+
+  <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+    <ng-container *ngIf="!disabled">
+        <img src="../../../../assets/img/pagination-activated.png" class="reversed">
+    </ng-container>
+    <ng-container *ngIf="disabled">
+        <img src="../../../../assets/img/pagination-disabled.png">
+    </ng-container>
+  </ng-template>

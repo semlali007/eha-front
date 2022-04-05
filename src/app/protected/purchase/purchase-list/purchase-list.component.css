@@ -1,12 +1,9 @@
-.hr{
+.hr{ 
     width: 100%;
     height: 0px;
-    left: 0px;
-    top: 1px;
     /* Noir (Charte) */
     border: 1px solid #000000;
 }
-
 .no-content{
     height: 110px;
     /* Gris tres clair (AAA, Cultured) */
@@ -35,6 +32,21 @@
     margin: 33px 20px 8px 8px ;
 }
 
+.pageText{
+    margin-top:8px;
+    margin-left:15px;
+    margin-right: 10px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.reversed{
+    transform: rotate(0.5turn);
+}
+
 ::ng-deep .card.customClass,
 ::ng-deep .card.customClass .card-header,
 ::ng-deep .panel.customClass {
@@ -49,4 +61,45 @@
     background-color: white;
     border-width: 0px;
 
+}
+
+::ng-deep .paginationClass .page-item.active .page-link{
+    background-color: #fff;
+    color:#001A70;
+}
+
+::ng-deep .paginationClass .page-item.disabled .page-link{
+    background-color: #fff;
+    color: #001A70;
+}
+
+::ng-deep .paginationClass .page-item .page-link{
+    margin-left: 10px;
+    margin-top: 4px;
+    color:#fff;
+    background-color: #001A70;
+    width: 30px;
+    height: 30px;
+    padding-top:3px;
+    padding-left:10px;
+}
+
+::ng-deep .paginationClass .pagination-prev .page-link{
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #fff;
+    border: 0px;
+    padding: 0px;
+}
+
+::ng-deep .paginationClass .pagination-next .page-link{
+    margin-left: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #fff;
+    border: 0px;
+    padding: 0px;
 }

@@ -4,12 +4,12 @@
         <tr>
             <td><img class="icon-no-content" src="../../../../assets/img/no-content.png"></td>
             <td>
-                <p *ngIf="params?.words.length>0" class="p-no-content">Nous sommes désolés, nous n’avons pas trouvé
+                <p *ngIf="params?.words?.length>0" class="p-no-content">Nous sommes désolés, nous n’avons pas trouvé
                     de
                     demande d’achat avec le numéro que vous avez saisi :
                     {{params?.words}}
                 </p>
-                <p *ngIf="params?.words.length==0" class="p-no-content" style="padding-top: 1em;">Nous sommes
+                <p *ngIf="params?.words?.length==0" class="p-no-content" style="padding-top: 1em;">Nous sommes
                     désolés,
                     nous n’avons pas trouvé de demandes d’achat associées à votre profil
                 </p>

@@ -7,11 +7,12 @@
          <app-purchases-list-item-body  [purchase$]="data[item.purchase_demand_id]" [purchase]="item" >
         </app-purchases-list-item-body>
     </accordion-group>
+    <hr class="hr">
 </accordion>
-<hr class="hr">
-<div class="row">
+
+<div class="row" *ngIf="purchases.length>0">
     <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
-    <form  [formGroup]="paginationForm" *ngIf="purchases.length>0">
+    <form  [formGroup]="paginationForm">
         <pagination [totalItems]='purchases.length' [itemsPerPage]="itemsPerPage"
         [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
         (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">

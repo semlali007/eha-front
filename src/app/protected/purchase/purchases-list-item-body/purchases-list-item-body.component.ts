@@ -13,7 +13,7 @@ export class PurchaseListItemBodyComponent implements OnInit {
     '1':{
       'icon':'icon-cree',
       'img':'polygon-first',
-      'label':'Crée'
+      'label':'Créee'
     },
     '2':{
       'icon':'icone-valide',

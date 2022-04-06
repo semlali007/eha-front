@@ -15,15 +15,16 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   @Input() isOpen: boolean;
   @Input() itemsPerPage: any = 10;
   @Input() filteredlist: any;
+  validated:boolean=false;
+  created:boolean=false;
+  instructed:boolean=false;
+  refused:boolean=false;
+
   subscription: Subscription;
 
   filterForm: FormGroup;
   get filterCode() { return this.filterForm.get('filterCode') as any; }
   get filterLabel() { return this.filterForm.get('filterLabel') as any; }
-  get validated() { return this.filterForm.get('validated') as any; }
-  get refused() { return this.filterForm.get('refused') as any; }
-  get instructed() { return this.filterForm.get('instructed') as any; }
-  get created() { return this.filterForm.get('created') as any; }
   constructor(private fb: FormBuilder
     , private filterAllProperty: FilterAllPropertyPipe
     , private filtermultiPipe: FiltermultiPipe
@@ -35,21 +36,19 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.filterForm = this.fb.group({
       'filterCode': '',
       'filterLabel': '',
-      'validated': '',
-      'refused': '',
-      'instructed': '',
-      'created': '',
     });
 
     this.subscription = this.messageService.getMessage().subscribe((data) => {
       if (data.source == 'form' && data.action=='get_all') {
         this.filterForm.reset();
+        this.validated=this.created= this.instructed=this.refused=false;
       }
     });
   }
 
   clearFilter() {
     this.filterForm.reset();
+    this.validated=this.created= this.instructed=this.refused=false;
     this.filter();
   }
 
@@ -89,13 +88,33 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.notifyList('purchases');
   }
 
+  public changeStatus(params) {
+    console.log('params',params);
+    switch(params.status){
+      case'validated':
+      this.validated = !this.validated;
+      break;
+      case'created':
+      this.created = !this.created;
+      break;
+      case'instructed':
+      this.instructed = !this.instructed;
+      break;
+      case'refused':
+      this.refused = !this.refused;
+      break;
+
+    }
+    this.filter();
+  }
+
   public filter() {
     this.filteredlist = this.purchases;
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterCode.value, ["purchase_demand_id"], "start");
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterLabel.value, ["purchase_demand_label"], "like");
     this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{
-      'last_status_event': [(this.validated.value == true) ? 2 : "", (this.created.value == true) ? 1 : "",
-      (this.instructed.value == true) ? 3 : "", (this.refused.value == true) ? 4 : ""]
+      'last_status_event': [(this.validated == true) ? 2 : "", (this.created == true) ? 1 : "",
+      (this.instructed == true) ? 3 : "", (this.refused == true) ? 4 : ""]
     }]);
     this.notifyList('purchases');
   }
@@ -117,10 +136,10 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
 
     return (!!this.filterCode.value
       || !!this.filterLabel.value
-      || !!this.validated.value
-      || !!this.created.value
-      || !!this.instructed.value
-      || !!this.refused.value
+      || !!this.validated
+      || !!this.created
+      || !!this.instructed
+      || !!this.refused
 
     )
   }

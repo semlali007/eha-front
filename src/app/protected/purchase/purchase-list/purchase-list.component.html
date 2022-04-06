@@ -2,7 +2,7 @@
 
 <accordion *ngIf="purchases.length>0">
     <accordion-group #group *ngFor="let item of purchases| slice:startItem:endItem; index as i" [isOpen]="isOpen" panelClass="customClass" (isOpenChange)="loadItem($event,item)">
-        <app-purchases-list-item-header  [item]="item" accordion-heading panelClass="customClass" >
+        <app-purchases-list-item-header  [item]="item" [slicedLabel]="item.purchase_demand_label|striphtml"  [isOpened]="opened[item.purchase_demand_id]" accordion-heading panelClass="customClass" >
         </app-purchases-list-item-header>
          <app-purchases-list-item-body  [purchase$]="data[item.purchase_demand_id]" [purchase]="item" >
         </app-purchases-list-item-body>

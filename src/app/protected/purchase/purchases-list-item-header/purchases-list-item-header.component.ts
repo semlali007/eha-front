@@ -6,6 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PurchaseListItemHeaderComponent implements OnInit {
   @Input() item: any;
+  @Input() isOpened: boolean=false;
+  @Input() slicedLabel: string= "";
+  
   constructor() {
   }
   ngOnInit() {

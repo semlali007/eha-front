@@ -24,6 +24,7 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   element:any={};
   purchase$: Observable<any>;
   data :any = {};
+  opened:any=[];
   constructor(
     private fb: FormBuilder,
     private messageService: PurchaseMessageService,
@@ -86,7 +87,9 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     if(event == true){
       this.purchase$= this.purchaseService.getPurchase({'num_da':item.purchase_demand_id});
       this.data[item.purchase_demand_id]=this.purchase$;
+     
     }
+     this.opened[item.purchase_demand_id]=event;
   }
 
     

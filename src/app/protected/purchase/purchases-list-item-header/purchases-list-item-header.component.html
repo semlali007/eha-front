@@ -1,11 +1,11 @@
 <div class="row">
 <hr class="ligne-table">
 <div class="col-2">
-    <p class="text"><img src="../../../../assets/img/element-table.png" class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" class="light-blue">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}
-    </p>
+    <p class="text" *ngIf="!isOpened;else opened"><img src='../../../../assets/img/element-table.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" class="light-blue">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}</p>
+   
 </div>
 <div class="col-4">
-    <p class="text">{{item.purchase_demand_label}}</p>
+    <p class="text">{{slicedLabel|slice:0:45}}<span *ngIf="slicedLabel.length >45">..</span></p>
 </div>
 <div class="col-2">
     <p class="text">{{item.purchase_created_date|customDate}}</p>
@@ -25,3 +25,4 @@
     <p class="text">{{item.last_status_date|customDate}}</p>
 </div>
 </div>
+<ng-template #opened><p class="text"><img src='../../../../assets/img/element-table-bas.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" [ngClass]="{'light-blue' : true, 'light-blue-rotate':isOpened}">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}</p></ng-template>

@@ -6,6 +6,18 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PurchaseListItemHeaderComponent implements OnInit {
   @Input() item: any;
+  @Input() isOpened: boolean=false;
+  @Input() slicedLabel: string= "";
+  
+
+  private icon_element:any={
+    '1':{
+      'img':'element-table',
+    },
+    '2':{
+      'img':'element-table-bas',
+    } 
+  } 
   constructor() {
   }
   ngOnInit() {

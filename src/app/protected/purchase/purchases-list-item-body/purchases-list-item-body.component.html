@@ -1,8 +1,8 @@
 
 
 <div class="row cadre-item-purchase">
+    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
     <div *ngFor="let item of purchase$|async">
-        <p class="text">{{purchase.purchase_demand_label}}</p>
         <div class="col-12">&nbsp;</div>
         <div class="col-2">
             <table>

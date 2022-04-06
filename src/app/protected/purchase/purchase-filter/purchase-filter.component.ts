@@ -35,10 +35,10 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.filterForm = this.fb.group({
       'filterCode': '',
       'filterLabel': '',
-      'validated': false,
-      'refused': false,
-      'instructed': false,
-      'created': false,
+      'validated': '',
+      'refused': '',
+      'instructed': '',
+      'created': '',
     });
 
     this.subscription = this.messageService.getMessage().subscribe((data) => {
@@ -137,26 +137,6 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
       }
     }
     this.messageService.sendMessage(search);
-  }
-
-  changeValidated(){
-    this.validated.setValue(!this.validated.value);
-    this.filter();
-  }
-
-  changeCreated(){
-    this.created.setValue(!this.created.value);
-    this.filter();
-  }
-
-  changeInstructed(){
-    this.instructed.setValue(!this.instructed.value);
-    this.filter();
-  }
-
-  changeRefused(){
-    this.refused.setValue(!this.refused.value);
-    this.filter();
   }
 
   ngOnDestroy() {

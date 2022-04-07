@@ -474,5 +474,12 @@ export class SheetService {
     }
   }
 
+  public cancel(){
+    this.toastrService.showToastr({
+      category: 'warning',
+      message: 'Vos modifications ont bien été annulées.'
+    })
+  }
+
 }
 

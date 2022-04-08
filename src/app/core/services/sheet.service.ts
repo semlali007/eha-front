@@ -474,11 +474,17 @@ export class SheetService {
     }
   }
 
-  public cancel(){
-    this.toastrService.showToastr({
-      category: 'warning',
-      message: 'Vos modifications ont bien été annulées.'
-    })
+  public cancel(error?){
+
+    if(error){
+      this.errorService.handleError(error)
+    }
+    else{
+      this.toastrService.showToastr({
+        category: 'warning',
+        message: 'Vos modifications ont bien été annulées.'
+      })
+    }
   }
 
 }

@@ -101,8 +101,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   cancel() {
-    this.router.navigate([`app/fiches/details/${this.sheetId}`]);
-    this.sheetService.cancel();
+    this.router.navigate([`app/fiches/details/${this.sheetId}`]).then( response => this.sheetService.cancel()).catch(error => this.sheetService.cancel(error));
+    ;
   }
 
   createsheetForm(): FormGroup {

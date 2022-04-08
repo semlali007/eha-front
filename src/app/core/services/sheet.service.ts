@@ -474,5 +474,18 @@ export class SheetService {
     }
   }
 
+  public cancel(error?){
+
+    if(error){
+      this.errorService.handleError(error);
+    }
+    else{
+      this.toastrService.showToastr({
+        category: 'warning',
+        message: 'Vos modifications ont bien été annulées.'
+      });
+    }
+  }
+
 }
 

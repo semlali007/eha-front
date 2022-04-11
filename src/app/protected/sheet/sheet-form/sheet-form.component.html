@@ -43,9 +43,10 @@
     <app-sheet-form-areas [areas]="areas"></app-sheet-form-areas>
     <app-sheet-form-directions [directions]="directions"></app-sheet-form-directions>
     <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
-    <app-sheet-form-lots [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
-    <app-sheet-form-contracts [sheetForm]="sheetForm" [contracts]="contracts" [lotsList]="lots">
+    <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
+    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [contracts]="contracts" [lotsList]="lots" >
     </app-sheet-form-contracts>
+    <app-sheet-form-content [content]="content" *ngIf="fromNetAchat==true" ></app-sheet-form-content>
     <app-sheet-form-status [status]="status"></app-sheet-form-status>
     <app-sheet-form-kit [uploader]="kitUploader" (removedItem)="onRemovedItem($event)" label="Kit de déploiement (PDF, Word, Excel, PowerPoint)"></app-sheet-form-kit>
     <div class="row">

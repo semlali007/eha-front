@@ -101,6 +101,7 @@ export class SheetService {
       description: sheet.comments,
       status: sheet.status,
       contracts: contracts,
+      content: sheet.content,
       lots: sheet.lots,
       start_date: sheet.startDate,
       end_date: sheet.endDate,

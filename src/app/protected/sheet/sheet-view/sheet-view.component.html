@@ -220,20 +220,23 @@
                 </ul>
             </div>
         </li>
-          <li class="list-group-item row border-right-0 border-left-0" *ngIf="!!netachatId">
-            <div class="col-3"><strong>NetAchat</strong></div>
+          <li class="list-group-item row border-right-0 border-left-0" *ngIf="!!netachatId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" >
+            <div class="col-3"><strong>Net@chat</strong></div>
             <div  class="col-9">
-              <a href="https://netachat.edf.fr/Lists/Fiches_{{netachatType}}/item_{{netachatType}}.aspx?ID={{netachatId}}" target="_blanck"> Fiche netachat</a>
+              <a href="https://netachat.edf.fr/Lists/Fiches_{{netachatType}}/item_{{netachatType}}.aspx?ID={{netachatId}}" target="_blanck"> Fiche Net@chat</a>
             </div>
           </li>
-
-               <li class="list-group-item row border-right-0 border-left-0 border-bottom-0">
-                <div class="col-3"><strong>Contrats</strong></div>
-                 <div class="col-9" [innerHTML]="fullContent | safe: 'html'"  *ngIf="!!netachatId && contracts.length==0">
-
-                 </div>
-                <div class="col-9" *ngIf="contracts.length>0">
-                <accordion  [closeOthers]="true" >
+        <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!!netachatId && netachatId>0">
+            <div class="col-3"><strong>Contenu</strong></div>
+            <div class="col-9"></div>
+            <div class="col-12" style="width: 726.9px;" [innerHTML]="fullContent | safe: 'html'">
+            </div>
+        </li>
+        <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!netachatId">
+            <div class="col-3"><strong>Contrats</strong></div>
+            <div class="col-9"></div>
+            <div class="col-12" *ngIf="contracts.length>0">
+                <accordion [closeOthers]="true">
                     <accordion-group #group [isDisabled]="true" panelClass="accordion-header">
                         <div class="row" accordion-heading>
                             <div class="col-sm-2">
@@ -248,18 +251,21 @@
                             <div class="col-sm-4">
                                 Contacts
                             </div>
-
+        
                         </div>
                     </accordion-group>
-                    <accordion-group #group *ngFor="let contract of contracts" (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0" (click)="showContract(contract)" class="blue_link">
-                        <div class="row" accordion-heading >
+                    <accordion-group #group *ngFor="let contract of contracts"
+                        (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0"
+                        (click)="showContract(contract)" class="blue_link">
+                        <div class="row" accordion-heading>
                             <div class="col-sm-2">
                                 <ul class="list-group list-group-horizontal">
                                     <li *ngFor="let lot of contract.lots" class="list-group-item"> {{lot.name}} </li>
                                 </ul>
                             </div>
                             <div class="col-sm-3">
-                                <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)" [class.icon-minus]="isOpened(contract)"></i>{{contract.code}}</div>
+                                <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)"
+                                        [class.icon-minus]="isOpened(contract)"></i>{{contract.code}}</div>
                             </div>
                             <div class="col-sm-3">
                                 {{contract.provider}}
@@ -268,7 +274,7 @@
                             </div>
                         </div>
                     </accordion-group>
-
+        
                     <accordion-group #group [isDisabled]="true" *ngIf="lots.length>0">
                         <div class="row" accordion-heading>
                             <ul>
@@ -278,10 +284,10 @@
                             </ul>
                         </div>
                     </accordion-group>
-
-                  </accordion>
-                </div>
-            </li>
+        
+                </accordion>
+            </div>
+        </li>
         </ul>
     </div>
         <div class="w-50 text-center">

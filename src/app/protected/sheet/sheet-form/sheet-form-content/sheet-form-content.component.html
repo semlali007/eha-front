@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label for="comments">
+        <strong>Contenu :</strong>
+    </label>
+    <editor [formControl]="content" id="content" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false, height: 800}"></editor>
+</div>

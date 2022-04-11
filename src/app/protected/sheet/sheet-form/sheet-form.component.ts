@@ -37,6 +37,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   private deletedFiles: Document[];
   public user: User;
   public subscription: Subscription;
+  fromNetAchat:boolean=false;
 
 
   constructor(private fb: FormBuilder,
@@ -63,6 +64,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get lots() { return this.sheetForm.get('lots') as FormArray; }
   get kits() { return this.sheetForm.get('kits') as FormArray; }
   get comments() { return this.sheetForm.get('comments') }
+  get content() { return this.sheetForm.get('content') }
   get dauphin() { return this.sheetForm.get('dauphin') }
   get edf_open() { return this.sheetForm.get('edf_open') }
   get stipulation_for_others() { return this.sheetForm.get('stipulation_for_others') }
@@ -91,11 +93,15 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.route.params.subscribe(params => {
       if (params.id) {
         this.sheetId = params.id;
+        
         this.sheetService.getSheet(params.id).subscribe(sheet => {
+          this.fromNetAchat = !!sheet.netachatId && sheet.netachatId > 0;
           this.resetSheetForm();
           if (!sheet) return;
           this.initEditForm(sheet);
         });
+      }else{
+        this.contracts.setValidators(Validators.required);
       }
     });
   }
@@ -119,10 +125,10 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         Validators.minLength(4),
       ]],
       'contracts': this.fb.array([], [
-				Validators.required,
 			]),
       'lots': this.fb.array([]),
       'comments': '',
+      'content': '',
       'dauphin': false,
       'edf_open': false,
       'stipulation_for_others': false,
@@ -150,6 +156,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   initEditForm(sheet: Sheet): void {
     this.deletedFiles = [];
     this.comments.setValue(sheet.comments);
+    this.content.setValue(sheet.content);
     this.title.setValue(sheet.title);
     this.status.setValue(sheet.status);
     this.edf_open.setValue(sheet.edfOpen);
@@ -225,7 +232,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       });
       this.lots.push(lotField);
     });
-
+    if(this.fromNetAchat == false){
     sheet.contracts.forEach(contract => {
       let contractLots = [];
       contract.lots.forEach(contractlot => {
@@ -236,6 +243,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
           value: contractlot.name,
         });
       });
+     
+
+     
       const contractField: FormGroup = this.fb.group({
         code: [contract.code, [
           Validators.required,
@@ -253,7 +263,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
       this.contracts.push(contractField);
     });
-
+  }
     sheet.documents.forEach((document) => {
       var blob = new Blob([""], { type: 'text/html' });
       blob["lastModifiedDate"] = "";
@@ -319,6 +329,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       startDate: this.startDate.value,
       endDate: this.endDate.value,
       comments: this.comments.value,
+      content: this.content.value,
       contracts: this.contracts.value,
       edf_open: this.edf_open.value,
       stipulation_for_others: this.stipulation_for_others.value,

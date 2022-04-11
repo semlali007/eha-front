@@ -8,6 +8,7 @@ import { SheetFormContractsComponent } from './sheet-form-contracts/sheet-form-c
 import { SheetFormContractsItemComponent } from './sheet-form-contracts-item/sheet-form-contracts-item.component';
 import { SheetFormContractsAddComponent } from './sheet-form-contracts-add/sheet-form-contracts-add.component';
 import { SheetFormCommentsComponent } from './sheet-form-comments/sheet-form-comments.component';
+import { SheetFormContentComponent } from './sheet-form-content/sheet-form-content.component';
 import { SheetFormLotsComponent } from './sheet-form-lots/sheet-form-lots.component';
 import { SheetFormLotsItemComponent } from './sheet-form-lots-item/sheet-form-lots-item.component';
 import { SheetFormLotsAddComponent } from './sheet-form-lots-add/sheet-form-lots-add.component';
@@ -41,6 +42,7 @@ defineLocale('fr', frLocale);
     SheetFormContractsItemComponent,
     SheetFormContractsAddComponent,
     SheetFormCommentsComponent,
+    SheetFormContentComponent,
     SheetFormLotsComponent,
     SheetFormLotsItemComponent,
     SheetFormLotsAddComponent,

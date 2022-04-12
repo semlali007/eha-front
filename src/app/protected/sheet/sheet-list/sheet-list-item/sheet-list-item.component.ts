@@ -11,6 +11,7 @@ import { SheetService } from 'src/app/core/services/sheet.service';
 })
 export class SheetListItemComponent implements OnInit {
   @Output() submittedGetSheet = new EventEmitter<Object>();
+  @Output() onSubscribe = new EventEmitter<Object>();
   @Input() comments: String;
   @Input() title: String;
   @Input() date: String;
@@ -50,6 +51,7 @@ export class SheetListItemComponent implements OnInit {
         user: this.user.nni
       }).subscribe((response: any) => {
         this.subscribed = true;
+        this.onSubscribe.emit();
       });
 
 
@@ -63,6 +65,7 @@ unsubscribe(sheetId: number){
     }).subscribe((response: any) => {
 
       this.subscribed = false;
+      this.onSubscribe.emit();
     });
 
 

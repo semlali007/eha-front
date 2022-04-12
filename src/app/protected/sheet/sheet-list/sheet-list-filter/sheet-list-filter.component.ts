@@ -15,6 +15,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   @Input() user : any = {};
   @Input() data : any;
   @Input() filter: any = {
+    subscribe: [],
     beneficiaries: [],
     edfOpen: [],
     partnership: [],
@@ -35,6 +36,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   ) {
   }
 
+  get subscribe() { return this.sheetFilterForm.get('subscribe') }
   get edfOpen() { return this.sheetFilterForm.get('edfOpen') }
   get partnership() { return this.sheetFilterForm.get('partnership') }
   get sector() { return this.sheetFilterForm.get('sector') }
@@ -61,6 +63,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   initForm() {
     this.sheetFilterForm = this.fb.group({
       'edfOpen': [(this.defaultFilter.edf_open === '') ? 'all' : this.defaultFilter.edf_open],
+      'subscribe': [(this.defaultFilter.subscribe === '') ? false : this.defaultFilter.subscribe],
       'partnership': [(this.defaultFilter.partnership === '') ? 'all' : this.defaultFilter.partnership],
       'sector': [(this.defaultFilter.protected_sector === '') ? 'all' : this.defaultFilter.protected_sector],
       'dauphin': [(this.defaultFilter.dauphin === '') ? 'all' : this.defaultFilter.dauphin],
@@ -76,6 +79,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
 
   resetForm() {
     this.sheetFilterForm = this.fb.group({
+      'subscribe': ['false'],
       'edfOpen': ['all'],
       'partnership': ['all'],
       'sector': ['all'],

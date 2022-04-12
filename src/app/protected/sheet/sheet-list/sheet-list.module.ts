@@ -23,6 +23,7 @@ import { SheetListSortComponent } from './sheet-list-sort/sheet-list-sort.compon
 import { SheetListExportComponent } from './sheet-list-export/sheet-list-export.component';
 import { SheetListShowcaseComponent } from './sheet-list-showcase/sheet-list-showcase.component';
 import { SheetListFilterShowcaseComponent } from './sheet-list-filter-showcase/sheet-list-filter-showcase.component';
+import { SheetListFilterSubscribeComponent } from './sheet-list-filter-subscribe/sheet-list-filter-subscribe.component';
 
 defineLocale('fr', frLocale);
 @NgModule({
@@ -46,7 +47,8 @@ defineLocale('fr', frLocale);
     SheetListSortComponent,
     SheetListExportComponent,
     SheetListFilterShowcaseComponent,
-    SheetListShowcaseComponent
+    SheetListShowcaseComponent,
+    SheetListFilterSubscribeComponent
   ],
   imports: [
     SharedModule,

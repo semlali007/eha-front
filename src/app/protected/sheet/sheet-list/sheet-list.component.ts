@@ -30,6 +30,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   public defaultFilter: any;
   public data:any = [];
   public filter = {
+    subscribe: [],
     beneficiaries: [],
     edfOpen: [],
     partnership: [],
@@ -49,6 +50,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     search: {
       searchText: this.searchText,
       searchProvider: this.searchProvider,
+      subscribe: '',
       status:  [],
       edf_open: '',
       partnership: '',
@@ -66,6 +68,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   };
 
   public filterInput: any = {
+    subscribe: false,
     edfOpen: '',
     partnership: '',
     sector: '',
@@ -160,6 +163,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       search: {
         searchText: this.searchText,
         searchProvider: this.searchProvider,
+        subscribe: this.filterInput.subscribe,
         status: this.filterInput.status,
         edf_open: this.filterInput.edfOpen,
         partnership: this.filterInput.partnership,
@@ -184,11 +188,11 @@ export class SheetListComponent implements OnInit, OnDestroy {
       }
     );
 
-    console.log(this.params);
   }
 
   initFilterInput() {
     this.filterInput = {
+      subscribe: '',
       edfOpen: '',
       partnership: '',
       sector: '',
@@ -235,6 +239,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     this.sortBy = this.defaultFilter.sortBy;
     this.sortDirection = this.defaultFilter.sortDirection;
     this.filterInput = {
+      subscribe: this.defaultFilter.search.subscribe,
       edfOpen: this.defaultFilter.search.edf_open,
       partnership: this.defaultFilter.search.partnership,
       sector: this.defaultFilter.search.protected_sector,

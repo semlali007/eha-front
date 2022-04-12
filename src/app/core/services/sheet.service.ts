@@ -267,6 +267,7 @@ export class SheetService {
           total: sheetData.total,
           sheets: sheets,
           filter: {
+            subscribe: sheetData.filter.subscribe,
             edfOpen: sheetData.filter.edf_open,
             partnership: sheetData.filter.partnership,
             sector: sheetData.filter.protected_sector,

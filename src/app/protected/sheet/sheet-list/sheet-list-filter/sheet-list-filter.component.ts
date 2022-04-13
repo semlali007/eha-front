@@ -79,7 +79,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
 
   resetForm() {
     this.sheetFilterForm = this.fb.group({
-      'subscribe': ['false'],
+      'subscribe': [false],
       'edfOpen': ['all'],
       'partnership': ['all'],
       'sector': ['all'],

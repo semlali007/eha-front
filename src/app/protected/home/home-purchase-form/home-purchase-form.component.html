@@ -5,8 +5,8 @@
     Ma situation Achat
 </div>
 
-<div class="list-group-item border-green"  [hidden]="!page?.active">
-            <span class="badge badge-primary my-title-for-searches" >NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 15.83px;margin-left: 10px;color:RGB(80,158,47) ;padding-bottom: 7.16px !important;" /> <span (click)="openModalWithComponent()" style="color:RGB(80,158,47)"> en savoir plus</span>
+<div class="list-group-item border-green">
+            <span [hidden]="!page?.active"><span class="badge badge-primary my-title-for-searches" >NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 15.83px;margin-left: 10px;color:RGB(80,158,47) ;padding-bottom: 7.16px !important;" /> <span (click)="openModalWithComponent()" style="color:RGB(80,158,47)"> en savoir plus</span></span>
 
             <ul style="padding-left: 25px;">
                 <li><strong><a href="javascript: void(0);" (click)="show()" style="color:RGB(80,158,47);">Afficher toutes mes demandes d'achat</a></strong></li>

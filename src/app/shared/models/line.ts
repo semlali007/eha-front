@@ -14,15 +14,15 @@ export class Line {
         return [
             {
                 code: 'F1',
-                label: 'Ligne 1',
+                label: 'PGI-1',
             },
             {
                 code: 'F2',
-                label: 'Ligne 2',
+                label: 'PGI-2',
             },
             {
                 code: 'F4',
-                label: 'Ligne 4',
+                label: 'PGI-4',
             }
         ];
     }

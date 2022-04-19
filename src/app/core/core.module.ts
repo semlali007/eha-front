@@ -6,6 +6,7 @@ import { AdministrationModule } from '../administration/administration.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BannerComponent } from './components/banner/banner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -25,12 +26,15 @@ import { AuthGuard } from './guards/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { getAuthConfig } from  './config/auth-config-factory';
 import { AppConfigService } from './services/app-config.service';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { InactivityComponent } from './components/inactivity/inactivity.component';
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
 
 @NgModule({
-  declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent,ToastrComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],
+  declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent,ToastrComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent,
+    InactivityComponent],
   imports: [
     SharedModule,
     PublicModule,
@@ -40,8 +44,9 @@ export function storageFactory(): OAuthStorage {
     HttpClientModule,
     AlertModule.forRoot(),
     OAuthModule.forRoot(),
+    NgIdleKeepaliveModule.forRoot(),
   ],
-  exports: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent, ToastrComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],
+  exports: [BannerComponent, InactivityComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent, ToastrComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],
   providers: [
     AppConfigService,
     AuthService,

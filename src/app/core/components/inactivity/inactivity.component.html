@@ -1,0 +1,12 @@
+<div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true}" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+     class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <p>Voulez-vous continuer sur Achatpédia? sinon vous serez déconnecter dans {{countdown}} secondes</p>
+        <button type="button" class="btn btn-default" (click)="decline()" >déconnecter</button>
+        <button type="button" class="btn btn-primary" (click)="confirm()" >Continuer</button>
+      </div>
+    </div>
+  </div>
+</div>

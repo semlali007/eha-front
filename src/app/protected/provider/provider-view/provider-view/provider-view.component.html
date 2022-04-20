@@ -22,7 +22,7 @@
 					<td class="font-weight-bold text-primary">{{provider.infos.provider_siret}}</td>
 				</tr>
 			</table>
-			<div *ngIf="provider.contracts.length > 0">
+			<div *ngIf="provider.contracts.length > 0 && provider.contracts[0].contract_code != null">
 				<h1 class="cover-heading">
 					Liste des contrats actifs :
 				</h1>
@@ -34,9 +34,9 @@
 					</div>
 				</form>
 				<ul class="list-group my-items-for-searches">
-					<a class="list-group-item link" *ngFor='let result  of provider.contracts | filterAllProperty:contractFilterText.value:["contract","contract_label","contract_date_end"]'
+					<a class="list-group-item link" *ngFor='let result  of provider.contracts | filterAllProperty:contractFilterText.value:["contract_code","contract_label","contract_date_end"]'
 						(click)="showContract(result.contract_code)">
-						{{result.contract}}, <b>{{result.contract_label}}</b>, fin le {{result.contract_date_end}}
+						{{result.contract_code}}, <b>{{result.contract_label}}</b>, fin le {{result.contract_date_end}}
 					</a>
 				</ul>
 			</div>

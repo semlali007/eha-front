@@ -22,7 +22,7 @@
         </tr>
         <tr *ngIf="!!item.infos.item_level_1">
             <td>Segment</td>
-            <td class="font-weight-bold text-primary">&diams; {{item.infos.item_level_1}}<br>&diams; {{item.infos.item_level_2}}<br>&diams; {{item.infos.item_level_3}}</td>
+            <td class="font-weight-bold text-primary"><span *ngIf="!!item.infos.item_level_1">&diams; {{item.infos.item_level_1}}<br></span><span *ngIf="!!item.infos.item_level_2">&diams; {{item.infos.item_level_2}}<br></span><span *ngIf="!!item.infos.item_level_3">&diams; {{item.infos.item_level_3}}</span></td>
         </tr>
         <tr *ngIf="!!item.infos.comptes_e">
             <td>Comptes</td>

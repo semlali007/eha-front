@@ -28,7 +28,7 @@ export class InactivityComponent implements OnInit {
      private authService: AuthService,
      ) {
     // set idle parameters
-    idle.setIdle(5); // how long can they be inactive before considered idle, in seconds
+    idle.setIdle(20); // how long can they be inactive before considered idle, in seconds
     idle.setTimeout(20); // how long can they be idle before considered timed out, in seconds
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES); // provide sources that will "interrupt" aka provide events indicating the user is active
 
@@ -93,13 +93,13 @@ export class InactivityComponent implements OnInit {
   confirm(): void {
     console.log("confirm");
     this.hideModal();
-    this.reset();
+    this.authService.login();
   }
  
   decline(): void {
     console.log("decline");
     this.hideModal();
-    this.authService.revokeTokenAndLogout();
+  //  this.authService.revokeTokenAndLogout();
   }
 
   showModal(): void {
@@ -110,6 +110,7 @@ export class InactivityComponent implements OnInit {
  
   hideModal(): void {
     console.log("hide");
+    this.reset();
     this.autoShownModal?.hide();
   }
  

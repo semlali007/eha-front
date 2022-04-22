@@ -55,35 +55,24 @@ export class AnchorService {
     private getDataFromApi(fields) {
         const activeProviders: Provider[] = [];
         const notActiveProviders: Provider[] = [];
-        let firstItemProviders = fields.providers[0];
-        let secondItemProviders = fields.providers[1];
-        
-        firstItemProviders.forEach(data => {
-            const provider: Provider = new Provider({
-                code: data.code,
-                siret: data.siret,
-                label: data.label,
-                town: data.town,
-                zipcode: data.zipcode,
-                nace: data.nace,
-                distance: data.distance,
-                activities: this.getActivitiesForProvider(data)
-            });
-            activeProviders.push(provider);
-        });
 
-        secondItemProviders.forEach(data => {
+        let itemsProviders = fields.providers ;
+        itemsProviders.forEach(data => {
             const provider: Provider = new Provider({
-                code: data.code,
-                siret: data.siret,
-                label: data.label,
-                town: data.town,
-                zipcode: data.zipcode,
-                nace: data.nace,
+                code: data.provider_code,
+                siret: data.provider_siret,
+                label: data.provider_label,
+                town: data.provider_town,
+                zipcode: data.provider_zipcode,
+                nace: data.provider_nace,
                 distance: data.distance,
-                activities: data.activities
+                activities: []
             });
-            notActiveProviders.push(provider);
+            if(!!data.is_active){
+                activeProviders.push(provider) ;
+            }else {
+                notActiveProviders.push(provider);
+            }
         });
         return new Anchor(
             {

@@ -66,7 +66,7 @@ export class AnchorService {
                 zipcode: data.provider_zipcode,
                 nace: data.provider_nace,
                 distance: data.distance,
-                activities: []
+                activities: this.getActivitiesForProvider(data),
             });
             if(!!data.is_active){
                 activeProviders.push(provider) ;
@@ -74,6 +74,10 @@ export class AnchorService {
                 notActiveProviders.push(provider);
             }
         });
+
+        
+
+
         return new Anchor(
             {
                 status: fields.status,
@@ -86,6 +90,8 @@ export class AnchorService {
         );
     }
 
+ 
+    
     getCodes(): Observable<any> {
         return this.http.get(this.naceCodesURL).pipe(
             switchMap((data: any) => {

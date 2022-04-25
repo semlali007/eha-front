@@ -21,7 +21,7 @@ export function getAuthConfig(http: HttpClient, oAuthService: OAuthService, conf
          postLogoutRedirectUri: data.authConfig.postLogoutRedirectUri,
          scope: 'openid gardianSesameProfil mail gardianSesameDroit gardianGroupID givenName cn uid employeeType gardianHierarchie departmentNumber name isMemberOf sn email', // Ask offline_access to support refresh token refreshes
          useSilentRefresh: false, // Needed for Code Flow to suggest using iframe-based refreshes
-         timeoutFactor: 0.99, 
+         timeoutFactor: 0.75, 
          sessionChecksEnabled: true,
          showDebugInformation: false, // Also requires enabling "Verbose" level in devtools
          clearHashAfterLogin: false, // https://github.com/manfredsteyer/angular-oauth2-oidc/issues/457#issuecomment-431807040,

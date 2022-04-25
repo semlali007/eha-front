@@ -11,6 +11,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ToastrComponent } from './components/toastr/toastr.component';
+import { GlobalToastrComponent } from './components/global-toastr/global-toastr.component';
 import { ModalInfoComponent } from './components/modal-info/modal-info.component';
 import { ModalPageComponent } from './components/modal-page/modal-page.component';
 import { ModalNewsComponent } from './components/modal-news/modal-news.component';
@@ -33,7 +34,7 @@ export function storageFactory(): OAuthStorage {
 }
 
 @NgModule({
-  declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent,ToastrComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent,
+  declarations: [BannerComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent,ToastrComponent, GlobalToastrComponent,PageNotFoundComponent, ModalPageComponent, ModalNewsComponent,
     InactivityComponent],
   imports: [
     SharedModule,
@@ -46,7 +47,7 @@ export function storageFactory(): OAuthStorage {
     OAuthModule.forRoot(),
     NgIdleKeepaliveModule.forRoot(),
   ],
-  exports: [BannerComponent, InactivityComponent, NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent, ToastrComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],
+  exports: [BannerComponent,  NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent, ToastrComponent, GlobalToastrComponent, InactivityComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],
   providers: [
     AppConfigService,
     AuthService,

@@ -33,12 +33,14 @@
                                     <div class="list-group-item" *ngFor="let item of items">
                                         <div>
                                             <strong>{{ item.label }}</strong>
-                                            <span style="float:right"> <button
+                                            <span style="float:right">
+                                                <button type="button" class="btn btn-danger float-left initial" *ngIf="type == 'provider' || type=='beneficiary'"(click)="remove(item)" >
+                                                    Supprimer
+                                                </button></span>
+                                                <span>&nbsp;</span>
+                                                <span style="float:right"> <button
                                                     class="btn btn-edf" (click)="addItemToList(item)">Sélectionner</button>
                                             </span>
-                                            <span style="float:right" *ngIf="type == 'provider' || type=='beneficiary'"> <button
-                                                class="btn btn-edf" (click)="remove(item)">Supprimer</button>
-                                        </span>
                                         </div>
                                     </div>
                                 </div>

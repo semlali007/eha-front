@@ -42,8 +42,8 @@ export class Browser {
           var browsername = this.detectName() ;
           localStorage.setItem('checkbrowser',browsername);
           if(browsername !== Browser.FIREFOX){
-            this.toastrService.showToastr({
-              category: 'warning',
+            this.toastrService.showGlobalToastr({
+              category: 'danger',
               message: "Le navigateur FIREFOX est recommandé pour une navigation optimale."
             });
           }

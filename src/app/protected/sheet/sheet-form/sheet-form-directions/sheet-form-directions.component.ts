@@ -56,6 +56,7 @@ export class SheetFormDirectionsComponent implements OnInit {
       
 
       const initialState = {
+        type:'direction',
         items: this.items,
         total: this.total,
         title: 'Directions opérationnelles',

@@ -56,6 +56,7 @@ export class SheetFormAreasComponent implements OnInit {
       
 
       const initialState = {
+        type:'area',
         items: this.items,
         total: this.total,
         title: 'Zones',

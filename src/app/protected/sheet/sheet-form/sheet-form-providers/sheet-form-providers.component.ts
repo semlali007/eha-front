@@ -51,6 +51,7 @@ export class SheetFormProvidersComponent implements OnInit {
       }
 
       const initialState = {
+        type:'provider',
         items: this.items,
         total: this.total,
         title: 'Fournisseurs',
@@ -83,6 +84,7 @@ export class SheetFormProvidersComponent implements OnInit {
 
 
       this.bsModalRef.content.eventPaginate.subscribe(res => {
+        this.page = res.data.pag;
         this.providerService.getProviders({
           page: res.data.page,
           perPage: this.itemsPerPage
@@ -91,6 +93,46 @@ export class SheetFormProvidersComponent implements OnInit {
           this.bsModalRef.content.total = data.total;
         })
       });
+
+
+      this.bsModalRef.content.removeElementEvent.subscribe(res => {
+        this.providerService.filter({ code: res.data.code }).subscribe(t => {
+          if (t.sheets && t.sheets.length > 0) {
+            this.bsModalRef.content.modalMessage = 'Ce Fournisseur est lié à des autres fiches.Voulez-vous le supprimer?';
+          }else{
+            this.bsModalRef.content.modalMessage = 'Voulez-vous le supprimer?';
+          }
+          this.bsModalRef.content.isModalShown = true;
+          this.bsModalRef.content.toRemoveId = res.data.code;
+        }
+        );
+      });
+
+      this.bsModalRef.content.runRemoveElementEvent.subscribe(res => {
+        this.providerService.remove({ code: res.data.id }).subscribe(t => {
+          this.providerService.getProviders({
+            page: this.page,
+            perPage: this.itemsPerPage
+          }).subscribe(data => {
+            this.bsModalRef.content.items = data.providers;
+            this.bsModalRef.content.total = data.total;
+          })
+          this.bsModalRef.content.removeItemFromList(res.data.id);
+          this.removeItemFromList(res.data.id);
+        }
+        );
+      });
+
+
+
+    });
+  }
+
+  removeItemFromList(code): void {
+    this.providers.value.forEach((element, index) => {
+      if (element.code == code) {
+        this.providers.value.splice(index, 1);
+      }
     });
   }
 }

@@ -54,6 +54,7 @@ export class SheetFormBeneficiariesComponent implements OnInit {
         }
 
       const initialState = {
+        type:'beneficiary',
         items: this.items,
         total: this.total,
         title: 'Bénéficiaires',
@@ -61,6 +62,9 @@ export class SheetFormBeneficiariesComponent implements OnInit {
         itemsPerPage: this.itemsPerPage,
         placeholder: 'Entrer un bénéficiaire',
         maxSize: 6,
+        isModalShown:false,
+        toRemoveId:'',
+        modalMessage: 'Ce bénificiaire est lié à des autres fiches.Voulez-vous le supprimer?',
         requestAutocompleteItems: this.requestAutocompleteItems,
       };
 
@@ -85,6 +89,7 @@ export class SheetFormBeneficiariesComponent implements OnInit {
       });
 
       this.bsModalRef.content.eventPaginate.subscribe(res => {
+        this.page = res.data.page;
         this.beneficiaryService.getList({
           page: res.data.page,
           perPage: this.itemsPerPage
@@ -93,8 +98,44 @@ export class SheetFormBeneficiariesComponent implements OnInit {
           this.bsModalRef.content.total = data.total;
         })
       });
+
+      this.bsModalRef.content.removeElementEvent.subscribe(res => {
+        this.beneficiaryService.filter({ code: res.data.code }).subscribe(t => {
+          if (t.sheets && t.sheets.length > 0) {
+            this.bsModalRef.content.modalMessage = 'Ce bénificiaire est lié à des autres fiches.Voulez-vous le supprimer?';
+          }else{
+            this.bsModalRef.content.modalMessage = 'Voulez-vous le supprimer?';
+          }
+          this.bsModalRef.content.isModalShown = true;
+          this.bsModalRef.content.toRemoveId = res.data.code;
+        }
+        );
+      });
+
+      this.bsModalRef.content.runRemoveElementEvent.subscribe(res => {
+        this.beneficiaryService.remove({ code: res.data.id }).subscribe(t => {
+          this.beneficiaryService.getList({
+            page: this.page,
+            perPage: this.itemsPerPage
+          }).subscribe(data => {
+            this.bsModalRef.content.items = data.beneficiaries;
+            this.bsModalRef.content.total = data.total;
+          })
+          this.bsModalRef.content.removeItemFromList(res.data.id);
+          this.removeItemFromList(res.data.id);
+        }
+        );
+      });
+
+
     });
   }
 
-  
+  removeItemFromList(code): void {
+    this.beneficiaries.value.forEach((element, index) => {
+      if (element.code == code) {
+        this.beneficiaries.value.splice(index, 1);
+      }
+    });
+  }
 }

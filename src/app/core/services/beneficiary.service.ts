@@ -82,4 +82,32 @@ export class BeneficiaryService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+  filter(params): Observable<any | null> {
+    let url = `${this.appConfigService.basePath}/sheets/filter`;
+    const data = { "type": 'beneficiary', "code": params.code };
+    this.loaderService.setLoading(true);
+    return this.http.post(url, data).pipe(
+      switchMap((response: any) => {
+        return of(
+          response
+        );
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  public remove(params): Observable<any> {
+    let url = `${this.appConfigService.basePath}/beneficiaries/remove/${params.code}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
 }

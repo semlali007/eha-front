@@ -36,6 +36,9 @@
                                             <span style="float:right"> <button
                                                     class="btn btn-edf" (click)="addItemToList(item)">Sélectionner</button>
                                             </span>
+                                            <span style="float:right" *ngIf="type == 'provider' || type=='beneficiary'"> <button
+                                                class="btn btn-edf" (click)="remove(item)">Supprimer</button>
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
@@ -72,4 +75,18 @@
     <button class="btn btn-success" type="button" (click)="validateModal()">Enregistrer</button>
     <button class="btn btn-danger" type="button" (click)="bsModalRef.hide()">Annuler</button>
 
+</div>
+
+
+<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>{{modalMessage}}</p>
+                <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
+                <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+            </div>
+        </div>
+    </div>
 </div>

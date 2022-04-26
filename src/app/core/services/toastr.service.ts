@@ -10,6 +10,9 @@ export class ToastrService {
 
   private toastr: BehaviorSubject<any> = new BehaviorSubject(null);
   public readonly toastr$: Observable<Toastr | null> = this.toastr.asObservable();
+  private globalToastr: BehaviorSubject<any> = new BehaviorSubject(null);
+  public  globalToastr$: Observable<Toastr | null> = this.globalToastr.asObservable();
+  private timer: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() { }
 
@@ -25,5 +28,14 @@ export class ToastrService {
 
   public closeToastr() {
     this.toastr.next(null);
-   }
+  }
+
+  public showGlobalToastr(globalToastr: Toastr): void {
+        this.globalToastr.next(globalToastr);
+    }
+
+  public closeGlobalToastr() {
+    this.globalToastr.next(null);
+  }
+
 }

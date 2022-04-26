@@ -1,0 +1,11 @@
+alert {
+    cursor: pointer;
+    position: fixed;
+    top: 0px;
+    z-index: 1000;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}

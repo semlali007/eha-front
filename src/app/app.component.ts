@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import {Browser} from 'src/app/core/services/browser.service' ;
@@ -8,6 +8,7 @@ import {Browser} from 'src/app/core/services/browser.service' ;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  user$: Observable<any>;
   constructor(
     private authService: AuthService, private browser: Browser,
   ) {
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
     this.browser.checkIfFirefox();
     this.authService.runInitialLoginSequence().then(() => {
       this.authService.autoLogin();
-    })
+    });
+    this.user$ = this.authService.user$;
   }
 }

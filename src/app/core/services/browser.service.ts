@@ -1,30 +1,52 @@
 import { Injectable } from '@angular/core';
- 
+import { ToastrService } from './toastr.service';
 @Injectable({
   providedIn: 'root'
 })
 export class Browser {
+  static readonly FIREFOX = 'firefox' ; // Firefox
+  static readonly EDGE = 'edge' ; // EDGE
+  static readonly CHROME = 'chrome' ; // Chrome 
+  static readonly IE = 'ie' ; // Internet explorer
+  static readonly OPERA = 'opera' ; // Opera
+  static readonly SAFARI = 'safari' ; // Safari
+  static readonly OTHER = 'other' ; // Safari
 
-    constructor(){ }
+  constructor(private toastrService: ToastrService)
+  { }
 
-    detectName() { 
+    /**
+     * Detect Browser name
+     */
+    detectName(){ 
         const agent = window.navigator.userAgent.toLowerCase()
         switch (true) {
           case agent.indexOf('edge') > -1:
-            return 'edge';
+            return Browser.EDGE;
           case agent.indexOf('opr') > -1 && !!(<any>window).opr:
-            return 'opera';
+            return Browser.OPERA;
           case agent.indexOf('chrome') > -1 && !!(<any>window).chrome:
-            return 'chrome';
+            return Browser.CHROME;
           case agent.indexOf('trident') > -1:
-            return 'ie';
+            return Browser.IE;
           case agent.indexOf('firefox') > -1:
-            return 'firefox';
+            return Browser.FIREFOX;
           case agent.indexOf('safari') > -1:
-            return 'safari';
+            return Browser.SAFARI;
           default:
-            return 'other';
+            return Browser.OTHER ;
         }
+      }
+
+      public checkIfFirefox() {
+          var browsername = this.detectName() ;
+          localStorage.setItem('checkbrowser',browsername);
+          if(browsername !== Browser.FIREFOX){
+            this.toastrService.showToastr({
+              category: 'warning',
+              message: "Le navigateur FIREFOX est recommandé pour une navigation optimale."
+            });
+          }
       }
         
     }

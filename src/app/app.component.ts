@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  user$: Observable<any>;
   constructor(
     private authService: AuthService,
   ) {
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.authService.runInitialLoginSequence().then(() => {
       this.authService.autoLogin();
-    })
+    });
+    this.user$ = this.authService.user$;
   }
 }

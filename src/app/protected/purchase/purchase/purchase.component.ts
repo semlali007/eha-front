@@ -44,7 +44,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
             purchase_created_date: p['purchase_created_date'],
             purchase_creator_name: p['purchase_creator_name'],
             purchase_demand_id: p['purchase_demand_id'],
-            purchase_demand_label: p['purchase_demand_label'],
+            purchase_demand_label: p['purchase_demand_label'] || '',
             purchase_validator_name: p['purchase_validator_name']
           }
         );

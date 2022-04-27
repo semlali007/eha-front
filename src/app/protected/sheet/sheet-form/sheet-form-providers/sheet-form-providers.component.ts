@@ -98,9 +98,9 @@ export class SheetFormProvidersComponent implements OnInit {
       this.bsModalRef.content.removeElementEvent.subscribe(res => {
         this.providerService.filter({ code: res.data.code }).subscribe(t => {
           if (t.sheets && t.sheets.length > 0) {
-            this.bsModalRef.content.modalMessage = 'Ce Fournisseur est lié à des autres fiches.Voulez-vous le supprimer?';
+            this.bsModalRef.content.modalMessage = "Attention, ce fournisseur est rattaché à une autre fiche marché. Cette action est irréversible et entrainera la suppression du fournisseur dans l'ensemble des fiches marchés auxquelles il est rattaché. Voulez-vous confirmer sa suppression ?";
           }else{
-            this.bsModalRef.content.modalMessage = 'Voulez-vous le supprimer?';
+            this.bsModalRef.content.modalMessage = ' Voulez-vous confirmer la suppression ?';
           }
           this.bsModalRef.content.isModalShown = true;
           this.bsModalRef.content.toRemoveId = res.data.code;

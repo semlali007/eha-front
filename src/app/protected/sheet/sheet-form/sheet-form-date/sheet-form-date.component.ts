@@ -18,12 +18,10 @@ export class SheetFormDateComponent implements OnInit {
     this.localeService.use('fr');
   }
   onValueChange(value: Date): void {
-    this.sheetForm.get('endDate').setValue(value);
+    if(!!value){
+      this.sheetForm.get('endDate').setValue(value);
+    }
     this.sheetService.sheetValidate(this.sheetForm);
-  
   }
-  onChange(event) {
-		this.sheetService.sheetValidate(this.sheetForm);
-   
-  }
+
 }

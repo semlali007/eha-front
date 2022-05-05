@@ -26,4 +26,11 @@ export class HotlineListFilterFormComponent implements OnInit {
       category: e.target.value
     });
   }
+
+  resetForm(){
+    this.hotlineFilterForm.reset();
+    this.submittedFilter.emit({
+      category: ''
+    });
+  }
 }

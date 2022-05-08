@@ -111,6 +111,17 @@ const routes: Routes = [
         },
       },
       {
+        path: 'hotline/get/:id',
+        loadChildren: () => import('./hotline/hotline-view/hotline-view.module').then(m => m.HotlineViewModule),
+        data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: "/app/hotline/list", label: "Mes demandes" },
+            { route: null, label: "Détails d'une question" }
+          ]
+        },
+      },
+      {
         path: 'contrat/details/:code',
         loadChildren: () => import('./contract/contract-view/contract-view.module').then(m => m.ContractViewModule),
         data: {

@@ -1,10 +1,55 @@
 <div class="alert alert-warning" *ngIf="items.length == 0">
     Aucune nouvelle demande.
 </div>
+
+
+
+<div class="perPage" *ngIf="items.length > 0">
+    <span>Demandes par page :</span>
+    <div class="btn-group" dropdown style="width:100px; margin-left: 20px;">
+        <button id="button-basic" dropdownToggle type="button"
+            class="btn btn-default ddown-per-page dropdown-toggle"
+            aria-controls="dropdown-basic">{{itemsPerPage}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
+        </ul>
+    </div>
+</div>
+
 <div class="list-group my-items-for-contacts" *ngIf="items.length > 0">
-    <a class="list-group-item link" *ngFor="let row  of items | slice:0:10" (click)="showHotline(row)">
+    <a class="list-group-item link" *ngFor="let row  of items |  slice:startItem:endItem;" (click)="showHotline(row)">
         <span style="color:grey; font-weight: bold;">n°{{row.id}}</span><small> le {{row.openedAt}}</small>
         <br>
         {{row.question}}
     </a>
 </div>
+
+<form  [formGroup]="paginationForm" *ngIf="items.length > 0">
+    <pagination [totalItems]='items.length' [itemsPerPage]="itemsPerPage"
+    [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+    (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+    </pagination>
+</form>
+
+
+<ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+<ng-container *ngIf="!disabled">
+    <img src="../../../../assets/img/pagination-activated.png">
+</ng-container>
+<ng-container *ngIf="disabled">
+    <img src="../../../../assets/img/pagination-disabled.png" class="reversed">
+</ng-container>
+</ng-template>
+
+<ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+<ng-container *ngIf="!disabled">
+    <img src="../../../../assets/img/pagination-activated.png" class="reversed">
+</ng-container>
+<ng-container *ngIf="disabled">
+    <img src="../../../../assets/img/pagination-disabled.png">
+</ng-container>
+</ng-template>

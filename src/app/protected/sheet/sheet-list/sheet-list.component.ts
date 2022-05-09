@@ -22,8 +22,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
   itemsPerPage: number = 20;
   paginationForm: FormGroup;
   smallnumPages: number = 0;
-  welcomeTitle = '';
   welcomeText = '';
+  activeText = true;
   public user: User = null;
   public subscription: Subscription;
   public searchText = '';
@@ -261,8 +261,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   loadText() {
     this.pageService.getPage({ page: 'welcome-text' }).subscribe(response => {
-      this.welcomeTitle = response.title;
       this.welcomeText = response.content;
+      this.activeText = response.active;
     })
   }
 }

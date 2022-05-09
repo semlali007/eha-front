@@ -25,7 +25,7 @@ export class PageComponent implements OnInit {
       'content': ['', [
         Validators.required
       ]],
-      'active': false,
+      'active': false
     });
     this.route.params.subscribe(params => {
       if (!!params.page) {
@@ -55,7 +55,7 @@ export class PageComponent implements OnInit {
         'content': [response.content, [
           Validators.required
         ]],
-        'active': response.active,
+        'active': response.active
       });
     })
   }

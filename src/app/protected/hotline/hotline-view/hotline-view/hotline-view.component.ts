@@ -53,7 +53,7 @@ export class HotlineViewComponent implements OnInit {
     this.informations = hotline.info;
     console.log(this.informations);
     this.timeline = hotline.timeline;
-    this.warningMessage = '';
+    //this.warningMessage = '';
   }
 
   showList() {
@@ -72,9 +72,8 @@ export class HotlineViewComponent implements OnInit {
       if (!!response && !!response.message) {
         this.warningMessage = response.message;
       }
-      else {
-        this.loadHotline();
-      }
+      
+      this.loadHotline();
     });
   }
 

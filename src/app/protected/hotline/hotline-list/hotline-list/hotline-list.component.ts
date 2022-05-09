@@ -5,7 +5,7 @@ import { HotlineService } from 'src/app/core/services/hotline.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-email.component';
 import { User } from 'src/app/shared/models/user';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hotline-list',
@@ -23,6 +23,9 @@ export class HotlineListComponent implements OnInit, OnDestroy {
   bsModalRef: BsModalRef;
   public user: User = null;
   userSubscription: Subscription;
+  hotlineSubscription: Subscription;
+  public currentEmail: string='';
+
   constructor(
     private authService: AuthService,
     private hotlineService: HotlineService,
@@ -32,6 +35,7 @@ export class HotlineListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.email = this.authService.currentUser.email;
     this.userSubscription = this.authService.user$.subscribe(user => this.user = user);
+    this.hotlineSubscription = this.hotlineService.emailHotline$.subscribe(currentEmail => this.currentEmail = currentEmail || this.email);
 
     this.loadList();
     this.hotlineService.getConfig().subscribe(
@@ -63,10 +67,13 @@ export class HotlineListComponent implements OnInit, OnDestroy {
   }
 
   private loadList(filter?: any) {
-    let params: any = { email: this.email };
+    let params: any = {};
     if (!!filter && !!filter.category) {
       params.category = filter.category;
     }
+
+    params.email = this.currentEmail;
+
     this.hotlineService
       .getHotlineByUser(params)
       .subscribe(hotlines => {
@@ -79,18 +86,19 @@ export class HotlineListComponent implements OnInit, OnDestroy {
 
   openEdit() {
     const initialState = {
-      actualEmail: this.email,
+      actualEmail: this.currentEmail,
     };
     this.bsModalRef = this.modalService.show(HotlineListEmailComponent, { initialState });
     this.bsModalRef.content.closeBtnName = 'Fermer';
     this.bsModalRef.content.afterEdit.subscribe(response => {
       if (!!response && !!response.email) {
-        this.email = response.email;
-        this.loadList();
+        this.hotlineService.setEmail(response.email);
+        this.loadList({email:response.email});
       }
     });
   }
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
+    this.hotlineSubscription.unsubscribe();
    }
 }

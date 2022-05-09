@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
@@ -13,6 +13,10 @@ import { LoaderService } from './loader.service';
   providedIn: 'root'
 })
 export class HotlineService {
+
+  private emailHotline: BehaviorSubject<string | null> = new BehaviorSubject(null);
+  public readonly emailHotline$: Observable<string | null> = this.emailHotline.asObservable();
+
   constructor(
     private appConfigService: AppConfigService,
     private http: HttpClient,
@@ -202,5 +206,9 @@ export class HotlineService {
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))
     );
+  }
+  
+  public setEmail(email){
+    this.emailHotline.next(email);
   }
 }

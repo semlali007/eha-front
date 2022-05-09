@@ -8,18 +8,17 @@
     <div class="mt-5 col-md-9">
       <div class="row justify-content-center">
         <div class="col-12">
-          <h1 class="cover-heading">
+          <!-- <h1 class="cover-heading">
             Bienvenue dans la Vitrine de l’Offre
-          </h1>
+          </h1> -->
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group row">
-                <div class="col-9 col-sm-9">
-
-                  <span class="text-muted">Vous recherchez des informations sur un marché multi-entités, un marché national ou un marché Groupe ?<br>
+                <div class="col-9 col-sm-9" [innerHtml]="welcomeText">
+                  <!-- <span class="text-muted">Vous recherchez des informations sur un marché multi-entités, un marché national ou un marché Groupe ?<br>
                     Vous les trouverez ici dans le catalogue des marchés portés par la DAG.<br>
                     Vous avez une question ? Contactez-nous <a id="link" routerLink="/" (click)="btnClick()">ici</a> en sélectionnant la rubrique « Fiches marché ».
-                  </span>
+                  </span> -->
 
                 </div>
                 <div class="col-3 col-sm-3" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))">

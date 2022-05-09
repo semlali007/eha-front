@@ -72,6 +72,11 @@
      class="list-group-item">
       Nouveautés (Page Accueil)
      </li>
+     <li (click)="navigate(welcomeTextPath)"
+     [class.list-group-item-success]="isActive(welcomeTextPath)"
+     class="list-group-item">
+      Texte de bienvenue (Vitrine de l'offre)
+     </li>
      </ul>
 
     </div>

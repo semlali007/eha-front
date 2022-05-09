@@ -7,6 +7,7 @@ import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { PreviousService } from 'src/app/core/services/previous.service';
+import { PageService } from 'src/app/core/services/page.service';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
   itemsPerPage: number = 20;
   paginationForm: FormGroup;
   smallnumPages: number = 0;
+  welcomeTitle = '';
+  welcomeText = '';
   public user: User = null;
   public subscription: Subscription;
   public searchText = '';
@@ -89,6 +92,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private previousService: PreviousService,
+    private pageService: PageService,
 
   ) { }
 
@@ -104,6 +108,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       this.defaultFilter = this.params;
     }
     this.loadItems();
+    this.loadText();
   }
 
   get currentPage() { return this.paginationForm.get('currentPage') }
@@ -252,5 +257,12 @@ export class SheetListComponent implements OnInit, OnDestroy {
       areas: this.defaultFilter.search.areas,
       showcase: this.defaultFilter.search.showcase
     };
+  }
+
+  loadText() {
+    this.pageService.getPage({ page: 'welcome-text' }).subscribe(response => {
+      this.welcomeTitle = response.title;
+      this.welcomeText = response.content;
+    })
   }
 }

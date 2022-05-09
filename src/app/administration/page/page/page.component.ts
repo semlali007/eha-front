@@ -37,6 +37,9 @@ export class PageComponent implements OnInit {
           case 'purchase-modal-news':
             this.pageCode = 'purchase_modal_news'
             break;
+          case 'welcome-text':
+            this.pageCode = 'welcome-text'
+            break;
         }
        this.loadData();
         console.log('page', this.pageCode);

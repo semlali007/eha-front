@@ -98,6 +98,17 @@ export class HotlineService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+  getList(params){
+    const url = `${this.appConfigService.basePath}/hotlines/list`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url,params).pipe(
+      switchMap((hotlinesData: any) => {
+        return of(hotlinesData);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
 
   getHotlines(hotlinesServer) {
     let hotlines: any = [];
@@ -115,6 +126,9 @@ export class HotlineService {
     });
     return hotlines;
   }
+
+ 
+
   getItem(options: {
     id?: string,
     openedAt?: string,

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { HotlineService } from 'src/app/core/services/hotline.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-hotline-change-informations',
   templateUrl: './hotline-change-informations.component.html',
@@ -8,8 +9,12 @@ import { Router } from '@angular/router';
   ]
 })
 export class HotlineChangeInformationsComponent implements OnInit {
-
-  constructor(private router: Router,) { }
+  hotlineSubscription: Subscription;
+  @Output() exported = new EventEmitter<Object>();
+  constructor(
+    private router: Router,
+    private hotlineService: HotlineService,
+    ) { }
 
   ngOnInit(): void {
   }
@@ -18,5 +23,11 @@ export class HotlineChangeInformationsComponent implements OnInit {
   createHotline(){
     this.router.navigate(['app/hotline/create']);
   }
+
+  export(){
+    this.exported.emit();
+  }
+  
+
 
 }

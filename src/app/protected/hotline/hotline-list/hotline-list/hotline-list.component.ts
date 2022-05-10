@@ -6,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-email.component';
 import { User } from 'src/app/shared/models/user';
 import { Subscription, Observable } from 'rxjs';
+import { ExcelService } from 'src/app/core/services/excel.service';
 
 @Component({
   selector: 'app-hotline-list',
@@ -24,12 +25,13 @@ export class HotlineListComponent implements OnInit, OnDestroy {
   public user: User = null;
   userSubscription: Subscription;
   hotlineSubscription: Subscription;
-  public currentEmail: string='';
+  public currentEmail: string = '';
 
   constructor(
     private authService: AuthService,
     private hotlineService: HotlineService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private excelService: ExcelService,
   ) { }
 
   ngOnInit(): void {
@@ -93,12 +95,21 @@ export class HotlineListComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.afterEdit.subscribe(response => {
       if (!!response && !!response.email) {
         this.hotlineService.setEmail(response.email);
-        this.loadList({email:response.email});
+        this.loadList({ email: response.email });
       }
     });
   }
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
     this.hotlineSubscription.unsubscribe();
-   }
+  }
+
+  public onExported(e) {
+    this.hotlineService
+      .getList({})
+      .subscribe(hotlines => {
+        this.excelService.generateExcel({header:Object.keys(hotlines[0]||[]),data:hotlines}, { sheet: 'hotline', name: 'hotlines' });
+      }
+      );
+  }
 }

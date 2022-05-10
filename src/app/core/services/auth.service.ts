@@ -97,25 +97,26 @@ export class AuthService {
   }
 
   public runInitialLoginSequence(): Promise<void> {
+    
     return this.oauthService.loadDiscoveryDocument()
+    .then(() => new Promise<void>(resolve => setTimeout(() => resolve(), 1500)))
       .then(() => this.oauthService.tryLogin())
+      
       .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
           return Promise.resolve();
-        }else{
-          return Promise.reject(false);
         }
       })
       .then(() => {
         this.isDoneLoadingSubject$.next(true);
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-          let stateUrl = this.oauthService.state;
+         let stateUrl = this.oauthService.state;
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
-          
-          this.messageService.sendMessage({modalStateHome:true});
-          this.router.navigateByUrl(stateUrl);
+         
+         this.messageService.sendMessage({modalStateHome:true});
+         this.router.navigateByUrl(stateUrl);
         }
       })
       .catch(() => this.isDoneLoadingSubject$.next(true));
@@ -124,7 +125,13 @@ export class AuthService {
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
-    this.oauthService.initLoginFlow(null, { 'acr_values': 'sesameGROUPE' });
+    let url = this.router.url;
+    
+    if('/login' == this.router.url){
+      url = '/app/accueil';
+    }
+
+    this.oauthService.initCodeFlow(targetUrl || url, { 'acr_values': 'sesameGROUPE' });
   }
 
   public logout() { this.oauthService.logOut(true); }
@@ -147,7 +154,7 @@ export class AuthService {
   public stopAutomaticRefresh() { return this.oauthService.stopAutomaticRefresh(); }
   private getUser(params): User {
     return new User({
-      email: params.email,
+      email: params.email || 'eha-front@edf.fr',
       nni: params.nni,
       name: params.name,
       direction: params.direction,
@@ -186,7 +193,6 @@ export class AuthService {
         nni: params['sub'],
         profil: params
       }));
-      this.router.navigate([this.router.url]);
     }
   }
 

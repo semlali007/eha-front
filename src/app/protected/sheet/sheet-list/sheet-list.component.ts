@@ -138,7 +138,6 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public onSubmittedFilterSheets(filter: any) {
     this.filterInput[filter.type] = filter.value;
-    console.log('cccc',filter);
     this.loadItems();
   }
 
@@ -261,8 +260,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   loadText() {
     this.pageService.getPage({ page: 'welcome-text' }).subscribe(response => {
-      this.welcomeText = response.content;
-      this.activeText = response.active;
+      this.welcomeText = response.content || '';
+      this.activeText = response.active || false;
     })
   }
 }

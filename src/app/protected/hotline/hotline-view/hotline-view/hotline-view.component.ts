@@ -103,9 +103,7 @@ export class HotlineViewComponent implements OnInit {
       if (!!response && !!response.message) {
         this.warningMessage = response.message;
       }
-      else {
-        this.loadHotline();
-      }
+      this.loadHotline();
     });
   }
   openAddFile() {
@@ -119,9 +117,7 @@ export class HotlineViewComponent implements OnInit {
       if (!!response && !!response.message) {
         this.warningMessage = response.message;
       }
-      else {
-        this.loadHotline();
-      }
+      this.loadHotline();
     });
   }
 
@@ -136,9 +132,7 @@ export class HotlineViewComponent implements OnInit {
       if (!!response && !!response.message) {
         this.warningMessage = response.message;
       }
-      else {
-        this.loadHotline();
-      }
+      this.loadHotline();
     });
   }
 

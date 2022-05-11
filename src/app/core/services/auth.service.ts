@@ -115,8 +115,10 @@ export class AuthService {
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
-          
-         this.messageService.sendMessage({modalStateHome:true});
+         if(stateUrl == '/app/accueil'){
+           this.messageService.sendMessage({modalStateHome:true});
+         }
+         
          this.router.navigateByUrl(stateUrl);
         }
       })

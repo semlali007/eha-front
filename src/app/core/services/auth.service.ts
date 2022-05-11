@@ -110,11 +110,12 @@ export class AuthService {
       .then(() => {
         this.isDoneLoadingSubject$.next(true);
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-         let stateUrl = this.oauthService.state;
+         let newStr = this.oauthService.state;
+         let stateUrl = newStr.replace(/w_t_p/g,'/');
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
-         
+          
          this.messageService.sendMessage({modalStateHome:true});
          this.router.navigateByUrl(stateUrl);
         }
@@ -154,7 +155,7 @@ export class AuthService {
   public stopAutomaticRefresh() { return this.oauthService.stopAutomaticRefresh(); }
   private getUser(params): User {
     return new User({
-      email: params.email || 'eha-front@edf.fr',
+      email: params.email || 'it@supportdag.edf.fr',
       nni: params.nni,
       name: params.name,
       direction: params.direction,

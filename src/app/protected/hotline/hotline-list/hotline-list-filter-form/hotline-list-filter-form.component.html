@@ -1,13 +1,15 @@
 <form [formGroup]="hotlineFilterForm" >
-    <p>Filter sur une catégorie :
-        <select class="form-control" required [formControl]="category" (change)="changeCategory($event)">
+    <p>Filtrer sur une catégorie :
+        <span class="row" style="margin-left: 0;">
+        <select class="form-control" required [formControl]="category" (change)="changeCategory($event)" style="width:50%;">
             <option value="" disabled>Choisissez une catégorie</option>
             <option *ngFor="let category of categories" [value]="category.code">
                 {{category.family}} - {{category.label}}
             </option>
         </select>
+        <button class="btn btn-sheet-search" style="margin-top:0;color: #007bff;border-color: #007bff; margin-left: 1%;" type="button" (click)="resetForm()">
+            Réinitialiser
+        </button>
+    </span>
     </p>
-    <button class="btn btn-sheet-search" style="margin-top:0;color: #007bff;border-color: #007bff;" type="button" (click)="resetForm()">
-        Réinitialiser
-    </button>
 </form>

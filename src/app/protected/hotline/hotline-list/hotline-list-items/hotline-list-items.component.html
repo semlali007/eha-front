@@ -38,7 +38,7 @@
 
 <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
 <ng-container *ngIf="!disabled">
-    <img src="../../../../assets/img/pagination-activated.png">
+    <img src="../../../../assets/img/pagination-activated.png" style="width: 31px; height: 31px;">
 </ng-container>
 <ng-container *ngIf="disabled">
     <img src="../../../../assets/img/pagination-disabled.png" class="reversed">
@@ -47,7 +47,7 @@
 
 <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
 <ng-container *ngIf="!disabled">
-    <img src="../../../../assets/img/pagination-activated.png" class="reversed">
+    <img src="../../../../assets/img/pagination-activated.png" class="reversed" style="width: 31px; height: 31px;">
 </ng-container>
 <ng-container *ngIf="disabled">
     <img src="../../../../assets/img/pagination-disabled.png">

@@ -130,7 +130,7 @@ export class AuthService {
     // call encodeURIComponent on the argument to the method.
     let url = this.router.url;
     
-    if('/login' == this.router.url){
+    if('/login' == this.router.url || '/logout' == this.router.url){
       url = '/app/accueil';
     }
 

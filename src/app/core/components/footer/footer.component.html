@@ -1,22 +1,32 @@
 <footer class="my-footer" role="contentinfo">
     Application proposée par la Direction des Achats Groupe, une direction de la DTEO
-    &nbsp;|&nbsp;
-    <a href="documentation.pdf" target="_blank">
-        Télécharger la documentation
-    </a>
-    &nbsp;|&nbsp;
-    <button class="btn btn-link btn-sm" data-toggle="modal" (click)="staticModal.show()">
-        Mentions légales
-    </button>
+    <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm"  href="documentation.pdf" target="_blank">
+            Télécharger la documentation
+        </a>
+    </span>
+
+    <span class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <button class="btn btn-link btn-sm" data-toggle="modal" (click)="staticModal.show()">
+            Mentions légales
+        </button>
+    </span>
     
-    <a *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="btn btn-link btn-sm" (click)="navigate('admin/dashboard')">
-        &nbsp;|&nbsp;
-        Administration
-    </a>
-    &nbsp;|&nbsp;
-    <a class="btn btn-link btn-sm" (click)="navigate('version.html')">
-        Version
-    </a>
+    <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm" (click)="navigate('admin/dashboard')">
+            Administration
+        </a>
+    </span>
+
+    <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm" (click)="navigate('version.html')">
+            Version
+        </a>
+    </span>
 </footer>
 
 <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"

@@ -4,7 +4,7 @@
         Liste des agences achats les plus susceptibles d'utiliser ce code article.
     </div>
     <div class="list-group my-items-for-searches">
-        <div class="list-group-item link" *ngFor="let result  of item.items" (click)="showAgency(result)">
+        <div class="list-group-item link" *ngFor="let result  of item.items | slice:startItem:endItem;" (click)="showAgency(result)">
             {{result.code}} <b>{{result.label}}</b>
             <br>
             <small>{{result.other}}</small>

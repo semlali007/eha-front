@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   ]
 })
 export class SearchResultContractComponent implements OnInit {
+  @Input() startItem: any;
+  @Input() endItem: any;
   @Input() item: any;
   @Input() updatedDate: any;
   constructor(private router: Router) { }

@@ -4,7 +4,7 @@
             Seuls les 30 premiers résultats sont affichés, vous devriez affiner votre recherche. En rajoutant un mot ?
         </div>
         <div class="list-group my-items-for-searches">
-            <a class="list-group-item link" *ngFor="let result  of item.items" (click)="showContract(result)">
+            <a class="list-group-item link" *ngFor="let result  of item.items | slice:startItem:endItem;" (click)="showContract(result)">
                 {{result.code}} <b>{{result.label}}</b>
                 <br>
                 <small>{{result.other}}</small>

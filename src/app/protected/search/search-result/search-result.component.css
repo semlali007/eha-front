@@ -1,0 +1,17 @@
+.ddown-per-page{ 
+    height: 37px;
+    left: 0px;
+    right: 0px;
+    /* Blanc (Charte) */
+    background: #FFFFFF;
+    
+    /* Noir (Charte) */
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 5px;
+    text-align:left;
+}
+
+.perPage {
+    text-align: right;
+}

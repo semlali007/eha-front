@@ -8,21 +8,47 @@
                 </a>
             </div>
         </nav>
+
+        <div class="perPage" *ngIf="count > 0">
+            <span>Demandes par page :</span>
+            <div class="btn-group" dropdown style="width:100px; margin-left: 20px;">
+                <button id="button-basic" dropdownToggle type="button"
+                    class="btn btn-default ddown-per-page dropdown-toggle"
+                    aria-controls="dropdown-basic">{{itemsPerPage}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
+                    <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
+                    <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
+                </ul>
+            </div>
+        </div>
+
         <div class="tab-content">
             <div class="tab-pane fade" *ngFor="let item  of results.elements" [class.active]="isActive(item)"
                 [class.show]="isActive(item)">
-                <app-search-result-tenders [item]='item'  *ngIf="item.code == 'tenders'"></app-search-result-tenders>
-                <app-search-result-dauphin [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'dauphin'"></app-search-result-dauphin>
-                <app-search-result-contract [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'contract'"></app-search-result-contract>
-                <app-search-result-provider [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'provider'"></app-search-result-provider>
-                <app-search-result-item-generic [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'item_generic'">
+                <app-search-result-tenders [item]='item'  *ngIf="item.code == 'tenders'" [startItem]='startItem' [endItem]='endItem'></app-search-result-tenders>
+                <app-search-result-dauphin [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'dauphin'"></app-search-result-dauphin>
+                <app-search-result-contract [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'contract'"></app-search-result-contract>
+                <app-search-result-provider [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'provider'"></app-search-result-provider>
+                <app-search-result-item-generic [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'item_generic'">
                 </app-search-result-item-generic>
-                <app-search-result-agencies [item]='item' [updatedDate]='updatedDate' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
+                <app-search-result-agencies [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
             </div>
         </div>
         <div class="alert alert-warning" *ngIf=" (!results.countMax  || results.countMax == 0)  && reset == false">
             Désolé, je n'ai rien trouvé.
         </div>
+
+        <form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="count > 0;">
+            <pagination [boundaryLinks]="true" [totalItems]="count" [itemsPerPage]="itemsPerPage"
+              [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+              (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
+              firstText="&laquo;" lastText="&raquo;">
+            </pagination>
+          </form>
+
         <div *ngIf="reset == false">
             <p style="font-size:0.1rem">&nbsp;</p>
             <div class="list-group my-items-for-searches">

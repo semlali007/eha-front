@@ -10,6 +10,8 @@ export class SearchResultTendersComponent implements OnInit {
   
   @Input() item: any;
   @Input() updatedDate: any;
+  @Input() startItem: any;
+  @Input() endItem: any;
   constructor() { }
 
   ngOnInit(): void {

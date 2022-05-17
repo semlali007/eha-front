@@ -47,6 +47,7 @@ export class SearchResultComponent implements OnInit, OnChanges {
   reloadData() {
     this.active = this.results.maxCount;
     this.count = this.results.countMax;
+    this.currentPage.setValue(1);
   }
 
   public pageChanged(event: any): void {

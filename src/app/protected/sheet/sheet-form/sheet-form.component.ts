@@ -30,20 +30,6 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 
 export class SheetFormComponent implements OnInit, OnDestroy{
 
-  // @HostListener('window:beforeunload', [ '$event' ])
-  // beforeUnloadHandler(event) {
-  //   if((!this.sheetId && !localStorage.getItem('draftId')) || (this.sheetId == localStorage.getItem('draftId'))){
-  //     this.submitDraft();
-  //   }
-  // }
-
-  // @HostListener('window:unload', [ '$event' ])
-  // unloadHandler(event) {
-  //   if((!this.sheetId && !localStorage.getItem('draftId')) || (this.sheetId == localStorage.getItem('draftId'))){
-  //   this.submitDraft();
-  //   }
-  // }
-
   sheetForm: FormGroup;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
@@ -541,10 +527,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
 		this.subscription.unsubscribe();
-    // if((!this.sheetId && !localStorage.getItem('draftId')) || (this.sheetId == localStorage.getItem('draftId')))
-    // {
-    //   this.submitDraft();
-    // }
 	}
 }
 

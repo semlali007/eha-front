@@ -32,31 +32,33 @@ export class SheetService {
     private dateService: DateService
   ) { }
 
-  save(sheet: Sheet, files: any) {
-    const url = `${this.appConfigService.basePath}/sheets/add`;
+  save(sheet: Sheet, files: any, params: {
+    draft: boolean,
+  }) {
+    var url = '';
+    var message = '';
+    switch(params.draft) { 
+      case false: {
+        url = `${this.appConfigService.basePath}/sheets/add`;
+        message = 'Votre Fiche a été enregistrée avec succès.'
+        this.loaderService.setLoading(true);
+         break; 
+      } 
+      case true: { 
+        url = `${this.appConfigService.basePath}/sheets/addDraft`;
+        message = 'Votre brouillon a été enregistré avec succès.' 
+         break; 
+      } 
+   } 
+    
     const data = this.getSheetForApi(sheet);
-    this.loaderService.setLoading(true);
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
     return this.http.post(url, fd).pipe(
-      tap(_ => this.toastrService.showToastr({
+      tap(_ => 
+        this.toastrService.showToastr({
         category: 'success',
-        message: 'Votre Fiche a été enregistrée avec succès.'
-      })),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
-    );
-  }
-
-  saveDraft(sheet: Sheet, files: any) {
-    const url = `${this.appConfigService.basePath}/sheets/addDraft`;
-    const data = this.getSheetForApi(sheet);
-    let fd = this.addMediasToFormData(files);
-    fd.append('model', JSON.stringify(data));
-    return this.http.post(url, fd).pipe(
-      tap(_ => this.toastrService.showToastr({
-        category: 'success',
-        message: 'Votre brouillon a été enregistré avec succès.'
+        message: message
       })),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))
@@ -84,32 +86,26 @@ export class SheetService {
   }
 
   update(sheet: Sheet, files: any, params: {
-    deletedFiles: Document[]
+    deletedFiles: Document[],
+    draft: boolean,
   }) {
 
-    const url = `${this.appConfigService.basePath}/sheets/save`;
-    const data = this.getSheetForApi(sheet);
-    data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
-    data.id = sheet.id;
-    this.loaderService.setLoading(true);
-    let fd = this.addMediasToFormData(files);
-    fd.append('model', JSON.stringify(data));
+    var url = '';
+    var message = '';
+    switch(params.draft) { 
+      case false: {
+        url = `${this.appConfigService.basePath}/sheets/save`;
+        message = 'Votre Fiche a été enregistrée avec succès.'
+        this.loaderService.setLoading(true);
+         break; 
+      } 
+      case true: { 
+        url = `${this.appConfigService.basePath}/sheets/saveDraft`;
+        message = 'Votre brouillon a été enregistré avec succès.' 
+         break; 
+      } 
+   } 
 
-    return this.http.post(url, fd).pipe(
-      tap(_ => this.toastrService.showToastr({
-        category: 'success',
-        message: 'Votre Fiche a été enregistrée avec succès.'
-      })),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
-    );
-  }
-
-  updateDraft(sheet: Sheet, files: any, params: {
-    deletedFiles: Document[]
-  }) {
-
-    const url = `${this.appConfigService.basePath}/sheets/saveDraft`;
     const data = this.getSheetForApi(sheet);
     data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
     data.id = sheet.id;
@@ -119,7 +115,7 @@ export class SheetService {
     return this.http.post(url, fd).pipe(
       tap(_ => this.toastrService.showToastr({
         category: 'success',
-        message: 'Votre brouillon a été enregistré avec succès.'
+        message: message
       })),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))

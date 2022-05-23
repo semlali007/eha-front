@@ -380,7 +380,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'update'),
       };
 
-      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles }).subscribe(
+      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: false }).subscribe(
         _ => this.router.navigate(['/app/fiches/liste']),
       );
       return;
@@ -392,7 +392,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'add'),
       };
 
-      this.sheetService.save(new Sheet($options), files).subscribe(
+      this.sheetService.save(new Sheet($options), files , {draft: false}).subscribe(
         _ => this.router.navigate(['/app/fiches/liste']),
       );
     }
@@ -436,7 +436,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'update'),
       };
 
-      this.sheetService.updateDraft(new Sheet($options), files, { deletedFiles: this.deletedFiles }).subscribe( response =>
+      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: true}).subscribe( response =>
          localStorage.setItem('draftId', this.sheetId));
       return;
     } else {
@@ -446,7 +446,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEnedis: this.getMedias(this.privateEnedisUploader.queue, 'add'),
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'add'),
       };
-      this.sheetService.saveDraft(new Sheet($options), files).subscribe( response => {
+      this.sheetService.save(new Sheet($options), files, {draft: true}).subscribe( response => {
         localStorage.setItem('draftId', response['id']);
         this.sheetId = response['id'];
     });

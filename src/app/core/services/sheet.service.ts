@@ -48,6 +48,21 @@ export class SheetService {
     );
   }
 
+  saveDraft(sheet: Sheet, files: any) {
+    const url = `${this.appConfigService.basePath}/sheets/addDraft`;
+    const data = this.getSheetForApi(sheet);
+    let fd = this.addMediasToFormData(files);
+    fd.append('model', JSON.stringify(data));
+    return this.http.post(url, fd).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Votre brouillon a été enregistré avec succès.'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
   addMediasToFormData(files: any): FormData {
     let fd = new FormData();
     files.kits.forEach(item => {
@@ -89,6 +104,28 @@ export class SheetService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+  updateDraft(sheet: Sheet, files: any, params: {
+    deletedFiles: Document[]
+  }) {
+
+    const url = `${this.appConfigService.basePath}/sheets/saveDraft`;
+    const data = this.getSheetForApi(sheet);
+    data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
+    data.id = sheet.id;
+    let fd = this.addMediasToFormData(files);
+    fd.append('model', JSON.stringify(data));
+
+    return this.http.post(url, fd).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Votre brouillon a été enregistré avec succès.'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
   private getSheetForApi(sheet: Sheet): any {
     const contracts: Object = this.getContractListForApi(sheet.contracts);
     const providers: Object = this.getProviderListForApi(sheet.providers);
@@ -485,6 +522,19 @@ export class SheetService {
       this.toastrService.showToastr({
         category: 'warning',
         message: 'Vos modifications ont bien été annulées.'
+      });
+    }
+  }
+
+  public redirectToDraft(error?){
+
+    if(error){
+      this.errorService.handleError(error);
+    }
+    else{
+      this.toastrService.showToastr({
+        category: 'success',
+        message: 'Votre brouillon a bien été chargé.'
       });
     }
   }

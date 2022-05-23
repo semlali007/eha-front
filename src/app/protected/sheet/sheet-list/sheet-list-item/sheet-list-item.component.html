@@ -5,7 +5,7 @@
                 <tr>
                     <td>
                         <a  (click)="onSubmittedGetSheet(id)" class="link blue_link" >
-            <strong>{{ title }}</strong>
+            <strong>{{ title }}</strong><strong  *ngIf="!title">Brouillon</strong>
                         </a>
                     </td>
                     <td>

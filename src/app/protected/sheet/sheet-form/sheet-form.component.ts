@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -17,6 +17,9 @@ import { Subscription } from 'rxjs';
 import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
 import { ContractService } from 'src/app/core/services/contract.service';
 import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
+import { SheetFormModalDraftComponent } from './sheet-form-modal-draft/sheet-form-modal-draft.component';
+import { of } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sheet-form',
@@ -26,6 +29,7 @@ import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
 })
 
 export class SheetFormComponent implements OnInit, OnDestroy{
+
   sheetForm: FormGroup;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
@@ -34,6 +38,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   sheetId: string;
   bsModalRef?: BsModalRef;
   bsConfirmModalRef?: BsModalRef;
+  bsDraftModalRef?: BsModalRef;
   private deletedFiles: Document[];
   public user: User;
   public subscription: Subscription;
@@ -55,6 +60,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.init();
+    this.openDraftModal();
+    this.autosaveDraft();
   }
 
   get title() { return this.sheetForm.get('title') }
@@ -109,8 +116,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   cancel() {
     if(this.sheetId)
       this.router.navigate([`app/fiches/details/${this.sheetId}`]).then( response => this.sheetService.cancel()).catch(error => this.sheetService.cancel(error));
-    else
+    else{
       this.router.navigate([`app/fiches/liste`]).then( response => this.sheetService.cancel()).catch(error => this.sheetService.cancel(error));
+    }
   }
 
   createsheetForm(): FormGroup {
@@ -166,8 +174,16 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.partnership.setValue(sheet.partnership);
     this.protected_sector.setValue(sheet.protectedSector);
     this.dauphin.setValue(sheet.dauphin);
-    this.startDate.setValue(new Date(sheet.startDate));
-    this.endDate.setValue(new Date(sheet.endDate));
+
+    if(sheet.startDate != '')
+    {
+      this.startDate.setValue(new Date(sheet.startDate));
+    }
+
+    if(sheet.endDate != '') 
+    { 
+      this.endDate.setValue(new Date(sheet.endDate));
+    }
 
     this.committeeCode.setValue(sheet.committee.code);
     this.showcase.setValue(sheet.showcase);
@@ -320,7 +336,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     });
   }
 
-  submit(): void {
+  submit(draft? : boolean): void {
     let dateOptions = [];
     this.options.value.forEach(op => {
       dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));
@@ -349,6 +365,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       options : dateOptions
     };
 
+
+    if(this.sheetId == localStorage.getItem('draftId') && !draft)
+    {
+      localStorage.removeItem('draftId');
+    }
+
     if (this.sheetId) {
       $options.id = this.sheetId;
       let files = {
@@ -358,8 +380,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'update'),
       };
 
-      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles }).subscribe(
-        _ => this.router.navigate(['/app/fiches/liste']),
+      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: !!draft }).subscribe(
+        _ => {
+          if (!!draft)
+            localStorage.setItem('draftId', this.sheetId);
+          else
+            this.router.navigate(['/app/fiches/liste']);}
       );
       return;
     } else {
@@ -370,9 +396,17 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'add'),
       };
 
-      this.sheetService.save(new Sheet($options), files).subscribe(
-        _ => this.router.navigate(['/app/fiches/liste']),
-      );
+      this.sheetService.save(new Sheet($options), files , {draft: !!draft}).subscribe(
+        response => {
+          if(!!draft)
+          {
+            localStorage.setItem('draftId', response['id']);
+            this.sheetId = response['id'];
+          }
+          else
+          {
+            this.router.navigate(['/app/fiches/liste']);
+          }});
     }
   }
 
@@ -418,6 +452,11 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
+  openDraftModal(){
+    if(!this.sheetId && !!localStorage.getItem('draftId'))
+      this.bsDraftModalRef = this.modalService.show(SheetFormModalDraftComponent, {class: 'modal-sm', ignoreBackdropClick: true});
+  }
+
   remove(): void {
     this.sheetService
       .remove({
@@ -425,6 +464,23 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       })
       .subscribe(response => this.list());
   }
+
+  autosaveDraft()
+  {
+    if((!this.sheetId || localStorage.getItem('draftId') == this.sheetId))
+    {
+      this.sheetForm.valueChanges
+      .pipe(
+        debounceTime(1500),
+        switchMap((value) => of(value))
+      )
+      .subscribe((value) => {
+        this.submit(true);
+      });
+    }
+
+  }
+  
 
   ngOnDestroy() {
 		this.subscription.unsubscribe();

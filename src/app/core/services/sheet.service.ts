@@ -32,16 +32,33 @@ export class SheetService {
     private dateService: DateService
   ) { }
 
-  save(sheet: Sheet, files: any) {
-    const url = `${this.appConfigService.basePath}/sheets/add`;
+  save(sheet: Sheet, files: any, params: {
+    draft: boolean,
+  }) {
+    var url = '';
+    var message = '';
+    switch(params.draft) { 
+      case false: {
+        url = `${this.appConfigService.basePath}/sheets/add`;
+        message = 'Votre Fiche a été enregistrée avec succès.'
+        this.loaderService.setLoading(true);
+         break; 
+      } 
+      case true: { 
+        url = `${this.appConfigService.basePath}/sheets/addDraft`;
+        message = 'Votre brouillon a été enregistré avec succès.' 
+         break; 
+      } 
+   } 
+    
     const data = this.getSheetForApi(sheet);
-    this.loaderService.setLoading(true);
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
     return this.http.post(url, fd).pipe(
-      tap(_ => this.toastrService.showToastr({
+      tap(_ => 
+        this.toastrService.showToastr({
         category: 'success',
-        message: 'Votre Fiche a été enregistrée avec succès.'
+        message: message
       })),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))
@@ -69,26 +86,42 @@ export class SheetService {
   }
 
   update(sheet: Sheet, files: any, params: {
-    deletedFiles: Document[]
+    deletedFiles: Document[],
+    draft: boolean,
   }) {
 
-    const url = `${this.appConfigService.basePath}/sheets/save`;
+    var url = '';
+    var message = '';
+    switch(params.draft) { 
+      case false: {
+        url = `${this.appConfigService.basePath}/sheets/save`;
+        message = 'Votre Fiche a été enregistrée avec succès.'
+        this.loaderService.setLoading(true);
+         break; 
+      } 
+      case true: { 
+        url = `${this.appConfigService.basePath}/sheets/saveDraft`;
+        message = 'Votre brouillon a été enregistré avec succès.' 
+         break; 
+      } 
+   } 
+
     const data = this.getSheetForApi(sheet);
     data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
     data.id = sheet.id;
-    this.loaderService.setLoading(true);
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
 
     return this.http.post(url, fd).pipe(
       tap(_ => this.toastrService.showToastr({
         category: 'success',
-        message: 'Votre Fiche a été enregistrée avec succès.'
+        message: message
       })),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
   private getSheetForApi(sheet: Sheet): any {
     const contracts: Object = this.getContractListForApi(sheet.contracts);
     const providers: Object = this.getProviderListForApi(sheet.providers);
@@ -485,6 +518,19 @@ export class SheetService {
       this.toastrService.showToastr({
         category: 'warning',
         message: 'Vos modifications ont bien été annulées.'
+      });
+    }
+  }
+
+  public redirectToDraft(error?){
+
+    if(error){
+      this.errorService.handleError(error);
+    }
+    else{
+      this.toastrService.showToastr({
+        category: 'success',
+        message: 'Votre brouillon a bien été chargé.'
       });
     }
   }

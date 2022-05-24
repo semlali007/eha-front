@@ -225,6 +225,11 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   }
 
   remove(): void {
+
+    if(this.sheetId == localStorage.getItem('draftId'))
+    {
+      localStorage.removeItem('draftId');
+    }
     this.sheetService
       .remove({
         id: this.sheetId

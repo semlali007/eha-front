@@ -11,6 +11,8 @@ import { AppConfigService } from 'src/app/core/services/app-config.service';
 })
 export class InactivityComponent {
 
+  message: string = '';
+
   constructor(
     private idle: Idle,
     private keepalive: Keepalive,
@@ -37,10 +39,11 @@ export class InactivityComponent {
     idle.onTimeoutWarning.subscribe((countdown) => {
       var minutes = Math.floor(countdown / 60);
       var secondes = countdown - (minutes * 60);
+      this.setMessage(minutes,secondes);
       this.toastrService.showGlobalToastr(
         {
           category: 'danger',
-          message: `Votre session va bientôt expirer. Voulez-vous poursuivre votre navigation ? Sans action de votre part, vous serez déconnecté dans ${minutes} minutes et ${secondes} secondes.`
+          message: this.message,
         }
       )
     }
@@ -56,5 +59,13 @@ export class InactivityComponent {
 
   reset() {
     this.idle.watch();
+  }
+  setMessage(minutes:number, secondes:number) {
+    let m = (minutes > 1) ? `${minutes} minutes` : (minutes == 1) ? `1 minute` : '';
+    let separator = (minutes >=1 && secondes >=1) ? ' et ':'';
+    let s = (secondes > 1) ? `${secondes} secondes` : (secondes == 1) ? `1 seconde` : '';
+
+    this.message =  `Votre session va bientôt expirer. Voulez-vous poursuivre votre navigation ? Sans action de votre part, vous serez déconnecté dans ${m}${separator}${s}.`;
+
   }
 }

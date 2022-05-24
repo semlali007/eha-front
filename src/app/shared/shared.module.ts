@@ -7,6 +7,7 @@ import { DragAndDropModule } from './modules/drag-and-drop.module';
 import { TagsModule } from './modules/tags.module';
 import { FileManagerModule } from './modules/file-manager.module';
 import { PipesModule } from './modules/pipes.module';
+import { ViewerModule } from './modules/viewer.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ApiService } from './api.service';
@@ -21,6 +22,7 @@ import { ApiService } from './api.service';
     DragAndDropModule,
     FileManagerModule,
     PipesModule,
+    ViewerModule
   ],
   exports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { ApiService } from './api.service';
     FileManagerModule,
     PipesModule,
     SidenavComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ViewerModule
   ],
   providers: [
     ApiService,

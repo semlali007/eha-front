@@ -33,6 +33,7 @@
     "html2canvas": "^1.4.0",
     "jspdf": "^2.5.0",
     "ng2-file-upload": "^1.4.0",
+    "ng2-pdf-viewer": "^9.0.0",
     "ngx-bootstrap": "^7.1.2",
     "ngx-chips": "^3.0.0",
     "rxjs": "~7.4.0",

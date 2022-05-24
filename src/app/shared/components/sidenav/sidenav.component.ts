@@ -31,6 +31,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public purchasePage = `${this.prefix}/page/purchase-modal-news`;
   public informationPath = `${this.prefix}/news/home-page`;
   public welcomeTextPath = `${this.prefix}/page/welcome-text`;
+  public filePath = `${this.prefix}/fiche-pratique/list`;
   public subscription: Subscription;
 	public user: User;
   constructor(

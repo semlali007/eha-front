@@ -179,6 +179,9 @@ const routes: Routes = [
           ]
         },
       },
+      {
+        path: 'media/view/:id', loadChildren: () => import('./media/media.module').then(m => m.MediaModule),
+      },
     ],
    canActivate: [AuthGuard],
   },

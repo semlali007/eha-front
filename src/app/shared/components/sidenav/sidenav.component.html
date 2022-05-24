@@ -77,6 +77,12 @@
      class="list-group-item">
       Texte de bienvenue (Vitrine de l'offre)
      </li>
+
+     <li (click)="navigate(filePath)"
+     [class.list-group-item-success]="isActive(filePath)"
+     class="list-group-item">
+     Fiches Pratiques
+     </li>
      </ul>
 
     </div>

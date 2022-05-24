@@ -55,6 +55,11 @@ const routes: Routes = [
         path: 'information/:type',
         loadChildren: () => import('./information/information.module').then(m => m.InformationModule),
       },
+      {
+        path: 'fiche-pratique/list',
+        loadChildren: () => import('./factsheet/factsheet.module').then(m => m.FactsheetModule),
+      },
+      
     ]
   }
 ];

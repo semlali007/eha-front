@@ -336,7 +336,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     });
   }
 
-  submit(): void {
+  submit(draft? : boolean): void {
     let dateOptions = [];
     this.options.value.forEach(op => {
       dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));
@@ -366,7 +366,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     };
 
 
-    if(this.sheetId == localStorage.getItem('draftId'))
+    if(this.sheetId == localStorage.getItem('draftId') && !draft)
     {
       localStorage.removeItem('draftId');
     }
@@ -380,8 +380,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'update'),
       };
 
-      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: false }).subscribe(
-        _ => this.router.navigate(['/app/fiches/liste']),
+      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: !!draft }).subscribe(
+        _ => {
+          if (!!draft)
+            localStorage.setItem('draftId', this.sheetId);
+          else
+            this.router.navigate(['/app/fiches/liste']);}
       );
       return;
     } else {
@@ -392,66 +396,19 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'add'),
       };
 
-      this.sheetService.save(new Sheet($options), files , {draft: false}).subscribe(
-        _ => this.router.navigate(['/app/fiches/liste']),
-      );
+      this.sheetService.save(new Sheet($options), files , {draft: !!draft}).subscribe(
+        response => {
+          if(!!draft)
+          {
+            localStorage.setItem('draftId', response['id']);
+            this.sheetId = response['id'];
+          }
+          else
+          {
+            this.router.navigate(['/app/fiches/liste']);
+          }});
     }
   }
-
-  submitDraft(): void {
-    let dateOptions = [];
-    this.options.value.forEach(op => {
-      dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));
-    });
-    let $options = {
-      id: null,
-      title: this.title.value,
-      startDate: this.startDate.value,
-      endDate: this.endDate.value,
-      comments: this.comments.value,
-      content: this.content.value,
-      contracts: this.contracts.value,
-      edf_open: this.edf_open.value,
-      stipulation_for_others: this.stipulation_for_others.value,
-      partnership: this.partnership.value,
-      protected_sector: this.protected_sector.value,
-      dauphin: this.dauphin.value,
-      lots: this.lots.value,
-      providers: this.providers.value,
-      beneficiaries: this.beneficiaries.value,
-      areas : this.areas.value,
-      directions: this.directions.value,
-      status: this.status.value,
-      committee: new Committee({code:this.committeeCode.value}),
-      showcase: this.showcase.value,
-      options : dateOptions
-    };
-
-    if (this.sheetId) {
-      $options.id = this.sheetId;
-      let files = {
-        kits: this.getMedias(this.kitUploader.queue, 'update'),
-        privates:  this.getMedias(this.privateUploader.queue, 'update'),
-        privatesEnedis: this.getMedias(this.privateEnedisUploader.queue, 'update'),
-        privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'update'),
-      };
-
-      this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: true}).subscribe( response =>
-         localStorage.setItem('draftId', this.sheetId));
-      return;
-    } else {
-      let files = {
-        kits: this.getMedias(this.kitUploader.queue, 'add'),
-        privates:  this.getMedias(this.privateUploader.queue, 'add'),
-        privatesEnedis: this.getMedias(this.privateEnedisUploader.queue, 'add'),
-        privatesEdfEnedis: this.getMedias(this.privateEdfEnedisUploader.queue, 'add'),
-      };
-      this.sheetService.save(new Sheet($options), files, {draft: true}).subscribe( response => {
-        localStorage.setItem('draftId', response['id']);
-        this.sheetId = response['id'];
-    });
-  }
-}
 
   onRemovedItem(document?: Document) {
     this.deletedFiles.push(document);
@@ -518,7 +475,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         switchMap((value) => of(value))
       )
       .subscribe((value) => {
-        this.submitDraft();
+        this.submit(true);
       });
     }
 

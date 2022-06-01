@@ -71,18 +71,18 @@
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li role="menuitem"><a class="dropdown-item"  (click)="changeStatus({'status':'initialized'})">
-                    <img src="../../../../assets/img/icon-cree.png">&nbsp;&nbsp;<span [class.font-weight-bold]="initialized">Initialisée</span></a></li>
+                    <img src="../../../../assets/img/icon-initilaisee.png">&nbsp;&nbsp;<span [class.font-weight-bold]="initialized">Initialisée</span></a></li>
 
                 <li role="menuitem"><a class="dropdown-item" (click)="changeStatus({'status':'transmitted'})"  >
-                        <img src="../../../../assets/img/icone-valide.png">&nbsp;&nbsp;<span [class.font-weight-bold]="transmitted">Transmise PHA</span></a>
+                        <img src="../../../../assets/img/icone-transmise-pha.png">&nbsp;&nbsp;<span [class.font-weight-bold]="transmitted">Transmise PHA</span></a>
                 </li>
                          <li role="menuitem"><a class="dropdown-item" (click)="changeStatus({'status':'managed'})">
-                        <img src="../../../../assets/img/icon-en-instruction.png">&nbsp;&nbsp;<span [class.font-weight-bold]="managed">Soumise au manager</span></a>
+                        <img src="../../../../assets/img/icone-soumise-au-manager.png">&nbsp;&nbsp;<span [class.font-weight-bold]="managed">Soumise au manager</span></a>
                 </li>
                 <li role="menuitem"><a class="dropdown-item"  (click)="changeStatus({'status':'affected'})">
-                    <img src="../../../../assets/img/icon-cree.png">&nbsp;&nbsp;<span [class.font-weight-bold]="affected">Affectée à l'acheteur</span></a></li>
+                    <img src="../../../../assets/img/icone-affecter-a-lachteur.png">&nbsp;&nbsp;<span [class.font-weight-bold]="affected">Affectée à l'acheteur</span></a></li>
                 <li role="menuitem"><a class="dropdown-item"  (click)="changeStatus({'status':'integred'})">
-                    <img src="../../../../assets/img/icon-cree.png">&nbsp;&nbsp;<span [class.font-weight-bold]="integred">Intégrée en affaire</span></a></li>
+                    <img src="../../../../assets/img/icon-integre-en-affaire.png">&nbsp;&nbsp;<span [class.font-weight-bold]="integred">Intégrée en affaire</span></a></li>
    
                 <li role="menuitem"><a class="dropdown-item"   (click)="changeStatus({'status':'refused'})">
                         <img src="../../../../assets/img/icon-refuse.png">&nbsp;&nbsp;<span [class.font-weight-bold]="refused">Refusée</span></a>

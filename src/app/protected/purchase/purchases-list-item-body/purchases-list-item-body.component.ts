@@ -11,32 +11,32 @@ export class PurchaseListItemBodyComponent implements OnInit {
 
   status:any={
     '1':{
-      'icon':'icon-cree',
+      'icon':'icon-initilaisee',
       'img':'polygon-first',
       'label':'Initialisée'
     },
     '2':{
-      'icon':'icone-valide',
+      'icon':'icone-transmise-pha',
       'img':'polygon-first',
       'label':'Transmise PHA'
     },
     '3':{
-      'icon':'icon-transmise',
+      'icon':'icone-soumise-au-manager',
       'img':'polygon-first',
       'label':'Soumise au manager'
     },
     '4':{
-      'icon':'icone-valide',
+      'icon':'icone-affecter-a-lachteur',
       'img':'polygon-first',
       'label':"Affectée à l'acheteur"
     },
     '5':{
-      'icon':'icon-en-instruction',
+      'icon':'icon-integre-en-affaire',
       'img':'polygon-first',
       'label':'Intégrée en affaire'
     },
     '6':{
-      'icon':'icon-en-instruction',
+      'icon':'icon-refuse',
       'img':'polygon-first',
       'label':'Refusée'
     }

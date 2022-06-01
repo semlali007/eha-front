@@ -20,6 +20,12 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   instructed:boolean=false;
   refused:boolean=false;
 
+  sortNuméro:boolean=false;
+  sortLibellé:boolean=false;
+  sortCrée:boolean=false;
+  sortStatut:boolean=false;
+  sortStatutModif:boolean=false;
+
   subscription: Subscription;
 
   filterForm: FormGroup;
@@ -53,39 +59,78 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   }
 
   sort(params) {
-    if (params.direction == 'asc') {
-      this.filteredlist.sort((a, b) => {
-        return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
-      });
-    } else {
-      this.filteredlist.sort((a, b) => {
-        return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
+    if(params['column'] == 'purchase_demand_id')
+    {  
+      if(this.sortNuméro) {
+        this.filteredlist.sort((a, b) => {
+          return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
+        });
+      } else {
+        this.filteredlist.sort((a, b) => {
+          return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
+        }
+        );
       }
-      );
+      this.sortNuméro = !this.sortNuméro;
     }
+    else
+    {
+      if(this.sortStatut) {
+        this.filteredlist.sort((a, b) => {
+          return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
+        });
+      } else {
+        this.filteredlist.sort((a, b) => {
+          return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
+        }
+        );
+      }
+      this.sortStatut = !this.sortStatut;
+    }
+
     this.notifyList('purchases');
   }
 
   sortText(params) {
-    if (params.direction == 'asc') {
-      this.filteredlist.sort((a, b) => a[params['column']].localeCompare(b[params['column']]));
-    } else {
-      this.filteredlist.sort((a, b) => b[params['column']].localeCompare(a[params['column']]));
+    if(params['column'] == 'purchase_demand_label'){
+      if (this.sortLibellé) {
+        this.filteredlist.sort((a, b) => a[params['column']].localeCompare(b[params['column']]));
+      } else {
+        this.filteredlist.sort((a, b) => b[params['column']].localeCompare(a[params['column']]));
+      }
+      this.sortLibellé = !this.sortLibellé;
     }
-    this.notifyList('purchases');
+      this.notifyList('purchases');
   }
   sortDate(params) {
-    if (params.direction == 'asc') {
-      this.filteredlist.sort((a, b) => {
-        return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
-      });
-    } else {
-      this.filteredlist.sort((a, b) => {
-        return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
+    if(params['column'] == 'purchase_created_date'){
+      if (this.sortCrée) {
+        this.filteredlist.sort((a, b) => {
+          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
+        });
+      } else {
+        this.filteredlist.sort((a, b) => {
+          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
+        }
+        );
       }
-      );
+      this.sortCrée = !this.sortCrée;
     }
-    this.notifyList('purchases');
+    else{
+      if (this.sortStatutModif) {
+        this.filteredlist.sort((a, b) => {
+          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
+        });
+      } else {
+        this.filteredlist.sort((a, b) => {
+          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
+        }
+        );
+      }
+      this.sortStatutModif = !this.sortStatutModif;
+
+    }
+      this.notifyList('purchases');
   }
 
   public changeStatus(params) {

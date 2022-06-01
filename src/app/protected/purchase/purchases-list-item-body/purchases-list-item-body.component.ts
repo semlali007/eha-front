@@ -13,27 +13,32 @@ export class PurchaseListItemBodyComponent implements OnInit {
     '1':{
       'icon':'icon-cree',
       'img':'polygon-first',
-      'label':'Créee'
+      'label':'Initialisée'
     },
     '2':{
       'icon':'icone-valide',
       'img':'polygon-first',
-      'label':'Validée'
+      'label':'Transmise PHA'
     },
     '3':{
       'icon':'icon-transmise',
       'img':'polygon-first',
-      'label':'Transmise'
+      'label':'Soumise au manager'
     },
     '4':{
       'icon':'icone-valide',
       'img':'polygon-first',
-      'label':'Transmise'
+      'label':"Affectée à l'acheteur"
     },
     '5':{
       'icon':'icon-en-instruction',
       'img':'polygon-first',
-      'label':'En instruction'
+      'label':'Intégrée en affaire'
+    },
+    '6':{
+      'icon':'icon-en-instruction',
+      'img':'polygon-first',
+      'label':'Refusée'
     }
   }
   constructor() {

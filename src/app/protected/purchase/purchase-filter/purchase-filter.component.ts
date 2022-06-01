@@ -19,6 +19,11 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   created:boolean=false;
   instructed:boolean=false;
   refused:boolean=false;
+  initialized:boolean=false;
+  transmitted:boolean=false;
+  managed:boolean=false;
+  affected:boolean=false;
+  integred:boolean=false;
 
   subscription: Subscription;
 
@@ -41,14 +46,15 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.subscription = this.messageService.getMessage().subscribe((data) => {
       if (data.source == 'form' && data.action=='get_all') {
         this.filterForm.reset();
-        this.validated=this.created= this.instructed=this.refused=false;
+        this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.integred= false;
       }
     });
   }
 
   clearFilter() {
     this.filterForm.reset();
-    this.validated=this.created= this.instructed=this.refused=false;
+    this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.integred= false;
+    //this.validated=this.created= this.instructed=this.refused=false;
     this.filter();
   }
 
@@ -91,19 +97,24 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   public changeStatus(params) {
     console.log('params',params);
     switch(params.status){
-      case'validated':
-      this.validated = !this.validated;
+      case'initialized':
+      this.initialized = !this.initialized;
       break;
-      case'created':
-      this.created = !this.created;
+      case'transmitted':
+      this.transmitted = !this.transmitted;
       break;
-      case'instructed':
-      this.instructed = !this.instructed;
+      case'managed':
+      this.managed = !this.managed;
+      break;
+      case'affected':
+      this.affected = !this.affected;
+      break;
+      case'integred':
+      this.integred = !this.integred;
       break;
       case'refused':
       this.refused = !this.refused;
       break;
-
     }
     this.filter();
   }
@@ -112,10 +123,15 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.filteredlist = this.purchases;
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterCode.value, ["purchase_demand_id"], "start");
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterLabel.value, ["purchase_demand_label"], "like");
-    this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{
+   /* this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{
       'last_status_event': [(this.validated == true) ? 2 : "", (this.created == true) ? 1 : "",
       (this.instructed == true) ? 3 : "", (this.refused == true) ? 4 : ""]
+    }]);*/
+    this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{
+      'last_status_event': [(this.initialized == true) ? 1 : "", (this.transmitted == true) ? 2 : "",
+      (this.managed == true) ? 3 : "", (this.affected == true) ? 4 : "", (this.integred == true) ? 5 : "", (this.refused == true) ? 6 : ""]
     }]);
+
     this.notifyList('purchases');
   }
 
@@ -136,11 +152,12 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
 
     return (!!this.filterCode.value
       || !!this.filterLabel.value
-      || !!this.validated
-      || !!this.created
-      || !!this.instructed
+      || !!this.initialized
+      || !!this.transmitted
+      || !!this.managed
+      || !!this.affected
+      || !!this.integred
       || !!this.refused
-
     )
   }
 

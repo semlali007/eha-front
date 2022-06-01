@@ -1,14 +1,15 @@
 
 
 <div class="row cadre-item-purchase">
-    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
+   <!-- <p  class="text" *ngIf="item.section == 1" >&nbsp;Cette DA n'est pas prise en charge par la Direction des Achats Groupe</p>
+    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>-->
     <div *ngFor="let item of purchase$|async">
         <div class="col-12">&nbsp;</div>
         <div class="col-2">
             <table>
                 <tr>
                     <td>
-                        <div  [ngClass]="{'flow-grey' : item.status == 1 || item.status == 2 , 'flow-green' : item.status == 3 || item.status == 4|| item.status == 5}" >
+                        <div  [ngClass]="{'flow-grey' : item.status == 1 || item.status == 2 , 'flow-green' : item.status == 3 || item.status == 4|| item.status == 5 || item.status == 6}" >
                             <p class="title">
                                 <img src='{{ "../../../../../assets/img/" + status[item.status].icon + ".png" }}'>&nbsp;&nbsp;{{status[item.status].label}}</p>
                             <p class="text-flow-content">Le {{item.date|customDate}}<br>{{item.lastItem.purchase_validator_name}}</p>

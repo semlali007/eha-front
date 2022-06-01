@@ -52,6 +52,23 @@ export class PurchaseService {
         let purchases: any = [];
 
         data.purchase.forEach(data => {
+          console.log('data', data);
+
+         let purchases1 =  data.items.filter(p => p.section == 1 );
+         let purchases2 =  data.items.filter(p => p.section == 2 );
+         let purchases3 =  data.items.filter(p => p.section == 3 );
+         if(purchases1.length == data.items.length){
+///
+         }
+
+         if(purchases2.length == data.items.length){
+           
+         }
+         
+        if(purchases3.length == data.items.length){
+           
+        }
+
           let sData = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data.items);
           let sData1 = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items);
           purchases.push({
@@ -61,7 +78,9 @@ export class PurchaseService {
             date: sData1[0]['event_date'],
           });
         });
-        return of(this.sort({ 'column': 'status', 'direction': 'asc' }, purchases));
+        let ss = this.sort({ 'column': 'status', 'direction': 'asc' }, purchases);
+        console.log('ss', ss);
+        return of(ss);
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))

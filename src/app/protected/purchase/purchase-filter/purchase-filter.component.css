@@ -66,4 +66,6 @@ margin: 0px 10px;
     box-sizing: border-box;
     border-radius: 5px;
     text-align:left;
+
+    flex:none;
 }

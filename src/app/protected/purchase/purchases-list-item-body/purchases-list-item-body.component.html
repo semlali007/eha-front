@@ -1,9 +1,145 @@
+<div *ngIf="(purchase$|async) as p;" class="row cadre-item-purchase" >
+    <p  class="text" *ngIf="p.section==1" >&nbsp;Cette DA n'est pas prise en charge par la Direction des Achats Groupe.</p>
+    <p  class="text" *ngIf="p.section!=1"  [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
+    <div *ngIf="p.section!=1 && (p.viewInitialized == true)">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/icon-cree.png" }}'>&nbsp;&nbsp;Initialisée</p>
+
+                            <p class="text-flow-content" *ngIf='!!p.initialized'>Le {{p.initialized.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf='!!p.initialized'>Source: {{p.initialized.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                   <!--   <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
+    <div *ngIf="p.section!=1 && (p.transmittedViewed == true)">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/icon-cree.png" }}'>&nbsp;&nbsp;Transmise PHA</p>
+
+                            <p class="text-flow-content" *ngIf='!!p.transmitted'>Le {{p.transmitted.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf='!!p.transmitted'>Source: {{p.transmitted.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                   <!--   <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
 
 
-<div class="row cadre-item-purchase">
-   <!-- <p  class="text" *ngIf="item.section == 1" >&nbsp;Cette DA n'est pas prise en charge par la Direction des Achats Groupe</p>
-    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>-->
-    <div *ngFor="let item of purchase$|async">
+    <div *ngIf="p.section!=1 && (p.managedViewed == true)">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/icon-cree.png" }}'>&nbsp;&nbsp;Soumise au manager</p>
+
+                            <p class="text-flow-content" *ngIf='!!p.managed'>Le {{p.managed.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf='!!p.managed'>Source: {{p.managed.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                   <!--   <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
+
+    <div *ngIf="p.section!=1 && (p.affectedViewed == true)">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/icon-cree.png" }}'>&nbsp;&nbsp;Affectée à l'acheteur</p>
+
+                            <p class="text-flow-content" *ngIf='!!p.affected'>Le {{p.affected.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf='!!p.affected'>Source: {{p.affected.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                   <!--   <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
+
+    <div *ngIf="p.section!=1 && (p.integredViewed == true)">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/icon-cree.png" }}'>&nbsp;&nbsp;Intégrée en affaire</p>
+
+                            <p class="text-flow-content" *ngIf='!!p.integred'>Le {{p.integred.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf='!!p.integred'>Source: {{p.integred.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                   <!--   <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
+
+
+    <div *ngIf="p.section!=1 && (p.refusedViewed == true)">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-2">
+            <table>
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/icon-cree.png" }}'>&nbsp;&nbsp;Refusée</p>
+
+                            <p class="text-flow-content" *ngIf='!!p.refused'>Le {{p.refused.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf='!!p.refused'>Source: {{p.refused.nature}}</p>
+                        </div>
+                    </td>
+                    <td>
+                   <!--   <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
+   <!-- <div *ngFor="let item of p.items">
         <div class="col-12">&nbsp;</div>
         <div class="col-2">
             <table>
@@ -23,5 +159,5 @@
             </table>
         </div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    </div>
+    </div>-->
 </div>

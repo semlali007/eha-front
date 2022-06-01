@@ -48,28 +48,84 @@ export class PurchaseService {
       num_da: params.num_da,
     }).pipe(
       switchMap((data: any) => {
+        let freeze = {
+          section:'',
+          initialized:null, 
+          viewInitialized:false,
+          transmitted:null, 
+          transmittedViewed:false,
+          managed:null, 
+          managedViewed:false,
+          affected:null, 
+          affectedViewed:false,
+          integred:null, 
+          integredViewed:false,
+          refusedViewed:false,
+          refused:null
+        };
 
         let purchases: any = [];
+        let ordered = this.sort({ 'column': 'event_label', 'direction': 'desc' }, data.items); 
+        let maxEvent = ordered[0].event_label;
+        console.log('maxEvent',maxEvent);
 
-        data.purchase.forEach(data => {
-          console.log('data', data);
+        let purchases1 =  data.items.filter(p => p.section == 1 );
+        let purchases2 =  data.items.filter(p => p.section == 2 );
+        let purchases3 =  data.items.filter(p => p.section == 3 );
+        let initialized =  data.items.filter(p => p.event_label == 1 );
+        let transmitted =  data.items.filter(p => p.event_label == 2 );
+        let managed =  data.items.filter(p => p.event_label == 3 );
+        let affected =  data.items.filter(p => p.event_label == 4 );
+        let integred =  data.items.filter(p => p.event_label == 5 );
+        let refused =  data.items.filter(p => p.event_label == 6 );
+        freeze.section = ((purchases1.length>0)?'1':'')+((purchases2.length>0)?'2':'')+((purchases3.length>0)?'3':'');
+        freeze.refusedViewed=maxEvent>4;
+        freeze.integredViewed=maxEvent>4;
+        freeze.affectedViewed=maxEvent>3;
+        freeze.managedViewed=maxEvent>2;
+       freeze.transmittedViewed=maxEvent > 1;
+       freeze.refused = refused[0] || null;
+       if(freeze.section == '2' || freeze.section=='12' || freeze.section=='23' || freeze.section=='123'){
+        let i = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, integred);
+        freeze.integred = i[0]||null;
 
-         let purchases1 =  data.items.filter(p => p.section == 1 );
-         let purchases2 =  data.items.filter(p => p.section == 2 );
-         let purchases3 =  data.items.filter(p => p.section == 3 );
-         if(purchases1.length == data.items.length){
-///
-         }
+         let f = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, affected);
+         freeze.affected = f[0]||freeze.integred;
 
-         if(purchases2.length == data.items.length){
-           
-         }
-         
-        if(purchases3.length == data.items.length){
-           
+         let m = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, managed);
+         freeze.managed = m[0]||freeze.affected;
+
+         let tList = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, transmitted);
+         freeze.transmitted = tList[0]||freeze.managed;
+       }
+        freeze.viewInitialized=maxEvent>0;
+        if(freeze.section == '12' || freeze.section=='123'){
+           freeze.initialized =       
+                              initialized.find(p => (p.last_status_event_label == 'Validation'))
+                              || initialized.find(p => (p.last_status_event_label == 'freeze.initialized'))
+                              || initialized.find(p => (p.last_status_event_label == 'Création'))
+                              || freeze.transmitted;
         }
+       
+    
 
-          let sData = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data.items);
+        
+
+        
+console.log('freeze.initialized',freeze.initialized);
+
+        /*switch(freeze.section){
+          case '1':
+              if(initialized.length>0){
+                freeze.initialized = 'initalisée';
+              }
+
+              if(initialized.length>0){
+                freeze.initialized = 'initalisée';
+              }
+            break;
+        }*/
+        /*let sData = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data.items);
           let sData1 = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items);
           purchases.push({
             status: (data.statut == '-1') ? 5 : data.statut,
@@ -77,10 +133,9 @@ export class PurchaseService {
             lastItem: sData[0] || null,
             date: sData1[0]['event_date'],
           });
-        });
-        let ss = this.sort({ 'column': 'status', 'direction': 'asc' }, purchases);
-        console.log('ss', ss);
-        return of(ss);
+      
+        let ss = this.sort({ 'column': 'status', 'direction': 'asc' }, purchases);*/
+        return of(freeze);
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))

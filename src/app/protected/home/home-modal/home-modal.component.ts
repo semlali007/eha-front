@@ -58,12 +58,6 @@ export class HomeModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCheckboxAllChange(e) {
-    this.infos.forEach(item => {
-      item.isSelected = e.target.checked == true;
-    })
-  }
-
   onCheckboxChange(e) {
     this.infos.forEach(item => {
       if (e.target.value == item.id) {

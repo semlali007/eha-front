@@ -55,6 +55,10 @@ export class SheetService {
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
     return this.http.post(url, fd).pipe(
+      switchMap(data => {
+        return of(data);
+      }),
+
       tap(_ => 
         this.toastrService.showToastr({
         category: 'success',

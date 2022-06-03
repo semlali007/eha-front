@@ -48,26 +48,39 @@ export class PurchaseService {
       num_da: params.num_da,
     }).pipe(
       switchMap((data: any) => {
-
-        let purchases: any = [];
-
-        data.purchase.forEach(data => {
-          let sData = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data.items);
-          let sData1 = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items);
-          purchases.push({
-            status: (data.statut == '-1') ? 5 : data.statut,
-            items: sData,
-            lastItem: sData[0] || null,
-            date: sData1[0]['event_date'],
+        let allItems = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items); 
+        let steps = [];
+        let c = true;
+        while( c == true){
+          let firstEventlabel = allItems[0].event_label;
+          let result = allItems.findIndex(element => {
+            return element.event_label !== firstEventlabel;
           });
-        });
-        return of(this.sort({ 'column': 'status', 'direction': 'asc' }, purchases));
+          if(result!=-1){
+            steps.push(allItems.slice(0, result));
+            allItems =  allItems.slice(result, allItems.length);
+          }else{
+            steps.push(allItems.slice(0, allItems.length));
+            allItems = [];
+            c = false;
+          }
+        }
+        const preparedSteps = []; 
+         steps.forEach(data => {
+            let orderedStep = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data);
+            preparedSteps.push({
+              viewPerson: orderedStep[0].event_label == 4 || orderedStep[0].last_status_event_label=="Acheteur - Intégrer à l'affaire => Refusé",
+              step: orderedStep[0]
+            });
+          });
+        return of(preparedSteps);
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))
     );
 
   }
+
 
   sort(params,data) {
     if (params.direction == 'asc') {

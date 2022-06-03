@@ -1,22 +1,21 @@
-
-
-<div class="row cadre-item-purchase">
+<div  class="row cadre-item-purchase" >
     <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
-    <div *ngFor="let item of purchase$|async">
+    <div  *ngFor="let data of (purchase$ | async); ">
         <div class="col-12">&nbsp;</div>
         <div class="col-2">
             <table>
                 <tr>
                     <td>
-                        <div  [ngClass]="{'flow-grey' : item.status == 1 || item.status == 2 , 'flow-green' : item.status == 3 || item.status == 4|| item.status == 5}" >
+                        <div  class="flow-grey" >
                             <p class="title">
-                                <img src='{{ "../../../../../assets/img/" + status[item.status].icon + ".png" }}'>&nbsp;&nbsp;{{status[item.status].label}}</p>
-                            <p class="text-flow-content">Le {{item.date|customDate}}<br>{{item.lastItem.purchase_validator_name}}</p>
-                            <p class="text-flow-source">Source: {{item.lastItem.nature}}</p>
+                            <img src='{{ "../../../../../assets/img/" + status[data.step.event_label].icon + ".png" }}'>&nbsp;&nbsp;{{status[data.step.event_label].label}}</p>
+                            <p class="text-flow-content" >Le {{data.step.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf="data.viewPerson==true">{{data.step.event_person}}</p>
+                            <p class="text-flow-source" >Source: {{data.step.nature}}</p>
                         </div>
                     </td>
                     <td>
-                      <img src='{{"../../../../../assets/img/" + status[item.status].img + ".png" }}'> 
+                      <img src='{{"../../../../../assets/img/" + status[data.step.event_label].img + ".png" }}'> 
                     </td>
                 </tr>
             </table>

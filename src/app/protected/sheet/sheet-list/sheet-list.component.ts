@@ -260,8 +260,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   loadText() {
     this.pageService.getPage({ page: 'welcome-text' }).subscribe(response => {
-      this.welcomeText = response.content || '';
-      this.activeText = response.active || false;
+    //  this.welcomeText = response.content || '';
+     // this.activeText = response.active || false;
     })
   }
 }

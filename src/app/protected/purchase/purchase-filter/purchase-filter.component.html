@@ -35,34 +35,26 @@
 </div>
 <div class="row">
     <div class="col-2">
-        <p class="t-key element">Numéro <img
-                (click)="sort({'column':'purchase_demand_id', 'direction':'desc'})" class="img-left"
+        <p class="t-key element">Numéro <a href="javascript: void(0);" (click)="sort({'column':'purchase_demand_id'})" ><img class="img-left"
                 src="../../../../assets/img/flech-down.png"><img class="img"
-                src="../../../../assets/img/flech-up.png"
-                (click)="sort({'column':'purchase_demand_id', 'direction':'asc'})"> </p>
+                src="../../../../assets/img/flech-up.png"></a></p>
         <input type="text" class="form-control text-field-filter" [formControl]="filterCode" (keyup)="filter()"
             placeholder="Saisir pour filtrer la liste">
     </div>
     <div class="col-4">
-        <p class="t-key element">Libellé <img class="img-left-label" src="../../../../assets/img/flech-down.png"
-                (click)="sortText({'column':'purchase_demand_label', 'direction':'desc'})"><img
-                class="img" src="../../../../assets/img/flech-up.png"
-                (click)="sortText({'column':'purchase_demand_label', 'direction':'asc'})"></p>
+        <p class="t-key element">Libellé <a href="javascript: void(0);" (click)="sortText({'column':'purchase_demand_label'})"><img class="img-left-label" src="../../../../assets/img/flech-down.png"><img
+                class="img" src="../../../../assets/img/flech-up.png"></a></p>
         <input type="text" class="form-control text-field-filter" placeholder="Saisir pour filtrer la liste"
             [formControl]="filterLabel" (keyup)="filter()">
     </div>
 
     <div class="col-2">
-        <p class="t-key element">Crée le <img class="img-left" src="../../../../assets/img/flech-down.png"
-                (click)="sortDate({'column':'purchase_created_date', 'direction':'desc'})"><img
-                class="img" src="../../../../assets/img/flech-up.png"
-                (click)="sortDate({'column':'purchase_created_date', 'direction':'asc'})"> </p>
+        <p class="t-key element">Crée le <a href="javascript: void(0);" (click)="sortDate({'column':'purchase_created_date'})"><img class="img-left" src="../../../../assets/img/flech-down.png"><img
+                class="img" src="../../../../assets/img/flech-up.png"> </a></p>
     </div>
     <div class="col-2">
-        <p class="t-key element">Statut <img class="img-left" src="../../../../assets/img/flech-down.png"
-                (click)="sort({'column':'last_status_event', 'direction':'desc'})"><img class="img"
-                src="../../../../assets/img/flech-up.png"
-                (click)="sort({'column':'last_status_event', 'direction':'asc'})"> </p>
+        <p class="t-key element">Statut <a href="javascript: void(0);" (click)="sort({'column':'last_status_event'})"><img class="img-left" src="../../../../assets/img/flech-down.png"><img class="img"
+                src="../../../../assets/img/flech-up.png"></a> </p>
         <div class="btn-group" dropdown [insideClick]="true">
             <button id="button-basic" dropdownToggle type="button"
                 class="btn btn-default ddown-per-page dropdown-toggle" aria-controls="dropdown-basic">
@@ -85,7 +77,7 @@
         </div>
     </div>
     <div class="col-2">
-        <p class="t-key element">Statut modifié le <img class="tri-icon" src="../../../../assets/img/tri-icon.png"
-                (click)="sortDate({'column':'last_status_date', 'direction':'desc'})"></p>
+        <p class="t-key element">Statut modifié le <a href="javascript: void(0);" (click)="sortDate({'column':'last_status_date'})"><img class="img-left" src="../../../../assets/img/flech-down.png"><img
+            class="img" src="../../../../assets/img/flech-up.png"> </a></p>
     </div>
 </div>

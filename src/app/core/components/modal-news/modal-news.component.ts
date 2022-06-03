@@ -22,12 +22,6 @@ export class ModalNewsComponent implements OnInit {
   ngOnInit() {
     console.log(this.page);
   }
- 
-  onCheckboxAllChange(e) {
-    this.list.forEach(item => {
-      item.isSelected = e.target.checked == true;
-    })
-  }
 
   onCheckboxChange(e) {
     this.list.forEach(item => {

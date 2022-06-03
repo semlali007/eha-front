@@ -6,8 +6,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-purchase-form',
   templateUrl: './purchase-form.component.html',
-  styles: [
-  ]
+  styleUrls: ['./purchase-form.component.css']
 })
 export class PurchaseFormComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;

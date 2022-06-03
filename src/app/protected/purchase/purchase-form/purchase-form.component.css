@@ -48,3 +48,8 @@
     margin: 0px 40px;
 
 }
+
+.centered {
+    display: flex !important; 
+    align-items: center !important; 
+}

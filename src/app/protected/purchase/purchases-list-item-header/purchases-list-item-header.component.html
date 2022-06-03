@@ -4,8 +4,8 @@
     <p class="text" *ngIf="!isOpened;else opened"><img src='../../../../assets/img/element-table.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" class="light-blue">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}</p>
    
 </div>
-<div class="col-4">
-    <p class="text">{{slicedLabel|slice:0:45}}<span *ngIf="slicedLabel.length >45">..</span></p>
+<div class="col-4" style="padding: 0;">
+    <p class="text">{{slicedLabel|slice:0:40}}<span *ngIf="slicedLabel.length >45">..</span></p>
 </div>
 <div class="col-2">
     <p class="text">{{item.purchase_created_date|customDate}}</p>

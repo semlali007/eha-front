@@ -37,7 +37,7 @@ export class PurchaseService {
         catchError(error => this.errorService.handleError(error)),
         finalize(() => this.loaderService.setLoading(false))
       );
-  
+
     }
 
   getPurchase(params): Observable<any | null> {
@@ -48,7 +48,13 @@ export class PurchaseService {
       num_da: params.num_da,
     }).pipe(
       switchMap((data: any) => {
-        let allItems = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items); 
+        let allItems = this.sortDate({ 'column': 'event_date', 'direction': 'asc' }, data.items);
+        let purchases1 =  data.items.filter(p => p.section == 1 );
+        let purchases2 =  data.items.filter(p => p.section == 2 );
+        let purchases3 =  data.items.filter(p => p.section == 3 );
+        let s = ((purchases1.length>0)?'1':'')+((purchases2.length>0)?'2':'')+((purchases3.length>0)?'3':'');
+
+
         let steps = [];
         let c = true;
         while( c == true){
@@ -65,12 +71,13 @@ export class PurchaseService {
             c = false;
           }
         }
-        const preparedSteps = []; 
+        const preparedSteps = [];
          steps.forEach(data => {
             let orderedStep = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data);
             preparedSteps.push({
               viewPerson: orderedStep[0].event_label == 4 || orderedStep[0].last_status_event_label=="Acheteur - Intégrer à l'affaire => Refusé",
-              step: orderedStep[0]
+              step: orderedStep[0],
+              section: s
             });
           });
         return of(preparedSteps);

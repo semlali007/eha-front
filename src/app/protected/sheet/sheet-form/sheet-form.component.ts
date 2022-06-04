@@ -60,8 +60,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.init();
-    this.openDraftModal();
-    this.autosaveDraft();
+   // this.openDraftModal();
+   // this.autosaveDraft();
   }
 
   get title() { return this.sheetForm.get('title') }

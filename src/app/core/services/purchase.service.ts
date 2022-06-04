@@ -73,9 +73,14 @@ export class PurchaseService {
         }
         const preparedSteps = [];
          steps.forEach(data => {
-            let orderedStep = this.sortDate({ 'column': 'event_date', 'direction': 'desc' }, data);
+           let dir = 'desc';
+           if(!!data[0] && !!data[0].event_label && data[0].event_label == 5){
+            dir = 'asc';
+           }
+           
+            let orderedStep = this.sortDate({ 'column': 'event_date', 'direction': dir }, data);
             preparedSteps.push({
-              viewPerson: orderedStep[0].event_label == 4 || orderedStep[0].last_status_event_label=="Acheteur - Intégrer à l'affaire => Refusé",
+              viewPerson: orderedStep[0].event_label == 4 || (orderedStep[0].event_label == 5 && orderedStep[0].last_status_event_label=="Acheteur - Intégrer à l'affaire => Refusé"),
               step: orderedStep[0],
               section: s
             });

@@ -157,11 +157,11 @@ export class AuthService {
   public stopAutomaticRefresh() { return this.oauthService.stopAutomaticRefresh(); }
   private getUser(params): User {
     return new User({
-      email: params.email || 'it@supportdag.edf.fr',
+      email: params.profil.email || 'it@supportdag.edf.fr',
       nni: params.nni,
-      name: params.name,
-      direction: params.direction,
-      roles: params.roles,
+      name: params.profil.name,
+      direction: params.profil.direction,
+      roles: params.profil.roles,
       profil: new Profil(params.profil)
     });
   }

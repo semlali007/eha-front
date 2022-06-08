@@ -1,7 +1,6 @@
 <div  class="row cadre-item-purchase" *ngIf="(purchase$|async) as p;" >
-    <p class="text" *ngIf="p[0].section=='1'"><span [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></span></p>
-    <p *ngIf="p[0].section=='1'" style="margin-top:4%; font-style:italic;" >Cette DA n'est pas prise en charge par la Direction des Achats Groupe.
-    </p>
+    <p class="text" *ngIf="p[0].section=='1'" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
+    <p class="message" *ngIf="p[0].section=='1'">Cette DA n'est pas prise en charge par la Direction des Achats Groupe.</p>
     <p class="text" *ngIf="p[0].section!='1'"  [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
       <div  *ngFor="let data of p; ">
           <div class="col-12" *ngIf="p[0].section!='1'">&nbsp;</div>

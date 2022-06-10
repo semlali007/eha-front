@@ -60,7 +60,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.subscription = this.messageService.getMessage().subscribe((data) => {
       if (data.source == 'form' && data.action=='get_all') {
         this.filterForm.reset();this.filter();
-        this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.integred= false;
+        this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.refused= false;
       }
     });
   }

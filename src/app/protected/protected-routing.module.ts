@@ -12,6 +12,9 @@ const routes: Routes = [
       {
         path: 'accueil',
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+        data:{
+          title:'accueil'
+        }
       },
       {
         path: 'fiches/creation',
@@ -22,7 +25,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/fiches/liste", label: "Vitrine de l’Offre" },
             { route: null, label: "Ajouter une fiche" }
-          ]
+          ],
+          title:'Ajouter une fiche'
         },
       },
       {
@@ -32,7 +36,8 @@ const routes: Routes = [
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
             { route: null, label: "Vitrine de l’Offre" }
-          ]
+          ],
+          title:'Vitrine de l’Offre'
         },
       },
       {
@@ -44,7 +49,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/fiches/liste", label: "Vitrine de l’Offre" },
             { route: null, label: "Modifier une fiche" }
-          ]
+          ],
+          title:'Modifier une fiche'
         },
       },
       {
@@ -55,7 +61,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/fiches/liste", label: "Vitrine de l’Offre" },
             { route: null, label: "Détails d'une fiche" }
-          ]
+          ],
+           title:"Détails d'une fiche"
         },
       },
       {
@@ -65,7 +72,8 @@ const routes: Routes = [
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
             { route: null, label: "Rechercher" },
-          ]
+          ],
+          title:"Rechercher"
         },
       },
       {
@@ -86,7 +94,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/hotline/list", label: "Mes demandes" },
             { route: null, label: "Poser une question" }
-          ]
+          ],
+          title:"Poser une question"
         },
       },
       {
@@ -96,7 +105,8 @@ const routes: Routes = [
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
             { route: null, label: "Mes demandes" }
-          ]
+          ],
+          title:"Mes demandes"
         },
       },
       {
@@ -107,7 +117,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/hotline/list", label: "Mes demandes" },
             { route: null, label: "Détails d'une question" }
-          ]
+          ],
+          title:"Détails d'une question"
         },
       },
       {
@@ -118,7 +129,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/hotline/list", label: "Mes demandes" },
             { route: null, label: "Détails d'une question" }
-          ]
+          ],
+          title:"Détails d'une question"
         },
       },
       {
@@ -129,7 +141,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/recherche", label: "Rechercher" },
             { route: null, label: "Contrat" }
-          ]
+          ],
+          title:"Contrat"
         },
       },
       {
@@ -140,7 +153,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/recherche", label: "Rechercher" },
             { route: null, label: "Fournisseur" }
-          ]
+          ],
+          title:"Fournisseur"
         },
       },
        {
@@ -151,7 +165,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/recherche", label: "Rechercher" },
             { route: null, label: "Dauphin" }
-          ]
+          ],
+          title:"Produit"
         },
       },
       {
@@ -162,7 +177,8 @@ const routes: Routes = [
             { route: "/app/accueil", label: "Accueil" },
             { route: "/app/recherche", label: "Rechercher" },
             { route: null, label: "Article" }
-          ]
+          ],
+          title:"Article"
         },
 
       },
@@ -176,7 +192,8 @@ const routes: Routes = [
           breadcrumb: [
             { route: "/app/accueil", label: "Accueil" },
             { route: null, label: "Ma situation achat" },
-          ]
+          ],
+          title:"Ma situation achat"
         },
       },
       {

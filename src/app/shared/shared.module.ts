@@ -11,6 +11,7 @@ import { ViewerModule } from './modules/viewer.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ApiService } from './api.service';
+import { MatomoModule } from 'ngx-matomo';
 @NgModule({
   declarations: [SidenavComponent, BreadcrumbComponent],
   imports: [
@@ -22,7 +23,8 @@ import { ApiService } from './api.service';
     DragAndDropModule,
     FileManagerModule,
     PipesModule,
-    ViewerModule
+    ViewerModule,
+    MatomoModule,
   ],
   exports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { ApiService } from './api.service';
     PipesModule,
     SidenavComponent,
     BreadcrumbComponent,
-    ViewerModule
+    ViewerModule,
+    MatomoModule,
   ],
   providers: [
     ApiService,

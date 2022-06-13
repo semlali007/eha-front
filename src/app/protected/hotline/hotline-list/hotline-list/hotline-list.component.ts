@@ -99,6 +99,12 @@ export class HotlineListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  resetMail(){
+    this.hotlineService.setEmail(this.email);
+    this.loadList();
+  }
+
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
     this.hotlineSubscription.unsubscribe();

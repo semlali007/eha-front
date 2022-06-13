@@ -3,8 +3,7 @@ import { Line } from 'src/app/shared/models/line';
 @Component({
   selector: 'app-search-form-line',
   templateUrl: './search-form-line.component.html',
-  styles: [
-  ]
+  styleUrls: ['./search-form-line.component.css']
 })
 export class SearchFormLineComponent implements OnInit {
   @Input() line: any;

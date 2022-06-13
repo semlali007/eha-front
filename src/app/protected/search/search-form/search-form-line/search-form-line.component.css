@@ -1,0 +1,8 @@
+::ng-deep .tooltip-inner{
+    background-color: #63a845;
+}
+
+::ng-deep .tooltip.top .tooltip-arrow::before { 
+    border-top-color: #63a845;
+    border-bottom-color: #63a845;
+}

@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="alert alert-warning" *ngIf=" (!results.countMax  || results.countMax == 0)  && reset == false">
-            Désolé, je n'ai rien trouvé.
+            Nous n'avons pas de résultat correspondant à votre recherche. Merci d'affiner vos critères de sélection.
         </div>
 
         <form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="count > 0;">

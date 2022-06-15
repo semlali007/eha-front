@@ -9,6 +9,8 @@
                 <button type="button" class="btn btn-link" (click) = "openEdit()">Changer d'email</button>
                 <br>
                 <button type="button" class="btn btn-link" (click) = "resetMail()">Réinitialiser email</button>
+                <br>
+                <button *ngIf="!!user && (user.hasRole('EHA_GESTIONNAIRE') || user.hasRole('EHA_ADMIN'))" type="button" class="btn btn-link" (click) = "balMail()">BAL Achatpédia</button>
             </p>
         </div>
         <div class="col-12 col-md-8">

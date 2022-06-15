@@ -105,6 +105,11 @@ export class HotlineListComponent implements OnInit, OnDestroy {
     this.loadList();
   }
 
+  balMail(){
+    this.hotlineService.setEmail('DA-DAG-achatpedia@edf.fr');
+    this.loadList();
+  }
+
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
     this.hotlineSubscription.unsubscribe();

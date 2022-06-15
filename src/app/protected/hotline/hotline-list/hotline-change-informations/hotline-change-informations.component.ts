@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotlineService } from 'src/app/core/services/hotline.service';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 export class HotlineChangeInformationsComponent implements OnInit {
   hotlineSubscription: Subscription;
   @Output() exported = new EventEmitter<Object>();
+  @Input() email: any;
+  @Input() currentEmail: any;
   constructor(
     private router: Router,
     private hotlineService: HotlineService,

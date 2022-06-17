@@ -51,9 +51,7 @@ export class HotlineViewComponent implements OnInit {
     this.isRequester = hotline.isRequester;
     this.isHotliner = hotline.isHotliner;
     this.informations = hotline.info;
-    console.log(this.informations);
     this.timeline = hotline.timeline;
-    //this.warningMessage = '';
   }
 
   showList() {

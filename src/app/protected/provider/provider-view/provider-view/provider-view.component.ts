@@ -40,7 +40,6 @@ export class ProviderViewComponent implements OnInit {
     this.providerService.get({
       code: this.code,
     }).subscribe(element => {
-      console.log(element);
       if (!element) return;
       this.provider = element;
     });

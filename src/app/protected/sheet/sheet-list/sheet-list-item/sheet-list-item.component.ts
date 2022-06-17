@@ -44,7 +44,6 @@ export class SheetListItemComponent implements OnInit {
 
 
   subscribe(sheetId: number){
-    console.log(sheetId);
     this.sheetService
       .sheetSubscribe({
         sheet: sheetId,

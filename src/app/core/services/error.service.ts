@@ -32,7 +32,6 @@ export class ErrorService {
       }
     } 
     else {
-      console.log(error) ;
       error = (typeof error === 'string') ? error : 'Une erreur est survenue, essayez plus tard.'
       this.toastrService.showToastr({
         category: 'danger',

@@ -124,7 +124,6 @@ export class AuthInterceptor implements HttpInterceptor {
       tap(stateEvent => {
         if (stateEvent instanceof HttpResponse) {
           if(!!stateEvent.headers && !!stateEvent.headers.get('total_notification')){
-            console.log(stateEvent.headers.get('total_notification'));
             this.notificationService.showNotification({
               category: 'success',
               count: stateEvent.headers.get('total_notification')

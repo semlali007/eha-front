@@ -140,7 +140,6 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   }
 
   public changeStatus(params) {
-    console.log('params',params);
     switch(params.status){
       case'initialized':
       this.initialized = !this.initialized;

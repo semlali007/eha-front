@@ -21,7 +21,6 @@ export class PurchaseService {
      search(params): Observable<any | null> {
       // params = A97609
       const url = `${this.appConfigService.basePath}/purchases/list`;
-      console.log(params) ;
       this.loaderService.setLoading(true);
       return this.http.post(url, {
           words: params.words,

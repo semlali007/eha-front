@@ -21,7 +21,6 @@ export class HotlineListFilterFormComponent implements OnInit {
   }
 
   changeCategory(e) {
-    console.log(e.target.value);
     this.submittedFilter.emit({
       category: e.target.value
     });

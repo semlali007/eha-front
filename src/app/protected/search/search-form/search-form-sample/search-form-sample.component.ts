@@ -13,7 +13,6 @@ export class SearchFormSampleComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-   console.log(this.words.value);
   }
 
   clearSearchForm() {

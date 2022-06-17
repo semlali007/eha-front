@@ -32,7 +32,6 @@ export class DauphinViewComponent implements OnInit {
     this.dauphinService.get({
       code: this.code,
     }).subscribe(element => {
-      console.log(element);
       if (!element) return;
       this.dauphin = element;
     });

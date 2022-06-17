@@ -22,7 +22,6 @@ export class ConfigService {
     public readonly isViewed$: Observable<boolean> = this.isViewed.asObservable(); 
 
     public tagModalViewed(state:boolean) {
-        console.log('tagModalViewed', state);
         this.isViewed.next(state);
     }
 

@@ -26,7 +26,6 @@ export class ModalNotificationComponent implements OnInit {
     ) {}
  
   ngOnInit() {
-    console.log(this.page);
   }
 
   putViewed(id) {

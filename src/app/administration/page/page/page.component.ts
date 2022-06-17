@@ -42,7 +42,6 @@ export class PageComponent implements OnInit {
             break;
         }
        this.loadData();
-        console.log('page', this.pageCode);
       }
     });
   }

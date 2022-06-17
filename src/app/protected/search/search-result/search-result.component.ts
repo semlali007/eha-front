@@ -14,13 +14,13 @@ export class SearchResultComponent implements OnInit, OnChanges {
   private active = '';
   count = 0;
   itemsPerPage: number = 10;
-  paginationForm: FormGroup;
+  paginationForm!: FormGroup;
   smallnumPages: number = 0;
   startItem: number = 0;
   endItem: number = 10;
   constructor(private fb: FormBuilder) { }
 
-  get currentPage() { return this.paginationForm.get('currentPage') }
+  get currentPage() { return this.paginationForm?.get('currentPage')}
 
   ngOnInit() {
     this.updatedDate.setDate(this.updatedDate.getDate() - 1);
@@ -29,6 +29,7 @@ export class SearchResultComponent implements OnInit, OnChanges {
     });
   }
   ngOnChanges(): void {
+    if(!!this.currentPage)
     this.reloadData();
   }
 

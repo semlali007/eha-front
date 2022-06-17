@@ -38,7 +38,6 @@ export class ExcelService {
     reader.onload = () => {
       const buffer = reader.result;
       wb.xlsx.load(buffer).then(workbook => {
-        //console.log(workbook, 'workbook instance')
         workbook.eachSheet((sheet, id) => {
           sheet.eachRow((row, rowIndex) => {
             let tt = row.values;

@@ -160,7 +160,6 @@ export class SheetListComponent implements OnInit, OnDestroy {
     if (!this.user || !(this.user.hasRole('EHA_ADMIN') || this.user.hasRole('EHA_GESTIONNAIRE')) ) {
       status = 1;
     }
-    console.log(this.searchProvider);
     this.params = {
       page: this.currentPage.value,
       perpage: this.itemsPerPage,

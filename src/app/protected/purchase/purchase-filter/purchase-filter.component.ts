@@ -31,6 +31,8 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   sortStatut:boolean=false;
   sortStatutModif:boolean=false;
 
+  filterStatusLabel:string="Aucun";
+
   subscription: Subscription;
 
   filterForm: FormGroup;
@@ -47,19 +49,25 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     this.filterForm = this.fb.group({
       'filterCode': '',
       'filterLabel': '',
+       initialized: [false],
+       transmitted: [false],
+       managed: [false],
+       affected: [false],
+       integred: [false],
+       refused: [false],
     });
 
     this.subscription = this.messageService.getMessage().subscribe((data) => {
       if (data.source == 'form' && data.action=='get_all') {
-        this.filterForm.reset();
-        this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.integred= false;
+        this.filterForm.reset();this.filter();
+        this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.refused= false;
       }
     });
   }
 
   clearFilter() {
     this.filterForm.reset();
-    this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.integred= false;
+    this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.refused= false;
     //this.validated=this.created= this.instructed=this.refused=false;
     this.filter();
   }
@@ -161,6 +169,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
       break;
     }
     this.filter();
+    
   }
 
   public filter() {
@@ -177,6 +186,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     }]);
 
     this.notifyList('purchases');
+    this.changeFilterStatusLabel();
   }
 
   open() {
@@ -217,6 +227,21 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
       }
     }
     this.messageService.sendMessage(search);
+  }
+
+  changeFilterStatusLabel(){
+    if(this.initialized && this.transmitted && this.managed && this.affected && this.integred && this.refused)
+    {
+      this.filterStatusLabel = "Tous";
+    }
+    else if(this.initialized || this.transmitted || this.managed || this.affected || this.integred || this.refused)
+    {
+      this.filterStatusLabel = "Sélection";
+    }
+    else
+    {
+      this.filterStatusLabel = "Aucun";
+    }
   }
 
   ngOnDestroy() {

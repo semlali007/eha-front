@@ -32,7 +32,6 @@ export class AgencyViewComponent implements OnInit {
     this.agencyService.get({
       code: this.agencyCode,
     }).subscribe(agency => {
-      console.log(agency);
       if (!agency) return;
       this.agency = agency;
     });

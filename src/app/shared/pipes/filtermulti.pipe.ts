@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FiltermultiPipe implements PipeTransform {
   transform(myobjects: Array<object>, args?: Array<object>,operator?:string): any {
 
-    console.log(args);
     if (args && Array.isArray(myobjects)) {
       var returnobjects = myobjects;
       args.forEach(function (filterobj) {

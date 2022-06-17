@@ -31,7 +31,6 @@ export class ContractViewComponent implements OnInit {
     this.contractService.get({
       code: this.contractCode,
     }).subscribe(contract => {
-      console.log(contract);
       if (!contract) return;
       this.contract = contract;
       this.contract.postes.sort((a,b)=> Number(a.contract_post_code) > Number(b.contract_post_code));

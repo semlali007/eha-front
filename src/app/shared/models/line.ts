@@ -15,14 +15,17 @@ export class Line {
             {
                 code: 'F1',
                 label: 'PGI-1',
+                tooltip: 'Énergies',
             },
             {
                 code: 'F2',
                 label: 'PGI-2',
+                tooltip: 'Fonctions communes et SEI',
             },
             {
                 code: 'F4',
                 label: 'PGI-4',
+                tooltip: 'Commerce',
             }
         ];
     }

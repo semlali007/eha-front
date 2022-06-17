@@ -25,7 +25,7 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
       if (!!searchData && !!searchData.type && (searchData.type == 'purchase')) {
         this.words.setValue(searchData.searchText);
     }
-    console.log('searchData',searchData)
+    
       this.submit();
     });
   }

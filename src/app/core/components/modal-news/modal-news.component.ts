@@ -20,7 +20,6 @@ export class ModalNewsComponent implements OnInit {
   constructor(public bsModalRef: BsModalRef, private configService: ConfigService,) {}
  
   ngOnInit() {
-    console.log(this.page);
   }
 
   onCheckboxChange(e) {

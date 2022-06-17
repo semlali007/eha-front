@@ -32,14 +32,13 @@ export class HotlineModalFileComponent implements OnInit {
   }
 
   submit(): void {
-    console.log('submit');
     const params = {
       id: this.id,
       sha: this.sha,
       name: this.name.value,
       file: this.fileForm.get('fileSource').value
     }
-    console.log(params);
+    
     this.hotlineService.addFile(params).subscribe(response => {
       this.bsModalRef.hide();
       this.fileEvent.emit(response);

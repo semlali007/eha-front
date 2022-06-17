@@ -22,7 +22,6 @@ export class MigrationDatpComponent implements OnInit {
       .uploadData(params)
       .subscribe(
         response => {
-          console.log(response);
           this.getList();
         }
       );
@@ -34,7 +33,6 @@ export class MigrationDatpComponent implements OnInit {
       .uploadData(params)
       .subscribe(
         response => {
-          console.log(response);
           this.getList();
         }
       );
@@ -51,7 +49,6 @@ export class MigrationDatpComponent implements OnInit {
   getList() {
     this.migrationService.getList({ type: 'datp' }).subscribe(response => {
       this.list = response;
-      console.log(this.list);
     })
   }
 }

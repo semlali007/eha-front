@@ -46,7 +46,6 @@ export class FactsheetFormComponent implements OnInit {
 
 
   submit(): void {
-    console.log('submit');
     const params = {
       id: this.id,
       title: this.title.value,

@@ -11,6 +11,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [],
@@ -26,7 +27,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     ProgressbarModule.forRoot(),
     AccordionModule.forRoot(),
     CollapseModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   exports: [
     AlertModule,
@@ -39,7 +41,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     TabsModule,
     ProgressbarModule,
     AccordionModule,
-    CollapseModule
+    CollapseModule,
+    TooltipModule,
    ]
 })
 export class NgxBootstrapModule { }

@@ -132,7 +132,6 @@ export class SheetService {
     const beneficiaries: Object = this.getBeneficiaryListForApi(sheet.beneficiaries);
     const areas: Object = this.getAreasListForApi(sheet.areas);
     const directions: Object = this.getDirectionsListForApi(sheet.directions);
-    console.log(sheet.committee.code);
     return {
       label: sheet.title,
       description: sheet.comments,
@@ -359,7 +358,6 @@ export class SheetService {
         systems: !!data.systems ? data.systems.split('|') : [],
         contacts: data.contacts,
       });
-      console.log(contract);
       contracts.push(contract);
     });
 

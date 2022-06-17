@@ -1,26 +1,28 @@
 <div  class="row cadre-item-purchase" *ngIf="(purchase$|async) as p;" >
-  <p  class="text" *ngIf="p[0].section=='1'" >&nbsp;Cette DA n'est pas prise en charge par la Direction des Achats Groupe.</p>
-  <p class="text" *ngIf="p[0].section!='1'"  [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
-    <div  *ngFor="let data of p; ">
-        <div class="col-12" *ngIf="p[0].section!='1'">&nbsp;</div>
-        <div class="col-2" *ngIf="p[0].section!='1'">
-            <table>
-                <tr>
-                    <td>
-                        <div  class="flow-grey" >
-                            <p class="title">
-                            <img src='{{ "../../../../../assets/img/" + status[data.step.event_label].icon + ".png" }}'>&nbsp;&nbsp;{{status[data.step.event_label].label}}</p>
-                            <p class="text-flow-content" >Le {{data.step.event_date|customDate}}</p>
-                            <p class="text-flow-source" *ngIf="data.viewPerson==true">{{data.step.event_person}}</p>
-                            <p class="text-flow-source" >Source: {{data.step.nature}}</p>
-                        </div>
-                    </td>
-                    <td>
-                      <img src='{{"../../../../../assets/img/" + status[data.step.event_label].img + ".png" }}'>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div *ngIf="p[0].section!='1'">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    </div>
-</div>
+    <p class="text" *ngIf="p[0].section=='1'" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
+    <p class="message" *ngIf="p[0].section=='1'">Cette DA n'est pas prise en charge par la Direction des Achats Groupe.</p>
+    <p class="text" *ngIf="p[0].section!='1'"  [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
+      <div  *ngFor="let data of p; ">
+          <div class="col-12" *ngIf="p[0].section!='1'">&nbsp;</div>
+          <div class="col-2" *ngIf="p[0].section!='1'">
+              <table>
+                  <tr>
+                      <td>
+                          <div  class="flow-grey" >
+                              <p class="title">
+                              <img src='{{ "../../../../../assets/img/" + status[data.step.event_label].icon + ".png" }}'>&nbsp;&nbsp;{{status[data.step.event_label].label}}</p>
+                              <p class="text-flow-content" >Le {{data.step.event_date|customDate}}</p>
+                              <p class="text-flow-source" *ngIf="data.viewPerson==true">{{data.step.event_person}}</p>
+                              <p class="text-flow-source" >Source: {{data.step.nature}}</p>
+                          </div>
+                      </td>
+                      <td>
+                        <img src='{{"../../../../../assets/img/" + status[data.step.event_label].img + ".png" }}'>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div *ngIf="p[0].section!='1'">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      </div>
+  </div>
+  

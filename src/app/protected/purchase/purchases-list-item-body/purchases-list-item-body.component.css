@@ -115,3 +115,8 @@
     order: 0;
     flex-grow: 0; 
 }
+
+.message{
+    margin-top:4%; 
+    font-style:italic;
+}

@@ -237,7 +237,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     }
     else if(this.initialized || this.transmitted || this.managed || this.affected || this.integred || this.refused)
     {
-      this.filterStatusLabel = "Selection";
+      this.filterStatusLabel = "Sélection";
     }
     else
     {

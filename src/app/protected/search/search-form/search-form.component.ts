@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class SearchFormComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   subscription: Subscription;
+  result: any =[];
   @Output() loadedResults = new EventEmitter<any>();
   @Output() resetedSearchForm = new EventEmitter<any>();
   constructor(
@@ -42,13 +43,16 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   submit() {
     let params: any = { words: this.words.value };
+    params.system = '';
     if (this.line.value.length > 0) {
       params.system = this.line.value;
     }
+
     this.searchService
       .search(params)
       .subscribe(
         result => {
+          this.result = result;
           this.loadedResults.emit(result);
         }
       );
@@ -63,4 +67,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
    }
+
+   onrChangedSystemForm() {
+    this.submit();
+  }
 }

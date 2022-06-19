@@ -13,17 +13,17 @@ export class Line {
     getLineList() {
         return [
             {
-                code: 'F1',
+                code: 'PGI-1',
                 label: 'PGI-1',
                 tooltip: 'Énergies',
             },
             {
-                code: 'F2',
+                code: 'PGI-2',
                 label: 'PGI-2',
                 tooltip: 'Fonctions communes et SEI',
             },
             {
-                code: 'F4',
+                code: 'PGI-4',
                 label: 'PGI-4',
                 tooltip: 'Commerce',
             }

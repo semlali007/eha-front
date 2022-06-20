@@ -18,7 +18,13 @@
                     <div class="col-12">
                         <input type="search" class="form-control" [formControl]="searchText"
                             placeholder="Saisir un numéro de DA" id="searchText">
+                            <small *ngIf="searchText.errors" class="form-text text-danger">
+                                <span [hidden]="!searchText.errors || searchText.errors.required">
+                                    Le numéro de DA doit commencer par 1 et être composé de 10 chiffres
+                                </span>
+                            </small>
                     </div>
+                   
                     <div class="col-12">
                         <button type="submit" class="btn btn-search" [disabled]="!homePurchaseForm.valid">Rechercher</button>
                     </div>

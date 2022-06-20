@@ -41,8 +41,12 @@ export class HomePurchaseFormComponent implements OnInit {
   createForm(): FormGroup {
     return this.homePurchaseForm = this.fb.group({
       'searchText': ['', [
-        Validators.required,
-      ]]
+				Validators.required,
+				Validators.minLength(10),
+				Validators.maxLength(10),
+			  Validators.pattern('^[1]{1}[0-9]{9}$')
+			]
+    ]
     });
   }
 

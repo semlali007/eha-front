@@ -6,6 +6,7 @@
         <div> 
             <app-purchase-form-words class="col-7" [words]="words"></app-purchase-form-words>
         </div>
+    
          <div>
             <button class="btn not-flex btn-edf" style="background: #001A70!important;" type="submit" >
                 Rechercher
@@ -14,6 +15,13 @@
         
         <div class="col-md-5" style="padding:0;">
             <a class="titre-listing" style="color: #001A70!important" (click)="showAll()">Afficher toutes mes demandes d'achat</a>
+        </div>
+        <div>
+            <small *ngIf="words.errors" class="form-text text-danger">
+                <span [hidden]="!words.errors || words.errors.required">
+                    Le numéro de DA doit commencer par 1 et être composé de 10 chiffres
+                </span>
+            </small>
         </div>
     </div>
 </form>

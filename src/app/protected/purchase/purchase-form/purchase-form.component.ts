@@ -34,7 +34,13 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
 
   createSearchForm(): FormGroup {
     return this.searchForm = this.fb.group({
-      'words': ['', [Validators.required]],
+      'words': ['', [
+				Validators.required,
+				Validators.minLength(10),
+				Validators.maxLength(10),
+			  Validators.pattern('^[1]{1}[0-9]{9}$')
+			]
+    ],
     });
   }
 

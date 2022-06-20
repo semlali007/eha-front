@@ -14,6 +14,6 @@
         </div>
     </div>
     <app-search-form-sample class="form-group row" (resetedSearchForm)="onrResetedSearchForm()" [words]="words"></app-search-form-sample>
-    <app-search-form-line [line]="line" ></app-search-form-line>
- 
+    <app-search-form-line [line]="line" (changedSystemForm)="onrChangedSystemForm()"></app-search-form-line>
+    
 </form>

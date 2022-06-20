@@ -37,7 +37,7 @@
                 <app-search-result-agencies [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
             </div>
         </div>
-        <div class="alert alert-warning" *ngIf=" (!results.countMax  || results.countMax == 0)  && reset == false">
+        <div class="alert alert-warning" *ngIf=" !(isLoading$| async) && (!results.countMax  || results.countMax == 0)  && reset == false">
             Nous n'avons pas de résultat correspondant à votre recherche. Merci d'affiner vos critères de sélection.
         </div>
 

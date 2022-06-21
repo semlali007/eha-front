@@ -3,8 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 @Component({
   selector: 'app-sheet-list-filter-direction',
   templateUrl: './sheet-list-filter-direction.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-list-filter-direction.component.css']
 })
 
 export class SheetListFilterDirectionComponent implements OnInit,OnChanges {

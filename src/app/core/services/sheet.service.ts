@@ -202,9 +202,11 @@ export class SheetService {
       if (!!p.code && p.code.length != 0) {
         dirs.push({
           id: p.code,
-          name: p.label
+          name: p.label,
+          tooltip: p.tooltip
         })
       }
+      
     });
     return dirs;
   }

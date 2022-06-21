@@ -4,5 +4,16 @@
 
 ::ng-deep .tooltip.top .tooltip-arrow::before { 
     border-top-color: #63a845;
+}
+
+::ng-deep .tooltip.bottom .tooltip-arrow::before { 
     border-bottom-color: #63a845;
+}
+
+::ng-deep .tooltip.right .tooltip-arrow::before { 
+    border-right-color: #63a845;
+}
+
+::ng-deep .tooltip.left .tooltip-arrow::before { 
+    border-left-color: #63a845;
 }

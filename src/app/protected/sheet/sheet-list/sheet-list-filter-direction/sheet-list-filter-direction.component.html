@@ -11,14 +11,14 @@
         </li>
 
         <li class="list-group-item link" *ngFor="let item of list|slice:0:4" (click)="changeFilter(item.code)"
-            [class.list-group-item-success]="isActive(item.code)">
+            [class.list-group-item-success]="isActive(item.code)" [tooltip]="item.tooltip">
             {{item.name}} ({{item.count}})
         </li>
     </ul>
 
     <ul class="list-group list-group-flush" id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
         <li class="list-group-item link" *ngFor="let item of list|slice:5:14" (click)="changeFilter(item.code)"
-            [class.list-group-item-success]="isActive(item.code)">
+            [class.list-group-item-success]="isActive(item.code)" [tooltip]="item.tooltip">
             {{item.name}} ({{item.count}})
         </li>
     </ul>

@@ -199,12 +199,14 @@ export class SheetService {
     let dirs = [];
 
     directions.forEach(p => {
-      if (!!p.code && p.code.length != 0) {
+      if (!!p.code && p.code.length != 0 && p.label ) {
         dirs.push({
           id: p.code,
-          name: p.label
+          name: p.label,
+          tooltip: p.tooltip
         })
       }
+      
     });
     return dirs;
   }

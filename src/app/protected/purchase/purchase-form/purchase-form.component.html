@@ -13,8 +13,11 @@
             </button>
         </div>        
         
-        <div class="col-md-5" style="padding:0;">
+        <div class="col-md-3" style="padding:0;">
             <a class="titre-listing" style="color: #001A70!important" (click)="showAll()">Afficher toutes mes demandes d'achat</a>
+        </div>
+        <div class="col-md-2" style="padding:0;">
+            <a class="titre-listing" style="color: #001A70!important" (click)="download()">Télécharger mes DA (CSV)</a>
         </div>
         <div>
             <small *ngIf="words.errors" class="form-text text-danger">

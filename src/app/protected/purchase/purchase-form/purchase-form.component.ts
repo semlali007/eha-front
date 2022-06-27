@@ -1,6 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message.service';
+import { PurchaseService } from 'src/app/core/services/purchase.service';
+import { ExcelService } from 'src/app/core/services/excel.service';
+import { PurchaseStatus } from 'src/app/shared/models/purchaseStatus';
 import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
 import { Subscription } from 'rxjs';
 @Component({
@@ -16,7 +19,10 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-   private purchaseMessageService: PurchaseMessageService,
+    private purchaseMessageService: PurchaseMessageService,
+    private purchaseService: PurchaseService,
+    private excelService: ExcelService,
+    
   ) { }
 
   ngOnInit(): void {
@@ -59,5 +65,24 @@ ngOnDestroy(): void {
   if(this.subscription)
   this.subscription.unsubscribe();
 }
+
+  download() {
+    this.purchaseService.search({ words: this.words.value }).subscribe((response: any) => {
+      const purchases: any = [];
+      response.forEach(data => {
+         purchases.push({
+           code:data.purchase_demand_id,
+           label: data.purchase_demand_label,
+           created:data.purchase_created_date,
+           status:  new PurchaseStatus({ code: data.last_status_event }).getLabel(),
+           status_date: data.last_status_date,
+         });
+       });
+
+      this.excelService.generateExcel({header:[
+        'Numéro', 'Libellé', 'Crée le', 'Statut', 'Statut modifié le'
+      ],data:purchases}, { sheet: 'DA', name: "mes demandes d'achat.xlsx" });
+    });
+  }
 
 }

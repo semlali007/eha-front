@@ -7,6 +7,7 @@ import { Anchor } from 'src/app/shared/models/anchor';
   styleUrls: ['./anchor.component.css']
 })
 export class AnchorComponent implements OnInit {
+  itemsPerPage: any = 10;
 
   anchor: Anchor = new Anchor();
   filter = {};
@@ -18,6 +19,7 @@ export class AnchorComponent implements OnInit {
 
   }
 
+
   onSubmittedSearchAnchor(filter: any) {
     this.filter = filter;
     this.anchorService.search(filter).subscribe(data => {
@@ -25,4 +27,7 @@ export class AnchorComponent implements OnInit {
     });
   }
 
+  changePerPage(number: number) {
+    this.itemsPerPage = number;
+  }
 }

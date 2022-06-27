@@ -42,17 +42,11 @@ export class ModalNotificationComponent implements OnInit {
    * Supprimer un element de tableau 
    */
   delete(element){
-   this.notificationService.putViewed(element.id).subscribe(
-    (response) => {
-      const index: number = this.list.indexOf(element);
-      if (index !== -1) {
-          this.list.splice(index, 1);
-      } 
-    },(error)=>{
-      console.log("error ")
-    }
-    
-   ) ;
+    const index: number = this.list.indexOf(element);
+    if (index !== -1) {
+        this.list.splice(index, 1);
+    } 
+   this.notificationService.putViewed(element.id).subscribe() ;
   }
 
   hideModal(): void {

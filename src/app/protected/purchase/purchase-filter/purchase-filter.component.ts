@@ -61,7 +61,6 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
       if (data.source == 'form' && data.action=='get_all') {
         this.filterForm.reset();this.filter();
         this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.refused= false;
-        this.sortDate({'column':'purchase_created_date'});
       }
     });
   }

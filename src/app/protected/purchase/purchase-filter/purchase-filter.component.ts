@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { FilterAllPropertyPipe } from 'src/app/shared/pipes/filter-all-property.pipe';
 import { FiltermultiPipe } from 'src/app/shared/pipes/filtermulti.pipe';
 import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
+import { PurchaseService } from 'src/app/core/services/purchase.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-purchase-filter',
@@ -42,6 +43,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     , private filterAllProperty: FilterAllPropertyPipe
     , private filtermultiPipe: FiltermultiPipe
     , private messageService: PurchaseMessageService
+    , private purchaseService: PurchaseService
   ) {
 
   }
@@ -73,35 +75,19 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   }
 
   sort(params) {
-    if(params['column'] == 'purchase_demand_id')
+     if(params['column'] == 'purchase_demand_id')
     {  
-      if(this.sortNumber) {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
-        }
-        );
-      }
+      params.direction = this.sortNumber?'desc':'asc';
       this.sortNumber = !this.sortNumber;
     }
     else
     {
-      if(this.sortStatut) {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
-        }
-        );
-      }
+      params.direction = this.sortStatut?'desc':'asc';
       this.sortStatut = !this.sortStatut;
     }
 
+    this.filteredlist = this.purchaseService.sort( params, this.filteredlist).slice();
+    
     this.notifyList('purchases');
   }
 
@@ -116,35 +102,22 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     }
       this.notifyList('purchases');
   }
+
   sortDate(params) {
-    if(params['column'] == 'purchase_created_date'){
-      if (this.sortCreated) {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
-        }
-        );
-      }
+
+    if(params['column'] == 'purchase_created_date')
+    {  
+      params.direction = this.sortCreated?'desc':'asc';
       this.sortCreated = !this.sortCreated;
     }
-    else{
-      if (!this.sortStatutModif) {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]) ;
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return  <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
-        }
-        );
-      }
+    else
+    {
+      params.direction = this.sortStatutModif?'desc':'asc';
       this.sortStatutModif = !this.sortStatutModif;
-
     }
-      this.notifyList('purchases');
+
+    this.filteredlist = this.purchaseService.sortDate( params, this.filteredlist).slice();
+    this.notifyList('purchases');
   }
 
   public changeStatus(params) {

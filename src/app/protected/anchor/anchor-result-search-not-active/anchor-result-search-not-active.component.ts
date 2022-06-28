@@ -5,8 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-anchor-result-search-not-active',
   templateUrl: './anchor-result-search-not-active.component.html',
-  styles: [
-  ]
+  styleUrls: ['./anchor-result-search-not-active.component.css']
 })
 export class AnchorResultSearchNotActiveComponent implements OnInit, OnChanges {
   @Input() notActiveProviders: Provider[];

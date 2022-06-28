@@ -25,9 +25,9 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   affected:boolean=false;
   integred:boolean=false;
 
-  sortNuméro:boolean=false;
-  sortLibellé:boolean=false;
-  sortCrée:boolean=false;
+  sortNumber:boolean=false;
+  sortLabel:boolean=false;
+  sortCreated:boolean=false;
   sortStatut:boolean=false;
   sortStatutModif:boolean=false;
 
@@ -76,7 +76,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   sort(params) {
     if(params['column'] == 'purchase_demand_id')
     {  
-      if(this.sortNuméro) {
+      if(this.sortNumber) {
         this.filteredlist.sort((a, b) => {
           return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
         });
@@ -86,7 +86,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
         }
         );
       }
-      this.sortNuméro = !this.sortNuméro;
+      this.sortNumber = !this.sortNumber;
     }
     else
     {
@@ -108,37 +108,37 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
 
   sortText(params) {
     if(params['column'] == 'purchase_demand_label'){
-      if (this.sortLibellé) {
+      if (this.sortLabel) {
         this.filteredlist.sort((a, b) => a[params['column']].localeCompare(b[params['column']]));
       } else {
         this.filteredlist.sort((a, b) => b[params['column']].localeCompare(a[params['column']]));
       }
-      this.sortLibellé = !this.sortLibellé;
+      this.sortLabel = !this.sortLabel;
     }
       this.notifyList('purchases');
   }
   sortDate(params) {
     if(params['column'] == 'purchase_created_date'){
-      if (this.sortCrée) {
+      if (this.sortCreated) {
         this.filteredlist.sort((a, b) => {
-          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
+          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
         });
       } else {
         this.filteredlist.sort((a, b) => {
-          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
+          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
         }
         );
       }
-      this.sortCrée = !this.sortCrée;
+      this.sortCreated = !this.sortCreated;
     }
     else{
-      if (this.sortStatutModif) {
+      if (!this.sortStatutModif) {
         this.filteredlist.sort((a, b) => {
-          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
+          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]) ;
         });
       } else {
         this.filteredlist.sort((a, b) => {
-          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
+          return  <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
         }
         );
       }

@@ -7,36 +7,33 @@
         <div class="col-12">
             <hr>
         </div>
-        <app-anchor-result-search-params class="col-11"
-        [anchor]="anchor" 
-        [filter]="filter">
+        <app-anchor-result-search-params class="col-9" [anchor]="anchor" [filter]="filter">
         </app-anchor-result-search-params>
+            <div>
+                <p class="text-simple">Fournisseur par page</p>
+            </div>
         <div class="col-1">
-        <div class="btn-group" dropdown style="width:100px">
-            <button id="button-basic" dropdownToggle type="button"
-                class="btn btn-default ddown-per-page dropdown-toggle"
-                aria-controls="dropdown-basic">{{itemsPerPage}}
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
-            </button>
-            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
-            </ul>
+                <div class="btn-group" dropdown style="width:100px">
+                    <button id="button-basic" dropdownToggle type="button"
+                        class="btn btn-default ddown-per-page dropdown-toggle"
+                        aria-controls="dropdown-basic">{{itemsPerPage}}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                    </button>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                        aria-labelledby="button-basic">
+                        <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
+                        <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
+                        <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
+                    </ul>
+                </div>
         </div>
-        </div>
-        <app-anchor-result-search-active  class="col-12 col-md-6"
-        [activeProviders]="anchor.activeProviders"  [itemsPerPage]="itemsPerPage"
-        *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders"
-        >
+        <app-anchor-result-search-active class="col-12 col-md-6" [activeProviders]="anchor.activeProviders"
+            [itemsPerPage]="itemsPerPage" *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders">
         </app-anchor-result-search-active>
 
-        <app-anchor-result-search-not-active class="col-12 col-md-6"
-        [notActiveProviders]="anchor.notActiveProviders"
-         [itemsPerPage]="itemsPerPage"
-        *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders"
-        >
+        <app-anchor-result-search-not-active class="col-12 col-md-6" [notActiveProviders]="anchor.notActiveProviders"
+            [itemsPerPage]="itemsPerPage" *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders">
         </app-anchor-result-search-not-active>
-        
+
     </div>
 </div>

@@ -5,8 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-anchor-result-search-active',
   templateUrl: './anchor-result-search-active.component.html',
-  styles: [
-  ]
+  styleUrls: ['./anchor-result-search-active.component.css']
 })
 export class AnchorResultSearchActiveComponent implements OnInit, OnChanges {
   paginationForm: FormGroup;

@@ -5,16 +5,29 @@
       <div class="col-12 col-sm-12">
         <table width="96%" border="0">
           <tr>
-            <td style="width:13%">
+            <td style="width:14%">
               <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
             </td>
-            <td><b>Achatpédia</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>Votre espace de documentation, de recherche, et de contacts sur les achats</small></td>
-            <td *ngIf="user" >
+            <td style="padding-top: 8px;"><b style="font-size:26px;">Achatpédia</b><small>&nbsp;&nbsp;-&nbsp;&nbsp;Votre espace de documentation, de recherche, et de contacts sur les achats</small></td>
+            <td style="padding-top: 8px;" *ngIf="user" >
+              <table border="0">
+                <tr>
+                  <td>
+                <img src="../../../../assets/img/icon-profil.png"  style="margin-top:7px;width:24px">
+              </td>
+              <td style="padding-top: 23px;">
+                <p class="bold"> Veronick Boudre </p>
+              </td>
+              </tr>
+              </table>
+              
+            </td>
+            <td style="padding-top: 8px;">
+              <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png"></a>
               <span *ngIf="(notification$ | async) as notification" (click)="openModal()" style="cursor:pointer">
-                <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px;margin-left: 5px;color:RGB(80,158,47) ;padding-bottom: 11px !important;" /> 
+                <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
               <span  *ngIf="notification.count > 0" style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">  {{ notification.count }}</span>
             </span>
-            <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png">&nbsp;</a>
             </td>
           </tr>
         </table>

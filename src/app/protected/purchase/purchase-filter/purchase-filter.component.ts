@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { FilterAllPropertyPipe } from 'src/app/shared/pipes/filter-all-property.pipe';
 import { FiltermultiPipe } from 'src/app/shared/pipes/filtermulti.pipe';
 import { PurchaseMessageService } from 'src/app/core/services/purchase-message.service';
+import { PurchaseService } from 'src/app/core/services/purchase.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-purchase-filter',
@@ -25,9 +26,9 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   affected:boolean=false;
   integred:boolean=false;
 
-  sortNuméro:boolean=false;
-  sortLibellé:boolean=false;
-  sortCrée:boolean=false;
+  sortNumber:boolean=false;
+  sortLabel:boolean=false;
+  sortCreated:boolean=false;
   sortStatut:boolean=false;
   sortStatutModif:boolean=false;
 
@@ -42,6 +43,7 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
     , private filterAllProperty: FilterAllPropertyPipe
     , private filtermultiPipe: FiltermultiPipe
     , private messageService: PurchaseMessageService
+    , private purchaseService: PurchaseService
   ) {
 
   }
@@ -61,7 +63,6 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
       if (data.source == 'form' && data.action=='get_all') {
         this.filterForm.reset();this.filter();
         this.initialized=this.transmitted= this.managed=this.affected=this.integred = this.refused= false;
-        this.sortDate({'column':'purchase_created_date'});
       }
     });
   }
@@ -74,78 +75,49 @@ export class PurchaseFilterComponent implements OnInit, OnDestroy {
   }
 
   sort(params) {
-    if(params['column'] == 'purchase_demand_id')
+     if(params['column'] == 'purchase_demand_id')
     {  
-      if(this.sortNuméro) {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
-        }
-        );
-      }
-      this.sortNuméro = !this.sortNuméro;
+      params.direction = this.sortNumber?'desc':'asc';
+      this.sortNumber = !this.sortNumber;
     }
     else
     {
-      if(this.sortStatut) {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) < parseInt(b[params['column']])) ? -1 : 1;
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return (parseInt(a[params['column']]) > parseInt(b[params['column']])) ? -1 : 1
-        }
-        );
-      }
+      params.direction = this.sortStatut?'desc':'asc';
       this.sortStatut = !this.sortStatut;
     }
 
+    this.filteredlist = this.purchaseService.sort( params, this.filteredlist).slice();
+    
     this.notifyList('purchases');
   }
 
   sortText(params) {
     if(params['column'] == 'purchase_demand_label'){
-      if (this.sortLibellé) {
+      if (this.sortLabel) {
         this.filteredlist.sort((a, b) => a[params['column']].localeCompare(b[params['column']]));
       } else {
         this.filteredlist.sort((a, b) => b[params['column']].localeCompare(a[params['column']]));
       }
-      this.sortLibellé = !this.sortLibellé;
+      this.sortLabel = !this.sortLabel;
     }
       this.notifyList('purchases');
   }
-  sortDate(params) {
-    if(params['column'] == 'purchase_created_date'){
-      if (this.sortCrée) {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
-        }
-        );
-      }
-      this.sortCrée = !this.sortCrée;
-    }
-    else{
-      if (this.sortStatutModif) {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(a[params['column']]) - <any>new Date(b[params['column']]);
-        });
-      } else {
-        this.filteredlist.sort((a, b) => {
-          return <any>new Date(b[params['column']]) - <any>new Date(a[params['column']]);
-        }
-        );
-      }
-      this.sortStatutModif = !this.sortStatutModif;
 
+  sortDate(params) {
+
+    if(params['column'] == 'purchase_created_date')
+    {  
+      params.direction = this.sortCreated?'desc':'asc';
+      this.sortCreated = !this.sortCreated;
     }
-      this.notifyList('purchases');
+    else
+    {
+      params.direction = this.sortStatutModif?'desc':'asc';
+      this.sortStatutModif = !this.sortStatutModif;
+    }
+
+    this.filteredlist = this.purchaseService.sortDate( params, this.filteredlist).slice();
+    this.notifyList('purchases');
   }
 
   public changeStatus(params) {

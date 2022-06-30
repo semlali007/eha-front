@@ -54,10 +54,7 @@ export class PurchaseService {
         let s = ((purchases1.length>0)?'1':'')+((purchases2.length>0)?'2':'')+((purchases3.length>0)?'3':'');
         let isPHA = true;
         if(s == '1'){
-          let phaData = data.items.filter(p => p.last_status_event_label == 'Groupe acheteur' && !p.event_person.startsWith('A') && !p.event_person.startsWith('a'));
-          if(phaData.length>0){
-            isPHA = false;
-          }
+          isPHA = data.items.filter(p => p.last_status_event_label == 'Groupe acheteur' && !p.event_person.startsWith('A') && !p.event_person.startsWith('a')).length==0;
         }
 
         let steps = [];

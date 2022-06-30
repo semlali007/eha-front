@@ -52,10 +52,8 @@ export class PurchaseService {
         let purchases2 =  data.items.filter(p => p.section == 2 );
         let purchases3 =  data.items.filter(p => p.section == 3 );
         let s = ((purchases1.length>0)?'1':'')+((purchases2.length>0)?'2':'')+((purchases3.length>0)?'3':'');
-        let isPHA = true;
-        if(s == '1'){
-          isPHA = data.items.filter(p => p.last_status_event_label == 'Groupe acheteur' && !p.event_person.startsWith('A') && !p.event_person.startsWith('a')).length==0;
-        }
+        let isPHA = data.items.filter(p => p.last_status_event_label == 'Groupe acheteur' && !p.event_person.startsWith('A') && !p.event_person.startsWith('a')).length==0;
+
 
         let steps = [];
         let c = true;

@@ -1,8 +1,15 @@
 <div  class="row cadre-item-purchase" *ngIf="(purchase$|async) as p;" >
-    <p class="text" *ngIf="p[0].section=='1'" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
-    <p class="message" *ngIf="p[0].section=='1'">Cette DA n'est pas prise en charge par la Direction des Achats Groupe.</p>
-    <p class="text" *ngIf="p[0].section!='1'"  [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
-      <div  *ngFor="let data of p; ">
+    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
+        <div *ngIf="p[0].section=='1'">
+            <p class="message" *ngIf="!p[0].isPHA">
+                Le numéro saisi correspond à une DA traitée directement dans PGI.
+            </p>
+            <p class="message" *ngIf="p[0].isPHA">
+                Cette DA n'est pas prise en charge par la Direction des Achats Groupe.
+            </p>
+        </div>
+
+    <div  *ngFor="let data of p; ">
           <div class="col-12" *ngIf="p[0].section!='1'">&nbsp;</div>
           <div class="col-2" *ngIf="p[0].section!='1'">
               <table>

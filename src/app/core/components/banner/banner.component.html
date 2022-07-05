@@ -3,7 +3,7 @@
     <div class="row align-items-center">
        
       <div class="col-12 col-sm-12">
-        <table width="96%" border="0">
+        <table width="105%" border="0">
           <tr>
             <td style="width:14%">
               <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
@@ -16,13 +16,13 @@
                 <img src="../../../../assets/img/icon-profil.png"  style="margin-top:7px;width:24px">
               </td>
               <td style="padding-top: 23px;">
-                <p class="bold"> Veronick Boudre </p>
+                <p class="bold">&nbsp;{{ user.name }} </p>
               </td>
               </tr>
               </table>
               
             </td>
-            <td style="padding-top: 8px;">
+            <td style="padding-top: 8px;" *ngIf="user">
               <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png"></a>
               <span *ngIf="(notification$ | async) as notification" (click)="openModal()" style="cursor:pointer">
                 <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
@@ -30,8 +30,37 @@
             </span>
             </td>
           </tr>
+          <tr *ngIf="user" >
+            <td>
+            <button (click)="navigate(homePath)" class="home-btn"><img src="../../../../assets/img/icon-home.png"> Accueil</button>
+            </td>
+            <td colspan="2">
+              <table>
+                <tr>
+                  <td>
+                    <a class="title-header"><img src="../../../../assets/img/icon-search-header.png">&nbsp;Rechercher&nbsp;<img src="../../../../assets/img/caret.png"></a>
+                  </td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td>
+                    <a class="title-header"><img src="../../../../assets/img/icon-panier-header.png">&nbsp;Mes demandes d'achat</a>
+                  </td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td>
+                    <a class="title-header"><img src="../../../../assets/img/icon-marches-cadres.png">&nbsp;Marchés cadres</a>
+                  </td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td>
+                    <a class="title-header"><img src="../../../../assets/img/icon-se-documenter-header.png">&nbsp;Se documenter&nbsp;<img src="../../../../assets/img/caret.png"></a>
+                  </td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td>
+                    <a class="title-header"><img src="../../../../assets/img/icon-contacter-header.png">&nbsp;Contacter&nbsp;<img src="../../../../assets/img/caret.png"></a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
         </table>
-        
       </div>
     </div>
   </div>

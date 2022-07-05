@@ -1,18 +1,93 @@
 .my-header {
   /* background-color: var(--my-color-darkblue); */
-  background-image: url('../../../../assets/img/bandeau2.png');
+  background-image: url('../../../../assets/img/bandeau.png');
   background-size: cover;
   color: white;
 }
 
+.text-header{
+  width: 50%;
+}
+
+
+.container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
+  width: 100%;
+  padding-right: 137px;
+  padding-left: -13px;
+  margin-right: auto;
+  margin-left: auto;
+  height: 144px;
+}
+
+
+.title-header{
+ 
+height: 24px;
+
+/* Body - 16 - Regular */
+font-family: 'Work Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+
+/* identical to box height, or 150% */
+display: flex;
+align-items: center;
+
+/* Blanc (Charte) */
+color: #FFFFFF;
+margin-top: 26px;
+margin-left: 8px;
+}
+
+
+.home-btn{
+/* Onglet - Achatpedia - Accueil */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 8px 10px;
+gap: 10px;
+
+width: 104px;
+height: 40px;
+color:#fff;
+/* Bleu clair (Charte) */
+background: #005BBB;
+
+/* Blanc (Charte) */
+border: 1px solid #FFFFFF;
+border-radius: 5px;
+margin-top: 10px;
+margin-left: 8px;
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+.bold{
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+  text-align: right;
+}
+
 .logout-icon{
-  width:38px;
-  margin-bottom:5px;
-  margin-right:18px;
+  width: 36px;
+  margin-right: 9px;
+  margin-top: 5px;
 }
 
 .my-logo {
-  height: 34px;
-  width: 80px;
-  margin: 30px 40px 30px 30px;
+  width: 120px;
+  height: auto;
+  margin-top: 1%;
 }

@@ -1,12 +1,48 @@
 
-<!----------------   Se documenter   --------------------->
-<div class="my-title-for-trainings">
-    Se documenter
-</div>
 
-<div class="list-group my-items-for-trainings border-orange">
+
+
+<!----------------   Se documenter   --------------------->
+<!-- <div class="my-title-for-trainings">
+    Se documenter
+</div> -->
+
+
+<div class="list-group cadre">
+    <p class="titre-cadre"><img src="../../../../assets/img/icon-search.png"> Rechercher</p>
+    <p class="p">
+        Recherchez un contrat, un fournisseur, un code article générique ou encore un produit :
+    </p>
+    <div class="row">
+        <div class="col-8">
+            <input type="search" class="form-control input-edf"  
+                placeholder="Saisissez votre recherche" >
+        </div>
+        <div class="col-4">
+            <button type="submit" class="btn btn-edf-v2" >Valider</button>
+        </div>
+    </div>
+    <p class="p">
+        Recherchez des fournisseurs près de chez vous (Code Postal) : 
+    </p>
+    <div class="row">
+        <div class="col-8">
+            <input type="search" class="form-control input-edf"  
+                placeholder="Saisissez un Code Postal" >
+        </div>
+        <div class="col-4">
+            <button type="submit" class="btn btn-edf-v2" >Valider</button>
+        </div>
+    </div>
+    
+</div>
+ 
+<br>
+<br><br><br><br><br>
+
+<!-- <div class="list-group my-items-for-trainings border-orange">
     <div class="list-group-item" style="color:black">Accès limité aux collaborateurs d'EDF </div>
-    <div *ngFor="let document of section" class="text list-group-item no-space" >
+    <div *ngFor="let document of section" class="black list-group-item no-space" >
         <ul class="color-or" >
             <li>
                 <p class="item" [innerHtml]="document.label" (click)="navigate(document)"></p>
@@ -16,25 +52,8 @@
             {{document.shortdescription}}
         </p>
     </div>
-</div>
+</div> -->
 <!--------------     Vitrine de l'offre ------------------>
-<div class="my-title-for-trainings">
-    Vitrine de l'Offre
-</div>
+ 
 
 
-<div class="list-group my-items-for-trainings border-orange">
-    <div class="list-group-item link no-space" >
-        <div [hidden]="!page?.active">
-            <span  (click)="openModalWithComponent()" ><span class="badge badge-primary my-title-for-trainings"  [hidden]="!page?.active">NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-orange.png" style="width: 20px;margin-left: 5px;padding-bottom: 11px !important;" /> en savoir plus</span>
-        </div>
-        <ul>
-            <li>
-                <a (click)="call(sheetPath)" class="disable-deco" >
-                <span class="title">Vitrine de l'Offre</span> <span class="text">, catalogue des marchés-cadres transverses portés par la Direction des Achats Groupe</span>
-                </a>
-            </li>
-        </ul>
-        
-    </div>
-</div>

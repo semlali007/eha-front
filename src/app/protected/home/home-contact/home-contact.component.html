@@ -1,16 +1,32 @@
+<div class="list-group my-items-for-trainings cadre">
+  <div class="row-table full-width">
+    <div class="col-6">
+      <p class="titre-cadre"> <img src="../../../../assets/img/icon-contact.png">&nbsp;Contacter</p>
+    </div>
+    <div class="col-md-12">
+      <p>&nbsp;</p>
+      <p class="p" (click)="navigate('/app/hotline/create')">Vous pouvez nous poser vos questions à propos des contrats négociés par la Direction des Achats.</p>
+    </div>
+    <div class="col-md-12">
+      <p><strong>Vous pouvez également contacter :</strong></p>
+      <ul>
+        <li class="titre-2" (click)="externalNavigate(agentPath, '_blank')">
+          Votre correspondant local achat
+        </li>
+        <li class="titre-2" (click)="externalNavigate(agencyPath, '_blank')">
+          Votre agence d’approvisionnement
+        </li>
+        <li class="titre-2" (click)="externalNavigate(accountingAgencyPath, '_blank')">
+          Votre agence d’approvisionnement
+        </li>
+        <li class="titre-2" (click)="externalNavigate(communityPath, '_blank')">
+          La communauté des achats
+        </li>
+        <li class="titre-2" (click)="externalNavigate(directionPath, '_blank')">
+          Votre contact à la Direction des Achats
+        </li>
+      </ul>
 
-<div class="list-group my-items-for-contacts cadre">
-   <p class="titre-cadre"><img src="../../../../assets/img/icon-marche-cadre.png"> Marchés cadres</p>
-   <table style="width:100%">
-    <tr>
-        <td style="width:25%"><p class="label">NOUVEAU</p></td>
-        <td><p class="savoir-plus"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p></td>
-    </tr>
-</table>  
-<p class="p">
-    Consultez le catalogue des marchés-cadres portés par la Direction des Achats Groupe.
-</p>
-<button class="btn btn-blanc">
-    Accéder au catalogue des Marchés Cadre du Groupe EDF
-</button>
-</div>
+      <p (click)="externalNavigate('mailto:gu@supportdag.edf.fr', '_self')">Enfin, pour toute question sur les applications du SI de la Direction des Achats Groupe, écrivez nous un email</p>
+    </div>
+  </div>

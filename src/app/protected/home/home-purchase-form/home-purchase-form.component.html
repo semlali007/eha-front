@@ -1,34 +1,36 @@
 
-
-
-<div class="my-title-for-searches">
-    Ma situation Achat
-</div>
-
-<div class="list-group-item border-green">
-            <span [hidden]="!page?.active"><span class="badge badge-primary my-title-for-searches" >NOUVEAU</span><img class="mt-1" src="../../../../assets/img/info-icon-green.png" style="width: 15.83px;margin-left: 10px;color:RGB(80,158,47) ;padding-bottom: 7.16px !important;" /> <span (click)="openModalWithComponent()" class="link" style="color:RGB(80,158,47)"> en savoir plus</span></span>
-
-            <ul style="padding-left: 25px;">
-                <li><strong><a href="javascript: void(0);" (click)="show()" style="color:RGB(80,158,47);">Afficher toutes mes demandes d'achat</a></strong></li>
-                <li style="color: #333333; margin-top: 10px;">Ou rechercher :</li>
-            </ul>
-
-            <form class="my-form-for-searches" role="search" novalidate [formGroup]="homePurchaseForm" (ngSubmit)="submit()">
-                <div class="row">
-                    <div class="col-12">
-                        <input type="search" class="form-control" [formControl]="searchText"
-                            placeholder="Saisir un numéro de DA" id="searchText">
-                            <small *ngIf="searchText.errors" class="form-text text-danger">
-                                <span [hidden]="!searchText.errors || searchText.errors.required">
-                                    Le numéro de DA doit commencer par 1 et être composé de 10 chiffres
-                                </span>
-                            </small>
-                    </div>
-                   
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-search" [disabled]="!homePurchaseForm.valid">Rechercher</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
+<div class="list-group-item link cadre"  >
+  <p class="titre-cadre"><img src="../../../../assets/img/icon-demande-achat.png"> Mes demandes d'achat</p>
+  <table style="width:100%;margin-bottom: -32px;">
+    <tr>
+      <td style="width:25%"><p  [hidden]="!page?.active" class="label" >NOUVEAU</p></td>
+      <td><p class="savoir-plus" (click)="openModalWithComponent()" [hidden]="!page?.active"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p></td>
+    </tr>
+  </table>
+  <p class="p">
+    Suivez l’avancement de toutes vos demandes d’achat (DA).
+  </p>
+  <div class="row-table">
+    <button class="btn btn-blanc" (click)="show()">
+      Consulter mes demandes d’achat
+    </button>
+  </div>
+  <p class="p">
+    Recherche rapide (par numéro de DA)
+  </p>
+  <form class="my-form-for-searches" role="search" novalidate [formGroup]="homePurchaseForm" (ngSubmit)="submit()">
+    <div class="row-table">
+      <div class="col-10" style="margin-left:-13px">
+        <input type="search" class="form-control input-edf"
+               placeholder="Saisissez un numéro de DA"  [formControl]="searchText"  id="searchText">
+               <small *ngIf="searchText.errors" class="form-text text-danger">
+                <span [hidden]="!searchText.errors || searchText.errors.required">
+                    Le numéro de DA doit commencer par 1 et être composé de 10 chiffres
+                </span>
+            </small>
+      </div>
+      <div class="col-2" style="margin-left:-13px">
+        <button type="submit" class="btn btn-edf-v2" [disabled]="!homePurchaseForm.valid">Valider</button>
+      </div>
+    </div>
+</form>

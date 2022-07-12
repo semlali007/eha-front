@@ -2,6 +2,11 @@
   font-weight: bold;
   color: var(--my-color-orange);
 }
+
+.link{
+  cursor: pointer;
+}
+
 .row-table {
   display: flex;
   flex-wrap: wrap;

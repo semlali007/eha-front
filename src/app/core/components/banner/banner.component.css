@@ -9,6 +9,10 @@
   width: 50%;
 }
 
+.link{
+  cursor:pointer ;
+}
+
 
 .container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
   width: 100%;

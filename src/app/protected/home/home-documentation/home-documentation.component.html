@@ -7,7 +7,7 @@
   <p class="p" style="margin-left:15px;">Accéder à des aides et ressources documentaires adaptées à chaque phase du processus Achat :</p>
   <table class="table-se-doc">
     <tr  *ngFor="let document of section">
-      <td class="td"><p class="titre-2" (click)="navigate(document)" [innerHtml]="document.label"> </p></td>
+      <td class="td"><p class="titre-2 link" (click)="navigate(document)" [innerHtml]="document.label"> </p></td>
       <td class="td"><p class="p">{{document.shortdescription}}</p></td>
     </tr>
   </table>

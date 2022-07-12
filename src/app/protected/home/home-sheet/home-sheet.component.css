@@ -2,6 +2,9 @@
   color:#000;
   margin-bottom:5px;
 }
+.link{
+  cursor: pointer;
+}
 
 .list-item{
   margin-bottom: 5px;

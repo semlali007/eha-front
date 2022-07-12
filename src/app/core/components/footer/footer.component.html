@@ -1,29 +1,29 @@
-<footer class="my-footer" role="contentinfo">
-    Application proposée par la Direction des Achats Groupe, une direction de la DTEO
+<footer class="cadre-footer my-footer" role="contentinfo">
+    <p class="p-footer">Application proposée par la Direction des Achats Groupe, une direction de la DTEO</p>
     <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
         &nbsp;|&nbsp;&nbsp;
-        <a class="btn btn-link btn-sm"  href="documentation.pdf" target="_blank">
+        <a class="btn btn-link btn-sm white"  href="documentation.pdf" target="_blank">
             Télécharger la documentation
         </a>
     </span>
 
     <span class="textFooter">
         &nbsp;|&nbsp;&nbsp;
-        <button class="btn btn-link btn-sm" data-toggle="modal" (click)="staticModal.show()">
+        <button class="btn btn-link btn-sm white" data-toggle="modal" (click)="staticModal.show()">
             Mentions légales
         </button>
     </span>
     
     <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
         &nbsp;|&nbsp;&nbsp;
-        <a class="btn btn-link btn-sm" (click)="navigate('admin/dashboard')">
+        <a class="btn btn-link btn-sm white" (click)="navigate('admin/dashboard')">
             Administration
         </a>
     </span>
 
     <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
         &nbsp;|&nbsp;&nbsp;
-        <a class="btn btn-link btn-sm" (click)="navigate('version.html')">
+        <a class="btn btn-link btn-sm white" (click)="navigate('version.html')">
             Version
         </a>
     </span>

@@ -1,3 +1,37 @@
 .textFooter {
     font-size: .875rem;
 }
+
+.p-footer{
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    margin-top: 17px;
+    /* Blanc (Charte) */
+    color: #FFFFFF;
+}
+
+.white{
+    text-decoration-line: underline ;
+    color: #FFFFFF;
+}
+
+.cadre-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+    gap: 20px;
+
+    width: 1440px;
+    height: 42px;
+
+    /* Bleu fonce (Charte) */
+    background: #001A70;
+
+    /* Ombre footer bleu */
+    box-shadow: 4px 0px 10px #75787B;
+}

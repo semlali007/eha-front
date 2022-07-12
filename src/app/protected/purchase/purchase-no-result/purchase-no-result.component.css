@@ -32,11 +32,12 @@
 .p-no-content{
     left: 313px;
     top: 342px;
-    margin-top:5px ;
+    margin-top:30px ;
+    margin-bottom: 8px;
     font-family: 'Segoe UI';
     font-style: normal;
     font-weight: 400;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 29px;
     /* Noir (Charte) */
     color: #000000;

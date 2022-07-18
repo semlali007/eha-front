@@ -3,8 +3,9 @@
   color: var(--my-color-orange);
 }
 .full-width{
-  width:100% ;
+  width:107% ;
   margin-top:30px;
+  margin-bottom: -28px;
 }
 .p-danger{
   font-family: 'Work Sans';
@@ -42,7 +43,8 @@
 
   /* Bleu fonce (Charte) */
   color: #001A70;
-
+  margin-top: -9px;
+  margin-bottom: -19px;
 }
 .hr{
   /* Inside auto layout */
@@ -77,13 +79,15 @@
   font-size: 16px;
   line-height: 24px;
   color: #333333;
-
+  margin-bottom:-8px;
+  margin-top:8px;
 }
 
 .table-se-doc{
   border-collapse: collapse;
   width: 100%;
   margin-left:8px;
+  height:50%;
 }
 
 .td{

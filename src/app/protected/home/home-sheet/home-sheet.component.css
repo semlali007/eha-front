@@ -19,7 +19,7 @@
 }
 
 .titre-cadre{
-  margin-bottom:0 ;
+  margin-bottom:-11px ;
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 600;
@@ -77,10 +77,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 20px;
+  padding: 33px;
   gap: 10px;
-
-
 
   /* Blanc (Charte) */
   background: #FFFFFF;
@@ -102,7 +100,6 @@
   /* Bleu fonce (Charte) */
   border: 1px solid #001A70;
   border-radius: 5px;
-
 }
 
 .p{

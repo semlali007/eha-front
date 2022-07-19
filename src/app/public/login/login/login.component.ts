@@ -1,18 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import {  ActivatedRoute } from '@angular/router';
+import {  ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   url:string='';
   sub: Subscription;
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {
   }
   ngOnInit(): void {
@@ -29,6 +30,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+   }
+
+   ngAfterViewInit(){
+    let userSubscription = this.authService.user$.subscribe(response=>
+      {
+        if(!!response && !!response.nni && response.nni.length>0){
+          this.router.navigate(['app/accueil']) ;
+        }
+      }
+      );
    }
 }
 

@@ -3,6 +3,8 @@ import { Component, EventEmitter, Output, Input, TemplateRef, ViewChild} from '@
 import * as fileSaver from 'file-saver';
 import { FileService } from 'src/app/core/services/file.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-sheet-form-kit',
@@ -17,6 +19,7 @@ export class SheetFormKitComponent {
   @ViewChild('template') template: TemplateRef<any>;
   bsModalRef?: BsModalRef;
   showModal: boolean = false;
+  maxsize = environment.maxuploadsize || 5000000;
   constructor(private fileService: FileService,
     private modalService: BsModalService,) {
   }
@@ -44,7 +47,7 @@ export class SheetFormKitComponent {
 
   upload(){
     this.uploader?.queue?.forEach((element,index) => {
-      if(element?.file?.size > 5000000)
+      if(element?.file?.size > this.maxsize)
       {
         this.uploader.queue.splice(index);
         this.showModal = true;

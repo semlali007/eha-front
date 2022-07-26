@@ -86,7 +86,7 @@
         </div>
            
         <!---------------- Navbar list elements--------------->
-        <div id="collapseBasic" [collapse]="isCollapsed" class="collapse-custom" [isAnimated]="true">
+        <div *ngIf="user"  id="collapseBasic" [collapse]="isCollapsed" class="collapse-custom" [isAnimated]="true">
                    <div class="card card-block card-header">
             <a href="/app/accueil#search_component" class="title-header link"><img src="../../../../assets/img/icon-search-header.png">&nbsp;Rechercher&nbsp;<img src="../../../../assets/img/caret.png"></a>
           </div>

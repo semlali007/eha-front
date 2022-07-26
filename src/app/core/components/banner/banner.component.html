@@ -63,7 +63,8 @@
         </table>
         <div id="mobile-header" class="row responsive-header fixed-top">
           <div class="col-md-1 menu-header-mobile">
-            <img src="../../../../assets/img/menu-icon-mobile.png">
+                <img type="button" (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic"  src="../../../../assets/img/menu-icon-mobile.png">
           </div>
           <div class="logo-edf-mobile">
             <div class="row left-header-mobile">
@@ -76,14 +77,35 @@
                 </table>
               </div>
               <div>
-                <img  class="icone-notif-mobile" src="../../../../assets/img/icone-notification-blanc-mobile.png">
+                <span *ngIf="(notification$ | async) as notification" (click)="openModal()" style="cursor:pointer">
+                  <img  class="icone-notif-mobile" src="../../../../assets/img/icone-notification-blanc-mobile.png">
+                  <span  *ngIf="notification.count > 0" style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">  {{ notification.count }}</span>
+                </span>
               </div>
           </div>
         </div>
            
+        <!---------------- Navbar list elements--------------->
+        <div id="collapseBasic" [collapse]="isCollapsed" class="collapse-custom" [isAnimated]="true">
+                   <div class="card card-block card-header">
+            <a href="/app/accueil#search_component" class="title-header link"><img src="../../../../assets/img/icon-search-header.png">&nbsp;Rechercher&nbsp;<img src="../../../../assets/img/caret.png"></a>
+          </div>
+          <div class="card card-block card-header">
+            <a class="title-header link" (click)="navigate(purchasePath)"><img src="../../../../assets/img/icon-panier-header.png">&nbsp;Mes demandes d'achat</a>
+          </div>
+          <div class="card card-block card-header">
+            <a class="title-header link" (click)="navigate(sheetPath)"><img src="../../../../assets/img/icon-marches-cadres.png">&nbsp;Vitrine de l'offre (ex Net@chat)</a>
+          </div>
+          <div class="card card-block card-header">
+            <a class="title-header link" href="/app/accueil#documentation_component" ><img src="../../../../assets/img/icon-se-documenter-header.png">&nbsp;Se documenter&nbsp;<img src="../../../../assets/img/caret.png"></a>
+          </div>
+          <div class="card card-block card-header">
+            <a class="title-header link" href="/app/accueil#contact_component" ><img src="../../../../assets/img/icon-contacter-header.png">&nbsp;Contacter&nbsp;<img src="../../../../assets/img/caret.png"></a>
+          </div>
+        </div>
+        <!--------------- End of navbar --------------->
         </div>
       </div>
-
     </div>
   </div>
 </header>

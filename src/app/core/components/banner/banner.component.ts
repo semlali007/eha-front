@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
+  public isCollapsed = true;
   public notification$: Observable<any|null>;
   homePath = 'app/accueil';
   sheetPath ="app/fiches/liste" ;

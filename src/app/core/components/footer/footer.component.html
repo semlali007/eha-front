@@ -1,40 +1,64 @@
-<footer class="cadre-footer my-footer" role="contentinfo">
-  <p class="p-footer">Application proposée par la Direction des Achats Groupe, une direction de la DTEO</p>
-  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
-        &nbsp;|&nbsp;&nbsp;
-        <a class="btn btn-link btn-sm white"  href="documentation.pdf" target="_blank">
-            Télécharger la documentation
-        </a>
-    </span>
 
-  <span class="textFooter">
-        &nbsp;|&nbsp;&nbsp;
-        <button class="btn btn-link btn-sm white" data-toggle="modal" (click)="staticModal.show()">
-            Mentions légales
-        </button>
-    </span>
 
-  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
-        &nbsp;|&nbsp;&nbsp;
-        <a class="btn btn-link btn-sm white" (click)="navigate('admin/dashboard')">
-            Administration
-        </a>
-    </span>
 
-  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
-        &nbsp;|&nbsp;&nbsp;
-        <a class="btn btn-link btn-sm white" (click)="navigate('version.html')">
-            Version
-        </a>
-    </span>
+
+<!-- Footer -->
+<footer class="page-footer font-small indigo fixed-bottom mt-auto flex-column">
+
+  <!-- Footer Links -->
+  <div class="container text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6">
+        <!-- Links -->
+        <p class="p-footer">Application proposée par la Direction des Achats Groupe, une direction de la DTEO</p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 margin-0">
+        <!-- Links -->
+        <p class="p-footer link"> Télécharger la documentation</p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2">
+        <!-- Links -->
+        <p class="p-footer link">Mentions légales</p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-1">
+        <!-- Links -->
+        <p class="p-footer link">Administration</p>
+      </div>
+      <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="left">
+          <!-- Links -->
+          <p class="p-footer link">Version</p>
+        </div>
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
 </footer>
+
 
 <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
      aria-labelledby="dialog-static-name">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Mentions légales</h5>
+        <h6 class="modal-title">Mentions légales</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                 (click)="staticModal.hide()">
           <span aria-hidden="true">&times;</span>

@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <div class="row align-items-center">
        
-      <div class="col-12 col-sm-12">
-        <table width="108%" border="0">
+      <div class="col-md-12 col-sm-12">
+        <table id="desktop-header" width="108%" border="0">
           <tr>
             <td style="width:14%">
               <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
@@ -61,7 +61,29 @@
             </td>
           </tr>
         </table>
+        <div id="mobile-header" class="row responsive-header fixed-top">
+          <div class="col-md-1 menu-header-mobile">
+            <img src="../../../../assets/img/menu-icon-mobile.png">
+          </div>
+          <div class="logo-edf-mobile">
+            <div class="row left-header-mobile">
+              <div class="col-6">
+                <table border="0">
+                  <tr>
+                    <td><img src="../../../../assets/img/logo-edf-mobile.png"></td>
+                    <td class="title-mobile">&nbsp;&nbsp;&nbsp;&nbsp;Accueil</td>                
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <img  class="icone-notif-mobile" src="../../../../assets/img/icone-notification-blanc-mobile.png">
+              </div>
+          </div>
+        </div>
+           
+        </div>
       </div>
+
     </div>
   </div>
 </header>

@@ -17,6 +17,7 @@ export class SheetFormBeneficiariesComponent implements OnInit {
 
   @Input() beneficiaries: FormControl;
   @Input() sheetForm: FormGroup;
+  @Input() allbeneficiaries: [];
   private page: number;
   private items: Beneficiary[];
   private total: number;
@@ -65,6 +66,7 @@ export class SheetFormBeneficiariesComponent implements OnInit {
         isModalShown:false,
         toRemoveId:'',
         modalMessage: 'Ce bénificiaire est lié à des autres fiches.Voulez-vous le supprimer?',
+        allitems: this.allbeneficiaries,
         requestAutocompleteItems: this.requestAutocompleteItems,
       };
 

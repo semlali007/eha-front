@@ -2,8 +2,8 @@
     <strong>Fournisseurs :</strong><span class="required">*</span>
     <div class="row">
         <div class="col-sm-10">
-            <tag-input [formControl]="providers"  [placeholder]="'Entrer un fournisseur'" [onTextChangeDebounce]="500"
-                [secondaryPlaceholder]="'Entrer un fournisseur'" [onlyFromAutocomplete]="true">
+            <tag-input [formControl]="providers"  [placeholder]="''" [onTextChangeDebounce]="500"
+                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
                 <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
                     [identifyBy]="'code'" [displayBy]="'label'">
                 </tag-input-dropdown>

@@ -13,8 +13,13 @@
                         <div class="form-group row">
 
                             <div class="col-6 col-sm-7">
-                                <input id="title" [formControl]="newItem" type="title" class="form-control" placeholder="Le titre" autocorrect="off"
-        autocomplete="off" />
+                                <input id="title" [formControl]="newItem" type="title" class="form-control" placeholder="Le titre" autocorrect="off" 
+        autocomplete="off"
+                [typeahead]="names"
+                [typeaheadOptionsLimit]="7"
+                [typeaheadMinLength]="2"
+                (typeaheadOnSelect)="onSelect($event)"
+                 />
 
                             </div>
                             <div class="col-4 col-sm-4">
@@ -39,7 +44,10 @@
                                                 </button></span>
                                                 <span>&nbsp;</span>
                                                 <span style="float:right"> <button
-                                                    class="btn btn-edf" (click)="addItemToList(item)">Sélectionner</button>
+                                                    class="btn btn-edf" (click)="addItemToList(item)" *ngIf="!isSelected(item)">Sélectionner</button>
+                                            </span>
+                                                <span style="float:right"> <button
+                                                class="btn btn-edf" (click)="removeItemFromList(item.code)" *ngIf="isSelected(item)">Retirer</button>
                                             </span>
                                         </div>
                                     </div>
@@ -60,8 +68,8 @@
             <div>
                 <nav class="d-flex justify-content-center">
                     <div class="bs-component">
-                        <tag-input [formControl]="selectedItems" [placeholder]="placeholder" [onTextChangeDebounce]="500"
-                            [secondaryPlaceholder]="placeholder" [onlyFromAutocomplete]="true">
+                        <tag-input [formControl]="selectedItems" [placeholder]="''" [onTextChangeDebounce]="500"
+                            [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
                             <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
                                 [identifyBy]="'code'" [displayBy]="'label'"    [zIndex]="1099">
                             </tag-input-dropdown>

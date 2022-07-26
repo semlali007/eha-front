@@ -7,6 +7,7 @@ import { Area } from './area';
 import { Direction } from './direction';
 import { Committee } from './committee';
 import { Option } from './option';
+import { Domain } from './domain';
 export class Sheet {
     readonly id: string;
     title: string;
@@ -35,6 +36,8 @@ export class Sheet {
     netachatId: number;
     content: string;
     netachatType: string;
+    domain: Domain[];
+    subDomains: Domain[];
 
     constructor(options: {
         id?: string,
@@ -64,6 +67,8 @@ export class Sheet {
         netachatId?: number,
         content?: string,
         netachatType?: string;
+        domain?: Domain[];
+        subDomains?: Domain[];
 
     } = {}) {
         this.id = options.id || null;
@@ -93,6 +98,9 @@ export class Sheet {
         this.netachatId = options.netachatId || 0;
         this.netachatType = options.netachatType || '';
         this.content = options.content || '';
+        this.domain = options.domain || [new Domain()];
+        this.subDomains = options.subDomains || [new Domain()];
+        
     }
 
 }

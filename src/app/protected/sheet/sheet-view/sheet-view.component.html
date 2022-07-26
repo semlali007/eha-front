@@ -172,6 +172,26 @@
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Segments</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let d of domain">
+                            {{d.label}}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Sous-ensemble</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let d of subDomain">
+                            {{d.label}}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Statut</strong></div>
                 <div class="col-9">{{status}}</div>
             </li>

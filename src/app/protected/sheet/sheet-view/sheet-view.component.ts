@@ -53,6 +53,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public fullContent: any;
   public netachatId: any;
   public netachatType: any;
+  public domain: Object[] = [];
+  public subDomain: Object[] = [];
+  
 
   @ViewChild('content') content:ElementRef;
 
@@ -102,6 +105,24 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.netachatType = sheet.netachatType;
     this.startDate = this.dateService.getDisplayDate(new Date(sheet.startDate));
     this.endDate = this.dateService.getDisplayDate(new Date(sheet.endDate));
+     sheet.domain.forEach(d => {
+      this.domain.push(
+        {
+          code: d.code,
+          label: d.label,
+        }
+      );
+    });
+
+    sheet.subDomains.forEach(d => {
+      this.subDomain.push(
+        {
+          code: d.code,
+          label: d.label,
+        }
+      );
+    });
+
     sheet.providers.forEach(provider => {
       this.providers.push(
         {

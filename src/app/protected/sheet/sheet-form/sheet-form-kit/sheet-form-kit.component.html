@@ -1,7 +1,7 @@
 <div class="form-group">
     <div class="row">
         <label for="name"><strong>{{label}}:</strong> </label>
-        <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+        <input (change)="upload()" id="upload" type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
 
         <div class="col-md-9" style="margin-bottom: 40px">
             <table class="table">
@@ -33,3 +33,10 @@
         </div>
     </div>
 </div>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Le fichier est trop volumineux. La taille maximale autorisée est de 5 Mo.</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Ok</button>
+    </div>
+  </ng-template>

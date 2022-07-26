@@ -1,11 +1,11 @@
 <div class="row global"  *ngIf="!!data && data.active && data.active==true && data.content">
     <div class="col-1 col-sm-1" style="padding-left: 6px;">
-        <img  class="icone-info" src="../../../../assets/img/info-icon-blue.png"
+        <img  class="icone-info" src="../../../../assets/img/icon-info-blue.png"
             ></div>
     <div class="col-9 col-sm-9" style="margin-left: -28px;" >
         <p style="width: 107%;margin-bottom: -4px;" [innerHTML]="data?.content| safe: 'html'"></p>
     </div>
-    <div class="col-2 col-sm-2 description" >
-        <a (click)="openModalWithComponent()" class="link">En savoir plus</a>
+    <div class="col-2 col-sm-2 description link"  [hidden]="!data?.news || data.news==0">
+        <a (click)="openModalWithComponent()" >En savoir plus</a>
     </div>
 </div>

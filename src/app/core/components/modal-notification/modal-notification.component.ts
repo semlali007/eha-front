@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 @Component({
   selector: 'modal-notification',
   templateUrl: './modal-notification.component.html',
+  styleUrls: ['./modal-notification.component.css']
 })
 export class ModalNotificationComponent implements OnInit {
   title?: string;
@@ -37,6 +38,17 @@ export class ModalNotificationComponent implements OnInit {
       )
   }
  
+  /**
+   * Supprimer un element de tableau 
+   */
+  delete(element){
+    const index: number = this.list.indexOf(element);
+    if (index !== -1) {
+        this.list.splice(index, 1);
+    } 
+   this.notificationService.putViewed(element.id).subscribe() ;
+  }
+
   hideModal(): void {
     this.bsModalRef?.hide();
   }

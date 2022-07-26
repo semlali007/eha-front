@@ -4,7 +4,7 @@
 }
 
 .icone-info{
-    width: 70%;
+    width:40px;
     margin-left: 5px; 
     padding-bottom: 11px !important;
 }
@@ -26,7 +26,7 @@
     padding-left: 6px;
 }
 .global{
-    border: 2px solid #001A70;
+    border: 1px solid #000;
         box-sizing: border-box;
         border-radius: 3px; margin-right: 0px;
         margin-left: 0px; padding-top: 5px;

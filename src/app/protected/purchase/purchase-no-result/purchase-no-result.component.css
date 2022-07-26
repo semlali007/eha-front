@@ -18,7 +18,7 @@
 }
 
 .no-content{
-    height: 110px;
+    height: 90px;
     /* Gris tres clair (AAA, Cultured) */
     background: #F5F5F5;
     /* Gris fonce + (AA, Sonic Silver) */
@@ -32,16 +32,18 @@
 .p-no-content{
     left: 313px;
     top: 342px;
-    margin-top:5px ;
+    margin-top:23px ;
+    margin-bottom: 8px;
     font-family: 'Segoe UI';
     font-style: normal;
     font-weight: 400;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 29px;
     /* Noir (Charte) */
     color: #000000;
 }
 
 .icon-no-content{
-    margin: 33px 20px 8px 8px ;
+    margin: 21px 20px 8px 8px ;
+    width: 50%;
 }

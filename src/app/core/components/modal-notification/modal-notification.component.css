@@ -1,0 +1,11 @@
+.img-notif{
+    width:50%!important ;
+}
+
+.close-X{
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+}

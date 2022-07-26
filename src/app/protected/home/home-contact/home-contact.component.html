@@ -1,44 +1,32 @@
-<div class="my-title-for-contacts">
-    Contacter
-</div>
-<div class="list-group my-items-for-contacts border-bleu">
-   
-    <div class="list-group-item link" >
-        <p class="text-item">Vous avez une question sur les contrats négociés par la Direction des Achats</p>
-        <a class="bleue-edf" href="javascript: void(0);" (click)="navigate('/app/hotline/create')"><ul><li><strong>Posez-la ici</strong></li></ul></a>
+<div class="list-group my-items-for-trainings cadre">
+  <div class="row-table full-width">
+    <div class="col-6">
+      <p class="titre-cadre"> <img src="../../../../assets/img/icon-contact.png">&nbsp;Contacter</p>
     </div>
-    <div class="list-group-item link" >
-        <p class="text-item">Vous pouvez également contacter:</p>
-        <ul>
-            <li class="list-item">
-              <strong><a target="_blank" class="bleue-edf" href="https://collab.intranet.edf.com/espaces/dadagrc/Lists/Liste%20des%20CAN%20et%20CAU/Par%20direction.aspx">
-                  Votre correspondant local achat</a></strong> 
-            </li>
-            <li class="list-item">
-                <a target="_blank" class="bleue-edf" href="https://collab.intranet.edf.com/espaces/dadagrc/Lists/Annuaire%20des%20approvisionneurs">
-                    <strong>Votre agence d'approvisionnement</strong>
-                </a> 
-            </li>
-            <li class="list-item">
-                <a target="_blank" class="bleue-edf" href="https://collab.intranet.edf.com/espaces/dadagrc/Lists/Liste%20des%20agences%20comptables">
-                    <strong>Votre agence comptable</strong>
-                </a> 
-            </li>
-            <li class="list-item">
-                <a target="_blank" class="bleue-edf" href="https://www.myelectricnetwork.fr/group/achat">
-                    <strong> La communauté des achats</strong>
-                </a> 
-            </li>
-            <li>
-                <a target="_blank" class="bleue-edf" href="https://collab.intranet.edf.com/espaces/dadagrc/trombidag/Forms/par%20Direction.aspx">
-                    <strong>  Votre contact à la Direction des Achats</strong>
-                </a> 
-            </li>
-        </ul>
+    <div class="col-md-12">
+      <p>&nbsp;</p>
+      <p class="p" >Vous pouvez <span class="titre-2 link" (click)="navigate('/app/hotline/create')">nous poser vos questions </span>à propos des contrats négociés par la Direction des Achats.</p>
     </div>
-  
-    <div class="list-group-item" href="mailto:gu@supportdag.edf.fr">
-        <p class="text-item">Vous avez une question sur les applications du SI de la Direction des Achats Groupe</p>
-        <ul><li><strong><a class="bleue-edf" href="mailto:gu@supportdag.edf.fr">Posez-la ici </a></strong></li></ul>
+    <div class="col-md-12">
+      <p><strong>Vous pouvez également contacter :</strong></p>
+      <ul>
+        <li class="titre-2 link" (click)="externalNavigate(agentPath, '_blank')">
+          Votre correspondant local achat
+        </li>
+        <li class="titre-2 link" (click)="externalNavigate(agencyPath, '_blank')">
+          Votre agence d’approvisionnement
+        </li>
+        <li class="titre-2 link" (click)="externalNavigate(accountingAgencyPath, '_blank')">
+          Votre agence d’approvisionnement
+        </li>
+        <li class="titre-2" (click)="externalNavigate(communityPath, '_blank')">
+          La communauté des achats
+        </li>
+        <li class="titre-2 link" (click)="externalNavigate(directionPath, '_blank')">
+          Votre contact à la Direction des Achats
+        </li>
+      </ul>
+
+      <p class="link" (click)="externalNavigate('mailto:gu@supportdag.edf.fr', '_self')">Enfin, pour toute question sur les applications du SI de la Direction des Achats Groupe, <span class="titre-2 link">écrivez nous un email</span></p>
     </div>
-</div>
+  </div>

@@ -36,7 +36,9 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       } else {
         list = response;
       }
-      list.forEach(p => {
+
+      let allItems = this.purchaseService.sortDate({'column':'purchase_created_date', 'direction':'desc'}, list);
+      allItems.forEach(p => {
         this.purchases.push(
           {
             last_status_date: p['last_status_date'],

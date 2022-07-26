@@ -2,7 +2,7 @@
     <b>{{ activeProviders.length }}</b> fournisseurs <b>avec</b> des contrats actifs :
 </p>
 <div class="list-group my-items-for-searches">
-    <a class="list-group-item link" *ngFor="let row  of activeProviders"  (click) = "showProvider(row.code)">
+    <a class="list-group-item link" *ngFor="let row  of activeProviders| slice:startItem:endItem;"  (click) = "showProvider(row.code)">
         <table>
             <tr>
                 <td style="width: 35px; padding-right: 10px;">
@@ -20,4 +20,14 @@
 </div>
 <div class="alert alert-warning" *ngIf="activeProviders.length == 0">
     Désolé, je n'ai trouvé aucun fournisseur avec un contrat actif proche de ce code postal.
+</div>
+
+<div class="row" *ngIf="activeProviders.length>0">
+    <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
+    <form  [formGroup]="paginationForm">
+        <pagination [totalItems]='activeProviders.length' [itemsPerPage]="itemsPerPage"
+        [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+        (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+        </pagination>
+    </form>
 </div>

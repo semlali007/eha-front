@@ -1,0 +1,16 @@
+
+<div class="list-group my-items-for-contacts cadre">
+  <p class="titre-cadre"><img src="../../../../assets/img/icon-marche-cadre.png"> Vitrine de l'offre</p>
+  <table style="width:100%;margin-bottom:-28px">
+    <tr>
+      <td style="width:25%"><p [hidden]="!page?.active" class="label ">NOUVEAU</p></td>
+      <td><p class="savoir-plus link" [hidden]="!page?.active" (click)="openModalWithComponent()"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p></td>
+    </tr>
+  </table>
+  <p class="p">
+    Consultez le catalogue des marchés-cadres portés par la Direction des Achats Groupe.
+  </p>
+  <button class="btn btn-blanc" (click)="call(sheetPath)" >
+    Accéder au catalogue des Marchés Cadre du Groupe EDF
+  </button>
+</div>

@@ -1,8 +1,27 @@
 <div  class="row cadre-item-purchase" *ngIf="(purchase$|async) as p;" >
-    <p class="text" *ngIf="p[0].section=='1'" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
-    <p class="message" *ngIf="p[0].section=='1'">Cette DA n'est pas prise en charge par la Direction des Achats Groupe.</p>
-    <p class="text" *ngIf="p[0].section!='1'"  [innerHTML]="purchase.purchase_demand_label | safe: 'html'" ></p>
-      <div  *ngFor="let data of p; ">
+    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
+        <div *ngIf="p[0].section=='1'">
+            <p class="message" *ngIf="!p[0].isPHA">
+                Le numéro saisi correspond à une DA traitée directement dans PGI.
+            </p>
+            <table *ngIf="p[0].isPHA">
+                <tr>
+                    <td>
+                        <div  class="flow-grey" >
+                            <p class="title">
+                            <img src='{{ "../../../../../assets/img/" + status[1].icon + ".png" }}'>&nbsp;&nbsp;{{status[1].label}}</p>
+                            
+                            <p class="text-flow-content" >Le {{p[0].step.event_date|customDate}}</p>
+                            <p class="text-flow-source" *ngIf="p[0].viewPerson==true">{{p[0].step.event_person}}</p>
+                            <p class="text-flow-source" >Source: {{p[0].step.nature}}</p>
+                            
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    <div  *ngFor="let data of p; ">
           <div class="col-12" *ngIf="p[0].section!='1'">&nbsp;</div>
           <div class="col-2" *ngIf="p[0].section!='1'">
               <table>

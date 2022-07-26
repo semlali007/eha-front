@@ -1,7 +1,7 @@
 <div class="modal-body">
   <div class="row">
     <div class="col-2">
-      <img class="mt-3" src="../../../../assets/img/icone-notification-noir.png" />
+      <img class="img-notif mt-3" src="../../../../assets/img/icone-notification-noir.png" />
     </div>
     <div class="col-10 text-justify">
       <div class="offset-11">
@@ -15,7 +15,12 @@
           <ul *ngIf="list?.length > 0;else ngelse">
           <tr *ngFor="let i of list">
             <td> 
-              <li (click)="putViewed(i.id)" style="cursor:pointer"><p class="font-weight-light">La fiche marché <strong>{{ i.label}}</strong > a été modifiée le <strong style="color:var(--my-color-green)">{{ i.updated_at }}</strong></p></li> 
+              <li (click)="putViewed(i.id)" style="cursor:pointer"><p class="font-weight-light">La fiche marché <strong>{{ i.label}}</strong > a été modifiée le <strong style="color:var(--my-color-green)">{{ i.updated_at|customDate:'dd/MM/yyyy \à HH:mm:ss' }}</strong></p></li> 
+            </td>
+            <td>
+              <button class="btn btn-outline-danger" > 
+                <span (click)="delete(i)" aria-label="Close" class="close-X d-inline" style="cursor: pointer;">×</span>  
+              </button>
             </td>
           </tr> 
         </ul>

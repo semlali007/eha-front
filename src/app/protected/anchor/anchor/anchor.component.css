@@ -1,0 +1,51 @@
+.text-simple{
+    position: static;
+left: 0px;
+right: 80px;
+top: 0px;
+
+font-family: 'Segoe UI';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 22px;
+
+/* or 138% */
+display: flex;
+align-items: center;
+text-align: right;
+
+/* Noir (Charte) */
+color: #000;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+margin: 0px 10px;
+}
+
+.ddown-per-page{ 
+    height: 37px;
+    left: 0px;
+    right: 0px;
+    /* Blanc (Charte) */
+    background: #FFFFFF;
+    
+    /* Noir (Charte) */
+    border: 1px solid green;
+    box-sizing: border-box;
+    border-radius: 5px;
+    text-align:left;
+
+    flex:none;
+}
+
+
+
+.dropdown-toggle::after{
+    position: absolute;
+    right: 10px;
+    top:17px;
+}

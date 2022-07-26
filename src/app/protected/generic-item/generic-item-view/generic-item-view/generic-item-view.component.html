@@ -44,14 +44,10 @@
             <tr>
                 <td>Code</td>
                 <td>Libellé</td>
-                <td>Poids</td>
             </tr>
             <tr *ngFor="let result of item.agencies">
                 <td>{{result.agency_code}}</td>
                 <td>{{result.agency_label}}</td>
-                <td>
-                    <progressbar 	 [value]="result.weight" max="100">{{result.weight}}%</progressbar>
-                </td>
             </tr>
         </table>
     </div>

@@ -31,3 +31,28 @@
         border-radius: 3px; margin-right: 0px;
         margin-left: 0px; padding-top: 5px;
 }
+.left{
+    margin-left:-28px;
+}
+@media (max-width: 800px) {
+    .left{
+        margin-left: 28px;
+    }
+
+    .description{
+        margin-left:20px;
+        font-family: Segoe UI;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 21px;
+        display: flex;
+        align-items: center;
+        margin-top:2%;
+        /* Bleu fonce (Charte) */
+        color: #001A70; 
+        margin-bottom: 15px;
+    
+    }
+  }
+  

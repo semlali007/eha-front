@@ -1,3 +1,6 @@
+
+
+
 .my-header {
   /* background-color: var(--my-color-darkblue); */
   background-image: url('../../../../assets/img/bandeau.png');
@@ -95,3 +98,142 @@ flex-grow: 0;
   height: auto;
   margin-top: 1%;
 }
+
+
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: #001A70;
+  color:#fff ;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+@media (max-width: 600px) {
+  .title-header{
+    height: 12px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    margin-top: 6px;
+    margin-left: 0px;
+}
+
+  .collapse-custom{
+    margin-top: 50px;
+    margin-left: -49px;
+  }
+  .title-mobile{
+    width: 58px;
+    height: 24px;
+    margin-top:7px;
+    /* Body - 16 - Semi Bold */
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    /* identical to box height, or 150% */
+    display: flex;
+    align-items: center;
+
+    /* Noir (Charte) */
+    color: #000000;
+  }
+  .container-fluid{
+    width: 100%;
+    padding-right: 137px;
+    padding-left: -13px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 80px;
+  }
+  
+  .responsive-header{
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+
+    width: 156%;
+    height: 50px;
+
+    /* Bleu très clair (AAA, Alice Blue) */
+    background: #F1F3F9;
+
+    /* Bleu fonce (Charte) */
+    border-bottom: 1px solid #001A70;
+  }
+
+  .left-header-mobile{
+    position: absolute;
+    right: 69%;
+  }
+
+  .icone-notif-mobile{
+    position: absolute;
+    left: 200%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+  }
+
+  .menu-header-mobile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin-left: 14px;
+    width: 50px;
+    height: 50px;
+  
+    /* Bleu fonce (Charte) */
+    background: #001A70;
+  }
+
+  .logo-edf-mobile{
+    position: absolute;
+    left: 22%;
+    right: 47.59%;
+    top: 17.99%;
+    bottom: 0%;
+  }
+
+  .my-header {
+    background-image: url('../../../../assets/img/white-bakhgroud.png');
+    background-color: #fff;
+    background-size: cover;
+    color: rgb(0, 0, 0);
+  }
+  #desktop-header{
+    display:none ;
+  }
+  #desktop-mobile{
+    display:block ;
+  }
+}
+
+
+
+@media screen and (min-width: 599px) {
+  
+  .menu-header-mobile{
+    display:none;
+  }
+  .responsive-header{
+    display:none;
+  }
+  #desktop-mobile{
+    display:none ;
+  }
+}
+

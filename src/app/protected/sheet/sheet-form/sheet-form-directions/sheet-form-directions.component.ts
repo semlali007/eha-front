@@ -17,6 +17,7 @@ export class SheetFormDirectionsComponent implements OnInit {
 
   @Input() directions: FormControl;
   @Input() sheetForm: FormGroup;
+  @Input() alldirections: [];
   private page: number;
   private items: Direction[];
   private total: number;
@@ -64,6 +65,7 @@ export class SheetFormDirectionsComponent implements OnInit {
         itemsPerPage: this.itemsPerPage,
         placeholder: 'Entrer une direction',
         maxSize: 6,
+        allitems: this.alldirections,
         requestAutocompleteItems: this.requestAutocompleteItems,
       };
 

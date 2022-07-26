@@ -30,6 +30,8 @@ export class SheetFormModalComponent implements OnInit {
   page: number;
   toRemoveId:string;
   closeBtnName: string;
+  allitems: any = [];
+  names: string[];
   @Input() selectedItems: FormControl;
   bsConfirmModalRef?: BsModalRef;
   constructor(
@@ -42,6 +44,7 @@ export class SheetFormModalComponent implements OnInit {
     this.selectedItems = new FormControl();
     this.selectedItems.setValue(this.selectedValues);
     this.sheetModalForm = this.createsheetModalForm();
+    this.names = this.allitems.map(t=>t.name);
   }
   get newItem() { return this.sheetModalForm.get('newItem') }
   createsheetModalForm(): FormGroup {
@@ -119,4 +122,27 @@ export class SheetFormModalComponent implements OnInit {
     this.isModalShown= false;
   }
 
+  isSelected(item){
+    var boolean = this.selectedItems.value.find(element => element.label == item.label);
+    return !!boolean;
+  }
+
+  onSelect(e){
+    var item = this.allitems.find(element => element.name == e.value);
+    let exist = false;
+    this.selectedItems.value.forEach(element => {
+      if (element.code == item.code) {
+        exist = true;
+      }
+    });
+    if (exist == false) {
+      this.selectedItems.value.push({
+        code: item.code,
+        label: item.name,
+        display: item.name,
+        value: item.name,
+      })
+    }
+    this.newItem.setValue('');
+  }
 }

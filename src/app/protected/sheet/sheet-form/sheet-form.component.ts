@@ -44,6 +44,43 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   public subscription: Subscription;
   fromNetAchat:boolean=false;
 
+  public data = {
+    subscribe: [],
+    beneficiaries: [],
+    edfOpen: [],
+    partnership: [],
+    sector: [],
+    dauphin: [],
+    areas: [],
+    providers: [],
+    status: [],
+    directions: [],
+    committees: [],
+    showcase: []
+  };
+
+  public params: any = {
+    page: 1,
+    perpage: 10,
+    search: {
+      searchText: '',
+      searchProvider: '',
+      subscribe: '',
+      status:  [],
+      edf_open: '',
+      partnership: '',
+      protected_sector: '',
+      dauphin: '',
+      beneficiaries: [],
+      areas: [],
+      providers: [],
+      directions: [],
+      committees: [],
+      showcase: ''
+    },
+    sortBy: 'date',
+    sortDirection: 'desc'
+  };
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -60,6 +97,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.init();
+    this.sheetService.getSheets(this.params).subscribe(
+      data => {
+        this.data = data.filter;
+      }
+    );
+    
    // this.openDraftModal();
    // this.autosaveDraft();
   }

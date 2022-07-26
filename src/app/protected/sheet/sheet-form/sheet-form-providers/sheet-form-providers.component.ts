@@ -14,6 +14,7 @@ import { Provider } from 'src/app/shared/models/provider';
 export class SheetFormProvidersComponent implements OnInit {
   @Input() providers: FormControl;
   @Input() sheetForm: FormGroup;
+  @Input() allproviders: [];
   private page: number;
   private items: Provider[];
   private total: number;
@@ -59,6 +60,7 @@ export class SheetFormProvidersComponent implements OnInit {
         itemsPerPage: this.itemsPerPage,
         placeholder: 'Entrer un fournisseur',
         maxSize: 6,
+        allitems: this.allproviders,
         requestAutocompleteItems: this.requestAutocompleteItems
       };
 

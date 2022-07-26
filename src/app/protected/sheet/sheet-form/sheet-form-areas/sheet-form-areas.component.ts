@@ -17,6 +17,7 @@ export class SheetFormAreasComponent implements OnInit {
 
   @Input() areas: FormControl;
   @Input() sheetForm: FormGroup;
+  @Input() allareas: [];
   private page: number;
   private items: Area[];
   private total: number;
@@ -64,6 +65,7 @@ export class SheetFormAreasComponent implements OnInit {
         itemsPerPage: this.itemsPerPage,
         placeholder: 'Entrer une zone',
         maxSize: 6,
+        allitems: this.allareas,
         requestAutocompleteItems: this.requestAutocompleteItems,
       };
 

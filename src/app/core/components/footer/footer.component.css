@@ -51,6 +51,14 @@
     text-decoration:underline ;
 }
 @media screen and (min-width: 790px) {
+
+    #footer-desktop{
+        display:inline-flex ;
+      }
+      #footer-mobile{
+        display:none ;
+      }
+
 .row{
     height: 17px;
 }
@@ -107,6 +115,14 @@ flex-grow: 0;
 }
 
 @media (max-width: 800px) {
+
+    #footer-desktop{
+        display:none ;
+      }
+      #footer-mobile{
+        display:block ;
+      }
+
     .fixed-bottom {
             position:relative ;
     }

@@ -1,9 +1,39 @@
 
 
+<footer id="footer-desktop" class="cadre-footer my-footer" role="contentinfo">
+  <p class="p-footer" style="margin-bottom: 0px;">Application proposée par la Direction des Achats Groupe, une direction de la DTEO</p>
+  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm white"  href="documentation.pdf" target="_blank">
+            Télécharger la documentation
+        </a>
+    </span>
+
+  <span class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <button class="btn btn-link btn-sm white" data-toggle="modal" (click)="staticModal.show()">
+            Mentions légales
+        </button>
+    </span>
+
+  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm white" (click)="navigate('admin/dashboard')">
+            Administration
+        </a>
+    </span>
+
+  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm white" (click)="navigate('version.html')">
+            Version
+        </a>
+    </span>
+</footer>
 
 
-<!-- Footer -->
-<footer class="page-footer font-small indigo fixed-bottom mt-auto flex-column">
+<!-- Footer mobile -->
+<footer id="footer-mobile" class="page-footer font-small indigo fixed-bottom mt-auto flex-column">
 
   <!-- Footer Links -->
   <div class="container text-center text-md-left">
@@ -19,30 +49,30 @@
       <!-- Grid column -->
 
       <!-- Grid column -->
-      <div class="col-md-3 margin-0">
+      <div class="col-md-3 margin-0" href="documentation.pdf" target="_blank">
         <!-- Links -->
-        <p class="p-footer link"> Télécharger la documentation</p>
+        <p  href="documentation.pdf" target="_blank" class="p-footer link"> Télécharger la documentation</p>
       </div>
       <!-- Grid column -->
 
       <!-- Grid column -->
       <div class="col-md-2">
         <!-- Links -->
-        <p class="p-footer link">Mentions légales</p>
+        <p class="p-footer link" (click)="staticModal.show()">Mentions légales</p>
       </div>
       <!-- Grid column -->
 
       <!-- Grid column -->
-      <div class="col-md-1">
+      <div class="col-md-1"  >
         <!-- Links -->
-        <p class="p-footer link">Administration</p>
+        <p  *ngIf="!!user && user.hasRole('EHA_ADMIN')" (click)="navigate('admin/dashboard')" class="p-footer link">Administration</p>
       </div>
       <!-- Grid column -->
 
         <!-- Grid column -->
-        <div class="left">
+        <div class="left" >
           <!-- Links -->
-          <p class="p-footer link">Version</p>
+          <p *ngIf="!!user && user.hasRole('EHA_ADMIN')" (click)="navigate('version.html')" class="p-footer link">Version</p>
         </div>
 
     </div>

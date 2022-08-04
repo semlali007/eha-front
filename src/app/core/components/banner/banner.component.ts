@@ -66,6 +66,10 @@ export class BannerComponent implements OnInit {
       this.bsModalRef = this.modalService.show(ModalNotificationComponent, { initialState });
       this.bsModalRef.content.closeBtnName = 'Close';
     })
-
   }
+
+  forceNavigate(name: string) {
+    this.router.navigate(['/app/accueil'], { fragment: name });
+  }
+
 }

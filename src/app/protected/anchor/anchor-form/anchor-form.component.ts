@@ -17,6 +17,7 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
   anchorForm: FormGroup;
   bsModalRef: BsModalRef;
   subscription: Subscription;
+  codes: any = [];
   @Output() submittedSearchAnchor = new EventEmitter<Object>();
   zipcode: string;
   constructor(
@@ -36,7 +37,22 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
         this.zipcode = searchData.searchText;
         this.submit();
       }
+
+      if (!!searchData && !!searchData.type && (searchData.type == 'anchor-code')) {
+        const selected = [];
+        searchData.selected.forEach(code=>
+          {
+            selected.push({'display':code, 'value': code});
+          }
+      
+        )
+        this.nace.setValue(selected);
+      }
     });
+    this.anchorService.getCodes().subscribe(codes => {
+      this.codes = codes;
+    });  
+    
   }
 
   createAnchorForm(): FormGroup {
@@ -51,9 +67,18 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
     if (this.zipcode.length > 0) {
       filter.zipcode = this.zipcode;
     }
+    
+    filter.nace = [];
+    if (!!this.nace.value && this.nace.value.length > 0) {
 
-    if (this.nace.value.length > 0) {
-      filter.nace = this.nace.value;
+      const selected = [];
+      (this.nace.value || []).forEach(item=>
+        {
+          selected.push(item.value);
+        }
+        );
+        
+      filter.nace = selected;
     }
     if (this.codeArticle.value.length > 0) {
       filter.articles = this.codeArticle.value;
@@ -63,8 +88,16 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
   }
   openModalCodes() {
     this.anchorService.getCodes().subscribe(codes => {
+      const selected = [];
+      (this.nace.value || []).forEach(item=>
+        {
+          selected.push(item.value);
+        }
+        );
+
       const initialState = {
-        codes: codes
+        codes: codes,
+        selected: selected
       };
 
       this.bsModalRef = this.modalService.show(AnchorCodesComponent, { initialState });
@@ -74,5 +107,10 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+   }
+
+   resetForm(){
+    this.anchorForm.reset();
+    this.submit();
    }
 }

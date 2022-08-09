@@ -84,7 +84,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'partnership': ['all'],
       'sector': ['all'],
       'dauphin': ['all'],
-      'beneficiaries': [this.defaultFilter.beneficiaries],
+      'beneficiaries': [[]],
       'areas': [[]],
       'providers': [[]],
       'directions': [[]],

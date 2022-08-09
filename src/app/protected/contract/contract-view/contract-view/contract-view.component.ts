@@ -33,7 +33,10 @@ export class ContractViewComponent implements OnInit {
     }).subscribe(contract => {
       if (!contract) return;
       this.contract = contract;
-      this.contract.postes.sort((a,b)=> Number(a.contract_post_code) > Number(b.contract_post_code));
+    this.contract.postes = [
+      ...new Map(this.contract.postes.map((item) => [item["contract_post_code"], item])).values(),
+  ];
+     this.contract.postes.sort((a,b)=> Number(a.contract_post_code) > Number(b.contract_post_code));
     });
   }
 

@@ -36,7 +36,7 @@ export class Sheet {
     netachatId: number;
     content: string;
     netachatType: string;
-    domain: Domain[];
+    domains: Domain[];
     subDomains: Domain[];
 
     constructor(options: {
@@ -67,7 +67,7 @@ export class Sheet {
         netachatId?: number,
         content?: string,
         netachatType?: string;
-        domain?: Domain[];
+        domains?: Domain[];
         subDomains?: Domain[];
 
     } = {}) {
@@ -98,7 +98,7 @@ export class Sheet {
         this.netachatId = options.netachatId || 0;
         this.netachatType = options.netachatType || '';
         this.content = options.content || '';
-        this.domain = options.domain || [new Domain()];
+        this.domains = options.domains || [new Domain()];
         this.subDomains = options.subDomains || [new Domain()];
         
     }

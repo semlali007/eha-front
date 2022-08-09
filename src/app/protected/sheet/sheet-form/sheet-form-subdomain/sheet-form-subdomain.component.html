@@ -1,0 +1,25 @@
+<div class="form-group">
+    <strong>Sous-ensemble :</strong><span class="required">*</span>
+    <div class="row">
+        <div class="col-sm-10">
+            <tag-input [formControl]="subdomains"  [placeholder]="''" [onTextChangeDebounce]="500"
+                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
+                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
+                    [identifyBy]="'code'" [displayBy]="'label'">
+                </tag-input-dropdown>
+            </tag-input>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-edf"
+            (click)="openModalWithComponent()"
+               >Sous-ensemble</button>
+        </div>
+
+    </div>
+    <small *ngIf="subdomains.errors" class="form-text text-danger">
+        <span [hidden]="!subdomains.errors.required">
+            Sous-ensemble requis.
+        </span>
+       
+    </small>
+</div>

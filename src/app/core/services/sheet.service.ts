@@ -94,7 +94,6 @@ export class SheetService {
     deletedFiles: Document[],
     draft: boolean,
   }) {
-
     var url = '';
     var message = '';
     switch(params.draft) { 
@@ -153,7 +152,9 @@ export class SheetService {
       groups: directions || [],
       committee: sheet.committee.code,
       showcase: sheet.showcase,
-      options: sheet.options
+      options: sheet.options,
+      domains: sheet.domains,
+      subdomains: sheet.subDomains
     }
   }
 
@@ -485,7 +486,7 @@ export class SheetService {
       netachatId: fields.netachat_id,
       netachatType: fields.netachat_type,
       content: fields.content,
-      domain: domains,
+      domains: domains,
       subDomains: subDomains
     });
   }

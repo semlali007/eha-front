@@ -116,7 +116,6 @@ export class SheetListComponent implements OnInit, OnDestroy {
   public onsSubmittedSearchSheets(filter: any) {
     this.initSortBy();
     this.initFilterInput();
-    this.filterInput.beneficiaries = this.params.search.beneficiaries;
     if(this.filterInput.beneficiaries) {
       this.filterInput.beneficiaries.forEach(element => {
         this.data.push(element);

@@ -55,8 +55,10 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     providers: [],
     status: [],
     directions: [],
+    domains: [],
     committees: [],
-    showcase: []
+    showcase: [],
+    subdomains: [],
   };
 
   public params: any = {
@@ -75,8 +77,10 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       areas: [],
       providers: [],
       directions: [],
+      domains: [],
       committees: [],
-      showcase: ''
+      showcase: '',
+      subdomains: []
     },
     sortBy: 'date',
     sortDirection: 'desc'
@@ -124,9 +128,11 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get beneficiaries() { return this.sheetForm.get('beneficiaries') as any; }
   get areas() { return this.sheetForm.get('areas') as any; }
   get directions() { return this.sheetForm.get('directions') as any; }
+  get domains() { return this.sheetForm.get('domains') as any; }
   get status() { return this.sheetForm.get('status') as any; }
   get committeeCode() { return this.sheetForm.get('committeeCode') as any; }
   get showcase() { return this.sheetForm.get('showcase') as any; }
+  get subdomains() { return this.sheetForm.get('subdomains') as any; }
   get options() { return this.sheetForm.get('options') as FormArray; }
   resetSheetForm() {
     this.sheetForm.reset();
@@ -197,6 +203,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 				Validators.required,
 			]],
       'directions': [[], [
+				Validators.required,
+			]],
+      'domains': [[], [
+				Validators.required,
+			]],
+      'subdomains': [[], [
 				Validators.required,
 			]],
       'status': 0,
@@ -285,6 +297,34 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     });
 
     this.directions.setValue(directionsList);
+
+    let domainsList = [];
+    sheet.domains.forEach(domain => {
+      domainsList.push(
+        {
+          code: domain.code,
+          label: domain.label,
+          display: domain.label,
+          value: domain.label,
+        }
+      );
+    });
+
+    this.domains.setValue(domainsList);
+
+    let subdomainsList = [];
+    sheet.subDomains.forEach(d => {
+      subdomainsList.push(
+        {
+          code: d.code,
+          label: d.label,
+          display: d.label,
+          value: d.label,
+        }
+      );
+    });
+
+    this.subdomains.setValue(subdomainsList);
 
     sheet.lots.forEach(lot => {
       const lotField: FormGroup = this.fb.group({
@@ -402,7 +442,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       beneficiaries: this.beneficiaries.value,
       areas : this.areas.value,
       directions: this.directions.value,
+      domains: this.domains.value,
       status: this.status.value,
+      subDomains: this.subdomains.value,
       committee: new Committee({code:this.committeeCode.value}),
       showcase: this.showcase.value,
       options : dateOptions

@@ -105,7 +105,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.netachatType = sheet.netachatType;
     this.startDate = this.dateService.getDisplayDate(new Date(sheet.startDate));
     this.endDate = this.dateService.getDisplayDate(new Date(sheet.endDate));
-     sheet.domain.forEach(d => {
+     sheet.domains.forEach(d => {
       this.domain.push(
         {
           code: d.code,

@@ -42,6 +42,8 @@
     <app-sheet-form-beneficiaries [beneficiaries]="beneficiaries" [allbeneficiaries]="data.beneficiaries"></app-sheet-form-beneficiaries>
     <app-sheet-form-areas [areas]="areas" [allareas]="data.areas"></app-sheet-form-areas>
     <app-sheet-form-directions [directions]="directions" [alldirections]="data.directions"></app-sheet-form-directions>
+    <app-sheet-form-domain [domains]="domains" [allDomains]="[]"></app-sheet-form-domain>
+    <app-sheet-form-subdomain [subdomains]="subdomains" [allSubdomains]="[]"></app-sheet-form-subdomain>
     <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
     <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
     <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [contracts]="contracts" [lotsList]="lots" >

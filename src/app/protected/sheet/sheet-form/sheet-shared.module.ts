@@ -24,6 +24,8 @@ import { SheetFormModalComponent } from './sheet-form-modal/sheet-form-modal.com
 import { SheetFormBeneficiariesComponent } from './sheet-form-beneficiaries/sheet-form-beneficiaries.component';
 import { SheetFormAreasComponent } from './sheet-form-areas/sheet-form-areas.component';
 import { SheetFormDirectionsComponent } from './sheet-form-directions/sheet-form-directions.component';
+import { SheetFormDomainComponent } from './sheet-form-domain/sheet-form-domain.component';
+
 import { SheetFormStatusComponent } from './sheet-form-status/sheet-form-status.component';
 import { SheetFormCommitteeComponent } from './sheet-form-committee/sheet-form-committee.component';
 import { SheetFormShowcaseComponent } from './sheet-form-showcase/sheet-form-showcase.component';
@@ -33,6 +35,7 @@ import { SheetFormOptionsItemComponent } from './sheet-form-options-item/sheet-f
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SheetFormModalDraftComponent } from './sheet-form-modal-draft/sheet-form-modal-draft.component';
+import { SheetFormSubdomainComponent } from './sheet-form-subdomain/sheet-form-subdomain.component';
 
 defineLocale('fr', frLocale);
 @NgModule({
@@ -59,13 +62,15 @@ defineLocale('fr', frLocale);
     SheetFormBeneficiariesComponent,
     SheetFormAreasComponent,
     SheetFormDirectionsComponent,
+    SheetFormDomainComponent,
     SheetFormStatusComponent,
     SheetFormCommitteeComponent,
     SheetFormShowcaseComponent,
     SheetFormOptionsComponent,
     SheetFormOptionsAddComponent,
     SheetFormOptionsItemComponent,
-    SheetFormModalDraftComponent
+    SheetFormModalDraftComponent,
+    SheetFormSubdomainComponent
   ],
   imports: [
     SharedModule,

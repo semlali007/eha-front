@@ -44,7 +44,6 @@ export class SheetFormDomainComponent implements OnInit {
   openModalWithComponent() {
 
     this.domainService.getList({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
-      console.log(data);
       this.items = data.domains;
       this.total = data.total;
       let selected = [];

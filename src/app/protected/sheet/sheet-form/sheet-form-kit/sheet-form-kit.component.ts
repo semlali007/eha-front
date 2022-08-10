@@ -19,7 +19,7 @@ export class SheetFormKitComponent {
   @ViewChild('template') template: TemplateRef<any>;
   bsModalRef?: BsModalRef;
   showModal: boolean = false;
-  maxsize = environment.maxuploadsize || 5000000;
+  maxsize = environment.maxuploadsize || 10000000;
   constructor(private fileService: FileService,
     private modalService: BsModalService,) {
   }

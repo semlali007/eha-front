@@ -80,7 +80,8 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
         
       filter.nace = selected;
     }
-    if (!!this.codeArticle.value && this.codeArticle.value.length > 0) {
+
+    if (!!this.codeArticle && !!this.codeArticle.value && this.codeArticle.value.length > 0) {
       filter.articles = this.codeArticle.value;
     }
 

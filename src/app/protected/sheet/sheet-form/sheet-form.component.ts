@@ -205,12 +205,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'directions': [[], [
 				Validators.required,
 			]],
-      'domains': [[], [
-				Validators.required,
-			]],
-      'subdomains': [[], [
-				Validators.required,
-			]],
+      'domains': [[]],
+      'subdomains': [[]],
       'status': 0,
       'committeeCode': 0,
       'kits': this.fb.array([File]),

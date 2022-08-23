@@ -1,4 +1,11 @@
 <h1>Gérer les thèmes :</h1>
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
 <p>{{themes.length}} entrées :</p>
 <table class="table">
     <thead>
@@ -7,13 +14,13 @@
                 id
             </th>
             <th>
-                label
+                Nom
             </th>
             <th>
-                living
+                Actif
             </th>
             <th>
-                Changer le statut
+               
             </th>
         </tr>
     </thead>
@@ -26,11 +33,19 @@
                 {{theme.label}}
             </td>
             <td>
-                {{theme.living}}
+                {{theme.living | showBooleanText}}
             </td>
             <td>
-                <button (click)="update(theme)">Modifier</button>
+                <button class="btn btn-primary" (click)="openAdd(theme.id)">Modifier</button>
             </td>
+
         </tr>
     </tbody>
 </table>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

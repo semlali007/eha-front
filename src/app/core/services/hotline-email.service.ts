@@ -61,4 +61,17 @@ export class HotlineEmailService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+  public add(params: any): Observable<any> {
+    let url = `${this.appConfigService.basePath}/hotline-emails/add`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url,params).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError('Erreur de modification')),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
 }

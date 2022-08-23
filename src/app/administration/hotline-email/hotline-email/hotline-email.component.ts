@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HotlineEmailService } from 'src/app/core/services/hotline-email.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HotlineEmailEditComponent } from '../hotline-email-edit/hotline-email-edit.component';
+import { HotlineEmailFormComponent } from '../hotline-email-form/hotline-email-form.component';
 
 @Component({
   selector: 'app-hotline-email',
@@ -51,4 +52,16 @@ export class HotlineEmailComponent implements OnInit {
       this.getList();
     });
   }
+
+  openAdd(id?: number) {
+    const initialState = {
+      id: id,
+    };
+    this.bsModalRef = this.modalService.show(HotlineEmailFormComponent, {initialState});
+    this.bsModalRef.content.closeBtnName = 'Fermer';
+    this.bsModalRef.content.afterAdd.subscribe(response => {
+      this.getList();
+    });
+  }
+
 }

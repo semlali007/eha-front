@@ -33,7 +33,7 @@ export class HotlineThemeService {
   public update(params: any): Observable<any> {
     let url = `${this.appConfigService.basePath}/hotline-themes/save`;
     this.loaderService.setLoading(true);
-    return this.http.post(url, { id: params.id }).pipe(
+    return this.http.post(url, params).pipe(
       tap(_ => this.toastrService.showToastr({
         category: 'success',
         message: 'Vos informations ont été mises à jour !'
@@ -42,4 +42,47 @@ export class HotlineThemeService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+  public add(params: any): Observable<any> {
+    let url = `${this.appConfigService.basePath}/hotline-themes/add`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url, params).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos informations ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError('Erreur de modification')),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  
+  public getElement(params: any)
+  {
+    let url = `${this.appConfigService.basePath}/hotline-themes/edit/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      switchMap((response: any) => {
+        return of(
+          response
+        );
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  public remove(params): Observable<any> {
+
+    let url = `${this.appConfigService.basePath}/hotline-themes/delete/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos factsheets ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
 }

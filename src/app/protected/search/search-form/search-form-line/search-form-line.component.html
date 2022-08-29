@@ -4,9 +4,9 @@
         <table>
             <tr>
                 <td *ngFor="let l of lineList">
-                    <div class="form-check form-check-inline">
+                    <div class="form-check form-check-inline" [tooltip]="l.tooltip" placement="top">
                         <input class="form-check-input" type="radio" name="radioSystem" [value]="l.code" id="l.code"
-                            [formControl]="line" [tooltip]="l.tooltip" placement="top" (change)="changeSystem()">
+                            [formControl]="line" (change)="changeSystem()">
                         <label class="form-check-label" for="l.code"> {{l.label}}</label>
                     </div>
                 </td>

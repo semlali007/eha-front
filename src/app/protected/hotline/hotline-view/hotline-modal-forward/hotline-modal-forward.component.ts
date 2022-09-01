@@ -19,10 +19,14 @@ export class HotlineModalForwardComponent implements OnInit {
     private hotlineService: HotlineService,
   ) { }
   get email() { return this.hotlineForwardForm.get('email') }
+  get emailcc() { return this.hotlineForwardForm.get('emailcc') }
   ngOnInit(): void {
     this.hotlineForwardForm = this.fb.group({
       'email': ['', [
         Validators.required, Validators.email
+      ]],
+      'emailcc': ['', [
+        Validators.email
       ]]
     });
   }
@@ -31,7 +35,8 @@ export class HotlineModalForwardComponent implements OnInit {
     const params = {
       id: this.id,
       sha: this.sha,
-      email : this.email.value.trim()
+      email : this.email.value.trim(),
+      emailcc : this.emailcc.value.trim()
     }
     this.hotlineService.forward(params).subscribe(response => {
       this.bsModalRef.hide();

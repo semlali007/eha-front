@@ -43,8 +43,12 @@
 					</ul>
 				</td>
 			</tr>
+			<tr>
+				<td>Agence</td>
+				<td class="font-weight-bold text-primary">{{contract.infos.agency}}</td>
+			</tr>
 			<tr *ngIf="contract.sheets.length > 0">
-				<td>Fiches des marchés</td>
+				<td>Vitrine de l'offre</td>
 				<td class="font-weight-bold text-primary">
 					<ul class="list-group my-items-for-searches" *ngFor="let sheet  of contract.sheets">
 						<a class="list-group-item link" (click)="showSheet(sheet.id)">
@@ -52,10 +56,6 @@
 						</a>
 					</ul>
 				</td>
-			</tr>
-			<tr>
-				<td>Agence</td>
-				<td class="font-weight-bold text-primary">{{contract.infos.agency}}</td>
 			</tr>
 			<tr *ngIf="contract.infos.showJauge">
 				<td>Niveau d'utilisation mandant {{contract.infos.system}}<br>(consommé sur valeur cible)</td>

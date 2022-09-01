@@ -49,7 +49,7 @@ export class HotlineViewComponent implements OnInit {
 
   initHotline(hotline: any) {
     this.isRequester = hotline.isRequester;
-    this.isHotliner = true;
+    this.isHotliner = hotline.isHotliner;
     this.informations = hotline.info;
     this.timeline = hotline.timeline;
   }

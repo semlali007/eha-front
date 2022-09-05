@@ -13,6 +13,11 @@
                     <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
                         <span [hidden]="!email.errors.email">Entrez une adresse email valide.</span>
                       </small>
+                      <label style="margin-top:2%;">Email de la personne à mettre en copie (facultatif)</label>
+                    <input type="email" class="form-control" placeholder="email"  [formControl]="emailcc" >
+                    <small *ngIf="emailcc.errors && emailcc.dirty" class="form-text text-muted">
+                        <span [hidden]="!emailcc.errors.email">Entrez une adresse email valide.</span>
+                      </small>
                 </div>
             </form>
         </div>

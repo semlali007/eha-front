@@ -65,21 +65,4 @@
 				</p>
 			</div>
 		</div>
-		<div class="row justify-content-center"  *ngIf="!isHotliner &&  !isRequester && informations.closed_at == null">
-			<div class="col-6">
-				<p>Si vous êtes partie prenante dans cet échange et que vous ne disposez plus de l'adresse vous permettant de le modifier, merci de saisir votre adresse email ci-après et nous vous enverrons un lien de modification :</p>
-				<form class="form">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-9">
-								<input type="email" class="form-control" placeholder="email" #inputRecovery  required>
-							</div>
-							<div class="col-3">
-								<button class="btn btn-primary" (click)="doRecovery(inputRecovery.value)">valider</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
 </div>

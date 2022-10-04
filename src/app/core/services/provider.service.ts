@@ -74,9 +74,24 @@ export class ProviderService {
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
         switchMap((response: any) => {
-            return of(
-              response
-            );
+
+        const contracts = [];
+        response.contracts.forEach(data => {
+        
+          const p = {
+            contract_code: data.contract_code,
+            contract_system: (data.contract_system==='510')?'PGI-1':((data.contract_system ==='520')?'PGI-2':'PGI-4'),
+            contract_label: data.contract_label,
+            contract_date_end: data.contract_date_end
+          }; 
+          contracts.push(p);
+        });
+        return of({
+          contracts:contracts,
+          infos:response.infos
+        }
+        );
+ 
         }),
         catchError(error => this.errorService.handleError(error)),
         finalize(() => this.loaderService.setLoading(false))

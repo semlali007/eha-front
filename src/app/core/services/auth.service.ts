@@ -11,6 +11,7 @@ import { ToastrService } from 'src/app/core/services/toastr.service';
 import { Profil } from 'src/app/shared/models/profil';
 import { Role } from 'src/app/shared/models/role';
 import { MessageService } from './message.service';
+import { NGXLogger } from "ngx-logger";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -49,9 +50,11 @@ export class AuthService {
     private oauthService: OAuthService,
     private messageService: MessageService,
     private router: Router,
+    private logger: NGXLogger
   ) {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
+      
       if (event instanceof OAuthErrorEvent) {
         console.error('OAuthErrorEvent Object:', event);
       } else {
@@ -85,6 +88,7 @@ export class AuthService {
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile().then((data) =>
       {
+        this.logger.error("loadUserProfile: " + JSON.stringify(data));
         this.autoLogin(data);
       }
 

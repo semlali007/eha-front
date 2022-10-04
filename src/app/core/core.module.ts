@@ -17,6 +17,7 @@ import { ModalPageComponent } from './components/modal-page/modal-page.component
 import { ModalNewsComponent } from './components/modal-news/modal-news.component';
 import { ModalNotificationComponent } from './components/modal-notification/modal-notification.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CacheInterceptor } from './interceptors/cache.interceptor';
@@ -46,6 +47,12 @@ export function storageFactory(): OAuthStorage {
     AlertModule.forRoot(),
     OAuthModule.forRoot(),
     NgIdleKeepaliveModule.forRoot(),
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/api/front/logs',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.ERROR,
+      disableConsoleLogging: true
+    }),
   ],
   exports: [BannerComponent,  NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent, ToastrComponent, GlobalToastrComponent, InactivityComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],
   providers: [

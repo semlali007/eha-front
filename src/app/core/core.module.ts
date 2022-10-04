@@ -48,9 +48,10 @@ export function storageFactory(): OAuthStorage {
     OAuthModule.forRoot(),
     NgIdleKeepaliveModule.forRoot(),
     LoggerModule.forRoot({
-      serverLoggingUrl: '/api/logs',
+      serverLoggingUrl: '/api/front/logs',
       level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: NgxLoggerLevel.ERROR
+      serverLogLevel: NgxLoggerLevel.ERROR,
+      disableConsoleLogging: true
     }),
   ],
   exports: [BannerComponent,  NavbarComponent, FooterComponent, LoaderComponent, ModalInfoComponent, ModalNotificationComponent, ToastrComponent, GlobalToastrComponent, InactivityComponent, PageNotFoundComponent, ModalPageComponent, ModalNewsComponent],

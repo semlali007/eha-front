@@ -54,7 +54,7 @@ export class AuthService {
   ) {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
-      this.logger.error("OAuthErrorEvent Object", event);
+      
       if (event instanceof OAuthErrorEvent) {
         console.error('OAuthErrorEvent Object:', event);
       } else {
@@ -88,6 +88,7 @@ export class AuthService {
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile().then((data) =>
       {
+        this.logger.error("loadUserProfile: " + JSON.stringify(data));
         this.autoLogin(data);
       }
 

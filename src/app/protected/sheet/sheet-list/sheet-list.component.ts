@@ -114,7 +114,14 @@ export class SheetListComponent implements OnInit, OnDestroy {
   get currentPage() { return this.paginationForm.get('currentPage') }
 
   public onsSubmittedSearchSheets(filter: any) {
-    this.initSortBy();
+    
+    if((!!filter.searchText && filter.searchText.length>0)
+      ||  (!!filter.searchProvider && filter.searchProvider.length>0)){
+        this.initSortBy('rank', 'desc');
+      }else{
+        this.initSortBy('updated_at', 'desc');
+      }
+      
     this.initFilterInput();
     if(this.filterInput.beneficiaries) {
       this.filterInput.beneficiaries.forEach(element => {
@@ -209,9 +216,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
     };
   }
 
-  initSortBy() {
-    this.sortBy = 'date';
-    this.sortDirection = 'desc';
+  initSortBy(sortBy, sortDirection) {
+    this.sortBy = sortBy;
+    this.sortDirection = sortDirection;
   }
 
   public navigate(page: string): void {

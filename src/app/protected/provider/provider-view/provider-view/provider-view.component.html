@@ -36,7 +36,7 @@
 				<ul class="list-group my-items-for-searches">
 					<a class="list-group-item link" *ngFor='let result  of provider.contracts | filterAllProperty:contractFilterText.value:["contract_code","contract_label","contract_date_end"]'
 						(click)="showContract(result.contract_code)">
-						<span *ngIf="result.contract_code">{{result.contract_code}},</span> <span *ngIf="result.contract_label"><b> {{result.contract_label}}</b>,</span> <span *ngIf="result.contract_date_end"> fin le {{result.contract_date_end}}</span>
+						<span *ngIf="result.contract_code">{{result.contract_system}}, {{result.contract_code}},</span> <span *ngIf="result.contract_label"><b> {{result.contract_label}}</b>,</span> <span *ngIf="result.contract_date_end"> fin le {{result.contract_date_end}}</span>
 					</a>
 				</ul>
 			</div>

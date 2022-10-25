@@ -5,7 +5,7 @@
         </div>
     </div>
 </div>
-<nav aria-label="breadcrumb">
+<nav aria-label="Vous êtes ici :" role="navigation">
     <ol class="breadcrumb my-items">
         <li class="breadcrumb-item">
             <a  (click)="showSubItems(0)"  class="blue_link"><span>Accueil</span></a>
@@ -16,7 +16,7 @@
                 [innerHtml]="row.breadcrumb"></span></a>
         </li>
 
-        <li class="breadcrumb-item active">
+        <li class="breadcrumb-item active" aria-current="true">
             <span [innerHtml]="breadcrumb"></span>
         </li>
     </ol>

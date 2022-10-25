@@ -9,30 +9,30 @@
     </h1>
     <table class="table table-hover">
         <tr>
-            <td>Libellé&nbsp;court</td>
+            <th scope="row">Libellé&nbsp;court</th>
             <td class="font-weight-bold text-primary">{{item.infos.item_label}}</td>
         </tr>
         <tr *ngIf="!!item.infos.item_label_long">
-            <td>Libellé long</td>
+            <th scope="row">Libellé long</th>
             <td class="font-weight-bold text-primary">{{item.infos.item_label_long}}</td>
         </tr>
         <tr *ngIf="!!item.infos.item_notice">
-            <td>Notice</td>
+            <th scope="row">Notice</th>
             <td class="font-weight-bold text-primary">{{item.infos.item_notice}}</td>
         </tr>
         <tr *ngIf="!!item.infos.item_level_1">
-            <td>Segment</td>
+            <th scope="row">Segment</th>
             <td class="font-weight-bold text-primary"><span *ngIf="!!item.infos.item_level_1">&diams; {{item.infos.item_level_1}}<br></span><span *ngIf="!!item.infos.item_level_2">&diams; {{item.infos.item_level_2}}<br></span><span *ngIf="!!item.infos.item_level_3">&diams; {{item.infos.item_level_3}}</span></td>
         </tr>
         <tr *ngIf="!!item.infos.comptes_e">
-            <td>Comptes</td>
+            <th scope="row">Comptes</th>
             <td class="font-weight-bold text-primary">
                 d'exploitation : {{item.infos.comptes_e}}<br>
                 d'investissement : {{item.infos.comptes_i}}
             </td>
         </tr>
         <tr *ngIf="!!item.infos.tva">
-            <td>Taux de TVA</td>
+            <th scope="row">Taux de TVA</th>
             <td class="font-weight-bold text-primary">{{item.infos.tva}}</td>
         </tr>
     </table>
@@ -42,8 +42,8 @@
         </h1>
         <table class="table table-hover">
             <tr>
-                <td>Code</td>
-                <td>Libellé</td>
+                <th scope="col">Code</th>
+                <th scope="col">Libellé</th>
             </tr>
             <tr *ngFor="let result of item.agencies">
                 <td>{{result.agency_code}}</td>

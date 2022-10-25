@@ -80,9 +80,8 @@ margin: 0px 10px;
 
 .checkbox{
     position: absolute;
-    right: 5px;
-    margin-top: 7px;
-    
+    left: 6px;
+    margin-top: 6px;
     pointer-events:all;
 }
 

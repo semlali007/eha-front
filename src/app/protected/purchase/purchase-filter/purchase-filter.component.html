@@ -63,28 +63,28 @@
             <form [formGroup]="filterForm">
             <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li role="menuitem"><span class="dropdown-item noClick">
-                    <img src="../../../../assets/img/icon-initilaisee.png">&nbsp;&nbsp;<span>Initialisée</span><input type="checkbox" class="checkbox" formControlName="initialized" (click)="changeStatus({'status':'initialized'})"></span></li>
+                     <span>Initialisée</span><input type="checkbox" class="checkbox" formControlName="initialized" (click)="changeStatus({'status':'initialized'})">&nbsp;&nbsp;<img src="../../../../assets/img/icon-initilaisee.png"></span></li>
 
                 <li role="menuitem"><span class="dropdown-item noClick">
-                        <img src="../../../../assets/img/icone-transmise-pha.png">&nbsp;&nbsp;<span>Transmise PHA</span><input type="checkbox" class="checkbox" formControlName="transmitted" (click)="changeStatus({'status':'transmitted'})"></span>
+                        <span>Transmise PHA</span><input type="checkbox" class="checkbox" formControlName="transmitted" (click)="changeStatus({'status':'transmitted'})">&nbsp;&nbsp;<img src="../../../../assets/img/icone-transmise-pha.png"></span>
                 </li>
                          <li role="menuitem"><span class="dropdown-item noClick">
-                        <img src="../../../../assets/img/icone-soumise-au-manager.png">&nbsp;&nbsp;<span>Soumise au manager</span><input type="checkbox" class="checkbox" formControlName="managed" (click)="changeStatus({'status':'managed'})"></span>
+                        <span>Soumise au manager</span><input type="checkbox" class="checkbox" formControlName="managed" (click)="changeStatus({'status':'managed'})">&nbsp;&nbsp;<img src="../../../../assets/img/icone-soumise-au-manager.png"></span>
                 </li>
                 <li role="menuitem"><span class="dropdown-item noClick">
-                    <img src="../../../../assets/img/icone-affecter-a-lachteur.png">&nbsp;&nbsp;<span>Affectée à l'acheteur</span><input type="checkbox" class="checkbox" formControlName="affected" (click)="changeStatus({'status':'affected'})"></span></li>
+                    <span>Affectée à l'acheteur</span><input type="checkbox" class="checkbox" formControlName="affected" (click)="changeStatus({'status':'affected'})">&nbsp;&nbsp;<img src="../../../../assets/img/icone-affecter-a-lachteur.png"></span></li>
                 <li role="menuitem"><span class="dropdown-item noClick">
-                    <img src="../../../../assets/img/icon-integre-en-affaire.png">&nbsp;&nbsp;<span>Intégrée en affaire</span><input type="checkbox" class="checkbox" formControlName="integred" (click)="changeStatus({'status':'integred'})"></span></li>
+                    <span>Intégrée en affaire</span><input type="checkbox" class="checkbox" formControlName="integred" (click)="changeStatus({'status':'integred'})">&nbsp;&nbsp;<img src="../../../../assets/img/icon-integre-en-affaire.png"></span></li>
    
                 <li role="menuitem"><span class="dropdown-item noClick">
-                        <img src="../../../../assets/img/icon-refuse.png">&nbsp;&nbsp;<span>Refusée</span><input type="checkbox" class="checkbox" formControlName="refused" (click)="changeStatus({'status':'refused'})"></span>
+                    <span>Refusée</span><input type="checkbox" class="checkbox" formControlName="refused" (click)="changeStatus({'status':'refused'})"> &nbsp;&nbsp;<img src="../../../../assets/img/icon-refuse.png"></span>
                 </li>
             </ul>
         </form>
         </div>
     </div>
     <div class="col-2">
-        <p class="t-key element">Statut modifié le <a class="clickable" (click)="sortDate({'column':'last_status_date'})"><img class="img-left" src="../../../../assets/img/flech-down.png"><img
+        <p class="t-key element">Statut modifié le <a class="clickable" (click)="sortDate({'column':'last_status_date'})"><img class="img-left" src="../../../../assets/img/flech-down.png">&nbsp;&nbsp;<img
             class="img" src="../../../../assets/img/flech-up.png"> </a></p>
     </div>
 </div>

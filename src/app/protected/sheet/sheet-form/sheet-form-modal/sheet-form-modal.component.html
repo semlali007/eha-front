@@ -55,10 +55,12 @@
                             </div>
                             <div class="row">
                                 <form class="col-xs-12 col-12" [formGroup]="sheetModalForm">
-                                  <pagination [boundaryLinks]="true" [totalItems]="total" [itemsPerPage]="itemsPerPage" (numPages)="smallnumPages = $event" [formControl]="currentPage"
+                                    <nav aria-label="pagination" >
+                                    <pagination [boundaryLinks]="true" [totalItems]="total" [itemsPerPage]="itemsPerPage" (numPages)="smallnumPages = $event" [formControl]="currentPage"
                                     (pageChanged)="pageChanged($event)"  previousText="&lsaquo;" [maxSize]="maxSize"
                                     nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
                                   </pagination>
+                                  </nav>
                                 </form>
                               </div>
                         </div>

@@ -29,10 +29,12 @@
 </div>
 
 <form  [formGroup]="paginationForm" *ngIf="items.length > 0">
+    <nav aria-label="pagination" >
     <pagination [totalItems]='items.length' [itemsPerPage]="itemsPerPage"
     [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
     (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
     </pagination>
+    </nav>
 </form>
 
 

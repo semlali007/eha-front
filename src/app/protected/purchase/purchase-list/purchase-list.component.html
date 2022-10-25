@@ -13,10 +13,12 @@
 <div class="row" *ngIf="purchases.length>0">
     <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
     <form  [formGroup]="paginationForm">
+        <nav aria-label="pagination" >
         <pagination [totalItems]='purchases.length' [itemsPerPage]="itemsPerPage"
         [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
         (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
         </pagination>
+        </nav>
     </form>
 </div>
 

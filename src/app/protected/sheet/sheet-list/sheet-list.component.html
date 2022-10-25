@@ -40,11 +40,13 @@
                       <div class="row">
 
                         <form class="col-xs-12 col-12" [formGroup]="paginationForm">
+                          <nav aria-label="pagination" >
                           <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
                             [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
                             (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
                             firstText="&laquo;" lastText="&raquo;">
                           </pagination>
+                          </nav>
                         </form>
                       </div>
                     </div>

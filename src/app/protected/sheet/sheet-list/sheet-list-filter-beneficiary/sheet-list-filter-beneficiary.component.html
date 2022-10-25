@@ -1,13 +1,13 @@
 <ng-template #customItemTemplate let-model="item">
     {{model.name}} ({{ model.count }})
   </ng-template>
-<div class="card" style="width: 18rem;" *ngIf="list.length > 0">
-    <div class="card-header link smaller-text" (click)="isTotalCollapsed = !isTotalCollapsed"
-    [attr.aria-expanded]="!isTotalCollapsed" aria-controls="collapseTotal">
+<div class="list-group card" style="width: 18rem;" *ngIf="list.length > 0">
+    <button class="list-group-item filter-header smaller-text" (click)="isTotalCollapsed = !isTotalCollapsed"
+    [attr.aria-expanded]="!isTotalCollapsed" aria-controls="beneficiaryList">
         Bénéficiaires <i class="fleche fleche-droite" [class.fleche-bas]="isTotalCollapsed == false"></i>
-    </div>
+    </button>
 
-    <div id="collapseTotal" [collapse]="isTotalCollapsed" [isAnimated]="true">
+    <div id="beneficiaryList" [collapse]="isTotalCollapsed" [isAnimated]="true">
         <form [formGroup]="myForm">
             <input formControlName="state"
                 [typeahead]="list"

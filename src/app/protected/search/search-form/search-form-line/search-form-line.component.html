@@ -1,6 +1,9 @@
 <div class="form-group row">
     <div class="col-6 col-sm-7 offset-sm-1">
-        <small class="form-text text-muted">Vous pouvez éventuellement limiter vos recherches à une ligne PGI :</small>
+        <fieldset>
+            <legend>
+                <small class="form-text text-muted">Vous pouvez éventuellement limiter vos recherches à une ligne PGI :</small>
+            </legend>
         <table>
             <tr>
                 <td *ngFor="let l of lineList">
@@ -12,5 +15,6 @@
                 </td>
             </tr>
         </table>
+    </fieldset>
     </div>
 </div>

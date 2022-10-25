@@ -1,4 +1,5 @@
 <form novalidate [formGroup]="hotlineForm" (ngSubmit)="submit()">
+    <p>Tous les champs sont obligatoires.</p>
     <app-hotline-form-theme [theme]='theme' [themesList] = 'themesList'></app-hotline-form-theme>
     <app-hotline-form-category [category]='category' [familiesList] = 'familiesList' [family]='family'></app-hotline-form-category>
     <app-hotline-form-question [question]='question'></app-hotline-form-question>

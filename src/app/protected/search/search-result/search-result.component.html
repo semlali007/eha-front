@@ -45,11 +45,13 @@
         </div>
 
         <form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="count > 0;">
+            <nav aria-label="pagination" >
             <pagination [boundaryLinks]="true" [totalItems]="count" [itemsPerPage]="itemsPerPage"
               [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
               (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
               firstText="&laquo;" lastText="&raquo;">
             </pagination>
+            </nav>
           </form>
 
         <div *ngIf="reset == false">

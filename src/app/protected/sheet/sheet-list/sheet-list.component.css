@@ -17,3 +17,7 @@
       margin-left: 20%; 
       margin-bottom: 10%;
      }
+
+     .filter-header{
+      background-color: rgba(0, 0, 0, 0.03);
+     }

@@ -10,31 +10,31 @@
 		</h1>
 		<table class="table table-hover">
 			<tr>
-				<td>Ligne PGI</td>
+				<th scope="row">Ligne PGI</th>
 				<td class="font-weight-bold text-primary">{{contract.infos.system}}</td>
 			</tr>
 			<tr>
-				<td>Contrat</td>
+				<th scope="row">Contrat</th>
 				<td class="font-weight-bold text-primary"> {{contract.infos.contract_label}} </td>
 			</tr>
 			<tr>
-				<td>Date de début</td>
+				<th scope="row">Date de début</th>
 				<td class="font-weight-bold text-primary">{{contract.infos.contract_date_start}} </td>
 			</tr>
 			<tr>
-				<td>Date de fin</td>
+				<th scope="row">Date de fin</th>
 				<td class="font-weight-bold text-primary">{{contract.infos.contract_date_end}}</td>
 			</tr>
 			<tr>
-				<td>Entité</td>
+				<th scope="row">Entité</th>
 				<td class="font-weight-bold text-primary">{{contract.infos.entity}}</td>
 			</tr>
 			<tr>
-				<td>Organisation d'achat</td>
+				<th scope="row">Organisation d'achat</th>
 				<td class="font-weight-bold text-primary">{{contract.infos.organisation_achat}}</td>
 			</tr>
 			<tr>
-				<td>Fournisseur</td>
+				<th scope="row">Fournisseur</th>
 				<td class="font-weight-bold text-primary">
 					<ul class="list-group my-items-for-searches">
 						<a class="list-group-item link" (click)="showProvider(contract.infos.provider_code)">
@@ -44,11 +44,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Agence</td>
+				<th scope="row">Agence</th>
 				<td class="font-weight-bold text-primary">{{contract.infos.agency}}</td>
 			</tr>
 			<tr *ngIf="contract.sheets.length > 0">
-				<td>Vitrine de l'offre</td>
+				<th scope="row">Vitrine de l'offre</th>
 				<td class="font-weight-bold text-primary">
 					<ul class="list-group my-items-for-searches" *ngFor="let sheet  of contract.sheets">
 						<a class="list-group-item link" (click)="showSheet(sheet.id)">
@@ -58,7 +58,7 @@
 				</td>
 			</tr>
 			<tr *ngIf="contract.infos.showJauge">
-				<td>Niveau d'utilisation mandant {{contract.infos.system}}<br>(consommé sur valeur cible)</td>
+				<th scope="row">Niveau d'utilisation mandant {{contract.infos.system}}<br>(consommé sur valeur cible)</th>
 				<td>
 					<progressbar *ngIf="contract.infos.jauge < 50"  [value]="contract.infos.jauge" type="success" [striped]="true">{{contract.infos.jauge}}%</progressbar>
 					<progressbar *ngIf="contract.infos.jauge >= 50  && contract.infos.jauge < 80"  	[value]="contract.infos.jauge" >{{contract.infos.jauge}}%</progressbar>
@@ -73,10 +73,10 @@
 			</h1>
 			<table class="table table-hover">
 				<tr>
-					<td>Poste</td>
-					<td>Poste libellé</td>
-					<td>Article</td>
-					<td>Article libellé</td>
+					<th scope="col">Poste</th>
+					<th scope="col">Poste libellé</th>
+					<th scope="col">Article</th>
+					<th scope="col">Article libellé</th>
 				</tr>
 				<tr *ngFor="let post  of contract.postes">
 					<td class="text-right">{{post.contract_post_code}}</td>

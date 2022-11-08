@@ -1,0 +1,50 @@
+<h1>Fiches pratiques</h1>
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th style="width:30%">
+                Texte
+            </th>
+            <th style="width:60%">
+                Synonymes
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let factsheet of logs$ | async">
+
+            <td>
+                {{factsheet.word}}
+            </td>
+            <td>
+                <div *ngFor="let syn of factsheet.synonymous">
+                    {{syn.synonymous}}<br>
+                </div>
+                <div class="row">
+                    <div class="add col-lg-5"  ></div>
+                    <button class="add col-lg-2 "  (click)="openAddSynonyous(factsheet.id)" type="button">+</button>
+                    <div class="add col-lg-5"  ></div>
+                </div>
+               
+            </td>
+            <td >
+                <div class="row">
+                    <button class="remove col"   (click)="openModal(template, factsheet.id)" type="button">-</button>
+                    <button class="edit col"  type="button" (click)="openAdd(factsheet.id)" ><i>&#9998;</i></button>
+                </div>
+            </td>
+        </tr> 
+
+    </tbody>
+</table>
+

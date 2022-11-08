@@ -1,0 +1,36 @@
+<h1>Fiches pratiques</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Texte
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let factsheet of logs$ | async" [ngClass]="{'table-success': factsheet.associated}">
+            <td>
+                {{factsheet.id}}
+            </td>
+            <td>
+                {{factsheet.word}} ({{factsheet.number}})
+            </td>
+          <td>
+          </td>
+        </tr> 
+    </tbody>
+</table>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

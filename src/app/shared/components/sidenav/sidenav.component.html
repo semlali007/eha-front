@@ -58,7 +58,26 @@
      class="list-group-item">
      Fiches Pratiques
      </li>
+     <li (click)="navigate(logsPath)"
+     [class.list-group-item-success]="isActive(logsPath)"
+     class="list-group-item">
+     Logs
+     </li>
+     <li (click)="navigate(blackListWordsPath)"
+     [class.list-group-item-success]="isActive(blackListWordsPath)"
+     class="list-group-item">
+     Mots à ignorer
+     </li>
+     <li (click)="navigate(whiteListWordsPath)"
+     [class.list-group-item-success]="isActive(whiteListWordsPath)"
+     class="list-group-item">
+     Mots à associer
+     </li>
+     <li (click)="navigate(searchedWordsPath)"
+     [class.list-group-item-success]="isActive(searchedWordsPath)"
+     class="list-group-item">
+     Mots recherchés
+     </li>
      </ul>
-
     </div>
    </div>

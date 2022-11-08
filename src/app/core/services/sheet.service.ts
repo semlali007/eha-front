@@ -265,6 +265,7 @@ export class SheetService {
 
     options.page = params.page || 1;
     options.perpage = params.perpage || 1;
+    options.is_search = params.isSearch || false;
 
     options.search = params.search || { searchText: '', status: '', searchProvider:'' };
     options.search.providers = !!options.search.providers? options.search.providers: [];

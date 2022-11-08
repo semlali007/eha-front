@@ -31,6 +31,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   public sortBy = 'date';
   public sortDirection = 'desc';
   public defaultFilter: any;
+  public isSearch = false; 
   public data:any = [];
   public filter = {
     subscribe: [],
@@ -118,10 +119,11 @@ export class SheetListComponent implements OnInit, OnDestroy {
     if((!!filter.searchText && filter.searchText.length>0)
       ||  (!!filter.searchProvider && filter.searchProvider.length>0)){
         this.initSortBy('rank', 'desc');
+        this.isSearch = true;
       }else{
+        this.isSearch = false;
         this.initSortBy('updated_at', 'desc');
       }
-      
     this.initFilterInput();
     if(this.filterInput.beneficiaries) {
       this.filterInput.beneficiaries.forEach(element => {
@@ -144,6 +146,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public onSubmittedFilterSheets(filter: any) {
     this.filterInput[filter.type] = filter.value;
+    this.isSearch = false;
     this.loadItems();
   }
 
@@ -157,6 +160,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       let sortBy = sort.sortBy.split('_');
       this.sortBy = sortBy[0];
       this.sortDirection = sortBy[1];
+      this.isSearch = false;
       this.loadItems();
     }
   }
@@ -169,6 +173,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     this.params = {
       page: this.currentPage.value,
       perpage: this.itemsPerPage,
+      isSearch: this.isSearch,
       search: {
         searchText: this.searchText,
         searchProvider: this.searchProvider,
@@ -232,6 +237,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public pageChanged(event: any): void {
     this.currentPage.setValue(event.page);
+    this.isSearch = false;
     this.loadItems();
   }
 

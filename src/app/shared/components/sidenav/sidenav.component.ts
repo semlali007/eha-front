@@ -38,6 +38,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public searchedWordsPath = `${this.prefix}/recherche/mots-rechercher`;
   public subscription: Subscription;
 	public user: User;
+  public isDropup = true;
   constructor(
     private router: Router,
     private authService: AuthService

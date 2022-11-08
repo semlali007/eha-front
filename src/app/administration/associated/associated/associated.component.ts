@@ -27,9 +27,10 @@ export class AssociatedComponent implements OnInit {
   loadData(){
     this.logs$ = this.searchLogService.getAssociatedList({type:'home_page'});
   }
-  openAdd(id?: number) {
+  openAdd(id?: number, title?:string) {
     const initialState = {
       id: id,
+      label: title,
       type: 'home_page'
     };
     this.bsModalRef = this.modalService.show(AssociatedFormComponent, {initialState});
@@ -51,4 +52,47 @@ export class AssociatedComponent implements OnInit {
     });
   }
 
+
+  openModalRemoveSynonymous(template: TemplateRef<any>, id: number) {
+    this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this.idToDelete = id;
+  }
+
+  removeSynonymous($id) {
+  
+    this.searchLogService
+      .removeSynonymous({
+        id: $id
+      })
+      .subscribe(response => this.loadData());
+    
+    }
+
+  confirm(): void {
+    this.removeSynonymous(this.idToDelete);
+    this.bsConfirmModalRef?.hide();    
+  }
+ 
+  decline(): void {
+    this.bsConfirmModalRef?.hide();  }
+
+    openModalRemoveAssociated(template: TemplateRef<any>, id: number) {
+      this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
+      this.idToDelete = id;
+    }
+  
+    removeAssociated($id) {
+    
+      this.searchLogService
+        .removeAssociated({
+          id: $id
+        })
+        .subscribe(response => this.loadData());
+      
+      }
+  
+      confirmAssociated(): void {
+      this.removeAssociated(this.idToDelete);
+      this.bsConfirmModalRef?.hide();    
+    }
 }

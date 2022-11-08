@@ -13,6 +13,7 @@ export class AssociatedFormComponent implements OnInit {
   factsheetAddForm: FormGroup;
   public afterAdd: EventEmitter<any> = new EventEmitter();
   id: number;
+  label: string;
   get title() { return this.factsheetAddForm.get('title') }
   get file() { return this.factsheetAddForm.get('file') }
   constructor(
@@ -29,14 +30,12 @@ export class AssociatedFormComponent implements OnInit {
       ]],
     });
     if (!!this.id) {
-      this.searchLogService.getElement({ id: this.id }).subscribe(response => {
         this.factsheetAddForm = this.fb.group({
-          'title': [response.name, [
+          'title': [this.label, [
             Validators.required,
           ]],
         });
 
-      })
     }
   }
 
@@ -46,11 +45,10 @@ export class AssociatedFormComponent implements OnInit {
       id: this.id,
       title: this.title.value,
     }
-    console.log('params', params);
 
     if (!!this.id) {
       params.id = this.id;
-      this.searchLogService.updatefactsheet(params).subscribe(response => {
+      this.searchLogService.updateAssociated(params).subscribe(response => {
         this.bsModalRef.hide();
         this.afterAdd.emit(response);
       });

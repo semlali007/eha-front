@@ -149,6 +149,19 @@ export class SearchLogService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+  public updateAssociated(params) {
+    let url = `${this.appConfigService.basePath}/admin/recherche/associated/update/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url, params).pipe(
+      switchMap((listData: any) => {
+        return of(listData);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
   public removeIgnored(params): Observable<any> {
 
     let url = `${this.appConfigService.basePath}/admin/recherche/ignored/delete/${params.id}`;
@@ -162,6 +175,36 @@ export class SearchLogService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+  public removeSynonymous(params): Observable<any> {
+
+    let url = `${this.appConfigService.basePath}/admin/recherche/synonymous/delete/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos factsheets ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  public removeAssociated(params): Observable<any> {
+
+    let url = `${this.appConfigService.basePath}/admin/recherche/associated/delete/${params.id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      tap(_ => this.toastrService.showToastr({
+        category: 'success',
+        message: 'Vos factsheets ont été mises à jour !'
+      })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+  
+  
 
 
 

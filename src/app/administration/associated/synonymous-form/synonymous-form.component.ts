@@ -27,16 +27,6 @@ export class SynonymousFormComponent implements OnInit {
         Validators.required,
       ]],
     });
-    if (!!this.id) {
-      this.searchLogService.getElement({ id: this.id }).subscribe(response => {
-        this.factsheetAddForm = this.fb.group({
-          'title': [response.name, [
-            Validators.required,
-          ]],
-        });
-
-      })
-    }
   }
 
 

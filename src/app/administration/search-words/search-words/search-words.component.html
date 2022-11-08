@@ -1,11 +1,8 @@
-<h1>Fiches pratiques</h1>
+<h1>Mots recherchés</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Id
-            </th>
             <th>
                 Texte
             </th>
@@ -15,9 +12,6 @@
     </thead>
     <tbody>
         <tr *ngFor="let factsheet of logs$ | async" [ngClass]="{'table-success': factsheet.associated}">
-            <td>
-                {{factsheet.id}}
-            </td>
             <td>
                 {{factsheet.word}} ({{factsheet.number}})
             </td>

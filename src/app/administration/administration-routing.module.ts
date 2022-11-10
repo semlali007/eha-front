@@ -59,6 +59,22 @@ const routes: Routes = [
         path: 'fiche-pratique/list',
         loadChildren: () => import('./factsheet/factsheet.module').then(m => m.FactsheetModule),
       },
+      {
+        path: 'recherche/logs',
+        loadChildren: () => import('./logs/logs.module').then(m => m.LogsModule),
+      },
+      {
+        path: 'recherche/mots-ignorer',
+        loadChildren: () => import('./search-ignore/search-ignore.module').then(m => m.SearchIgnoreModule),
+      },
+      {
+        path: 'recherche/mots-associer',
+        loadChildren: () => import('./associated/associated.module').then(m => m.AssociatedModule),
+      },
+      {
+        path: 'recherche/mots-rechercher',
+        loadChildren: () => import('./search-words/search-words.module').then(m => m.SearchWordsModule),
+      },
       
     ]
   }

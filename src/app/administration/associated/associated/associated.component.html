@@ -1,0 +1,63 @@
+<h1>Mot à associer</h1>
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th style="width:30%">
+                Texte
+            </th>
+            <th style="width:60%">
+                Synonymes
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let factsheet of logs$ | async">
+            <td>
+                <div>
+                    {{factsheet.word}}<button class="edit" type="button"
+                        (click)="openAdd(factsheet.id, factsheet.word)"><i>&#9998;</i></button>
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let syn of factsheet.synonymous" class="row">
+                    <div> {{syn.synonymous}} <button class="remove"
+                            (click)="openModalRemoveSynonymous(template, syn.id)" type="button">-</button>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="row">
+                    <button class="remove col" (click)="openModalRemoveAssociated(template_associated, factsheet.id)" type="button">-</button>
+
+                    <button class="add col " (click)="openAddSynonyous(factsheet.id)" type="button">+ Synonyme</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Voulez-vous supprimer l'élément?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+    </div>
+</ng-template>
+
+<ng-template #template_associated>
+    <div class="modal-body text-center">
+        <p>Voulez-vous supprimer l'élément?</p>
+        <button type="button" class="btn btn-default" (click)="confirmAssociated()">Oui</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+    </div>
+</ng-template>

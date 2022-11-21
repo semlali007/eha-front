@@ -11,6 +11,7 @@
         <form [formGroup]="myForm">
             <input formControlName="state"
                 [typeahead]="list"
+                typeaheadOptionField="name"
                 [typeaheadOptionsLimit]="7"
                 [typeaheadMinLength]="0"
                 (typeaheadOnSelect)="onSelect($event)"

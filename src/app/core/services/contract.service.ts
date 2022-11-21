@@ -23,7 +23,15 @@ export class ContractService {
         this.loaderService.setLoading(true);
         return this.http.get(url).pipe(
             switchMap((response: any) => {
+               
+                if(!!response && !!response.error){
+                    return of(
+                        response
+                    );
+                }
+
                 let infos = response.infos;
+                
                 var i = parseInt(infos.contract_date_start.substring(0, 4));
                 infos.showJauge = (i > 2012) ? true : false;
                 infos.shortSystem = infos.system.substr(3,1);

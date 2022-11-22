@@ -13,6 +13,7 @@
                 [typeahead]="list"
                 [typeaheadOptionsLimit]="7"
                 [typeaheadMinLength]="0"
+                typeaheadOptionField="name"
                 (typeaheadOnSelect)="onSelect($event)"
                 [typeaheadItemTemplate]="customItemTemplate"
                 placeholder="Entrer un fournisseur"

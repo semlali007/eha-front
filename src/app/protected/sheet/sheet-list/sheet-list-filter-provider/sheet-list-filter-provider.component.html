@@ -10,7 +10,6 @@
     <div id="providerList" [collapse]="isTotalCollapsed" [isAnimated]="true">
         <form [formGroup]="myForm">
             <input formControlName="state"
-                [(ngModel)]="selected"
                 [typeahead]="list"
                 [typeaheadOptionsLimit]="7"
                 [typeaheadMinLength]="0"

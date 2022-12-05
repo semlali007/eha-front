@@ -21,9 +21,8 @@
 					<img src="../../../../assets/img/picto-{{row.nature}}_white.png" height="30px">
 				</div>
 				<div class="timeline-panel">
-					<div class="timeline-body">
-						<p *ngIf="row.nature != 'N'" >
-							{{row.message}}
+					<div class="timeline-body" >
+						<p *ngIf="row.nature != 'N'" [innerHtml]="row.message">
 							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn-link">visualiser</a>
 						</p>
 						<p *ngIf="row.nature == 'N'">

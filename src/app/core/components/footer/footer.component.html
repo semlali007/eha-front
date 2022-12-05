@@ -16,7 +16,7 @@
         </button>
     </span>
 
-  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+  <span *ngIf="!!user && (user.hasRole('EHA_ADMIN')|| user.hasRole('EHA_GESTIONNAIRE'))" class="textFooter">
         &nbsp;|&nbsp;&nbsp;
         <a class="btn btn-link btn-sm white" (click)="navigate('admin/dashboard')">
             Administration

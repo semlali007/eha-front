@@ -191,10 +191,14 @@ export class AuthService {
             dc: roleArray['dc'],
             ou: roleArray['ou'],
           });
+          // if(role.name!=='EHA_ADMIN'){
+          //   roles.push(role);
+          // }
           roles.push(role);
         });
 
-      }
+      } 
+      
       params['roles'] = roles;
       this.user.next(this.getUser({
         nni: params['sub'],

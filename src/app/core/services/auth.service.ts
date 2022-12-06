@@ -191,10 +191,12 @@ export class AuthService {
             dc: roleArray['dc'],
             ou: roleArray['ou'],
           });
+          
           roles.push(role);
         });
 
-      }
+      } 
+      
       params['roles'] = roles;
       this.user.next(this.getUser({
         nni: params['sub'],

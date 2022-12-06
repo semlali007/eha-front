@@ -1,83 +1,98 @@
+<div class="row sidenav">
+
 <div class="sticky-top">
     <div class="nav flex-column">
-     <div class="card-header">Menu</div>
-     <ul class="list-group list-group-flush">
-      <li (click)="navigate(dashboardPath)"
-       [class.list-group-item-success]="isActive(dashboardPath)"
-       class="list-group-item">
-       Console d'administration
-      </li>
-      <li (click)="navigate(hotlineThemePath)"
+     <div class="card-header"><strong>Menu</strong></div>
+<accordion>
+    <accordion-group *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" heading="Fonction de recherche de la vitrine de l'offre">
+        <ul class="list-group list-group-flush">
+            <li   (click)="navigate(logsPath)"
+            [class.list-group-item-success]="isActive(logsPath)"
+            class="list-group-item">
+            Historique des recherches
+            </li>
+            <li   (click)="navigate(blackListWordsPath)"
+            [class.list-group-item-success]="isActive(blackListWordsPath)"
+            class="list-group-item">
+            Mots à ignorer
+            </li>
+            <li   (click)="navigate(whiteListWordsPath)"
+            [class.list-group-item-success]="isActive(whiteListWordsPath)"
+            class="list-group-item">
+            Mots à associer
+            </li>
+            <li   (click)="navigate(searchedWordsPath)"
+            [class.list-group-item-success]="isActive(searchedWordsPath)"
+            class="list-group-item">
+            Récurrence des recherches
+            </li>
+        </ul>
+    </accordion-group>
+    <accordion-group heading="Paramétrage hotlines" *ngIf="!!user && (user.hasRole('EHA_ADMIN'))">
+        <ul class="list-group list-group-flush">
+            <li (click)="navigate(hotlineThemePath)"
        [class.list-group-item-success]="isActive(hotlineThemePath)"
        class="list-group-item">
-       thèmes des hotlines
+       thèmes
       </li>
-      <li (click)="navigate(hotlineGroupPath)"
+      <li  (click)="navigate(hotlineGroupPath)"
        [class.list-group-item-success]="isActive(hotlineGroupPath)"
        class="list-group-item">
-       Groupes des hotlines
+       Groupes
       </li>
-      <li (click)="navigate(hotlineEmailPath)"
+      <li  (click)="navigate(hotlineEmailPath)"
        [class.list-group-item-success]="isActive(hotlineEmailPath)"
        class="list-group-item">
-       Emails des hotlines
+       Emails
       </li>
-      <li (click)="navigate(documentationPath)"
-       [class.list-group-item-success]="isActive(documentationPath)"
-       class="list-group-item">
-       documentation
-      </li>
-     <li (click)="navigate(newsPath)"
-     [class.list-group-item-success]="isActive(newsPath)"
-     class="list-group-item">
-      News
-     </li>
-     <li (click)="navigate(sheetPage)"
-     [class.list-group-item-success]="isActive(sheetPage)"
-     class="list-group-item">
-      Nouveautés(Vitrine de l'offre)
-     </li>
-     <li (click)="navigate(purchasePage)"
-     [class.list-group-item-success]="isActive(purchasePage)"
-     class="list-group-item">
-      Nouveautés(Ma situation achat)
-     </li>
-     <li (click)="navigate(informationPath)"
-     [class.list-group-item-success]="isActive(informationPath)"
-     class="list-group-item">
-      Nouveautés (Page Accueil)
-     </li>
-     <li (click)="navigate(welcomeTextPath)"
-     [class.list-group-item-success]="isActive(welcomeTextPath)"
-     class="list-group-item">
-      Texte de bienvenue (Vitrine de l'offre)
-     </li>
+        </ul>
+    </accordion-group>
+    <accordion-group  *ngIf="!!user && (user.hasRole('EHA_ADMIN'))"  heading="Documentation">
+        <ul class="list-group list-group-flush">
+            <li (click)="navigate(documentationPath)"
+            [class.list-group-item-success]="isActive(documentationPath)" 
+            class="list-group-item">
+            documentation
+            </li>
+        </ul>
+    </accordion-group>
+    <accordion-group *ngIf="!!user && (user.hasRole('EHA_ADMIN')|| user.hasRole('EHA_GESTIONNAIRE'))"  heading="Communication/accompagnement">
+        <ul class="list-group list-group-flush">
+            <li *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" (click)="navigate(newsPath)"
+            [class.list-group-item-success]="isActive(newsPath)"
+            class="list-group-item">
+            News
+            </li>
+            <li *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" (click)="navigate(sheetPage)"
+            [class.list-group-item-success]="isActive(sheetPage)"
+            class="list-group-item">
+            Nouveautés Vitrine
+            </li>
+            <li *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" (click)="navigate(purchasePage)"
+            [class.list-group-item-success]="isActive(purchasePage)"
+            class="list-group-item">
+            Nouveautés MSA
+            </li>
+            <li (click)="navigate(informationPath)"
+            [class.list-group-item-success]="isActive(informationPath)"
+            class="list-group-item">
+            Nouveautés Page Accueil
+            </li>
+            <li   (click)="navigate(filePath)"
+            [class.list-group-item-success]="isActive(filePath)"
+            class="list-group-item">
+            Fiches Pratiques
+            </li>
+            <li   (click)="navigate(welcomeTextPath)"
+            [class.list-group-item-success]="isActive(welcomeTextPath)"
+            class="list-group-item">
+            Texte de bienvenue Vitrine
+            </li>
+        </ul>
+    </accordion-group>
+  </accordion>
 
-     <li (click)="navigate(filePath)"
-     [class.list-group-item-success]="isActive(filePath)"
-     class="list-group-item">
-     Fiches Pratiques
-     </li>
-     <li (click)="navigate(logsPath)"
-     [class.list-group-item-success]="isActive(logsPath)"
-     class="list-group-item">
-     Logs
-     </li>
-     <li (click)="navigate(blackListWordsPath)"
-     [class.list-group-item-success]="isActive(blackListWordsPath)"
-     class="list-group-item">
-     Mots à ignorer
-     </li>
-     <li (click)="navigate(whiteListWordsPath)"
-     [class.list-group-item-success]="isActive(whiteListWordsPath)"
-     class="list-group-item">
-     Mots à associer
-     </li>
-     <li (click)="navigate(searchedWordsPath)"
-     [class.list-group-item-success]="isActive(searchedWordsPath)"
-     class="list-group-item">
-     Mots recherchés
-     </li>
-     </ul>
-    </div>
+      
    </div>
+
+</div>

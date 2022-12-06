@@ -191,9 +191,7 @@ export class AuthService {
             dc: roleArray['dc'],
             ou: roleArray['ou'],
           });
-          // if(role.name!=='EHA_ADMIN'){
-          //   roles.push(role);
-          // }
+          
           roles.push(role);
         });
 

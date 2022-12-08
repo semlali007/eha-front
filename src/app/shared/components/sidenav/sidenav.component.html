@@ -4,7 +4,14 @@
     <div class="nav flex-column">
      <div class="card-header"><strong>Menu</strong></div>
 <accordion>
-    <accordion-group *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" heading="Fonction de recherche de la vitrine de l'offre">
+    <accordion-group *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" >
+       
+        <button
+        class="btn btn-link btn-block justify-content-between d-flex w-100  shadow-none"
+        accordion-heading type="button">
+        <div class="text-left pull-left float-left">Fonction de recherche de la vitrine de l'offre</div>
+       
+      </button>
         <ul class="list-group list-group-flush">
             <li   (click)="navigate(logsPath)"
             [class.list-group-item-success]="isActive(logsPath)"
@@ -33,7 +40,7 @@
             <li (click)="navigate(hotlineThemePath)"
        [class.list-group-item-success]="isActive(hotlineThemePath)"
        class="list-group-item">
-       thèmes
+       Thèmes
       </li>
       <li  (click)="navigate(hotlineGroupPath)"
        [class.list-group-item-success]="isActive(hotlineGroupPath)"
@@ -52,11 +59,17 @@
             <li (click)="navigate(documentationPath)"
             [class.list-group-item-success]="isActive(documentationPath)" 
             class="list-group-item">
-            documentation
+            Documentation
             </li>
         </ul>
     </accordion-group>
-    <accordion-group *ngIf="!!user && (user.hasRole('EHA_ADMIN')|| user.hasRole('EHA_GESTIONNAIRE'))"  heading="Communication/accompagnement">
+    <accordion-group *ngIf="!!user && (user.hasRole('EHA_ADMIN')|| user.hasRole('EHA_GESTIONNAIRE'))" >
+        
+        <button
+        class="btn btn-link btn-block justify-content-between d-flex w-100  shadow-none"
+        accordion-heading type="button" style="padding-right: 0;">
+        <div class="pull-left float-left text-left" >Communication / Accompagnement </div></button>
+
         <ul class="list-group list-group-flush">
             <li *ngIf="!!user && (user.hasRole('EHA_ADMIN'))" (click)="navigate(newsPath)"
             [class.list-group-item-success]="isActive(newsPath)"

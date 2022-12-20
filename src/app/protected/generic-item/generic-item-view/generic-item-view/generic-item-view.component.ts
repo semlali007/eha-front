@@ -5,8 +5,7 @@ import { GenericItemService } from 'src/app/core/services/generic-item.service';
 @Component({
   selector: 'generic-item-view',
   templateUrl: './generic-item-view.component.html',
-  styles: [
-  ]
+  styleUrls:['./generic-item-view.component.css']
 })
 export class GenericItemViewComponent implements OnInit {
   public code: string = '';

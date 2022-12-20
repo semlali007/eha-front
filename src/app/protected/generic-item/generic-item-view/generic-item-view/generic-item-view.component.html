@@ -50,7 +50,8 @@
                 <td>{{result.agency_code}}</td>
                 <td>{{result.agency_label}}</td>
                 <td>
-                    <progressbar 	 [value]="result.agency_weight" max="100">{{result.agency_weight}}%</progressbar>
+                    <progressbar 	 [value]="(result.agency_weight<=7)?7:result.agency_weight"
+                     max="100">{{result.agency_weight}}%</progressbar>
                 </td>
             </tr>
         </table>

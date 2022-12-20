@@ -14,7 +14,7 @@
         <div class="col-12 col-md-8">
             <app-hotline-list-filter-form [categories]="categories" (submittedFilter)="onsSubmittedFilter($event)"></app-hotline-list-filter-form>
             <p>
-                <label>Filtrer sur <input [formControl]="codeFilter" type="text"></label>
+                <label>Rechercher par numéro de question:<input [formControl]="codeFilter" type="text"></label>
             </p>
             <p>Liste de vos demandes sur les 12 derniers mois :</p>
             <nav>

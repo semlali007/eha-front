@@ -13,6 +13,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 })
 export class ModalNotificationComponent implements OnInit {
   title?: string;
+  userNni?: string;
   page?: any;
   closeBtnName?: string;
   list:UserNews[] = [];
@@ -56,6 +57,10 @@ export class ModalNotificationComponent implements OnInit {
   onHidden(): void {
   }
 
-  
+  deleteAll(){
+   this.notificationService.putAllViewed(this.userNni).subscribe(() => {
+    this.list = [];
+  }) ;
+  }
 
 }

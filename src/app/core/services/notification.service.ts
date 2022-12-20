@@ -50,4 +50,17 @@ putViewed(id): Observable<any | null> {
       catchError(error => this.errorService.handleError(error)),
   );
 }
+putAllViewed(nni): Observable<any | null> {
+  let url = `${this.appConfigService.basePath}/notifications/update-all`;
+  return this.http.post(url,{nni:nni}).pipe(
+      switchMap((response: any) => {
+          return of(
+              response
+          );
+      }),
+      catchError(error => this.errorService.handleError(error)),
+  );
+}
+
+
 }

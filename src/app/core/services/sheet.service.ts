@@ -135,6 +135,7 @@ export class SheetService {
     return {
       label: sheet.title,
       description: sheet.comments,
+      words: sheet.words,
       status: sheet.status,
       contracts: contracts,
       content: sheet.content,
@@ -333,7 +334,6 @@ export class SheetService {
     const url = `${this.appConfigService.basePath}/sheets/show/${id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
-
       switchMap((sheetData: any) => {
         return of(this.getSheetFromApi(sheetData.sheet));
       }),
@@ -464,6 +464,7 @@ export class SheetService {
       id: fields.id,
       title: fields.label,
       comments: fields.description,
+      words: fields.search_words,
       startDate: fields.start_date,
       endDate: fields.end_date,
       contracts: contracts,

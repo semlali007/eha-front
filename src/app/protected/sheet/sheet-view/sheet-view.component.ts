@@ -33,6 +33,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public privatesEdfEnedis: Object[] = [];
   public bsConfirmModalRef?: BsModalRef;
   public comments: any;
+  public words: any;
   public dauphin: any;
   public edf_open: any;
   public stipulation_for_others: any;
@@ -92,6 +93,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
 
     this.subscribed = sheet.subscribed;
     this.comments = sheet.comments;
+    this.words = sheet.words;
     this.title = sheet.title;
     this.committee = sheet.committee;
     this.showcase = sheet.showcase;

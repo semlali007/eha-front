@@ -19,9 +19,8 @@
         </ul>
     </div>
 </div>
-
 <div class="list-group my-items-for-contacts" *ngIf="items.length > 0">
-    <a class="list-group-item link" *ngFor="let row  of items |  slice:startItem:endItem;" (click)="showHotline(row)">
+    <a class="list-group-item link" *ngFor="let row  of items | filterAllProperty:filterCode:['id']:'equal' |  slice:startItem:endItem;" (click)="showHotline(row)">
         <span style="color:grey; font-weight: bold;">n°{{row.id}}</span><small> le {{row.openedAt}}</small>
         <br>
         {{row.question}}

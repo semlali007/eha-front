@@ -13,6 +13,8 @@ import { SheetFormLotsComponent } from './sheet-form-lots/sheet-form-lots.compon
 import { SheetFormLotsItemComponent } from './sheet-form-lots-item/sheet-form-lots-item.component';
 import { SheetFormLotsAddComponent } from './sheet-form-lots-add/sheet-form-lots-add.component';
 import { SheetFormTitleComponent } from './sheet-form-title/sheet-form-title.component';
+import { SheetFormWordsComponent } from './sheet-form-words/sheet-form-words.component';
+
 import { SheetFormKitComponent } from './sheet-form-kit/sheet-form-kit.component';
 import { SheetFormProvidersComponent } from './sheet-form-providers/sheet-form-providers.component';
 import { SheetFormDauphinComponent } from './sheet-form-dauphin/sheet-form-dauphin.component';
@@ -51,6 +53,7 @@ defineLocale('fr', frLocale);
     SheetFormLotsItemComponent,
     SheetFormLotsAddComponent,
     SheetFormTitleComponent,
+    SheetFormWordsComponent,
     SheetFormKitComponent,
     SheetFormProvidersComponent,
     SheetFormDauphinComponent,

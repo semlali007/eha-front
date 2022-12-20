@@ -10,6 +10,9 @@
       </div>
       <h1 class="font-weight-bold pt-2" style="color:var(--my-color-darkblue)">Liste des notifications</h1>
       <p class="pr-3"></p>
+      <button class="btn btn-outline-danger" > 
+        <span  aria-label="Close" (click)="deleteAll()" style="cursor: pointer;"  class="d-inline">Tout supprimer</span>  
+      </button>
       <table class="table">
         <tbody>
           <ul *ngIf="list?.length > 0;else ngelse">

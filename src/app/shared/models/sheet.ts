@@ -12,6 +12,7 @@ export class Sheet {
     readonly id: string;
     title: string;
     comments: string;
+    words: string;
     startDate: string;
     endDate: string;
     contracts: Contract[];
@@ -43,6 +44,7 @@ export class Sheet {
         id?: string,
         title?: string,
         comments?: string,
+        words?: string,
         startDate?: string,
         endDate?: string,
         contracts?: Contract[],
@@ -74,6 +76,7 @@ export class Sheet {
         this.id = options.id || null;
         this.title = options.title || '';
         this.comments = options.comments || '';
+        this.words = options.words || '';
         this.startDate = options.startDate || '';
         this.endDate = options.endDate || '';
         this.contracts = options.contracts || [new Contract()];

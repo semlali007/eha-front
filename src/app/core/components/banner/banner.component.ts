@@ -57,6 +57,7 @@ export class BannerComponent implements OnInit {
       const initialState = {
         title: 'test',
         list: this.list,
+        userNni:this.user.nni,
         page: {
           content: this.data.content,
           type: 'home_page',

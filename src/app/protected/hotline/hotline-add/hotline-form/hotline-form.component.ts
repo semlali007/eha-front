@@ -84,7 +84,7 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
       theme: this.theme.value,
       category: this.category.value,
       post: this.question.value,
-      entity: this.entity.value
+      entity: this.entity.value,
     }
 
     this.hotlineService.createHotline(params).subscribe(result => {

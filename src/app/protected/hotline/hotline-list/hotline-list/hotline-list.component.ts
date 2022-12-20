@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { HotlineService } from 'src/app/core/services/hotline.service';
-
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-email.component';
 import { User } from 'src/app/shared/models/user';
@@ -15,6 +15,7 @@ import { ExcelService } from 'src/app/core/services/excel.service';
   ]
 })
 export class HotlineListComponent implements OnInit, OnDestroy {
+  codesForm: FormGroup;
   new: [] = [];
   progress: [] = [];
   end: [] = [];
@@ -27,18 +28,24 @@ export class HotlineListComponent implements OnInit, OnDestroy {
   hotlineSubscription: Subscription;
   public currentEmail: string = '';
 
+ 
+
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private hotlineService: HotlineService,
     private modalService: BsModalService,
     private excelService: ExcelService,
   ) { }
-
+  get codeFilter() { return this.codesForm.get('codeFilter') as any; }
   ngOnInit(): void {
+    this.codesForm = this.fb.group({
+      'codeFilter': '',
+    });
     this.email = this.authService.currentUser.email;
     this.userSubscription = this.authService.user$.subscribe(user => this.user = user);
     this.hotlineSubscription = this.hotlineService.emailHotline$.subscribe(currentEmail => this.currentEmail = currentEmail || this.email);
-
+    
     this.loadList();
     this.hotlineService.getConfig().subscribe(
       config => {

@@ -118,6 +118,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get lots() { return this.sheetForm.get('lots') as FormArray; }
   get kits() { return this.sheetForm.get('kits') as FormArray; }
   get comments() { return this.sheetForm.get('comments') }
+  get words() { return this.sheetForm.get('words') }
   get content() { return this.sheetForm.get('content') }
   get dauphin() { return this.sheetForm.get('dauphin') }
   get edf_open() { return this.sheetForm.get('edf_open') }
@@ -187,6 +188,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 			]),
       'lots': this.fb.array([]),
       'comments': '',
+      'words': ['', [
+        Validators.minLength(4),
+      ]],
       'content': '',
       'dauphin': false,
       'edf_open': false,
@@ -219,6 +223,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.comments.setValue(sheet.comments);
     this.content.setValue(sheet.content);
     this.title.setValue(sheet.title);
+    this.words.setValue(sheet.words);
     this.status.setValue(sheet.status);
     this.edf_open.setValue(sheet.edfOpen);
     this.stipulation_for_others.setValue(sheet.stipulationForOthers);
@@ -426,6 +431,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       startDate: this.startDate.value,
       endDate: this.endDate.value,
       comments: this.comments.value,
+      words: this.words.value,
       content: this.content.value,
       contracts: this.contracts.value,
       edf_open: this.edf_open.value,

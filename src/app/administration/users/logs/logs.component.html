@@ -1,0 +1,23 @@
+<h1>Recherches des utilisateurs</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Texte recherché
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let factsheet of logs$ | async">
+            <td>
+                {{factsheet.search_text}}
+            </td>
+            <td> 
+                {{factsheet.created | customDate : "dd/MM/yyyy à HH:mm:ss" }}
+            </td>
+        </tr>
+    </tbody>
+</table>

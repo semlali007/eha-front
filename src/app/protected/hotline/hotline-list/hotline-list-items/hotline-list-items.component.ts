@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HotlineListItemsComponent implements OnInit {
   @Input() items: [] = [];
+  @Input() filterCode: any;
   paginationForm: FormGroup;
   itemsPerPage: number = 10;
   smallnumPages: number = 0;

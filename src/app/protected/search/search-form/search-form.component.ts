@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/cor
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message.service';
 import { SearchService } from 'src/app/core/services/search.service';
+import { PreviousService } from 'src/app/core/services/previous.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-search-form',
@@ -13,22 +14,30 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   subscription: Subscription;
   result: any =[];
+  searchWord?:string;
   @Output() loadedResults = new EventEmitter<any>();
   @Output() resetedSearchForm = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
     private searchService: SearchService,
+    private previousService: PreviousService,
   ) { }
 
   ngOnInit(): void {
     this.createSearchForm();
-    this.subscription = this.messageService.getMessage().subscribe((searchData) => {
-      if (!!searchData.searchText && !!searchData.type && (searchData.type === 'all')) {
-        this.words.setValue(searchData.searchText);
-        this.submit();
-      }
-    });
+    console.log('this.searchWord',this.searchWord);
+    console.log('this.previousService.getPreviousUrl()',this.previousService.getPreviousUrl());
+      this.subscription = this.messageService.getMessage().subscribe((searchData) => {
+        if (this.previousService.getPreviousUrl().includes('/app/accueil') && !!searchData.searchText && !!searchData.type && (searchData.type === 'all')) {
+          this.words.setValue(searchData.searchText);
+          this.submit();
+        }else{
+          this.words.setValue(localStorage.getItem('searchWord'));
+          this.submit();
+        }
+      }); 
+    
   }
 
   get words() { return this.searchForm.get('words') }
@@ -43,6 +52,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   submit() {
     let params: any = { words: this.words.value };
+    this.searchWord = this.words.value;
+    localStorage.setItem('searchWord', this.words.value);
     params.system = '';
     if (this.line.value.length > 0) {
       params.system = this.line.value;
@@ -53,6 +64,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
       .subscribe(
         result => {
           this.result = result;
+          
           this.loadedResults.emit(result);
         }
       );

@@ -23,7 +23,7 @@ export class FilterAllPropertyPipe implements PipeTransform {
   }
 
   search(text: string, word: string, operator: string){
-   
+
     if(!text || !word || text.length==0 ||word.length==0){
       return false;
     }
@@ -33,6 +33,8 @@ export class FilterAllPropertyPipe implements PipeTransform {
         return text.toLowerCase().startsWith(word.toLowerCase());
       case 'like':
         return (text.toLowerCase().indexOf(word.toLowerCase()) >= 0);
+        case 'equal':
+          return text  == word;
       default:
         return false;
     }

@@ -29,7 +29,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     console.log('this.searchWord',this.searchWord);
     console.log('this.previousService.getPreviousUrl()',this.previousService.getPreviousUrl());
       this.subscription = this.messageService.getMessage().subscribe((searchData) => {
-        if (this.previousService.getPreviousUrl().includes('/app/accueil') && !!searchData.searchText && !!searchData.type && (searchData.type === 'all')) {
+        if ((this.previousService.getPreviousUrl().includes('/app/recherche') || 
+          this.previousService.getPreviousUrl().includes('/app/accueil')) && !!searchData.searchText && !!searchData.type && (searchData.type === 'all')) {
           this.words.setValue(searchData.searchText);
           this.submit();
         }else{

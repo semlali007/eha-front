@@ -126,7 +126,7 @@ export class HotlineListComponent implements OnInit, OnDestroy {
     this.hotlineService
       .getList({})
       .subscribe(hotlines => {
-        this.excelService.generateExcel({header:Object.keys(hotlines[0]||[]),data:hotlines}, { sheet: 'hotline', name: 'hotlines.xlsx' });
+       this.excelService.generateExcel({header:hotlines.header,data:hotlines.data}, { sheet: 'hotline', name: 'hotlines.xlsx' });
       }
       );
   }

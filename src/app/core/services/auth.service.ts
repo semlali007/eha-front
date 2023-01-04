@@ -161,7 +161,7 @@ export class AuthService {
   public stopAutomaticRefresh() { return this.oauthService.stopAutomaticRefresh(); }
   private getUser(params): User {
     return new User({
-      email: params.profil.email || 'it@supportdag.edf.fr',
+      email: params.profil.email || 'it_front@supportdag.edf.fr',
       nni: params.nni,
       name: params.profil.name,
       direction: params.profil.direction,

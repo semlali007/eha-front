@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdministrationComponent,
-    canActivate: [AuthGuard],
+    canActivate: [EhaAdminRoleGuard],
     children: [
       {
         path: 'dashboard',

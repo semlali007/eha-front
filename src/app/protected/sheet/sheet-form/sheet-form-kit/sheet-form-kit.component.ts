@@ -17,8 +17,8 @@ export class SheetFormKitComponent {
   @Input() uploader: FileUploader;
   @Input() label: string = '';
   @ViewChild('template') template: TemplateRef<any>;
+  @ViewChild('templateType') templateType: TemplateRef<any>;
   bsModalRef?: BsModalRef;
-  showModal: boolean = false;
   maxsize = environment.maxuploadsize || 10000000;
   constructor(private fileService: FileService,
     private modalService: BsModalService,) {
@@ -46,17 +46,20 @@ export class SheetFormKitComponent {
   }
 
   upload(){
+    let list = ['application/pdf', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.presentationml.presentation'];
     this.uploader?.queue?.forEach((element,index) => {
+      console.log(element?.file?.type);
+      if(!list.includes(element?.file?.type)){
+        this.uploader.queue.splice(index);
+        this.bsModalRef =  this.modalService.show(this.templateType, {class: 'modal-sm'});
+      }
+
       if(element?.file?.size > this.maxsize)
       {
         this.uploader.queue.splice(index);
-        this.showModal = true;
+        this.bsModalRef =  this.modalService.show(this.template, {class: 'modal-sm'});
       }
     })
-    if(this.showModal)
-      this.bsModalRef =  this.modalService.show(this.template, {class: 'modal-sm'});
-
-    this.showModal = false;
   }
 
   confirm(){

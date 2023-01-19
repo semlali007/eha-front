@@ -12,16 +12,12 @@ export class EhaAdminRoleGuard implements CanActivate, CanActivateChild {
 
   constructor(private authService: AuthService,private router: Router) {}
 
-  canActivate(): Observable<boolean> {
-   
+  canActivate(): Observable<any> {
+
     return this.authService.user$.pipe(
       map(user => {
         const hasRoleAdmin =  !!user && user.hasRole('EHA_ADMIN') ;
-        if(!hasRoleAdmin) {
-          this.router.navigate(['/app/accueil']);
-          return true;
-        }
-        return false;
+          return hasRoleAdmin ||  this.router.navigate(['/app/accueil']);
       })
     );
   }

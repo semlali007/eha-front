@@ -6,27 +6,42 @@
         </div>
     </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Texte
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let factsheet of logs$ | async">
-            <td>
-                {{factsheet.word}}
-            </td>
-            <td>
-                <button class="btn btn-danger" (click)="openModal(template, factsheet.id)">Supprimer</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="row" *ngIf="(logs$|async) as logs;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Texte
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody >
+    
+            <tr *ngFor="let factsheet of logs | slice:startItem:endItem; index as i">
+                <td>
+                    {{factsheet.word}}
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="openModal(template, factsheet.id)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+        
+    </table>
+    <form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="logs.length > 0;">
+            <nav aria-label="pagination" >
+            <pagination [boundaryLinks]="true" [totalItems]="logs.length" [itemsPerPage]="itemsPerPage"
+              [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+              (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
+              firstText="&laquo;" lastText="&raquo;">
+            </pagination>
+            </nav>
+          </form>
+
+</div>
+
 <ng-template #template>
     <div class="modal-body text-center">
         <p>Voulez-vous supprimer l'élément?</p>

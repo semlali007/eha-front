@@ -169,7 +169,7 @@ export class SearchLogService {
     return this.http.get(url).pipe(
       tap(_ => this.toastrService.showToastr({
         category: 'success',
-        message: 'Vos factsheets ont été mises à jour !'
+        message: 'Le mot est supprimé avec succès!'
       })),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))

@@ -275,8 +275,6 @@ export class SheetService {
 
     options.search = params.search || { searchText: '', status: '', searchProvider:'' };
     options.search.providers = !!options.search.providers? options.search.providers: [];
-    
-    console.log("contrat:",options.search.searchText);
     options.search.searchText= this.clear(options.search.searchText)
 
     switch (params.sortBy) {

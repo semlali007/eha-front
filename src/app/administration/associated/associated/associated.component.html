@@ -22,17 +22,17 @@
     </thead>
     <tbody>
         <tr *ngFor="let factsheet of logs$ | async">
-            <td>
+            <td >
                 <div>
-                    {{factsheet.word}}<button class="edit" type="button"
+                    {{factsheet.word}} <button class="edit" type="button"
                         (click)="openAdd(factsheet.id, factsheet.word)"><i>&#9998;</i></button>
                 </div>
             </td>
             <td>
-                <div *ngFor="let syn of factsheet.synonymous" class="row">
-                    <div> {{syn.synonymous}} <button class="remove"
+                <div *ngFor="let syn of factsheet.synonymous" style="display: inline;">
+                   {{syn.synonymous}} <button class="remove"
                             (click)="openModalRemoveSynonymous(template, syn.id)" type="button">-</button>
-                    </div>
+                   
                 </div>
             </td>
             <td>

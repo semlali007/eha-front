@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { filter, switchMap, tap } from 'rxjs/operators';
-
+import { map } from 'rxjs/operators'; 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -12,14 +12,12 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-  ): Observable<boolean> {
-    return this.authService.isDoneLoading$.pipe(
-      filter(isDone => isDone),
-      switchMap(_ => this.authService.isAuthenticated$),
-      tap(isAuthenticated => isAuthenticated || this.router.navigate(['/login'], { queryParams: { url: state.url } })),
+  canActivate(): Observable<boolean|any> {
+    return this.authService.user$.pipe(
+      map(user => {
+        console.log('user',user);
+        return (!!user && !!user.nni && user.nni.length>0 ) ||  this.router.navigate(['/login']);
+      })
     );
   }
 }

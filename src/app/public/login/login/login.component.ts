@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() { 
-    this.authService.login(this.url); 
+    window.location.href = "https://eha-v2-dev.edf.fr/api/saml/login";
+   // this.authService.login(this.url); 
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

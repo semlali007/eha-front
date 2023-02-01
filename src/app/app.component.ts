@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { UsersService } from 'src/app/core/services/users.service';
 import { Browser } from 'src/app/core/services/browser.service' ;
 import { MatomoTracker, MatomoInjector } from 'ngx-matomo';
 import { Router,  NavigationEnd, ActivatedRoute} from '@angular/router';
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
     private matomoInjector: MatomoInjector,
     private router: Router,
     private config: AppConfigService,
+    private usersService: UsersService,
   ) {
   }
 
@@ -53,11 +55,14 @@ export class AppComponent implements OnInit {
       }
     });
     this.browser.checkIfFirefox();
-    this.authService.runInitialLoginSequence().then(() => {
-      this.authService.autoLogin();
-    });
+    this.tryAutoLogin();
     this.user$ = this.authService.user$;
   }
 
-  
+  private tryAutoLogin() {
+		this.usersService.get().subscribe(user => {
+			this.authService.autoLogin(user);
+		});
+	}
+
 }

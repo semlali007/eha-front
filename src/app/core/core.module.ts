@@ -22,7 +22,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CacheInterceptor } from './interceptors/cache.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AuthConfig, OAuthModule, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthGuardWithForcedLogin } from './guards/auth-guard-with-forced-login.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AuthService } from './services/auth.service';
@@ -30,7 +29,7 @@ import { getAuthConfig } from  './config/auth-config-factory';
 import { AppConfigService } from './services/app-config.service';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { InactivityComponent } from './components/inactivity/inactivity.component';
-export function storageFactory(): OAuthStorage {
+export function storageFactory() {
   return localStorage;
 }
 
@@ -45,7 +44,6 @@ export function storageFactory(): OAuthStorage {
     BrowserAnimationsModule,
     HttpClientModule,
     AlertModule.forRoot(),
-    OAuthModule.forRoot(),
     NgIdleKeepaliveModule.forRoot(),
     LoggerModule.forRoot({
       serverLoggingUrl: '/api/front/logs',
@@ -70,8 +68,7 @@ export function storageFactory(): OAuthStorage {
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: APP_INITIALIZER, useFactory: getAuthConfig, deps: [HttpClient, OAuthService, AppConfigService], multi: true },
-    { provide: OAuthStorage, useFactory: storageFactory },
+    { provide: APP_INITIALIZER, useFactory: getAuthConfig, deps: [HttpClient, AppConfigService], multi: true },
   ]
 })
 

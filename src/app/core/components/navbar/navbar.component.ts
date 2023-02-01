@@ -30,16 +30,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
    this.subscription.unsubscribe();
   }
   
-  public logout() { this.authService.logout(); }
- /* public logout() {
-
-    this.authService
-      .logout()
-      .subscribe(response=>{
-          this.router.navigate(['/login'])
-      }
-      );
-
-   }
-   */
+  public logout() {  }
+ 
 }

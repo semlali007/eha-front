@@ -48,7 +48,7 @@ export class BannerComponent implements OnInit {
   }
 
   public logout() { 
-    this.authService.revokeTokenAndLogout();
+    window.location.href = "https://eha-v2-dev.edf.fr/api/saml/logout";
    }
 
    openModal() {

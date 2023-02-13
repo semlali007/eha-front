@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group">
-            <label for="start_date" class="mr-3"><strong>Date de début part ferme :</strong></label>
+            <label for="start_date" class="mr-3"><strong>Date de début de validité :</strong></label>
             <input bsDatepicker [formControl]="start_date" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"  type="text"
                 class="form-control form-control-sm align-middle" placement="top" />
                 <small *ngIf="start_date.errors" class="form-text text-danger">
@@ -41,7 +41,7 @@
                 </small>
         </div>
         <div class="form-group">
-            <label for="end_date" class="mr-3"><strong>Date de fin part ferme :</strong></label>
+            <label for="end_date" class="mr-3"><strong>Date de fin de validité :</strong></label>
             <input bsDatepicker [formControl]="end_date" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
                 class="form-control form-control-sm align-middle"  placement="top" />
                 <small *ngIf="end_date.errors" class="form-text text-danger">

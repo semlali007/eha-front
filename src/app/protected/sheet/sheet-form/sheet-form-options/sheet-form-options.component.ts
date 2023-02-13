@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
 import { customValidator } from '../../customValidator';
 
 @Component({
@@ -24,7 +23,7 @@ export class SheetFormOptionsComponent implements OnInit {
 			'id': [''],
 			'startDate': ['', [
 			  Validators.required,
-			  Validators.required, MinDateValidator(this.sheetForm.get('endDate'))
+			  Validators.required
 			]],
 			'endDate': ['', [
 			  Validators.required

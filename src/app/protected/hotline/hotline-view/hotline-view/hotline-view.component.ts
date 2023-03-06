@@ -8,6 +8,9 @@ import { HotlineModalForwardComponent } from '../hotline-modal-forward/hotline-m
 import { HotlineModalMessageComponent } from '../hotline-modal-message/hotline-modal-message.component';
 import { FileService } from 'src/app/core/services/file.service';
 import * as fileSaver from 'file-saver';
+import { User } from 'src/app/shared/models/user';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-hotline-view',
@@ -25,12 +28,16 @@ export class HotlineViewComponent implements OnInit {
   public timeline: any = {};
   public warningMessage: string = '';
   bsModalRef: BsModalRef;
+  public subscription: Subscription;
+  public user: User;
+
   constructor(
     private route: ActivatedRoute,
     private hotlineService: HotlineService,
     private router: Router,
     private modalService: BsModalService,
     private fileService: FileService,
+    private authService: AuthService,
 
   ) {
   }
@@ -45,6 +52,8 @@ export class HotlineViewComponent implements OnInit {
         this.loadHotline();
       }
     });
+
+   
   }
 
   initHotline(hotline: any) {
@@ -52,10 +61,11 @@ export class HotlineViewComponent implements OnInit {
     this.isHotliner = hotline.isHotliner;
     this.informations = hotline.info;
     this.timeline = hotline.timeline;
+    this.subscription = this.authService.user$.subscribe(user => this.user = user);
   }
 
-  showList() {
-    this.router.navigate(['app/hotline/list']);
+  showList(step) {
+    this.router.navigate(['app/hotline/list'], { queryParams: { step: step } });
   }
 
   openPostMessage() {
@@ -146,4 +156,10 @@ export class HotlineViewComponent implements OnInit {
       };
     });
   }
+
+  ngOnDestroy() {
+    if (this.subscription)
+      this.subscription.unsubscribe();
+  }
+  
 }

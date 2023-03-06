@@ -259,6 +259,11 @@ export class SheetService {
     }
   }
 
+  clear(word:any){
+    word = word.trim();
+    return word;
+  }
+
   getSheets(params: any): any {
     const url = `${this.appConfigService.basePath}/sheets`;
     this.loaderService.setLoading(true);
@@ -270,6 +275,7 @@ export class SheetService {
 
     options.search = params.search || { searchText: '', status: '', searchProvider:'' };
     options.search.providers = !!options.search.providers? options.search.providers: [];
+    options.search.searchText= this.clear(options.search.searchText)
 
     switch (params.sortBy) {
       case 'date':

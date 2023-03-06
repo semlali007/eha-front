@@ -16,7 +16,6 @@ import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
 import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
 import { ContractService } from 'src/app/core/services/contract.service';
-import { MinDateValidator } from 'src/app/shared/validators/min-date.validator';
 import { SheetFormModalDraftComponent } from './sheet-form-modal-draft/sheet-form-modal-draft.component';
 import { of } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
@@ -188,9 +187,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 			]),
       'lots': this.fb.array([]),
       'comments': '',
-      'words': ['', [
-        Validators.minLength(4),
-      ]],
+      'words': [''],
       'content': '',
       'dauphin': false,
       'edf_open': false,
@@ -409,7 +406,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         id: option.id,
         startDate: [startdate, [
           Validators.required,
-          Validators.required, MinDateValidator(this.endDate)
+          Validators.required
         ]],
         endDate: [enddate, [
           Validators.required

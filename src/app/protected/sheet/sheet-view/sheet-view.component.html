@@ -64,12 +64,12 @@
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de début part ferme</strong></div>
+                <div class="col-3"><strong>Date de début de validité</strong></div>
                 <div class="col-9">{{startDate}}</div>
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de fin part ferme</strong></div>
+                <div class="col-3"><strong>Date de fin de validité</strong></div>
                 <div class="col-9">{{endDate}}</div>
             </li>
 
@@ -245,12 +245,6 @@
                 </ul>
             </div>
         </li>
-          <li class="list-group-item row border-right-0 border-left-0" *ngIf="!!netachatId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" >
-            <div class="col-3"><strong>Net@chat</strong></div>
-            <div  class="col-9">
-              <a href="https://netachat.edf.fr/Lists/Fiches_{{netachatType}}/item_{{netachatType}}.aspx?ID={{netachatId}}" target="_blanck"> Fiche Net@chat</a>
-            </div>
-          </li>
         <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!!netachatId && netachatId>0">
             <div class="col-3"><strong>Contenu</strong></div>
             <div class="col-9"></div>

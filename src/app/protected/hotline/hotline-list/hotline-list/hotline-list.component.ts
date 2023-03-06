@@ -7,7 +7,7 @@ import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-em
 import { User } from 'src/app/shared/models/user';
 import { Subscription, Observable } from 'rxjs';
 import { ExcelService } from 'src/app/core/services/excel.service';
-
+import {  ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-hotline-list',
   templateUrl: './hotline-list.component.html',
@@ -16,6 +16,7 @@ import { ExcelService } from 'src/app/core/services/excel.service';
 })
 export class HotlineListComponent implements OnInit, OnDestroy {
   codesForm: FormGroup;
+  sub: Subscription;
   new: [] = [];
   progress: [] = [];
   end: [] = [];
@@ -27,7 +28,6 @@ export class HotlineListComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
   hotlineSubscription: Subscription;
   public currentEmail: string = '';
-
  
 
   constructor(
@@ -36,16 +36,25 @@ export class HotlineListComponent implements OnInit, OnDestroy {
     private hotlineService: HotlineService,
     private modalService: BsModalService,
     private excelService: ExcelService,
+    private route: ActivatedRoute,
   ) { }
   get codeFilter() { return this.codesForm.get('codeFilter') as any; }
   ngOnInit(): void {
     this.codesForm = this.fb.group({
       'codeFilter': '',
     });
+    
     this.email = this.authService.currentUser.email;
     this.userSubscription = this.authService.user$.subscribe(user => this.user = user);
     this.hotlineSubscription = this.hotlineService.emailHotline$.subscribe(currentEmail => this.currentEmail = currentEmail || this.email);
     
+    
+    this.sub = this.route.queryParams.subscribe(params => {
+      if (!!params && !!params.step) {
+        this.setActive(params.step);
+      }
+    });
+
     this.loadList();
     this.hotlineService.getConfig().subscribe(
       config => {

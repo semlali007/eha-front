@@ -4,6 +4,7 @@ import { SearchLogService } from 'src/app/core/services/search-log.service';
 import {IgnoreFormComponent} from 'src/app/administration/search-ignore/ignore-form/ignore-form.component';
 
 import { Observable} from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
  
 
 @Component({
@@ -16,13 +17,29 @@ export class SearchIgnoreComponent implements OnInit {
   bsModalRef?: BsModalRef;
   bsConfirmModalRef?: BsModalRef;
   idToDelete?: number;
-  constructor(private modalService: BsModalService,
-    private searchLogService: SearchLogService) { }
+  
+  count = 0;
+  paginationForm!: FormGroup;
+  itemsPerPage: number = 10;
+  smallnumPages: number = 0;
+  startItem: number = 0;
+  endItem: number = 10;
+
+  constructor(
+    private modalService: BsModalService,
+    private searchLogService: SearchLogService,
+    private fb: FormBuilder,
+    ) { }
 
   ngOnInit(): void {
+    this.paginationForm = this.fb.group({
+      'currentPage': [1],
+    });
     this.loadData();
   }
 
+  get currentPage() { return this.paginationForm?.get('currentPage')}
+  
   loadData(){
     this.logs$ = this.searchLogService.getIgnoreList({type:'home_page'});
   }
@@ -58,5 +75,12 @@ export class SearchIgnoreComponent implements OnInit {
         this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
         this.idToDelete = id;
       }
-    
+      public pageChanged(event: any): void {
+        console.log(event.itemsPerPage);
+        console.log(event.page);
+
+        this.startItem = (event.page - 1) * event.itemsPerPage;
+        this.endItem = event.page * event.itemsPerPage;
+        this.currentPage.setValue(event.page);
+      }
 }

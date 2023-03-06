@@ -495,7 +495,8 @@ export class SheetService {
       netachatType: fields.netachat_type,
       content: fields.content,
       domains: domains,
-      subDomains: subDomains
+      subDomains: subDomains,
+      history: fields.history
     });
   }
 

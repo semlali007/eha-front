@@ -56,6 +56,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public netachatType: any;
   public domain: Object[] = [];
   public subDomain: Object[] = [];
+  public history: any;
   
 
   @ViewChild('content') content:ElementRef;
@@ -73,7 +74,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.route.params.subscribe(params => {
+      console.log('params', params);
       if (params.id) {
+       // this.router.navigate([`app/fiches/details/${sheetId}`], { queryParams: { history: 'history' } });
         this.sheetId = params.id;
         this.sheetService.getSheet(params.id).subscribe(sheet => {
           if (!sheet) return;
@@ -107,6 +110,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.netachatType = sheet.netachatType;
     this.startDate = this.dateService.getDisplayDate(new Date(sheet.startDate));
     this.endDate = this.dateService.getDisplayDate(new Date(sheet.endDate));
+    this.history = sheet.history;
      sheet.domains.forEach(d => {
       this.domain.push(
         {

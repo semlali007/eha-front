@@ -48,7 +48,7 @@ export class BannerComponent implements OnInit {
   }
 
   public logout() { 
-    this.authService.revokeTokenAndLogout();
+    window.location.href = "/api/saml/logout";
    }
 
    openModal() {

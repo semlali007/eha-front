@@ -29,7 +29,7 @@ export class InactivityComponent {
       this.appRef.tick();
     });
     idle.onTimeout.subscribe(() => {
-      this.authService.revokeTokenAndLogout();
+      window.location.href = "/api/saml/logout";
     });
     idle.onIdleStart.subscribe(
       () => {

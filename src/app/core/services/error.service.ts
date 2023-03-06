@@ -4,15 +4,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from './toastr.service';
 import { ModalService } from './modal.service';
-import { Error } from 'src/app/shared/models/error';
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
-
   constructor(private router: Router,private toastrService: ToastrService, private modalService: ModalService) { }
-
-
   public handleError(error) {
 
     if (!!error && !!error.error && !!error.error.source && error.error.source == 'HLK') {
@@ -27,8 +23,6 @@ export class ErrorService {
           category: 'danger',
           message: "Votre session a expiré, veuillez vous reconnecter !"
         });
-
-        this.router.navigate(['/login']);
       }
     } 
     else {

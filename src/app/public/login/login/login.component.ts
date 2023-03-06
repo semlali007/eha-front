@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() { 
-    this.authService.login(this.url); 
+    window.location.href = "/api/saml/login";
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

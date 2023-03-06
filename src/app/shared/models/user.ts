@@ -1,4 +1,5 @@
 import { Profil } from "./profil";
+import { Role } from "./role";
 
 export class User {
     readonly id: string; // id de l’utilisateur
@@ -6,7 +7,7 @@ export class User {
     name: string; // nom de l’utilisateur
     nni: string; // nni de l’utilisateur
     direction: string;
-    roles: string[] = []
+    roles: Role[] = []
     profil: Profil ;
 
     constructor(options: {
@@ -15,20 +16,18 @@ export class User {
         nni?: string,
         name?: string,
         direction?: string,
-        roles?: string[],
-        profil?: Profil
+        roles?: Role[],
     } = {}) {
         this.id = options.id || null;
         this.email = options.email || '';
         this.name = options.name || '';
         this.nni = options.nni || '';
         this.direction = options.direction || '';
-        this.roles = options.roles || [];
-        this.profil = options.profil || null;
+        this.roles = options.roles;
     }
 
     hasRole(role: string): boolean {
-        return this.profil.roles.some(function(el) {
+        return this.roles.some(function(el) {
             return el.name === role;
           });
     }

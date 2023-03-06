@@ -1,6 +1,5 @@
 import { Observable, of } from 'rxjs';
 import { Injectable, Inject, Optional } from '@angular/core';
-import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -9,7 +8,6 @@ import { tap } from 'rxjs/operators';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    private authStorage: OAuthStorage,
     private appConfigService: AppConfigService,
     private notificationService: NotificationService,
   ) {
@@ -112,8 +110,8 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     if (!this.isPublicRequest(req.url)) {
-      const token = this.authStorage.getItem('id_token');
-      const accessToken = this.authStorage.getItem('access_token');
+      const token = '';
+      const accessToken = '';
       const header = 'Bearer ' + token + ' ' + accessToken;
       const headers = req.headers
         .set('Authorization', header);

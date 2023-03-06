@@ -74,7 +74,7 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
       category: ['', [Validators.required]],
       family: ['', [Validators.required]],
       question: ['', [Validators.required, MinWordCountValidator(5)]],
-      entity: new FormControl({ value: this.user.profil.gardianHierarchie, disabled: true }, Validators.required),
+      entity: new FormControl({ value: this.user.direction, disabled: true }, Validators.required),
     });
   }
 

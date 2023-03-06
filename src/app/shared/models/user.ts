@@ -1,4 +1,3 @@
-import { Profil } from "./profil";
 import { Role } from "./role";
 
 export class User {
@@ -8,7 +7,6 @@ export class User {
     nni: string; // nni de l’utilisateur
     direction: string;
     roles: Role[] = []
-    profil: Profil ;
 
     constructor(options: {
         id?: string,

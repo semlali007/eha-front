@@ -34,23 +34,4 @@ export class Profil {
         this.roles = options.roles || [];
     }
 
-    /*hasRole(role: string): boolean {
-        return this.roles.includes(role);
-    }*/
-    hasRole(role: string, options?: string[]): boolean {
-        let existRole = false;
-        /*if (!!this.profil.isMemberOf) {
-            this.profil.isMemberOf.forEach(item => {
-                item.split(",").forEach(r => {
-                    let tt = r.split("=");
-                    if (tt[0] == 'cn' && tt[1] == role) {
-                        existRole = true;
-                    }
-                }
-                )
-            });
-        }*/
-        return existRole;
-    }
-
 }

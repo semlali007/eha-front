@@ -29,6 +29,7 @@ import { getAuthConfig } from  './config/auth-config-factory';
 import { AppConfigService } from './services/app-config.service';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { InactivityComponent } from './components/inactivity/inactivity.component';
+import { UsersService } from './services/users.service';
 export function storageFactory() {
   return localStorage;
 }
@@ -68,7 +69,7 @@ export function storageFactory() {
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: APP_INITIALIZER, useFactory: getAuthConfig, deps: [HttpClient, AppConfigService], multi: true },
+    { provide: APP_INITIALIZER, useFactory: getAuthConfig, deps: [HttpClient, AppConfigService, UsersService, AuthService], multi: true },
   ]
 })
 

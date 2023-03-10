@@ -12,11 +12,12 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(): Observable<boolean|any> {
+  canActivate(route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,): Observable<boolean|any> {
     return this.authService.user$.pipe(
       map(user => {
-        console.log('user',user);
-        return (!!user && !!user.nni && user.nni.length>0 ) ||  this.router.navigate(['/login']);
+        console.log('user', user);
+        return (!!user && !!user.nni && user.nni.length>0 ) ||  this.router.navigate(['/login'], { queryParams: { url: state.url } });
       })
     );
   }

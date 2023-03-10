@@ -32,16 +32,12 @@ export class AuthService {
   }
 
   public login(targetUrl?: string) {
-    targetUrl = targetUrl.replace(/w_t_p/g, '/');
-    if (targetUrl.startsWith('/') === false) {
-      targetUrl = decodeURIComponent(targetUrl);
-    }
-
     let destUrl = "/api/saml/login";
     let url = this.router.url;
     if ('/login' == this.router.url || '/logout' == this.router.url) {
       url = '/app/accueil';
     }
+    
     destUrl += '/' + encodeURIComponent(targetUrl || url);
     window.location.href = destUrl;
   }

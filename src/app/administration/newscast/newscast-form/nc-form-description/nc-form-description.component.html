@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label for="description">
+        <strong>Description :</strong>
+    </label>
+    <editor [formControl]="description" id="description" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
+</div>

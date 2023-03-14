@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div id="htmlData" class="col-11 col-md-10">
+        <div class="row" data-html2canvas-ignore="true">
+            <div class="col-lg-6">
+                <div >
+                    <button  (click)="list()" class="btn btn-edf">Liste</button>
+                </div>
+            </div>
+          
+            <div class="col-lg-3" >
+                <div class="pull-right"  >
+                    <a (click)="modification(id)"
+                        class="btn btn-edf float-left" ><i class="fas fa-plus" ></i>
+                        Modifier
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-danger float-left initial"  (click)="openModal(template)" >
+                    Supprimer
+                </button>
+            </div>
+        </div>
+        <ul class="list-group" id="print-section">
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Titre</strong></div>
+                <div class="col-9 ">{{news.title}}</div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Date de création</strong></div>
+                <div class="col-9">{{news.created_date}}</div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Catégorie</strong></div>
+                <div class="col-9">{{news.categ}}</div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Description courte</strong></div>
+                <div [innerHTML]="news.short_description" class="col-9">
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Description longue</strong></div>
+                <div [innerHTML]="news.long_description" class="col-9">
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Publié</strong></div>
+                <div class="col-9">
+                    {{news.status | showBooleanText}}
+                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Sur la page d'accueil</strong></div>
+                <div class="col-9">
+                    {{news.is_home | showBooleanText}}
+                </div>
+            </li>
+            </ul>
+         </div>  
+</div>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+</ng-template>
+
+

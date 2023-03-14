@@ -7,10 +7,12 @@ import { CustomDatePipe } from '../pipes/custom-date.pipe';
 import { BooleanToTextPipe } from '../pipes/boolean.to.text.pipe';
 import { StripHtmlPipe } from '../pipes/stripHtml.pipe';
 import { SafePipe } from '../pipes/safe.pipe';
+import { NewsCastCategoryColor } from '../pipes/newscast-category-color.pipe';
+import { SheetStatusColorPipe } from '../pipes/sheet-status-color.pipe';
 
 @NgModule({
-	declarations: [CountWordPipe, CustomDatePipe, FilterCodePipe, FilterAllPropertyPipe, FiltermultiPipe,BooleanToTextPipe, SafePipe, StripHtmlPipe],
+	declarations: [CountWordPipe, CustomDatePipe, FilterCodePipe, FilterAllPropertyPipe, FiltermultiPipe,BooleanToTextPipe, SafePipe, StripHtmlPipe, NewsCastCategoryColor, SheetStatusColorPipe],
 	imports: [],
-	exports: [CountWordPipe, CustomDatePipe, FilterCodePipe, FilterAllPropertyPipe, FiltermultiPipe,BooleanToTextPipe, SafePipe, StripHtmlPipe]
+	exports: [CountWordPipe, CustomDatePipe, FilterCodePipe, FilterAllPropertyPipe, FiltermultiPipe,BooleanToTextPipe, SafePipe, StripHtmlPipe, NewsCastCategoryColor, SheetStatusColorPipe]
 })
 export class PipesModule {}

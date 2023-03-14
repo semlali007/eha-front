@@ -1,0 +1,33 @@
+<div class="list-group-item">
+    <div>
+        <table border="0">
+            <tr>
+                <td>
+                    <span class="badge {{news.categ_code|newsCastCategoryColor}}" style="float:left"> {{ news.categ }}</span>
+                </td>
+               
+            </tr>
+            <tr>
+                <td>
+                    <a (click)="onSubmittedGetSheet(news.id)" class="link blue_link">
+                        <strong>{{ news.title }}</strong>
+                    </a>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a [innerHtml]="news.short_description">
+                    </a>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <span style="font-size:0.8em; color: black;"> Crée le
+        {{news.created_date}}</span>
+    <span class="badge {{status.code|sheetStatusColor}}" style="float:right">{{status.label}}</span>
+
+</div>

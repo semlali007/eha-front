@@ -75,6 +75,26 @@ const routes: Routes = [
         path: 'recherche/mots-rechercher',
         loadChildren: () => import('./search-words/search-words.module').then(m => m.SearchWordsModule),
       },
+      {
+        path: 'actualites',
+        loadChildren: () => import('./newscast/newscast-list/newscast-list.module').then(m => m.NewsCastListModule),
+      },
+      {
+        path: 'actualites/creation',
+        loadChildren: () => import('./newscast/newscast-add/newscast-add.module').then(m => m.NewsCastAddModule),
+      },
+      {
+        path: 'actualites/accueil',
+        loadChildren: () => import('./newscast/newscast-list-home/newscast-list-home.module').then(m => m.NewsCastListHomeModule),
+      },
+      {
+        path: 'actualites/detail/:id',
+        loadChildren: () => import('./newscast/newscast-view/newscast-view.module').then(m => m.NewsCastViewModule),
+      },
+      {
+        path: 'actualites/modification/:id',
+        loadChildren: () => import('./newscast/newscast-edit/newscast-edit.module').then(m => m.NewsCastEditModule),
+      },
       
     ]
   }

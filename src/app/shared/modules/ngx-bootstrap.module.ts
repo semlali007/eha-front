@@ -13,6 +13,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -28,7 +30,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     AccordionModule.forRoot(),
     CollapseModule.forRoot(),
     TypeaheadModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    InfiniteScrollModule,
   ],
   exports: [
     AlertModule,
@@ -43,6 +46,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     AccordionModule,
     CollapseModule,
     TooltipModule,
+    InfiniteScrollModule,
    ]
 })
 export class NgxBootstrapModule { }

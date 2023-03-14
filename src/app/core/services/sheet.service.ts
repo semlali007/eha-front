@@ -347,7 +347,18 @@ export class SheetService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+ 
 
+  public getHistory(id: any, page: number): Observable<any> {
+    const url = `${this.appConfigService.basePath}/sheets/history`;
+    return this.http.post(url, {id:id, page:page}).pipe(
+      switchMap((sheetData: any) => {
+        return of(this.getSheetFromApi(sheetData.sheet));
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
   private getMinSheetFromApi(fields): Sheet {
     return new Sheet({
       id: fields.id,

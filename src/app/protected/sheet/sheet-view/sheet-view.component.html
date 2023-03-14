@@ -307,38 +307,35 @@
                 </accordion>
             </div>
         </li>
-
-        <li id="history">
-            
-            <ul *ngFor="let h of history ; let isFirst = first;" class="list-group" id="print-section">
-               <li>
-                   Modifications - {{h.date | customDate : "dd/MM/yyyy à HH:mm:ss" }}
-               </li>
-               <li class="list-group-item row border-right-0 border-left-0" *ngIf="isFirst">
-                   <div class="col-2"><strong>Champ</strong> </div>
-                   <div class="col-5">
-                       <strong>Valeur d'origine</strong>
-                   </div>
-                   <div class="col-5">
-                       <strong>Nouvelle valeur</strong>
-                   </div>
-               </li>
-
-               <li class="list-group-item row border-right-0 border-left-0" >
-                   <div class="col-2">{{ h.changement_fields }}</div>
-                   <div [innerHTML]="h.old_value" class="col-5">
-                </div>
-                <div [innerHTML]="h.new_value" class="col-5">
-                </div>
-               </li>
-            </ul>
-       </li>
         </ul>
     </div>
     <div class="w-50 text-center col-md-4 mb-4">
         <button class="btn btn-edf btn-block" (click)="openPDF()">Exporter</button>
     </div>
-     
+    <div id="htmlData" class="col-11 col-md-10">
+    <ul *ngFor="let h of history ; let isFirst = first;" class="list-group" id="print-section">
+        <li>
+            Modifications - {{h.date | customDate : "dd/MM/yyyy à HH:mm:ss" }}
+        </li>
+        <li class="list-group-item row border-right-0 border-left-0" *ngIf="isFirst">
+            <div class="col-2"><strong>Champ</strong> </div>
+            <div class="col-5">
+                <strong>Valeur d'origine</strong>
+            </div>
+            <div class="col-5">
+                <strong>Nouvelle valeur</strong>
+            </div>
+        </li>
+
+        <li class="list-group-item row border-right-0 border-left-0" >
+            <div class="col-2">{{ h.changement_fields }}</div>
+            <div [innerHTML]="h.old_value" class="col-5">
+         </div>
+         <div [innerHTML]="h.new_value" class="col-5">
+         </div>
+        </li>
+     </ul>
+    </div>
 </div>
 <ng-template #template>
     <div class="modal-body text-center">
@@ -347,5 +344,4 @@
       <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
     </div>
 </ng-template>
-
 

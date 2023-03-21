@@ -3,7 +3,7 @@
         <div class="row" data-html2canvas-ignore="true">
             <div class="col-lg-6">
                 <div >
-                    <button  (click)="list()" class="btn btn-edf">Liste</button>
+                    <button  (click)="list()" class="btn btn-edf">Liste des actualités</button>
                 </div>
             </div>
           
@@ -25,37 +25,51 @@
         <ul class="list-group" id="print-section">
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Titre</strong></div>
-                <div class="col-9 ">{{news.title}}</div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-11 ">{{news.title}}</div>
             </li>
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Date de création</strong></div>
-                <div class="col-9">{{news.created_date}}</div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-9">{{news.created_date | customDate}}</div>
             </li>
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Catégorie</strong></div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-9">{{news.categ}}</div>
             </li>
+
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Description courte</strong></div>
-                <div [innerHTML]="news.short_description" class="col-9">
+                <div class="col-3"><strong>Déscription courte</strong></div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div [innerHTML]="news.short_description" class="col-12">
                 </div>
             </li>
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Description longue</strong></div>
-                <div [innerHTML]="news.long_description" class="col-9">
+                <div class="col-3"><strong>Déscription longue</strong></div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div [innerHTML]="news.long_description |safe: 'html'"  class="col-12">
                 </div>
             </li>
+
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Publié</strong></div>
-                <div class="col-9">
-                    {{news.status | showBooleanText}}
-                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-12"> {{news.status | showBooleanText}}</div>
+                   
             </li>
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Sur la page d'accueil</strong></div>
-                <div class="col-9">
-                    {{news.is_home | showBooleanText}}
-                </div>
+            </li>
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-12">{{news.is_home | showBooleanText}}</div>
             </li>
             </ul>
          </div>  

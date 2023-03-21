@@ -61,6 +61,7 @@ export class NcFormComponent implements OnInit, OnDestroy{
   get short_description() { return this.ncForm.get('short_description') }
   get categoryId() { return this.ncForm.get('categoryId') as any; }
   get status() { return this.ncForm.get('status') as any; }
+  get is_home() { return this.ncForm.get('is_home') }
   resetSheetForm() {
     this.ncForm.reset();
   }
@@ -96,6 +97,7 @@ export class NcFormComponent implements OnInit, OnDestroy{
       'short_description': [''],
       'categoryId': 0,
       'status': 0,
+      'is_home': false,
     });
   }
 
@@ -105,6 +107,7 @@ export class NcFormComponent implements OnInit, OnDestroy{
     this.categoryId.setValue(data.category);
     this.title.setValue(data.title);
     this.status.setValue(data.status);
+    this.is_home.setValue(data.is_home);
 
   }
 
@@ -116,6 +119,7 @@ export class NcFormComponent implements OnInit, OnDestroy{
       short_description: this.short_description.value,
       categoryId: this.categoryId.value,
       status: this.status.value,
+      is_home: this.is_home.value,
     };
 
     if (this.newsId) {

@@ -1,0 +1,174 @@
+.Coeur-de-page {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 0;
+}
+
+.Frame-897 {
+  align-self: stretch;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.Bouton-Lien---Retour- {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+}
+
+.Vector {
+  flex-grow: 0;
+  margin: 0 10px 0 0;
+  background-color: var(--bleu-fonce-charte);
+}
+
+img.Icone---Retour {
+  margin: 0 10px 0 0;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.Retour-la-liste-des-articles {
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--bleu-fonce-charte);
+}
+.Body---16---Semi-Bold {
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.Frame-910 {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 0;
+}
+
+img.Bouton---Prcdent-Suivant {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 2px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.Title {
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--bleu-fonce-charte);
+}
+
+.Frame-938 {
+  align-self: stretch;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 10px;
+  padding: 0;
+}
+
+.Frame-937 {
+  align-self: stretch;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+}
+
+
+.Frame-3 {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: var(--bleu-azure);
+}
+
+.NOUVEAUT {
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 12px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--blanc-charte);
+}
+
+.Publi-le-02022023 {
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--gris-fonce-aa-sonic-silver);
+}
+
+.Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a {
+  height: 1416px;
+  align-self: stretch;
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--noir-charte);
+}

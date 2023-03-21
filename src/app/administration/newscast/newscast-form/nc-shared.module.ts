@@ -9,6 +9,7 @@ import { NcFormShortComponent } from './nc-form-short/nc-form-short.component';
 import { NcFormTitleComponent } from './nc-form-title/nc-form-title.component';
 import { NcFormCategoryComponent } from './nc-form-category/nc-form-category.component';
 import { NcFormStatusComponent } from './nc-form-status/nc-form-status.component';
+import { NcFormHomeComponent } from './nc-form-home/nc-form-home.component';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -21,7 +22,8 @@ defineLocale('fr', frLocale);
     NcFormShortComponent,
     NcFormTitleComponent,
     NcFormCategoryComponent,
-    NcFormStatusComponent
+    NcFormStatusComponent,
+    NcFormHomeComponent
   ],
   imports: [
     SharedModule,

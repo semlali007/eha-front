@@ -20,7 +20,8 @@
                   <div class="active">
                     <div>
                       <div class="list-group my-items-for-trainings" *ngIf="newsList">
-                        <app-newscast-list-item *ngFor="let news of newsList" [news]="news">
+                        <app-newscast-list-item *ngFor="let news of newsList" [news]="news" class="draggable" [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)" (dragstart)="onDragStart(i)"
+                        (drop)="onDrop($event, i)">
                         </app-newscast-list-item>
                         <div class="row">
                           <form class="col-xs-12 col-12" [formGroup]="paginationForm">

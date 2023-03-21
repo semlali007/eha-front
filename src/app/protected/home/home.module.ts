@@ -11,11 +11,12 @@ import { HomeSearchFormZipComponent } from './home-search-form-zip/home-search-f
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeModalComponent } from './home-modal/home-modal.component';
 import { HomeInformationComponent } from './home-information/home-information.component';
+import { HomeNewsCastComponent } from './home-newscast/home-newscast.component';
 import { ConfigService } from 'src/app/core/services/config.service';
 
 
 @NgModule({
-  declarations: [HomeComponent, HomeDocumentationComponent, HomeSearchComponent, HomeContactComponent, HomeSearchFormComponent,HomeSheetComponent, HomeSearchFormZipComponent, HomeModalComponent, HomeInformationComponent, HomePurchaseFormComponent],
+  declarations: [HomeComponent, HomeDocumentationComponent, HomeSearchComponent, HomeContactComponent, HomeSearchFormComponent,HomeSheetComponent, HomeSearchFormZipComponent, HomeModalComponent, HomeInformationComponent, HomePurchaseFormComponent, HomeNewsCastComponent],
   imports: [
     SharedModule,
     HomeRoutingModule

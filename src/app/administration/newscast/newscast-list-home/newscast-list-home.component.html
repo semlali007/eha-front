@@ -5,39 +5,62 @@
         <div class="col-12">
           <div class="col-12">
             <div class="row">
-              <div class="col-lg-12">
-                <div class="form-group row">
-                  <div class="col-9 col-sm-9"></div>
-                  <div class="col-3 col-sm-3"
-                    *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))">
-                    <a (click)="navigate('creation')" class="btn btn-sheet-search"><i class="fas fa-plus"></i>
-                      Ajouter une actualité</a>
-                  </div>
+              <div class="col-9 margin-tb">
+                <div class="pull-left" style="padding-top:30px">
+                  <button type="button" class="btn btn-primary" value="1" (click)="saveChange()">Enregistrer les
+                    modifications</button>
                 </div>
+              </div>
+              <div class="col-3 col-sm-3">
               </div>
             </div>
             <div>
               <div>
                 <div class="tab-content">
-                  <div class="active">
-                    <div>
-                      <div class="list-group my-items-for-trainings" *ngIf="newsList">
-                        <app-newscast-list-home-item *ngFor="let news of newsList" [news]="news">
-                        </app-newscast-list-home-item>
-                        <div class="row">
-                          <form class="col-xs-12 col-12" [formGroup]="paginationForm">
-                            <nav aria-label="pagination">
-                              <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-                                [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-                                (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
-                                firstText="&laquo;" lastText="&raquo;">
-                              </pagination>
-                            </nav>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let news of newsList; let i = index" class="draggable"
+                        [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)"
+                        (dragstart)="onDragStart(i)" (drop)="onDrop($event, i)">
+                        <td>
+                          <div class="list-group-item">
+                              <table style="border: 0;">
+                                <tr>
+                                  <td>
+                                    <span class="badge {{news.categ_code|newsCastCategoryColor}}">
+                                      {{ news.categ }}
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <a (click)="onSubmittedGetSheet(news.id)" class="link blue_link">
+                                      <strong>{{ news.title }}</strong>
+                                    </a>
+                                  </td>
+                                  <td>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <a [innerHtml]="news.short_description">
+                                    </a>
+                                  </td>
+                                  <td>
+                                  </td>
+                                </tr>
+                              </table>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

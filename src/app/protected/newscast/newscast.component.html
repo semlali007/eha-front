@@ -1,0 +1,93 @@
+<div class="container">
+    <app-breadcrumb></app-breadcrumb>
+    <div class="row">
+        <div class="col-8 col-md-8">
+            <div class="Frame-315">
+                <img src="../../../../assets/img/mdi_announcement.png"
+                    srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
+                    class="mdiannouncement">
+                <span class="Actualit H2---26---Semi-Bold">
+                    Actualité
+                </span>
+            </div>
+        </div>
+        <div class="col-4 col-md-4">
+            <form [formGroup]="newsCastFilterForm" class="form-inline">
+                <div class="form-group" style="position: absolute;
+                right: 0px;">
+                    <label><span class="Afficher Body---16---Semi-Bold" styl>
+                            Afficher
+                        </span></label>
+                    <div class="Rectangle-6" >
+                        <select class="form-control" style="width:100%" required (change)="changeCategory($event)">
+                            <option value="">Tous les articles</option>
+                            <option *ngFor="let category of categories" [value]="category.id">
+                                {{category.label}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div *ngFor="let item of items.data;">
+        <div class="Frame-420 row">
+            <div class="Frame-937">
+                <div >
+                    <span class="badge {{item.categ_code|newsCastCategoryColor}}">
+                        {{ item.categ }}
+                    </span>
+                </div>
+                <span class="Publi-le-02022023 Body---16---Semi-Bold">
+                    Publié le {{item.published_date|  customDate: "dd.MM.yyyy" }}
+                </span>
+            </div>
+            <span class="Elit-donec-fermentum-dignissim-amet-massa-sed-dolor-enim H3---22---Regular">
+                {{item.title}}
+            </span>
+            <span [innerHtml]="item.short_description"
+                class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular">
+            </span>
+            <span class="Lire-la-suite Body---16---Semi-Bold "  (click)="navigate(item.id)">
+                Lire la suite
+            </span >
+        </div>
+        <div>
+            <br>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="count > itemsPerPage">
+        <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
+        <form  [formGroup]="paginationForm">
+            <nav aria-label="pagination" >
+            <pagination [totalItems]='count' [itemsPerPage]="itemsPerPage"
+            [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+            (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+            </pagination>
+            </nav>
+        </form>
+    </div>
+
+</div>
+
+<ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+    <ng-container *ngIf="!disabled">
+        <img src="../../../../assets/img/pagination-activated.png">
+    </ng-container>
+    <ng-container *ngIf="disabled">
+        <img src="../../../../assets/img/pagination-disabled.png" class="reversed">
+    </ng-container>
+  </ng-template>
+
+  <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+    <ng-container *ngIf="!disabled">
+        <img src="../../../../assets/img/pagination-activated.png" class="reversed">
+    </ng-container>
+    <ng-container *ngIf="disabled">
+        <img src="../../../../assets/img/pagination-disabled.png">
+    </ng-container>
+  </ng-template>

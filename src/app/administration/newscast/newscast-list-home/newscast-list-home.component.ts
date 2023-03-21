@@ -21,8 +21,9 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
   smallnumPages: number = 0;
   public subscription: Subscription;
   public user: User = null;
-  newsList: [] = [];
-
+  newsList: any = [];
+  private draggedIndex: number;
+  public draggedOverIndex: number;
 
 
   constructor(
@@ -113,4 +114,41 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
   loadText() {
     
   }
+
+  
+  allowDrop($event, index): void {
+    this.draggedOverIndex = index;
+    $event.preventDefault();
+  }
+
+  onDragStart(index): void {
+    this.draggedIndex = index;
+  }
+
+  onDrop($event, index): void {
+    $event.preventDefault();
+    const item = this.newsList[this.draggedIndex];
+    this.newsList.splice(this.draggedIndex, 1);
+    this.newsList.splice(index, 0, item);
+    this.draggedIndex = -1;
+    this.draggedOverIndex = -1;
+  }
+ 
+  saveChange(){
+    let sortedList = [];
+    let position: number = 0;
+    this.newsList.forEach(element => {
+      position++;
+      if(!!element)
+      element.position = position;
+      sortedList.push(element);
+    });
+
+    this.newsCastService
+    .updatePositions({items:sortedList})
+    .subscribe(response=>{
+      this.loadItems();
+    });
+  }
+
 }

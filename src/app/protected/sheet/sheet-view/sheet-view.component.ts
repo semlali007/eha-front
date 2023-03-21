@@ -24,6 +24,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public sheetId: string;
   public title: any = '';
   public page = 0;
+  public totalHistory = 0;
   public startDate: any;
   public endDate: any;
   public contracts: Object[] = [];
@@ -82,6 +83,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
         this.sheetService.getSheet(params.id).subscribe(sheet => {
           if (!sheet) return;
           this.initSheet(sheet);
+          this.onScroll();
         });
       }
     });
@@ -111,7 +113,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.netachatType = sheet.netachatType;
     this.startDate = this.dateService.getDisplayDate(new Date(sheet.startDate));
     this.endDate = this.dateService.getDisplayDate(new Date(sheet.endDate));
-    this.history = sheet.history;
      sheet.domains.forEach(d => {
       this.domain.push(
         {
@@ -345,7 +346,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
         sheet: sheetId,
         user: this.user.nni
       }).subscribe((response: any) => {
-
         this.subscribed = false;
       });
 
@@ -354,9 +354,11 @@ export class SheetViewComponent implements OnInit, OnDestroy {
 
 onScroll(): void {
   this.sheetService
-    .getHistory(this.sheetId, ++this.page)
+    .getHistory(this.sheetId, this.page)
     .subscribe(data => {
-      this.history.push(...data);
+      this.history.push(...data.history.data);
+      this.totalHistory = data.history.total;
+      this.page++;
     });
 }
 }

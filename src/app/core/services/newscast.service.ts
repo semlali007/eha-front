@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
 import { LoaderService } from './loader.service';
+import { ToastrService } from './toastr.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class NewsCastService {
     private http: HttpClient, 
     private errorService: ErrorService,
     private loaderService: LoaderService,
+    private toastrService: ToastrService,
     ) {
      };
   
@@ -30,13 +32,22 @@ export class NewsCastService {
     );
   }
 
-  public getList(params: any): Observable<any> {
+  public getList(
+   params:{
+    page?:number,
+    perPage?:number,
+    is_home?:number,
+    category?:any
+   }
+  ): Observable<any> {
+    console.log('test');
     const url = `${this.appConfigService.basePath}/admin/news-cast/list`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
-        perpage: params.perPage || 10,
-        is_home: params.is_home || 0
+        perpage: params.perPage || 100,
+        is_home: params.is_home || 0,
+        category:params.category || ''
     }).pipe(
       switchMap((listData: any) => {
 
@@ -108,4 +119,31 @@ public getStatusLabel(code) {
   })
   return label;
 }
+
+
+public updatePositions(params: any): Observable<any> {
+  let url = `${this.appConfigService.basePath}/admin/news-cast/sort`;
+  this.loaderService.setLoading(true);
+  return this.http.post(url, params).pipe(
+    tap(_ => this.toastrService.showToastr({
+      category: 'success',
+      message: 'Vos informations ont été mises à jour !'
+    })),
+    catchError(error => this.errorService.handleError('Erreur de modification')),
+    finalize(() => this.loaderService.setLoading(false))
+  );
+}
+public remove(id){
+  let url = `${this.appConfigService.basePath}/admin/news-cast/delete`;
+  this.loaderService.setLoading(true);
+  return this.http.post(url, {id:id}).pipe(
+    tap(_ => this.toastrService.showToastr({
+      category: 'success',
+      message: 'Vos informations ont été mises à jour !'
+    })),
+    catchError(error => this.errorService.handleError('Erreur de modification')),
+    finalize(() => this.loaderService.setLoading(false))
+  );
+}
+
 }

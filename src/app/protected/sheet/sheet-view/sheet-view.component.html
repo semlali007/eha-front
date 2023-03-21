@@ -336,6 +336,9 @@
         </li>
      </ul>
     </div>
+    <div class="w-50 text-center col-md-4 mb-4" *ngIf="totalHistory >  history.length">
+        <button class="btn btn-edf btn-block" (click)="onScroll()">Plus</button>
+    </div>
 </div>
 <ng-template #template>
     <div class="modal-body text-center">

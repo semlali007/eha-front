@@ -353,7 +353,7 @@ export class SheetService {
     const url = `${this.appConfigService.basePath}/sheets/history`;
     return this.http.post(url, {id:id, page:page}).pipe(
       switchMap((sheetData: any) => {
-        return of(this.getSheetFromApi(sheetData.sheet));
+        return of(sheetData);
       }),
       catchError(error => this.errorService.handleError(error)),
       finalize(() => this.loaderService.setLoading(false))

@@ -22,6 +22,8 @@ export class NewsCastListComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
   public user: User = null;
   newsList: [] = [];
+  private draggedIndex: number;
+  public draggedOverIndex: number;
 
 
 
@@ -113,4 +115,27 @@ export class NewsCastListComponent implements OnInit, OnDestroy {
   loadText() {
     
   }
+
+  allowDrop($event, index): void {
+    this.draggedOverIndex = index;
+    $event.preventDefault();
+  }
+
+  onDragStart(index): void {
+    this.draggedIndex = index;
+  }
+
+  onDrop($event, index): void {
+    $event.preventDefault();
+    const item = this.newsList[this.draggedIndex];
+    this.newsList.splice(this.draggedIndex, 1);
+    this.newsList.splice(index, 0, item);
+    this.draggedIndex = -1;
+    this.draggedOverIndex = -1;
+  }
+ 
+  saveChange(){
+   
+  }
+
 }

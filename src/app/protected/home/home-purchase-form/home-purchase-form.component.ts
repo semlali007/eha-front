@@ -79,4 +79,9 @@ export class HomePurchaseFormComponent implements OnInit {
     this.messageService.sendMessage(search);
     this.router.navigate(['/app/ma-situation-achat']);
   }
+
+  purchasev2() {
+    this.router.navigate(['/app/mes-demandes-achat']);
+  }
+  
 }

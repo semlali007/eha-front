@@ -220,9 +220,21 @@ const routes: Routes = [
           title:"Actualité"
         },
       },
+      {
+        path: 'mes-demandes-achat',
+        loadChildren: () => import('./purchase-situation/purchase-situation.module').then(m => m.PurchaseSituationModule),
+        data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: null, label: "Ma situation achat" },
+          ],
+          title:"Ma situation achat"
+        },
+      },
     ],
    canActivate: [AuthGuard],
   },
+  
 ];
 
 @NgModule({

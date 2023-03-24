@@ -30,7 +30,7 @@ export class FilterAllPropertyPipe implements PipeTransform {
 
     switch (operator) {
       case 'start':
-        return text.toLowerCase().startsWith(word.toLowerCase());
+        return text.toString().toLowerCase().startsWith(word.toString().toLowerCase());
       case 'like':
         return (text.toLowerCase().indexOf(word.toLowerCase()) >= 0);
         case 'equal':

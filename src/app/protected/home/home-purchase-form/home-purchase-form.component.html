@@ -10,14 +10,28 @@
   <p class="p">
     Suivez l’avancement de toutes vos demandes d’achat (DA).
   </p>
-  <div class="row-table">
+    <div class="row-table">
+      <button class="btn btn-edf-v3" (click)="purchasev2()">
+        Toutes mes demandes d’achat (78)
+      </button>
+    </div>
+<!-- <div class="row-table">
     <button class="btn btn-blanc" (click)="show()">
       Consulter mes demandes d’achat
     </button>
   </div>
-  <p class="p">
+-->
+<div class="row-table">
+   <span (click)="show()" class="Consultez-mes-anciennes-demandes-dachat-issues-du-Portail-Achats-v1-12 Body---16---Regular">
+    Consultez mes anciennes demandes d’achat issues du Portail Achats v1 (12)
+  </span >
+</div>
+ 
+
+<!--  <p class="p">
     Recherche rapide de mes DA demandées
   </p>
+ 
   <form class="my-form-for-searches" role="search" novalidate [formGroup]="homePurchaseForm" (ngSubmit)="submit()">
     <div class="row-table">
       <div class="col-10" style="margin-left:-13px">
@@ -34,3 +48,4 @@
       </div>
     </div>
 </form>
+-->

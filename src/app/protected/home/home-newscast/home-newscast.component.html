@@ -31,7 +31,7 @@
                                     <div class="Frame-938">
                                         <div class="Frame-933">
                                             <span class="Nascetur-diam-arcu-ut-neque-purus-maur Body---14---Semi-Bold">
-                                                {{news.title}}
+                                                {{news.title|slice:0:35}}<span *ngIf="news.title.length > 35">...</span>
                                             </span>
                                             <span class="Modification-de-march---Publi-le-22012023 Body---12---Regular">
                                                 {{news.categ}} - Publié le {{news.published_date| customDate: "dd.MM.yyyy"  }}
@@ -53,8 +53,8 @@
                                       <span class="Elit-donec-fermentum-dignissim-amet-massa-sed-dolor-enim H3---22---Regular">
                                         {{news.title}}
                                       </span>
-                                      <span [innerHtml]="news.short_description" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular">
-                                      </span>
+                                      <span *ngIf="(news.short_description|striphtml).length<=250" [innerHtml]="(news.short_description|striphtml|slice:0:250)" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular"></span>
+                                      <span *ngIf="(news.short_description|striphtml).length>250" [innerHtml]="(news.short_description|striphtml|slice:0:250) + '...'" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular"></span>
                                       <span class="Lire-la-suite Body---16---Semi-Bold" (click)="navigate(news.id)">
                                         Lire la suite
                                       </span>

@@ -65,7 +65,7 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
   }
 
   public onSubmittedGetSheet(id: any) {
-    this.router.navigate([`app/fiches/details/${id}`]);
+    this.router.navigate([`admin/actualites/detail/${id}`]);
   }
 
   public onChangedSort(sort: any) {

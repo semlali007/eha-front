@@ -5,8 +5,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 20px;
-    padding: 20px;
+    gap: 5px;
+    padding: 7px;
     border-radius: 3px;
     border: solid 5px var(--bleu-tr-s-clair-aaa-alice-blue);
     background-color: var(--blanc-charte);
@@ -18,7 +18,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     padding: 0;
 }
 
@@ -47,7 +47,7 @@ img.mdiannouncement {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 20px;
+    gap: 5px;
     padding: 0;
 }
 
@@ -57,7 +57,7 @@ img.mdiannouncement {
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    padding: 10px;
+    padding: 5px;
 }
 
 .Vector-28 {
@@ -112,7 +112,7 @@ img.mdiannouncement {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 10px;
+    gap: 2px;
     padding: 0;
 }
 
@@ -195,7 +195,7 @@ img.mdiannouncement {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 10px;
+    gap: 5px;
     padding: 2px 5px;
     border-radius: 3px;
     background-color: var(--bleu-azure);
@@ -208,7 +208,7 @@ img.mdiannouncement {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     padding: 0;
 }
 
@@ -252,7 +252,7 @@ img.mdiannouncement {
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    padding: 10px;
+    padding: 5px;
     background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
     font-family: WorkSans;
     font-size: 14px;
@@ -261,6 +261,7 @@ img.mdiannouncement {
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
+   
 }
 
 
@@ -283,17 +284,22 @@ img.mdiannouncement {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 10px;
+    gap: 5px;
     padding-left: 22px;
 }
 
 .Bloc-actualit .tab-content {
-    width: 69%;
+    width: 70%;
+    margin-right: 26px;
 }
 
 .Bloc-actualit .nav .nav-stacked .flex-column .nav-tabs {
-    width: 31%;
+    width: 30%;
 }
+.Bloc-actualit .nav-tabs {
+    border-bottom: none;
+}
+
 
 .Bloc-actualit .nav-link.active span.Nascetur-diam-arcu-ut-neque-purus-maur {
     font-size: 14px;
@@ -323,7 +329,7 @@ img.mdiannouncement {
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    padding: 10px;
+    padding: 5px;
     font-family: WorkSans;
     font-size: 14px;
     font-weight: 600;
@@ -332,3 +338,4 @@ img.mdiannouncement {
     line-height: 1.57;
     letter-spacing: normal;
 }
+

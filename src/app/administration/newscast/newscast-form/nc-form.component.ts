@@ -84,7 +84,12 @@ export class NcFormComponent implements OnInit, OnDestroy{
   }
 
   cancel() {
-    this.router.navigate(['/admin/actualites']);
+    if(this.newsId!==''){
+      this.router.navigate([`/admin/actualites/detail/${this.newsId}`]);
+      
+    }else{
+      this.router.navigate(['/admin/actualites']);
+    }
   }
 
   createForm(): FormGroup {
@@ -122,7 +127,7 @@ export class NcFormComponent implements OnInit, OnDestroy{
       is_home: this.is_home.value,
     };
 
-    if (this.newsId) {
+    if(this.newsId!==''){
       options.id = this.newsId;
       this.newsCastService.update(options).subscribe(
         _ => {

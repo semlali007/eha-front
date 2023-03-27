@@ -4,6 +4,8 @@ import { PurchaseSituationService } from 'src/app/core/services/purchase-situati
 import { DateService } from 'src/app/core/services/date.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FilterAllPropertyPipe } from 'src/app/shared/pipes/filter-all-property.pipe';
+import { PurchaseSituationStatus } from 'src/app/shared/models/purchaseSituationStatus';
+import { FiltermultiPipe } from 'src/app/shared/pipes/filtermulti.pipe';
 
 @Component({
   selector: 'app-search',
@@ -12,18 +14,26 @@ import { FilterAllPropertyPipe } from 'src/app/shared/pipes/filter-all-property.
 })
 export class PurchaseSituationComponent implements OnInit, OnDestroy {
   purchases: any = [];
+  status: any = [];
   params: any = { words: "", offset: 0 };
   private subscription: Subscription;
   isOpen: boolean;
   itemsPerPage: any = 10;
+  currentPage:1;
+  startItem:0;
+  endItem: any = 10;
   filteredlist: any = [];
+  
   filterForm: FormGroup;
   get filterCode() { return this.filterForm?.get('filterCode') as any; }
   get filterLabel() { return this.filterForm?.get('filterLabel') as any; }
+  get filterOwner() { return this.filterForm?.get('filterOwner') as any; }
   constructor(
     private purchaseSituationService: PurchaseSituationService,
     private fb: FormBuilder,
-    private filterAllProperty: FilterAllPropertyPipe
+    private filterAllProperty: FilterAllPropertyPipe,
+    private filtermultiPipe: FiltermultiPipe,
+
   ) {
   }
 
@@ -31,13 +41,9 @@ export class PurchaseSituationComponent implements OnInit, OnDestroy {
     this.filterForm = this.fb.group({
       'filterCode': '',
       'filterLabel': '',
-       initialized: [false],
-       transmitted: [false],
-       managed: [false],
-       affected: [false],
-       integred: [false],
-       refused: [false],
+      'filterOwner':'',
     });
+    this.status = new PurchaseSituationStatus({}).getStatusList();
   }
 
   loadData(params: any) {
@@ -55,7 +61,7 @@ export class PurchaseSituationComponent implements OnInit, OnDestroy {
         list = response;
       }
 
-      let allItems = this.purchaseSituationService.sortDate({'column':'PurchaseSituation_created_date', 'direction':'desc'}, list);
+      let allItems = this.purchaseSituationService.sortDate({ 'column': 'need_system_validation_date', 'direction': 'desc' }, list);
       allItems.forEach(p => {
         this.purchases.push(
           {
@@ -69,11 +75,11 @@ export class PurchaseSituationComponent implements OnInit, OnDestroy {
             buyer_party_level_1_label: p['buyer_party_level_1_label'],
             buyer_party_level_2_label: p['buyer_party_level_2_label'],
             contract_awarding_id: p['contract_awarding_id'],
-            
           }
         );
         this.filteredlist = this.purchases;
-      });
+      }
+      );
     })
   }
 
@@ -82,12 +88,17 @@ export class PurchaseSituationComponent implements OnInit, OnDestroy {
     this.loadData(params);
   }
   ngOnDestroy() {
-    if(this.subscription)
-    this.subscription.unsubscribe();
+    if (this.subscription)
+      this.subscription.unsubscribe();
   }
 
   isFiltered() {
-    return true;
+
+    return (!!this.filterCode.value
+      || !!this.filterLabel.value
+      || !!this.filterOwner.value
+      || (this.getFilteredStatus().length > 0)
+    )
   }
   open() {
     this.isOpen = true;
@@ -106,12 +117,51 @@ export class PurchaseSituationComponent implements OnInit, OnDestroy {
 
   sortDate(params) {
     this.filteredlist = this.purchaseSituationService.sortDate(params, this.filteredlist).slice();
-  }    
+  }
 
   public filter() {
     this.filteredlist = this.purchases;
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterCode.value, ["need_system_id"], "start");
     this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterLabel.value, ["need_mtb_desc"], "like");
+    this.filteredlist = this.filterAllProperty.transform(this.filteredlist, this.filterOwner.value, ["owner_label"], "like");
+
+    this.filteredlist = this.filtermultiPipe.transform(this.filteredlist, [{
+      'main_mtb_status_label': this.getFilteredStatus()
+    }]);
   }
 
+  clearFilter() {
+    this.status = new PurchaseSituationStatus({}).getStatusList();
+    this.filterForm.reset();
+    this.filter();
+  }
+
+  public changeStatus(event, params) {
+    this.status.forEach((element, val) => {
+      if (element.code == params.status.code && !!this.status[val]) {
+        this.status[val].selected = event.target.checked;
+      }
+    });
+    this.filter();
+  }
+
+
+  getFilteredStatus(){
+    let filteredStatus = this.status.filter(function (item) {
+      return item.selected;
+    });
+
+    let statusLabel = [];
+    filteredStatus.forEach(e => {
+      statusLabel.push(e.label);
+    });
+    return statusLabel;
+  }
+
+  changePerPage(number: number) {
+    this.itemsPerPage = number;
+    this.currentPage  = 1;
+    this.startItem = 0;
+    this.endItem = this.itemsPerPage;
+  }
 }

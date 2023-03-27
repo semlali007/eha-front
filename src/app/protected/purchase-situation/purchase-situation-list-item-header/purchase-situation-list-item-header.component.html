@@ -9,8 +9,10 @@
 <div class="col-1">
     <p class="text">{{item.need_system_validation_date|customDate}}</p>
 </div>
-<div class="col-2">
-    <p class="text">{{item.main_mtb_status_label}}</p>
+
+<div class="col-2"  style="font-size:15px">
+    <p > {{item.main_mtb_status_label}}
+    </p>
 </div>
 <div class="col-2">
     <p class="text">{{item.main_mtb_status_last_event_date|customDate}}</p>
@@ -22,4 +24,4 @@
     <p class="text">{{item.last_status_date|customDate}}</p>
 </div>
 </div>
-<ng-template #opened><p class="text"><img src='../../../../assets/img/element-table-bas.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" [ngClass]="{'light-blue' : true, 'light-blue-rotate':isOpened}">&nbsp;&nbsp;&nbsp;{{item.purchase_demand_id}}</p></ng-template>
+<ng-template #opened><p class="text"><img src='../../../../assets/img/element-table-bas.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" [ngClass]="{'light-blue' : true, 'light-blue-rotate':isOpened}">&nbsp;&nbsp;&nbsp;{{item.need_system_id}}</p></ng-template>

@@ -14,11 +14,12 @@ export class PurchaseSituationListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   filtredPurchases: any = [];
   paginationForm: FormGroup;
-  itemsPerPage: number = 10;
+  @Input() itemsPerPage: number = 10;
   smallnumPages: number = 0;
-  startItem: number = 0;
-  isOpen: boolean = false;
-  endItem: number = 10;
+  @Input() startItem: number = 0;
+  @Input() isOpen: boolean = false;
+  @Input() endItem: number = 10;
+  
   customClass = 'customClass';
   element:any={};
   purchase$: Observable<any>;
@@ -38,8 +39,6 @@ export class PurchaseSituationListComponent implements OnInit, OnDestroy {
   }
   get currentPage() { return this.paginationForm.get('currentPage') }
   get totalPage() { return  Math.ceil(this.purchases.length/this.itemsPerPage)}
-  
- 
 
 
   ngOnDestroy() {
@@ -61,13 +60,6 @@ export class PurchaseSituationListComponent implements OnInit, OnDestroy {
   }
 
   loadItem(event: boolean, item: any) {
-   /* if(event == true){
-      this.purchase$= this.purchaseService.getPurchase({'num_da':item.purchase_demand_id});
-      this.data[item.purchase_demand_id]=this.purchase$;
-     
-    }
-     this.opened[item.purchase_demand_id]=event;*/
+     this.opened[item.need_system_id]=event;
   }
-
-    
 }

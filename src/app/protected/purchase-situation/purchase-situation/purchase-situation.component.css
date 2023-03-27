@@ -189,3 +189,10 @@ margin: 0px 10px;
         width: 100%;
     }
 }
+
+img.Icone---Mes-DA {
+    width: 24px;
+    height: 24px;
+    flex-grow: 0;
+    object-fit: contain;
+  }

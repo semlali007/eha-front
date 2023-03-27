@@ -18,25 +18,25 @@ export class PurchaseSituationService {
 
 
 
-     search(params): Observable<any | null> {
-      // params = A97609
-      const url = `${this.appConfigService.basePath}/purchases-situation/list`;
-      this.loaderService.setLoading(true);
-      return this.http.post(url, {
-          words: params.words,
-          offset: 0
-      }).pipe(
-        switchMap((data: any) => {
-          const purchases: any = [];
-         data.purchases.forEach(data => {
-            purchases.push(data);
-          });
-          return of(purchases);
-        }),
-        catchError(error => this.errorService.handleError(error)),
-        finalize(() => this.loaderService.setLoading(false))
-      );
-    }
+  search(params): Observable<any | null> {
+    // params = A97609
+    const url = `${this.appConfigService.basePath}/purchases-situation/list`;
+    this.loaderService.setLoading(true);
+    return this.http.post(url, {
+      words: params.words,
+      offset: 0
+    }).pipe(
+      switchMap((data: any) => {
+        const purchases: any = [];
+        data.purchases.forEach(data => {
+          purchases.push(data);
+        });
+        return of(purchases);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
 
   getPurchase(params): Observable<any | null> {
     // params = A97609
@@ -123,9 +123,9 @@ export class PurchaseSituationService {
 
   sortText(params, data) {
     if (params.direction == 'asc') {
-      return data.sort((a, b) => a[params['column']].localeCompare(b[params['column']]));
+      return data.sort((a, b) => a[params['column']]?.localeCompare(b[params['column']]));
     } else {
-      return data.sort((a, b) => b[params['column']].localeCompare(a[params['column']]));
+      return data.sort((a, b) => b[params['column']]?.localeCompare(a[params['column']]));
     }
   }
 

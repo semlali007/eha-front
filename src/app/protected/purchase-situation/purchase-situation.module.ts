@@ -6,13 +6,12 @@ import { PurchaseSituationNoResultComponent } from './purchase-situation-no-resu
 import { PurchaseSituationFormWordsComponent } from './purchase-situation-form/purchase-situation-form-words/purchase-situation-form-words.component';
 import { PurchaseSituationListItemHeaderComponent } from './purchase-situation-list-item-header/purchase-situation-list-item-header.component';
 import { PurchaseSituationListItemBodyComponent } from './purchase-situation-list-item-body/purchase-situation-list-item-body.component';
-import { PurchaseSituationFilterComponent } from './purchase-situation-filter/purchase-situation-filter.component';
 import { PurchaseSituationListComponent } from './purchase-situation-list/purchase-situation-list.component';
 import { PurchaseSituationRoutingModule } from './purchase-situation-routing.module';
 import { FilterAllPropertyPipe } from  'src/app/shared/pipes/filter-all-property.pipe';
 import { FiltermultiPipe } from  'src/app/shared/pipes/filtermulti.pipe';
 @NgModule({
-  declarations: [PurchaseSituationComponent, PurchaseSituationListComponent, PurchaseSituationNoResultComponent, PurchaseSituationListItemBodyComponent, PurchaseSituationListItemHeaderComponent, PurchaseSituationFormComponent, PurchaseSituationFormWordsComponent,PurchaseSituationFilterComponent],
+  declarations: [PurchaseSituationComponent, PurchaseSituationListComponent, PurchaseSituationNoResultComponent, PurchaseSituationListItemBodyComponent, PurchaseSituationListItemHeaderComponent, PurchaseSituationFormComponent, PurchaseSituationFormWordsComponent],
   imports: [
     SharedModule,
     PurchaseSituationRoutingModule

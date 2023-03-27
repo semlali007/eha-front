@@ -1,8 +1,11 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="row">
+     <div class="col-12">
     <h1 class="titre">
         Ma situation achat
     </h1>
+    </div>
+
     <div class="col-12">
         <app-purchase-situation-form (submittedForm)="onSubmittedForm($event)"></app-purchase-situation-form>
         <hr class="hr">
@@ -75,7 +78,7 @@
                             (click)="sortDate({'column':'need_system_validation_date', 'direction':'asc'})"> </p>
                 </div>
                 <div class="col-2">
-                    <p class="t-key element">Statut</p>
+                    <p class="t-key element">Statut </p>
                     <div class="btn-group" dropdown [insideClick]="true">
                         <button id="button-basic" dropdownToggle type="button"
                             class="btn btn-default ddown-per-page dropdown-toggle status"
@@ -84,40 +87,9 @@
                         </button>
                         <form [formGroup]="filterForm">
                             <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                <li role="menuitem"><span class="dropdown-item noClick">
-                                        <span>Initialisée</span><input type="checkbox" class="checkbox"
-                                            formControlName="initialized"
-                                            (click)="changeStatus({'status':'initialized'})">&nbsp;&nbsp;<img
-                                            src="../../../../assets/img/icon-initilaisee.png"></span></li>
-
-                                <li role="menuitem"><span class="dropdown-item noClick">
-                                        <span>Transmise PHA</span><input type="checkbox" class="checkbox"
-                                            formControlName="transmitted"
-                                            (click)="changeStatus({'status':'transmitted'})">&nbsp;&nbsp;<img
-                                            src="../../../../assets/img/icone-transmise-pha.png"></span>
-                                </li>
-                                <li role="menuitem"><span class="dropdown-item noClick">
-                                        <span>Soumise au manager</span><input type="checkbox" class="checkbox"
-                                            formControlName="managed"
-                                            (click)="changeStatus({'status':'managed'})">&nbsp;&nbsp;<img
-                                            src="../../../../assets/img/icone-soumise-au-manager.png"></span>
-                                </li>
-                                <li role="menuitem"><span class="dropdown-item noClick">
-                                        <span>Affectée à l'acheteur</span><input type="checkbox" class="checkbox"
-                                            formControlName="affected"
-                                            (click)="changeStatus({'status':'affected'})">&nbsp;&nbsp;<img
-                                            src="../../../../assets/img/icone-affecter-a-lachteur.png"></span></li>
-                                <li role="menuitem"><span class="dropdown-item noClick">
-                                        <span>Intégrée en affaire</span><input type="checkbox" class="checkbox"
-                                            formControlName="integred"
-                                            (click)="changeStatus({'status':'integred'})">&nbsp;&nbsp;<img
-                                            src="../../../../assets/img/icon-integre-en-affaire.png"></span></li>
-
-                                <li role="menuitem"><span class="dropdown-item noClick">
-                                        <span>Refusée</span><input type="checkbox" class="checkbox"
-                                            formControlName="refused" (click)="changeStatus({'status':'refused'})">
-                                        &nbsp;&nbsp;<img src="../../../../assets/img/icon-refuse.png"></span>
-                                </li>
+                                <li role="menuitem"><span class="dropdown-item noClick" *ngFor="let stat of status">
+                                        <span>{{stat.label}}</span><input type="checkbox" class="checkbox"
+                                            (click)="changeStatus($event,{'status':stat})"></span></li>
                             </ul>
                         </form>
                     </div>
@@ -138,10 +110,12 @@
                             (click)="sortText({'column':'owner_label', 'direction':'asc'})"
                             src="../../../../assets/img/flech-up.png">
                     </p>
+                    <input type="text" class="form-control text-field-filter" [formControl]="filterOwner" style="width:90%"
+                        (keyup)="filter()" placeholder="Saisir pour filtrer la liste">
                 </div>
             </div>
             <br>
-            <app-purchase-situation-list [params]="params" [purchases]="filteredlist"></app-purchase-situation-list>
+            <app-purchase-situation-list [params]="params" [purchases]="filteredlist" [isOpen]="isOpen" [itemsPerPage]="itemsPerPage" [startItem]="startItem" [endItem]="endItem" ></app-purchase-situation-list>
         </div>
     </div>
 </div>

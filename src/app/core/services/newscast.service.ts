@@ -45,7 +45,7 @@ export class NewsCastService {
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
-        perpage: params.perPage || 100,
+        perpage: params.perPage || 10,
         is_home: params.is_home || 0,
         category:params.category || ''
     }).pipe(
@@ -57,6 +57,33 @@ export class NewsCastService {
       finalize(() => this.loaderService.setLoading(false))
     );
   }
+
+
+  public getFrontList(
+    params:{
+     page?:number,
+     perPage?:number,
+     is_home?:number,
+     category?:any
+    }
+   ): Observable<any> {
+     console.log('test');
+     const url = `${this.appConfigService.basePath}/news-cast/list`;
+     this.loaderService.setLoading(true);
+     return this.http.post(url, {
+         page: params.page || 1,
+         perpage: params.perPage || 100,
+         is_home: params.is_home || 0,
+         category:params.category || ''
+     }).pipe(
+       switchMap((listData: any) => {
+ 
+         return of(listData);
+       }),
+       catchError(error => this.errorService.handleError(error)),
+       finalize(() => this.loaderService.setLoading(false))
+     );
+   }
 
   public getCategories(): Observable<any> {
     const url = `${this.appConfigService.basePath}/admin/news-cast/categories`;

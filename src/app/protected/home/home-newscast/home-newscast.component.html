@@ -1,5 +1,5 @@
-<div class="row ">
-    <div class="col-12 col-md-12">
+<div class="row " *ngIf="(data$ | async) as data">
+    <div  *ngIf="!!data && !!data.total && data.total>0" class="col-12 col-md-12">
         <div class="Bloc-actualit">
             <div class="row Frame-931">
                 <div class="col-8 col-md-8 ">
@@ -11,7 +11,6 @@
                             Actualité
                         </span>
                     </div>
-                 
                 </div>
                 
                 <div class="col-4 col-md-4 ">
@@ -25,7 +24,7 @@
             <div class="row Frame-930">
                 <div class="col-12 col-md-12 ">
                     <div class="list-group Frame-934">
-                        <tabset [vertical]="true" customClass="customClass"*ngIf="(data$ | async) as data">
+                        <tabset [vertical]="true" customClass="customClass">
                             <tab *ngFor="let news of data.data |  slice:0:3;">
                                 <ng-template tabHeading>
                                     <div class="Frame-938">

@@ -9,6 +9,8 @@ import { NewsCastService } from 'src/app/core/services/newscast.service';
 })
 export class NewsCastViewComponent implements OnInit, OnDestroy {
   public id: string;
+  public next: 0;
+  public previous: 0;
   public news: any ={};
 
   constructor(
@@ -18,6 +20,7 @@ export class NewsCastViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
       if (params.id) {
         this.id = params.id;
@@ -26,6 +29,16 @@ export class NewsCastViewComponent implements OnInit, OnDestroy {
           this.news = data;
         });
       }
+
+      if (!!params && !!params.next) {
+        this.next = params.next;
+      }
+
+      if (!!params && !!params.previous) {
+        this.next = params.previous;
+
+      }
+
     });
   }
 
@@ -80,5 +93,7 @@ export class NewsCastViewComponent implements OnInit, OnDestroy {
   }
   unsubscribe(sheetId: number) {
   }
+
+
 
 }

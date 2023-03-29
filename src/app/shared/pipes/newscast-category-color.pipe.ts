@@ -6,22 +6,22 @@ export class NewsCastCategoryColor implements PipeTransform {
     let color: string;
     switch (true) {
       case statusCode == 'tech':
-        color = 'bleu-azure';
+        color = 'orange-fonce-firebrick';
         break;
       case statusCode == 'evolution':
-        color = 'bleu-chrysler';
+        color = 'bleu-azure';
         break;
       case statusCode == 'other':
-        color = 'violet-veronica';
-        break;
-      case statusCode == 'future_sales':
         color = 'vert-shamrock';
         break;
+      case statusCode == 'future_sales':
+        color = 'violet-veronica';
+        break;
       case statusCode == 'current_sales':
-        color = 'gris-fonce-charte';
+        color = 'violet-veronica';
         break;
       case statusCode == 'finished_sales':
-        color = 'bleu-clair-charte';
+        color = 'violet-veronica';
         break;
       default:
         color = 'bleu-azure';

@@ -45,7 +45,7 @@ export class NewsCastComponent implements OnInit {
   get currentPage() { return this.paginationForm?.get('currentPage')}
   get totalPage() { return  Math.ceil(this.count/this.itemsPerPage)}
   loadNewsCast() {
-    this.newsCastService.getList({'category':this.category,'page': this.currentPage.value, 'perPage': this.itemsPerPage}).subscribe(data => {
+    this.newsCastService.getFrontList({'category':this.category,'page': this.currentPage.value, 'perPage': this.itemsPerPage}).subscribe(data => {
       this.items = data;
       this.count = data.total;
     })
@@ -66,7 +66,9 @@ export class NewsCastComponent implements OnInit {
   resetForm() {
     this.newsCastFilterForm.reset();
   }
-  navigate(id){
+  navigate(id, index){
+    let previous = this.items.data[index-1]?.id;
+    let next = this.items.data[index+1]?.id;
     this.router.navigate([`app/actualites/detail/${id}`]);
   }
   public pageChanged(event: any): void {

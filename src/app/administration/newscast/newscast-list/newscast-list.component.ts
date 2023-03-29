@@ -16,7 +16,7 @@ import { NewsCastService } from 'src/app/core/services/newscast.service';
 })
 export class NewsCastListComponent implements OnInit, OnDestroy {
   totalItems: number = 0;
-  itemsPerPage: number = 20;
+  itemsPerPage: number = 10;
   paginationForm: FormGroup;
   smallnumPages: number = 0;
   public subscription: Subscription;
@@ -74,7 +74,7 @@ export class NewsCastListComponent implements OnInit, OnDestroy {
   }
 
   public loadItems() {
-    this.newsCastService.getList({}).subscribe(
+    this.newsCastService.getList({'page': this.currentPage.value}).subscribe(
       data => {
         this.totalItems = data.total;
         this.newsList = data.data;
@@ -100,9 +100,10 @@ export class NewsCastListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public pageChanged(event: any): void {
-   
-  }
+    public pageChanged(event: any): void {
+      this.currentPage.setValue(event.page);
+       this.loadItems();
+    }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

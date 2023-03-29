@@ -312,7 +312,19 @@
     <div class="w-50 text-center col-md-4 mb-4">
         <button class="btn btn-edf btn-block" (click)="openPDF()">Exporter</button>
     </div>
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
     <div id="htmlData" class="col-11 col-md-10">
+    <br>
+    <br>
+    <br>
+    <br>
+        <h4 *ngIf="!!history && history?.length>0"><strong >Historique des modifications</strong></h4>
+        <br>
     <ul *ngFor="let h of history ; let isFirst = first;" class="list-group" id="print-section">
         <li>
             Modifications - {{h.date | customDate : "dd/MM/yyyy à HH:mm:ss" }}

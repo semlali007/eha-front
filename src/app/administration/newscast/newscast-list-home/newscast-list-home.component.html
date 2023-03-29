@@ -17,42 +17,32 @@
             <div>
               <div>
                 <div class="tab-content">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>
-                        </th>
-                      </tr>
-                    </thead>
+                  <table class="table" style="border: 0;">
                     <tbody>
                       <tr *ngFor="let news of newsList; let i = index" class="draggable"
                         [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)"
-                        (dragstart)="onDragStart(i)" (drop)="onDrop($event, i)">
-                        <td>
+                        (dragstart)="onDragStart(i)" (drop)="onDrop($event, i)" style="border: 0;">
+                        <td style="border: 0;">
                           <div class="list-group-item">
                               <table style="border: 0;">
-                                <tr>
-                                  <td>
+                                <tr style="border: 0;">
+                                  <td style="border: 0;">
                                     <span class="badge {{news.categ_code|newsCastCategoryColor}}">
                                       {{ news.categ }}
                                     </span>
                                   </td>
                                 </tr>
-                                <tr>
-                                  <td>
+                                <tr style="border: 0;">
+                                  <td style="border: 0;">
                                     <a (click)="onSubmittedGetSheet(news.id)" class="link blue_link">
                                       <strong>{{ news.title }}</strong>
                                     </a>
                                   </td>
-                                  <td>
-                                  </td>
                                 </tr>
-                                <tr>
-                                  <td>
+                                <tr style="border: 0;">
+                                  <td style="border: 0;">
                                     <a [innerHtml]="news.short_description">
                                     </a>
-                                  </td>
-                                  <td>
                                   </td>
                                 </tr>
                               </table>

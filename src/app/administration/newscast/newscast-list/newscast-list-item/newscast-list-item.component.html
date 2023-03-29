@@ -27,7 +27,7 @@
         </table>
     </div>
     <span style="font-size:0.8em; color: black;"> Crée le
-        {{news.created_date}}</span>
+        {{news.created_date | customDate}}</span>
     <span class="badge {{status.code|sheetStatusColor}}" style="float:right">{{status.label}}</span>
 
 </div>

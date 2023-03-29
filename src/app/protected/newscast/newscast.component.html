@@ -1,5 +1,6 @@
 <div class="container">
     <app-breadcrumb></app-breadcrumb>
+    <div name="top"></div>
     <div class="row">
         <div class="col-8 col-md-8">
             <div class="Frame-315">
@@ -33,7 +34,7 @@
     <div>
         <br>
     </div>
-    <div *ngFor="let item of items.data;">
+    <div *ngFor="let item of items.data; index as i;">
         <div class="Frame-420 row">
             <div class="Frame-937">
                 <div >
@@ -51,7 +52,7 @@
             <span [innerHtml]="item.short_description"
                 class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular">
             </span>
-            <span class="Lire-la-suite Body---16---Semi-Bold "  (click)="navigate(item.id)">
+            <span class="Lire-la-suite Body---16---Semi-Bold "  (click)="navigate(item.id, i)">
                 Lire la suite
             </span >
         </div>
@@ -59,6 +60,18 @@
             <br>
         </div>
     </div>
+    
+
+    <div *ngIf="!!items && !!items.data && items.data.length === 0;">
+        <div class="Frame-420 row">
+              <span style="text-align: center;"
+                class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular">
+                Aucun article trouvé
+            </span>
+
+        </div>
+    </div>
+
 
     <div class="row" *ngIf="count > itemsPerPage">
         <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
@@ -71,6 +84,7 @@
             </nav>
         </form>
     </div>
+
 
 </div>
 

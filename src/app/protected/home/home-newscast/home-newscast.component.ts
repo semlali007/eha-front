@@ -22,7 +22,7 @@ export class HomeNewsCastComponent implements OnInit {
 
 
   loadInformation() {
-    this.data$ = this.newsCastService.getList({is_home:1});
+    this.data$ = this.newsCastService.getFrontList({is_home:1});
   }
 
   navigate(id){

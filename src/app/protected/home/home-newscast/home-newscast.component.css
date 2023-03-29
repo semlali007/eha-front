@@ -261,7 +261,11 @@ img.mdiannouncement {
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
+    border: none;
    
+}
+.Bloc-actualit .nav-item.active{
+border: none;
 }
 
 

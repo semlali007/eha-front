@@ -1,0 +1,121 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row">
+     <div class="col-12">
+    <h1 class="titre">
+        Ma situation achat
+    </h1>
+    </div>
+
+    <div class="col-12">
+        <app-purchase-situation-form (submittedForm)="onSubmittedForm($event)"></app-purchase-situation-form>
+        <hr class="hr">
+        <div>
+            <div class="row">
+                <div class="col-2">
+                    <h1 class="titre-result">
+                        {{filteredlist.length}} demande<span *ngIf="filteredlist.length > 1">s</span> d'achat </h1>
+                </div>
+                <div class="col-3">
+                    <p *ngIf="isFiltered()" class="critere">&nbsp;avec vos critères de recherche</p>
+                </div>
+                <div class="col-2">
+                    <a *ngIf="isFiltered()" class="open-da clickable" (click)="clearFilter()">Supprimer mes critères</a>
+                </div>
+                <div class="col-2" *ngIf='isOpen!=true'>
+                    <a class="open-da clickable" (click)="open()"><img
+                            src="../../../../assets/img/icon-list-da.png">&nbsp;Ouvrir toutes les DA</a>
+                </div>
+                <div class="col-2" *ngIf='isOpen==true'>
+                    <a class="open-da clickable" (click)="close()"><img
+                            src="../../../../assets/img/icon-list-da.png">&nbsp;Fermer toutes les DA</a>
+                </div>
+                <div>
+                    <p class="text-simple">DA par page</p>
+                </div>
+                <div class="col-1">
+                    <div class="btn-group" dropdown style="width:100px">
+                        <button id="button-basic" dropdownToggle type="button"
+                            class="btn btn-default ddown-per-page dropdown-toggle"
+                            aria-controls="dropdown-basic">{{itemsPerPage}}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                                class="caret"></span>
+                        </button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-basic">
+                            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p class="t-key element">Numéro <img class="img-left clickable"
+                            src="../../../../assets/img/flech-down.png"
+                            (click)="sort({'column':'need_system_id', 'direction':'desc'})"><img class="img clickable"
+                            src="../../../../assets/img/flech-up.png"
+                            (click)="sort({'column':'need_system_id', 'direction':'asc'})"></p>
+                    <input type="text" class="form-control text-field-filter" [formControl]="filterCode"
+                        (keyup)="filter()" placeholder="Saisir pour filtrer la liste">
+                </div>
+                <div class="col-3">
+                    <p class="t-key element">Libellé
+                        <img class="img-left-label clickable" src="../../../../assets/img/flech-down.png"
+                            (click)="sortText({'column':'need_mtb_desc', 'direction':'desc'})"><img
+                            class="img clickable" src="../../../../assets/img/flech-up.png"
+                            (click)="sortText({'column':'need_mtb_desc', 'direction':'asc'})">
+                    </p>
+                    <input type="text" class="form-control text-field-filter" placeholder="Saisir pour filtrer la liste"
+                        [formControl]="filterLabel" (keyup)="filter()">
+                </div>
+
+                <div class="col-1">
+                    <p class="t-key element">Crée le <img class="img-left clickable"
+                            src="../../../../assets/img/flech-down.png"
+                            (click)="sortDate({'column':'need_system_validation_date', 'direction':'desc'})"><img
+                            class="img clickable" src="../../../../assets/img/flech-up.png"
+                            (click)="sortDate({'column':'need_system_validation_date', 'direction':'asc'})"> </p>
+                </div>
+                <div class="col-2">
+                    <p class="t-key element">Statut </p>
+                    <div class="btn-group" dropdown [insideClick]="true">
+                        <button id="button-basic" dropdownToggle type="button"
+                            class="btn btn-default ddown-per-page dropdown-toggle status"
+                            aria-controls="dropdown-basic">
+                            <span class="caret"></span>
+                        </button>
+                        <form [formGroup]="filterForm">
+                            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                <li role="menuitem"><span class="dropdown-item noClick" *ngFor="let stat of status">
+                                        <span>{{stat.label}}</span><input type="checkbox" class="checkbox"
+                                            (click)="changeStatus($event,{'status':stat})"></span></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <p class="t-key element">Statut modifié le
+                        <img class="img-left clickable"
+                            (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'desc'})"
+                            src="../../../../assets/img/flech-down.png">&nbsp;&nbsp;<img class="img clickable"
+                            src="../../../../assets/img/flech-up.png"
+                            (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'asc'})">
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p class="t-key element">Responsable
+                        <img class="img-left clickable" (click)="sortText({'column':'owner_label', 'direction':'desc'})"
+                            src="../../../../assets/img/flech-down.png">&nbsp;&nbsp;<img class="img clickable"
+                            (click)="sortText({'column':'owner_label', 'direction':'asc'})"
+                            src="../../../../assets/img/flech-up.png">
+                    </p>
+                    <input type="text" class="form-control text-field-filter" [formControl]="filterOwner" style="width:90%"
+                        (keyup)="filter()" placeholder="Saisir pour filtrer la liste">
+                </div>
+            </div>
+            <br>
+            <app-purchase-situation-list [params]="params" [purchases]="filteredlist" [isOpen]="isOpen" [itemsPerPage]="itemsPerPage" [startItem]="startItem" [endItem]="endItem" ></app-purchase-situation-list>
+        </div>
+    </div>
+</div>

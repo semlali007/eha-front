@@ -103,6 +103,23 @@
             </li>
         </ul>
     </accordion-group>
+    <accordion-group  *ngIf="!!user && (user.hasRole('EHA_ADMIN'))"  heading="Actualités">
+        <ul class="list-group list-group-flush">
+            <li (click)="navigate(newsCastPath)"
+            [class.list-group-item-success]="isActive(newsCastPath)" 
+            class="list-group-item">
+            Actualités
+            </li>
+
+            <li (click)="navigate(newsCastHomePath)"
+            [class.list-group-item-success]="isActive(newsCastHomePath)" 
+            class="list-group-item">
+            Page d'accueil
+            </li>
+
+            
+        </ul>
+    </accordion-group>
   </accordion>
 
       

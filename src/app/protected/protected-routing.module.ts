@@ -199,9 +199,42 @@ const routes: Routes = [
       {
         path: 'media/view/:id', loadChildren: () => import('./media/media.module').then(m => m.MediaModule),
       },
+      {
+        path: 'actualites/detail/:id', loadChildren: () => import('./newscast-view/newscast-view.module').then(m => m.NewsCastViewModule),
+        data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: "/app/actualites", label: "Actualité" },
+            { route: null, label: "Article" }
+          ],
+          title:"Actualité"
+        },
+      },
+      {
+        path: 'actualites', loadChildren: () => import('./newscast/newscast.module').then(m => m.NewsCastModule),
+        data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: null, label: "Actualité" },
+          ],
+          title:"Actualité"
+        },
+      },
+      {
+        path: 'mes-demandes-achat',
+        loadChildren: () => import('./purchase-situation/purchase-situation.module').then(m => m.PurchaseSituationModule),
+        data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: null, label: "Ma situation achat" },
+          ],
+          title:"Ma situation achat"
+        },
+      },
     ],
    canActivate: [AuthGuard],
   },
+  
 ];
 
 @NgModule({

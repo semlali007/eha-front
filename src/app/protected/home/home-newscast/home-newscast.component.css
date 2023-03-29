@@ -1,0 +1,345 @@
+.Bloc-actualit {
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    padding: 7px;
+    border-radius: 3px;
+    border: solid 5px var(--bleu-tr-s-clair-aaa-alice-blue);
+    background-color: var(--blanc-charte);
+}
+
+.Frame-315 {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+}
+
+img.mdiannouncement {
+    flex-grow: 0;
+    object-fit: contain;
+}
+
+.Actualit {
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 26px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--gris-fonce-aaa-jet);
+}
+
+.Frame-930 {
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 0;
+}
+
+.Frame-933 {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 5px;
+}
+
+.Vector-28 {
+    flex-grow: 0;
+    width: 15px;
+    height: 58px;
+    border: solid 1px var(--bleu-tr-s-clair-aaa-alice-blue);
+    background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
+}
+
+.Elit-donec-fermentum-dignissim-amet- {
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--noir-charte);
+}
+
+.Nouveaut---Publi-le-02022023 {
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--gris-fonce-aa-sonic-silver);
+}
+
+.Bloc-actualit .Frame-934 {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    background-color: var(--blanc-charte);
+}
+
+.Frame-410 {
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 0;
+}
+
+.NOUVEAUT {
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 12px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: center;
+    color: var(--blanc-charte);
+}
+
+.Publi-le-02022023 {
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--gris-fonce-aa-sonic-silver);
+}
+
+.Elit-donec-fermentum-dignissim-amet-massa-sed-dolor-enim {
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 22px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.27;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--bleu-fonce-charte);
+}
+
+.Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a {
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--noir-charte);
+}
+
+.Lire-la-suite {
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--bleu-fonce-charte);
+    cursor: pointer;
+}
+
+
+.Bloc-actualit .tab-container {
+    display: inherit;
+}
+
+.Frame-3 {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background-color: var(--bleu-azure);
+}
+
+.Frame-937 {
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+}
+
+.Consulter-toute-lactualit {
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--bleu-fonce-charte);
+    padding-left: 100px;
+    cursor: pointer;
+}
+
+.Nascetur-diam-arcu-ut-neque-purus-maur {
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: 'Work Sans';
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--bleu-fonce-charte);
+}
+
+
+.Bloc-actualit .nav-tabs .nav-link.active,
+
+.Bloc-actualit.nav-tabs .nav-item.show .nav-link {
+    color: #495057;
+    background-color: #fff;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 5px;
+    background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
+    font-family: WorkSans;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    border: none;
+   
+}
+.Bloc-actualit .nav-item.active{
+border: none;
+}
+
+
+
+.Bloc-actualit .Frame-938 {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+}
+
+
+
+
+.Bloc-actualit .Frame-316 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    padding-left: 22px;
+}
+
+.Bloc-actualit .tab-content {
+    width: 70%;
+    margin-right: 26px;
+}
+
+.Bloc-actualit .nav .nav-stacked .flex-column .nav-tabs {
+    width: 30%;
+}
+.Bloc-actualit .nav-tabs {
+    border-bottom: none;
+}
+
+
+.Bloc-actualit .nav-link.active span.Nascetur-diam-arcu-ut-neque-purus-maur {
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+}
+
+
+.Bloc-actualit .Body---12---Regular {
+    font-family: 'Work Sans';
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+}
+
+.Bloc-actualit .nav-tabs .nav-link {
+    color: #495057;
+    background-color: #fff;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 5px;
+    font-family: WorkSans;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+}
+

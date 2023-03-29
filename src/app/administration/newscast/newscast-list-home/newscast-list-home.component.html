@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-md-9" style="margin-top:-8px;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9 margin-tb">
+                <div class="pull-left" style="padding-top:30px">
+                  <button type="button" class="btn btn-primary" value="1" (click)="saveChange()">Enregistrer les
+                    modifications</button>
+                </div>
+              </div>
+              <div class="col-3 col-sm-3">
+              </div>
+            </div>
+            <div>
+              <div>
+                <div class="tab-content">
+                  <table class="table" style="border: 0;">
+                    <tbody>
+                      <tr *ngFor="let news of newsList; let i = index" class="draggable"
+                        [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)"
+                        (dragstart)="onDragStart(i)" (drop)="onDrop($event, i)" style="border: 0;">
+                        <td style="border: 0;">
+                          <div class="list-group-item">
+                              <table style="border: 0;">
+                                <tr style="border: 0;">
+                                  <td style="border: 0;">
+                                    <span class="badge {{news.categ_code|newsCastCategoryColor}}">
+                                      {{ news.categ }}
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr style="border: 0;">
+                                  <td style="border: 0;">
+                                    <a (click)="onSubmittedGetSheet(news.id)" class="link blue_link">
+                                      <strong>{{ news.title }}</strong>
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr style="border: 0;">
+                                  <td style="border: 0;">
+                                    <a [innerHtml]="news.short_description">
+                                    </a>
+                                  </td>
+                                </tr>
+                              </table>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

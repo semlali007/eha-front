@@ -23,6 +23,8 @@ import html2canvas from 'html2canvas';
 export class SheetViewComponent implements OnInit, OnDestroy {
   public sheetId: string;
   public title: any = '';
+  public page = 0;
+  public totalHistory = 0;
   public startDate: any;
   public endDate: any;
   public contracts: Object[] = [];
@@ -56,6 +58,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public netachatType: any;
   public domain: Object[] = [];
   public subDomain: Object[] = [];
+  public history: any[] = [];
   
 
   @ViewChild('content') content:ElementRef;
@@ -73,11 +76,14 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.route.params.subscribe(params => {
+      console.log('params', params);
       if (params.id) {
+       // this.router.navigate([`app/fiches/details/${sheetId}`], { queryParams: { history: 'history' } });
         this.sheetId = params.id;
         this.sheetService.getSheet(params.id).subscribe(sheet => {
           if (!sheet) return;
           this.initSheet(sheet);
+          this.onScroll();
         });
       }
     });
@@ -340,11 +346,19 @@ export class SheetViewComponent implements OnInit, OnDestroy {
         sheet: sheetId,
         user: this.user.nni
       }).subscribe((response: any) => {
-
         this.subscribed = false;
       });
 
 
 }
 
+onScroll(): void {
+  this.sheetService
+    .getHistory(this.sheetId, this.page)
+    .subscribe(data => {
+      this.history.push(...data.history.data);
+      this.totalHistory = data.history.total;
+      this.page++;
+    });
+}
 }

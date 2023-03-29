@@ -185,3 +185,34 @@
 .no-space{
   padding-bottom: 0px;
 }
+.btn-edf-v3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 10px;
+  color: #fff;
+  /* Bleu fonce (Charte) */
+  background: #001A70;
+  border-radius: 5px;
+
+  padding: 15px;
+  gap: 10px;
+  height: 64px;
+  font-family: 'Work Sans';
+}
+.Consultez-mes-anciennes-demandes-dachat-issues-du-Portail-Achats-v1-12 {
+  height: 48px;
+  align-self: stretch;
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--bleu-fonce-charte);
+  cursor: pointer;
+}

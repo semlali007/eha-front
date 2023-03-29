@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { frLocale } from 'ngx-bootstrap/locale';
-import { SheetStatusColorPipe } from '../../../shared/pipes/sheet-status-color.pipe';
 import { SheetListComponent } from './sheet-list.component';
 import { SheetListItemComponent } from './sheet-list-item/sheet-list-item.component';
 import { SheetListSearchFormComponent } from './sheet-list-search-form/sheet-list-search-form.component';
@@ -28,7 +27,6 @@ import { SheetListFilterSubscribeComponent } from './sheet-list-filter-subscribe
 defineLocale('fr', frLocale);
 @NgModule({
   declarations: [
-    SheetStatusColorPipe,
     SheetListComponent,
     SheetListItemComponent,
     SheetListFilterStatusComponent,

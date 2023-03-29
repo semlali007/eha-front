@@ -1,0 +1,73 @@
+<div class="container">
+    <app-breadcrumb></app-breadcrumb>
+    <div class="Coeur-de-page">
+        <div class="Frame-897">
+            <div class="Bouton-Lien---Retour-" >
+                <img src="../../../../assets/img/icone-retour.png" srcset="../../../../assets/img/icone-retour@2x.png 2x,
+                    ../../../../assets/img/icone-retour@3x.png 3x" class="Icone---Retour" (click)="list()">
+                <span class="Retour-la-liste-des-articles Body---16---Semi-Bold" >
+                    Retour à la liste des articles
+                </span>
+            </div>
+            <div class="Frame-910">
+              
+                <img src="../../../../assets/img/article-precedent.png" srcset="../../../../assets/img/article-precedent@2x.png 2x,
+     ../../../../assets/img/article-precedent@3x.png 3x" class="Bouton---Prcdent-Suivant" >
+     <img src="../../../../assets/img/article-suivant.png" srcset="../../../../assets/img/article-suivant@2x.png 2x,
+     ../../../../assets/img/article-suivant@3x.png 3x" class="Bouton---Prcdent-Suivant">
+            </div>
+        </div>
+
+
+        <div class="Frame-938">
+
+            <div class="Frame-937">
+                    <span class="badge {{news.categ_code|newsCastCategoryColor}}" style="float:left"> {{ news.categ }}</span>
+                <span class="Publi-le-02022023 Body---16---Semi-Bold">
+                    Publié le {{news.published_date| customDate: "dd.MM.yyyy"  }}
+                  </span>
+            </div>
+            <div class="Frame-315">
+                <img src="../../../../assets/img/mdi_announcement.png"
+                    srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
+                    class="mdiannouncement">
+                <span class="Actualit H2---26---Semi-Bold">
+                    {{news.title}}
+                </span>
+            </div>
+        </div>
+
+        <span  [innerHtml]="news.long_description|safe: 'html'">
+          </span>
+    </div>
+
+
+    <!--<div class="row">
+        <div class="Frame-897">
+            <div class="Bouton-Lien---Retour-">
+                <div class="Group">
+                    <div class="Vector">
+                        <img src="../../../../assets/img/icone-retour.png" srcset="../../../../assets/img/icone-retour@2x.png 2x,
+
+                        ../../../../assets/img/icone-retour@3x.png 3x" class="Icone---Retour">
+                    </div>
+                </div>
+                <span class="Retour-la-liste-des-articles Body---16---Semi-Bold">
+                    Retour à la liste des articles
+                </span>
+            </div>
+            <span class="Retour-la-liste-des-articles Body---16---Semi-Bold">
+                Retour à la liste des articles
+            </span>
+            <div class="Frame-910">
+                <img src="../../../../assets/img/bouton-pr-c-dent-suivant.png" srcset="../../../../assets/img/bouton-pr-c-dent-suivant@2x.png 2x,
+             img/bouton-pr-c-dent-suivant@3x.png 3x" class="Bouton---Prcdent-Suivant">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <span [innerHtml]="news.long_description"
+            class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular">
+        </span>
+    </div>-->
+</div>

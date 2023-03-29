@@ -1,0 +1,27 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { SheetService } from 'src/app/core/services/sheet.service';
+@Component({
+  selector: 'app-nc-form-date',
+  templateUrl: './nc-form-date.component.html',
+  styles: [
+  ]
+})
+export class NcFormDateComponent implements OnInit {
+  @Input() startDate: FormControl;
+  @Input() endDate: FormControl;
+  @Input() sheetForm: FormGroup;
+  constructor(private localeService: BsLocaleService,
+    private sheetService: SheetService) { }
+  ngOnInit(): void {
+    this.localeService.use('fr');
+  }
+  onValueChange(value: Date): void {
+    if(!!value){
+      this.sheetForm.get('endDate').setValue(value);
+    }
+    this.sheetService.sheetValidate(this.sheetForm);
+  }
+
+}

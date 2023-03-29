@@ -30,11 +30,11 @@ export class ModalNotificationComponent implements OnInit {
   ngOnInit() {
   }
 
-  putViewed(id) {
+  putViewed(id, sheetId) {
       this.notificationService.putViewed(id).subscribe(
         (response) => {
           this.bsModalRef?.hide();
-          this.router.navigate([`app/fiches/details/${id}`]);
+          this.router.navigate([`app/fiches/details/${sheetId}`], { fragment: 'history' });
         }
       )
   }

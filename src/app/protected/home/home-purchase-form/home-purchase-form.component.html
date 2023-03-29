@@ -10,27 +10,13 @@
   <p class="p">
     Suivez l’avancement de toutes vos demandes d’achat (DA).
   </p>
-  <div class="row-table">
-    <button class="btn btn-blanc" (click)="show()">
-      Consulter mes demandes d’achat
-    </button>
-  </div>
-  <p class="p">
-    Recherche rapide de mes DA demandées
-  </p>
-  <form class="my-form-for-searches" role="search" novalidate [formGroup]="homePurchaseForm" (ngSubmit)="submit()">
     <div class="row-table">
-      <div class="col-10" style="margin-left:-13px">
-        <input type="search" class="form-control input-edf"
-               placeholder="Saisissez un numéro de DA"  [formControl]="searchText"  id="searchText">
-               <small *ngIf="searchText.errors" class="form-text text-danger">
-                <span [hidden]="!searchText.errors || searchText.errors.required">
-                    Le numéro de DA doit commencer par 1 et être composé de 10 chiffres
-                </span>
-            </small>
-      </div>
-      <div class="col-2" style="margin-left:-13px">
-        <button type="submit" class="btn btn-edf-v2" [disabled]="!homePurchaseForm.valid">Valider</button>
-      </div>
+      <button class="btn btn-edf-v3" (click)="purchasev2()">
+        Toutes mes demandes d’achat ({{situations.length}})
+      </button>
     </div>
-</form>
+<div class="row-table">
+   <span (click)="show()" class="Consultez-mes-anciennes-demandes-dachat-issues-du-Portail-Achats-v1-12 Body---16---Regular">
+    Consultez mes anciennes demandes d’achat issues du Portail Achats v1 ({{purchases.length}})
+  </span >
+</div>

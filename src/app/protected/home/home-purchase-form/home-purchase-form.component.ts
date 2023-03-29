@@ -5,6 +5,8 @@ import { MessageService } from 'src/app/core/services/message.service';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { PageService } from 'src/app/core/services/page.service';
 import { ModalPageComponent } from 'src/app/core/components/modal-page/modal-page.component';
+import { PurchaseSituationService } from 'src/app/core/services/purchase-situation.service';
+import { PurchaseService } from 'src/app/core/services/purchase.service';
 
 @Component({
   selector: 'app-home-purchase-form',
@@ -15,21 +17,34 @@ export class HomePurchaseFormComponent implements OnInit {
   homePurchaseForm: FormGroup;
   bsModalRef?: BsModalRef;
   page: any = {};
+  situations: any = [];
+  purchases: any = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private messageService: MessageService,
     private pageService: PageService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private purchaseSituationService: PurchaseSituationService,
+    private purchaseService: PurchaseService,
 
   ) { }
   get searchText() { return this.homePurchaseForm.get('searchText') }
 
   ngOnInit(): void {
     this.createForm();
-      this.loadPurchasePage();
-    }
-  
+    this.loadPurchasePage();
+    this.purchaseSituationService.search({}).subscribe(data => {
+      this.situations = data;
+    });
+
+    this.purchaseService.search({}).subscribe(response => 
+      {
+        this.purchases = response;
+      }
+      );
+  }
+
   
     loadPurchasePage() {
       this.pageService.getPage({ cache: 'cache' , page:'purchase_modal_news'}).subscribe(data => {
@@ -79,4 +94,9 @@ export class HomePurchaseFormComponent implements OnInit {
     this.messageService.sendMessage(search);
     this.router.navigate(['/app/ma-situation-achat']);
   }
+
+  purchasev2() {
+    this.router.navigate(['/app/mes-demandes-achat']);
+  }
+  
 }

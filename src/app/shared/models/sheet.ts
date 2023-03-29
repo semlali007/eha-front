@@ -39,6 +39,7 @@ export class Sheet {
     netachatType: string;
     domains: Domain[];
     subDomains: Domain[];
+    history: any[];
 
     constructor(options: {
         id?: string,
@@ -71,6 +72,7 @@ export class Sheet {
         netachatType?: string;
         domains?: Domain[];
         subDomains?: Domain[];
+        history?: any[];
 
     } = {}) {
         this.id = options.id || null;
@@ -103,7 +105,7 @@ export class Sheet {
         this.content = options.content || '';
         this.domains = options.domains || [new Domain()];
         this.subDomains = options.subDomains || [new Domain()];
-        
+        this.history = options.history || [];
     }
 
 }

@@ -45,6 +45,7 @@
     <app-sheet-form-directions [directions]="directions" [alldirections]="data.directions"></app-sheet-form-directions>
     <app-sheet-form-domain [domains]="domains" [allDomains]="[]"></app-sheet-form-domain>
     <app-sheet-form-subdomain [subdomains]="subdomains" [allSubdomains]="[]"></app-sheet-form-subdomain>
+    <app-sheet-form-category [categoryCode]="categoryCode"></app-sheet-form-category>
     <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
     <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
     <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [contracts]="contracts" [lotsList]="lots" >

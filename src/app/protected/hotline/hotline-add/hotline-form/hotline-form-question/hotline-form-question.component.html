@@ -7,7 +7,7 @@
 
     <small *ngIf="question.errors">
         <span [hidden]="!question.errors.minWordsCount">
-            <span class="form-help">Vous avez tapé <b>{{question.value | countWord}} mots</b> sur 5 mots obligatoires.</span>
+            <span class="form-text text-danger">Vous avez tapé <b>{{question.value | countWord}} mots</b> sur 5 mots obligatoires.</span>
         </span>
     </small>
 </div>

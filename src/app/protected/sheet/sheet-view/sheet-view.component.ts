@@ -59,6 +59,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public domain: Object[] = [];
   public subDomain: Object[] = [];
   public history: any[] = [];
+  public category: any = '';
   
 
   @ViewChild('content') content:ElementRef;
@@ -102,6 +103,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.words = sheet.words;
     this.title = sheet.title;
     this.committee = sheet.committee;
+    this.category = sheet.category;
     this.showcase = sheet.showcase;
     this.edf_open = sheet.edfOpen;
     this.stipulation_for_others = sheet.stipulationForOthers;

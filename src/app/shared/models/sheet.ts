@@ -8,6 +8,7 @@ import { Direction } from './direction';
 import { Committee } from './committee';
 import { Option } from './option';
 import { Domain } from './domain';
+import { Category } from './category';
 export class Sheet {
     readonly id: string;
     title: string;
@@ -40,6 +41,7 @@ export class Sheet {
     domains: Domain[];
     subDomains: Domain[];
     history: any[];
+    category: Category;
 
     constructor(options: {
         id?: string,
@@ -63,6 +65,7 @@ export class Sheet {
         documents?: Document[],
         updated_at?: string,
         committee?: Committee,
+        category?: Category,
         showcase?: boolean,
         options?: Option[],
         created_at?: string,
@@ -95,7 +98,8 @@ export class Sheet {
         this.directions = options.directions || [];
         this.documents = options.documents || [];
         this.updatedAt = options.updated_at || '';
-        this.committee = options.committee || new Committee(),
+        this.committee = options.committee || new Committee();
+        this.category =  options.category || new Category();
         this.showcase = options.showcase || false;
         this.options = options.options || [new Option()];
         this.createdAt = options.created_at || '';

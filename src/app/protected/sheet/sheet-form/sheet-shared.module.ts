@@ -38,6 +38,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SheetFormModalDraftComponent } from './sheet-form-modal-draft/sheet-form-modal-draft.component';
 import { SheetFormSubdomainComponent } from './sheet-form-subdomain/sheet-form-subdomain.component';
+import { SheetFormCategoryComponent } from './sheet-form-category/sheet-form-category.component';
 
 defineLocale('fr', frLocale);
 @NgModule({
@@ -73,7 +74,8 @@ defineLocale('fr', frLocale);
     SheetFormOptionsAddComponent,
     SheetFormOptionsItemComponent,
     SheetFormModalDraftComponent,
-    SheetFormSubdomainComponent
+    SheetFormSubdomainComponent,
+    SheetFormCategoryComponent
   ],
   imports: [
     SharedModule,

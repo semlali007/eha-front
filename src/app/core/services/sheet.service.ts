@@ -19,6 +19,7 @@ import { Status } from 'src/app/shared/models/status';
 import { Committee } from 'src/app/shared/models/committee';
 import { Option } from 'src/app/shared/models/option';
 import { Domain } from 'src/app/shared/models/domain';
+import { Category } from 'src/app/shared/models/category';
 @Injectable({
   providedIn: 'root'
 })
@@ -55,6 +56,7 @@ export class SheetService {
     const data = this.getSheetForApi(sheet);
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
+    console.log('data', data);
     return this.http.post(url, fd).pipe(
       switchMap(data => {
         return of(data);
@@ -111,6 +113,7 @@ export class SheetService {
    } 
 
     const data = this.getSheetForApi(sheet);
+    console.log('data:::', data);
     data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
     data.id = sheet.id;
     let fd = this.addMediasToFormData(files);
@@ -152,6 +155,7 @@ export class SheetService {
       zones: areas || [],
       groups: directions || [],
       committee: sheet.committee.code,
+      category: sheet.category.code,
       showcase: sheet.showcase,
       options: sheet.options,
       domains: sheet.domains,
@@ -457,6 +461,17 @@ export class SheetService {
     } else {
       committee = new Committee();
     }
+
+    let category: Category;
+    if (fields.category && fields.category.code && fields.category.label) {
+      category = new Category({
+        code: fields.category.code,
+        label: fields.category.label,
+      })
+    } else {
+      category = new Category();
+    }
+
     const domains: Domain[] = [];
     fields.domain.forEach(data => {
       const dom: Domain = new Domain({
@@ -499,6 +514,7 @@ export class SheetService {
       documents: documents,
       updated_at: fields.updated_at,
       committee: committee,
+      category: category,
       showcase: fields.showcase,
       options: options,
       subscribed: fields.subscribed,

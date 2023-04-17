@@ -15,6 +15,7 @@ import { NewsCastService } from 'src/app/core/services/newscast.service';
   encapsulation: ViewEncapsulation.None
 })
 export class NewsCastListHomeComponent implements OnInit, OnDestroy {
+  pageForm: FormGroup;
   totalItems: number = 0;
   itemsPerPage: number = 20;
   paginationForm: FormGroup;
@@ -36,6 +37,9 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.pageForm = this.fb.group({
+      'active': false
+    });
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.paginationForm = this.fb.group({
       'currentPage': 1,
@@ -47,7 +51,7 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
     }
     this.loadItems();
   }
-
+  get active() { return this.pageForm.get('active') }
   get currentPage() { return this.paginationForm.get('currentPage') }
 
   public onsSubmittedSearchSheets(filter: any) {
@@ -77,6 +81,7 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
       data => {
         this.totalItems = data.total;
         this.newsList = data.data;
+        this.active.setValue(data.active);
       }
     );
 
@@ -145,10 +150,10 @@ export class NewsCastListHomeComponent implements OnInit, OnDestroy {
     });
 
     this.newsCastService
-    .updatePositions({items:sortedList})
+    .updatePositions({items:sortedList, active: this.active.value})
     .subscribe(response=>{
       this.loadItems();
     });
   }
-
+  
 }

@@ -6,14 +6,30 @@
           <div class="col-12">
             <div class="row">
               <div class="col-9 margin-tb">
-                <div class="pull-left" style="padding-top:30px">
-                  <button type="button" class="btn btn-primary" value="1" (click)="saveChange()">Enregistrer les
-                    modifications</button>
-                </div>
+                
               </div>
               <div class="col-3 col-sm-3">
               </div>
             </div>
+
+            <form [formGroup]="pageForm" (ngSubmit)="saveChange()">
+            <div class="form-group row" style="padding-top:30px">
+             
+              <div class="col-sm-2">
+                  <strong>Activer</strong>
+              </div>
+              <div class="col-sm-4">
+                  <div class="form-check">
+                      <input type="checkbox" formControlName="active" id="active"  class="form-check-input"/>
+                  </div>
+              </div>
+              <div class="col-sm-6 pull-left" >
+                <button type="submit" class="btn btn-primary" value="1" >Enregistrer les
+                  modifications</button>
+              </div>
+          </div>
+
+</form>
             <div>
               <div>
                 <div class="tab-content">

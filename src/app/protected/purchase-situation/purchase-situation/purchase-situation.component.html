@@ -1,10 +1,12 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="row">
-     <div class="col-12">
+
+<div class="col-5">
     <h1 class="titre">
         Ma situation achat
     </h1>
-    </div>
+</div>
+
 
     <div class="col-12">
         <app-purchase-situation-form (submittedForm)="onSubmittedForm($event)"></app-purchase-situation-form>
@@ -98,7 +100,7 @@
                     <p class="t-key element">Statut modifié le
                         <img class="img-left clickable"
                             (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'desc'})"
-                            src="../../../../assets/img/flech-down.png">&nbsp;&nbsp;<img class="img clickable"
+                            src="../../../../assets/img/flech-down.png"><img class="img clickable"
                             src="../../../../assets/img/flech-up.png"
                             (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'asc'})">
                     </p>
@@ -106,7 +108,7 @@
                 <div class="col-2">
                     <p class="t-key element">Responsable
                         <img class="img-left clickable" (click)="sortText({'column':'owner_label', 'direction':'desc'})"
-                            src="../../../../assets/img/flech-down.png">&nbsp;&nbsp;<img class="img clickable"
+                            src="../../../../assets/img/flech-down.png"><img class="img clickable"
                             (click)="sortText({'column':'owner_label', 'direction':'asc'})"
                             src="../../../../assets/img/flech-up.png">
                     </p>

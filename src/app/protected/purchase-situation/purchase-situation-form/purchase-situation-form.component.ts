@@ -6,6 +6,7 @@ import { ExcelService } from 'src/app/core/services/excel.service';
 import { PurchaseStatus } from 'src/app/shared/models/purchaseStatus';
 //import { PurchaseMessageService } from 'src/app/core/services/purchase-situation-message.service';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-purchase-situation-form',
   templateUrl: './purchase-situation-form.component.html',
@@ -69,19 +70,26 @@ ngOnDestroy(): void {
   download() {
     this.purchaseService.search({ words: this.words.value }).subscribe((response: any) => {
       const purchases: any = [];
+      var pipe = new DatePipe('fr');
       response.forEach(data => {
-         purchases.push({
-           code:data.purchase_demand_id,
-           label: data.purchase_demand_label,
-           created:data.purchase_created_date,
-           status:  new PurchaseStatus({ code: data.last_status_event }).getLabel(),
-           status_date: data.last_status_date,
-         });
-       });
+        purchases.push({
+          id: data.need_system_id,
+          label: data.need_mtb_label,
+          created: pipe.transform(data.need_system_validation_date, 'shortDate') ,
+          status: data.main_mtb_status_label,
+          status_date: pipe.transform(data.main_mtb_status_last_event_date, 'shortDate'),
+          owner: data.owner_label,
+          descripion: data.need_mtb_desc,
+          category: data.mtb_purchase_category_label_list,
+          direction: data.buyer_party_level_1_label,
+          division: data.buyer_party_level_2_label,
+          contrat: data.contract_awarding_id
+        });
+      });
 
       this.excelService.generateExcel({header:[
-        'Numéro', 'Libellé', 'Crée le', 'Statut', 'Statut modifié le'
-      ],data:purchases}, { sheet: 'DA', name: "mes demandes d'achat.xlsx" });
+        'Numéro', 'Libellé', 'Crée le', 'Statut', 'Statut modifié le', 'Responsable', 'Déscription','Catégorie Achat','Direction', 'Direction', 'Division', 'Numéro de contrat'
+      ],data:purchases}, { sheet: 'DA', name: "Mes demandes d'achat.xlsx" });
     });
   }
 

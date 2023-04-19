@@ -9,7 +9,7 @@
               <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
             </td>
             <td style="padding-top: 8px;"><b style="font-size:26px;">Achatpédia</b><small>&nbsp;&nbsp;-&nbsp;&nbsp;Votre espace de documentation, de recherche et de contacts sur les achats</small></td>
-            <td style="padding-top: 8px;" *ngIf="user" >
+            <td style="padding-top: 8px;" *ngIf="!!user && user.nni" >
               <table border="0">
                 <tr>
                   <td>
@@ -22,7 +22,7 @@
               </table>
               
             </td>
-            <td style="padding-top: 8px;" *ngIf="user">
+            <td style="padding-top: 8px;" *ngIf="!!user && user.nni">
               <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png"></a>
               <span *ngIf="(notification$ | async) as notification" (click)="openModal()" style="cursor:pointer">
                 <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
@@ -30,7 +30,7 @@
             </span>
             </td>
           </tr>
-          <tr *ngIf="user" >
+          <tr *ngIf="!!user && user.nni" >
             <td>
             <button (click)="navigate(homePath)" class="home-btn"><img src="../../../../assets/img/icon-home.png"> Accueil</button>
             </td>
@@ -86,7 +86,7 @@
         </div>
            
         <!---------------- Navbar list elements--------------->
-        <div *ngIf="user"  id="collapseBasic" [collapse]="isCollapsed" class="collapse-custom" [isAnimated]="true">
+        <div *ngIf="!!user && user.nni"  id="collapseBasic" [collapse]="isCollapsed" class="collapse-custom" [isAnimated]="true">
                    <div class="card card-block card-header">
             <a (click)="forceNavigate('search_component')" class="title-header link"><img src="../../../../assets/img/icon-search-header.png">&nbsp;Rechercher&nbsp;<img src="../../../../assets/img/caret.png"></a>
           </div>

@@ -1,0 +1,118 @@
+<div class="container justify-content-center">
+  <form novalidate class="form my-form-connection" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <alert type="warning" *ngIf="warning">
+      <h4 class="alert-heading">Bonjour.</h4>
+      <p>Vous avez déjà répondu à ce questionnaire.</p>
+    </alert>
+    <alert type="success" *ngIf="success">
+      <p>Merci pour votre participation.</p>
+    </alert>
+    <div class="row">
+      <div class="col-12">
+        <h2> La Direction des Achats Groupe vous sollicite pour recueillir votre niveau de satisfaction concernant l’acte d’achat cockpit {{cockpitId}} <span *ngIf="!!daPGI">(DA PGI : {{daPGI}})</span>  </h2>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce
+            dossier?</label>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
+                value="special" [attr.disabled]="disabled ? '' : null">Mention spéciale
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
+                value="good_job" [attr.disabled]="disabled ? '' : null">Bon travail, professionnalisme à la hauteur
+            </label>
+          </div>
+          <div class="form-check ">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
+                value="complicated" [attr.disabled]="disabled ? '' : null">Dossier compliqué à faire aboutir
+            </label>
+          </div>
+          <div class="form-check ">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
+                value="not_expected" [attr.disabled]="disabled ? '' : null">Ce n'est pas à l'attendu
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Les clauses contractuelles validées sont-elles pertinentes ? </label>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
+                value="special" [attr.disabled]="disabled ? '' : null">Mention spéciale
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
+                value="good_job" [attr.disabled]="disabled ? '' : null">Bon travail, professionnalisme à la hauteur
+            </label>
+          </div>
+          <div class="form-check ">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
+                value="complicated" [attr.disabled]="disabled ? '' : null">Dossier compliqué à faire aboutir
+            </label>
+          </div>
+          <div class="form-check ">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
+                value="not_expected" [attr.disabled]="disabled ? '' : null">Ce n'est pas à l'attendu
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Le marché a-t-il été mis à disposition au bon moment ? </label>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="special"
+                [attr.disabled]="disabled ? '' : null">Mention spéciale
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="good_job"
+                [attr.disabled]="disabled ? '' : null">Bon travail, professionnalisme à la hauteur
+            </label>
+          </div>
+          <div class="form-check ">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="complicated"
+                [attr.disabled]="disabled ? '' : null">Dossier compliqué à faire aboutir
+            </label>
+          </div>
+          <div class="form-check ">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="not_expected"
+                [attr.disabled]="disabled ? '' : null">Ce n'est pas à l'attendu
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Quels sont les points forts à souligner (notre collaboration, nos
+            conseils en amont de la consultation, la connaissance du segment, les initiatives en matières de RSE,
+            d'innovation, etc...) </label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="strong_points"
+            [formControl]="strong_points" [attr.disabled]="disabled ? '' : null"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Avez-vous des axes d'amélioration à nous soumettre ? </label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="improvement"
+            [formControl]="improvement" [attr.disabled]="disabled ? '' : null"></textarea>
+        </div>
+
+      </div>
+      <div class="col-12">
+        <button type="submit" [disabled]="!loginForm.valid || disabled" class="btn btn-secondary">
+          Je donne mon avis
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

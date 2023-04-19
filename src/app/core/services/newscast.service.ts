@@ -40,7 +40,6 @@ export class NewsCastService {
     category?:any
    }
   ): Observable<any> {
-    console.log('test');
     const url = `${this.appConfigService.basePath}/admin/news-cast/list`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {

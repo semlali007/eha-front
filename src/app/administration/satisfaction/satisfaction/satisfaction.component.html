@@ -1,0 +1,72 @@
+<h1>Enquête de satisfaction</h1>
+<div class="form-group row" style="margin-left:0 !important">
+     <div  style=" position: absolute; right: 2px; ">
+         <a class="titre-listing" style="color: #001A70!important" (click)="download()">Télécharger mes DA (CSV)</a>
+     </div>
+ </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                cockpit_id
+            </th>
+            <th>
+                da_pgi
+            </th>
+            <th>
+                nni
+            </th>
+            <th>
+                accompaniement
+            </th>
+            <th>
+                contractual
+            </th>
+            <th>
+                timing
+            </th>
+            <th>
+                strong_points
+            </th>
+            <th>
+                improvement
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let factsheet of satisfactions$ | async">
+            <td>
+                {{factsheet.cockpit_id}}
+            </td>
+
+            <td>
+                {{factsheet.da_pgi}}
+            </td>
+            <td>
+                {{factsheet.nni}}
+            </td>
+            <td>
+                {{factsheet.accompaniement}}
+            </td>
+            <td>
+                {{factsheet.contractual}}
+            </td>
+            <td>
+                {{factsheet.timing}}
+            </td>
+            <td>
+                {{factsheet.strong_points}}
+            </td>
+            <td>
+                {{factsheet.improvement}}
+            </td>
+            <td> 
+                {{factsheet.created_at | customDate : "dd/MM/yyyy à HH:mm:ss" }}
+            </td>
+        </tr>
+    </tbody>
+</table>

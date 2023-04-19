@@ -231,6 +231,13 @@ const routes: Routes = [
           title:"Ma situation achat"
         },
       },
+      {
+        path: 'enquete',
+        loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
+        data: {
+          is_external: true
+        }
+      },
     ],
    canActivate: [AuthGuard],
   },

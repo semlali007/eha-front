@@ -95,6 +95,10 @@ const routes: Routes = [
         path: 'actualites/modification/:id',
         loadChildren: () => import('./newscast/newscast-edit/newscast-edit.module').then(m => m.NewsCastEditModule),
       },
+      {
+        path: 'satisfactions',
+        loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
+      },
       
     ]
   }

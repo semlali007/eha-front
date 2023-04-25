@@ -46,6 +46,7 @@ export class SubdomainService {
     return this.http.post(url, {
         page: params.page || 1,
         perpage: params.perPage || 10,
+        search: params.search || '',
     }).pipe(
       switchMap((listData: any) => {
         const directions: Domain[] = [];

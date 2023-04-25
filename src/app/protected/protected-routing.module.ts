@@ -232,7 +232,14 @@ const routes: Routes = [
         },
       },
       {
-        path: 'enquete',
+        path: 'enquete/cockpit/:cockpit',
+        loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
+        data: {
+          is_external: true
+        }
+      },
+      {
+        path: 'enquete/cockpit/:cockpit/pgi/:pgi',
         loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
         data: {
           is_external: true

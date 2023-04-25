@@ -13,6 +13,7 @@ export class SheetFormModalComponent implements OnInit {
   modalMessage = '';
   smallnumPages: number ;
   sheetModalForm: FormGroup;
+  searchModalForm: FormGroup;
   type:string='';
   title: string;
   items: any[];
@@ -40,10 +41,12 @@ export class SheetFormModalComponent implements OnInit {
   ) { }
   public requestAutocompleteItems: any;
   get currentPage() { return this.sheetModalForm.get('currentPage') }
+  get search() { return this.searchModalForm.get('search') }
   ngOnInit() {
     this.selectedItems = new FormControl();
     this.selectedItems.setValue(this.selectedValues);
     this.sheetModalForm = this.createsheetModalForm();
+    this.searchModalForm = this.createSearchModalForm();
     this.names = this.allitems.map(t=>t.name);
   }
   get newItem() { return this.sheetModalForm.get('newItem') }
@@ -53,6 +56,11 @@ export class SheetFormModalComponent implements OnInit {
         Validators.required,
       ]],
       'currentPage': 1
+    });
+  }
+  createSearchModalForm(): FormGroup {
+    return this.searchModalForm = this.fb.group({
+      'search': [''],
     });
   }
 
@@ -68,6 +76,11 @@ export class SheetFormModalComponent implements OnInit {
   submit(): void {
     this.addElementEvent.emit({ data: this.newItem });
     this.newItem.setValue('');
+  }
+
+  submitSearch(): void {
+    this.currentPage.setValue(1);
+    this.eventPaginate.emit({ data: { page: 1, search: this.search.value } });
   }
 
   addItemToList($event): void {
@@ -93,7 +106,7 @@ export class SheetFormModalComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage.setValue(event.page);
-    this.eventPaginate.emit({ data: { page: this.currentPage.value } });
+    this.eventPaginate.emit({ data: { page: this.currentPage.value, search: this.search.value } });
   }
   
   confirm(): void {

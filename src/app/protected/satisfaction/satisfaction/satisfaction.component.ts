@@ -42,9 +42,9 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
       'strong_points': [''],
       'improvement': ['']
     });
-    this.sub = this.route.queryParams.subscribe(params => {
-      if (!!params && !!params.cockpit_id) {
-        this.cockpitId = params.cockpit_id;
+    this.sub = this.route.params.subscribe(params => {
+      if (!!params && !!params.cockpit) {
+        this.cockpitId = params.cockpit;
         this.subscription = this.authService.user$.subscribe(user => {
           this.user = user;
           this.satisfactionService.getParticipation({ cockpit_id: this.cockpitId, nni: user.nni })
@@ -58,8 +58,8 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
         }
         );
       }
-      if (!!params && !!params.da_pgi) {
-        this.daPGI = params.da_pgi;
+      if (!!params && !!params.pgi) {
+        this.daPGI = params.pgi;
       }
     });
   }

@@ -1,0 +1,119 @@
+.Accueil-Actualit {
+  width: 146px;
+  height: 24px;
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--gris-fonce-aaa-jet);
+}
+
+.Accueil-Actualit .Body---16---Semi-Bold {
+  color: var(--bleu-fonce-charte);
+}
+
+.Property-1Hors-Cockpit {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 30px;
+  background-color: var(--gris-tres-clair-aaa-cultured);
+}
+
+.Pierre-Laforet-GAI-NORD-TOUR1 {
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--noir-charte);
+}
+
+.Lorem-ipsum-dolor-sit-amet-consectetur-nesta-adipiscing-elit-lectus-nunc-commodo-in-at-ultricies-id {
+  width: 1030px;
+  height: 24px;
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--noir-charte);
+}
+
+.EtatSurvol-ou-Clic-Tap-TypeSans-sous-menu {
+  width: 167px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
+}
+
+img.Icone---Achatpedia---Se-documenter {
+  width: 16px;
+  height: 16px;
+  flex-grow: 0;
+  object-fit: contain;
+}
+
+.Se-documenter {
+  width: 121px;
+  height: 24px;
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--bleu-fonce-charte);
+}
+
+.btn-space {
+  margin-right: 10px;
+  background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
+  color: #001A70;
+  border: none;
+  z-index: 0;
+}
+
+.btn-submit-stf {
+  background-color: #001A70;
+}
+
+.Publi-le-02022023 {
+  width: 160px;
+  height: 24px;
+  flex-grow: 0;
+  font-family: 'Work Sans';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--gris-fonce-aa-sonic-silver);
+}

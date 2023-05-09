@@ -1,3 +1,147 @@
+<div class="container">
+  <span class="Accueil-Actualit Body---16---Semi-Bold">
+    <span class="Body---16---Semi-Bold link" (click)="navigate('app/accueil')">Accueil</span>
+    / Enquête de satisfaction
+  </span>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="Frame-315">
+        <i class="fas fa-box"></i>
+        <img src="../../../../assets/img/mdi_announcement.png"
+          srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
+          class="mdiannouncement">
+        <span class="Actualit H2---26---Semi-Bold">
+          Enquête de satisfaction
+        </span>
+        <br>
+        <br>
+       
+      </div>
+      
+    </div>
+    
+    <div class="Property-1Hors-Cockpit">
+      <span class="Pierre-Laforet-GAI-NORD-TOUR1 Body---16---Regular">
+        La Direction des Achats Groupe vous sollicite pour recueillir votre niveau de satisfaction concernant l’acte
+        d’achat qui a été mené pour vos besoins sur l'achat suivant :
+    
+      <ul>
+        <li>
+          Référence Cockpit : {{cockpitId}}
+        </li>
+        <li *ngIf="!!daPGI">
+          Numéro de DA PGI : {{daPGI}}
+        </li>
+      </ul>
+    </span>
+      <span
+        class="Lorem-ipsum-dolor-sit-amet-consectetur-nesta-adipiscing-elit-lectus-nunc-commodo-in-at-ultricies-id Body---16---Semi-Bold---Underlined">
+        A des fins d'amélioration de nos processus, nous vous remercions de bien vouloir prendre quelques instants pour
+        répondre à cette enquête de satisfaction.
+      </span>
+    </div>
+  </div>
+<br>
+  <div class="row">
+    <div>
+      <div class="Frame-315" >
+        <alert class="Actualit Body---16---Semi-Bold" type="warning" *ngIf="warning && postedNni == user.nni">
+          Vous avez déjà répondu à ce questionnaire
+        </alert>
+        <alert class="Actualit Body---16---Semi-Bold" type="warning" *ngIf="warning && postedNni != user.nni">
+          Une réponse à déjà été validée pour cette enquête
+        </alert>
+        <alert  class="Actualit Body---16---Semi-Bold" type="success" *ngIf="success">
+          <p>Merci pour votre participation.</p>
+        </alert>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <ul>
+      <li>
+        Les questions dont les réponses sont obligatoires sont ondiquées en <strong>gras</strong> et avec <strong>*</strong>.
+      </li>
+      <li>
+        Attention : une fois le formulaire validé, vous ne pourrez plus le modifier.
+      </li>
+    </ul>
+  </div>
+
+  <div class="row" [hidden]="warning && postedNni != user.nni">
+    <div >
+      <form *ngIf="loginForm" [formGroup]="loginForm"  (ngSubmit)="submit()">
+        <div class="Frame-315">
+          <span class="Actualit Body---16---Semi-Bold">
+            Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce dossier ? (*)
+          </span>
+        </div>
+        <div class="form-group ">
+          <div class="btn-group" btnRadioGroup [formControl]="accompaniement" name="accompaniement">
+            <label btnRadio="special" class="btn  btn-outline-primary btn-space">Mention spéciale</label>
+            <label btnRadio="good_job" class="btn  btn-outline-primary btn-space">Bon travail, professionnalisme à la hauteur</label>
+            <label btnRadio="complicated" class="btn  btn-outline-primary btn-space">Dossier compliqué à faire aboutir</label>
+            <label btnRadio="not_expected" class="btn  btn-outline-primary btn-space">Ce n'est pas à l'attendu</label>
+          </div>
+        </div>
+        <div class="Frame-315">
+          <span class="Actualit Body---16---Semi-Bold">
+            Les clauses contractuelles validées sont-elles pertinentes ? (*)
+          </span>
+        </div>
+        <div class="form-group mb-3">
+          <div class="btn-group" btnRadioGroup [formControl]="contractual" name="contractual">
+            <label btnRadio="special" class="btn  btn-outline-primary btn-space">Mention spéciale</label>
+            <label btnRadio="good_job" class="btn  btn-outline-primary btn-space">Bon travail, professionnalisme à la hauteur</label>
+            <label btnRadio="complicated" class="btn  btn-outline-primary btn-space">Dossier compliqué à faire aboutir</label>
+            <label btnRadio="not_expected" class="btn  btn-outline-primary btn-space">Ce n'est pas à l'attendu</label>
+          </div>
+        </div>
+
+
+        <div class="Frame-315">
+          <span class="Actualit Body---16---Semi-Bold">
+            Le marché a-t-il été mis à disposition au bon moment ? (*)
+          </span>
+        </div>
+        <div class="form-group mb-3">
+          <div class="btn-group" btnRadioGroup [formControl]="timing" name="timing">
+            <label btnRadio="special" class="btn  btn-outline-primary btn-space">Mention spéciale</label>
+            <label btnRadio="good_job" class="btn  btn-outline-primary btn-space">Bon travail, professionnalisme à la hauteur</label>
+            <label btnRadio="complicated" class="btn  btn-outline-primary btn-space">Dossier compliqué à faire aboutir</label>
+            <label btnRadio="not_expected" class="btn  btn-outline-primary btn-space">Ce n'est pas à l'attendu</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Quels sont les points forts à souligner (notre collaboration, nos
+            conseils en amont de la consultation, la connaissance du segment, les initiatives en matières de RSE,
+            d'innovation, etc...) </label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="strong_points"
+            [formControl]="strong_points" [attr.disabled]="disabled ? '' : null"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Avez-vous des axes d'amélioration à nous soumettre ? </label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="improvement"
+            [formControl]="improvement" [attr.disabled]="disabled ? '' : null"></textarea>
+        </div>
+        <div class="col-12">
+          <div class="col text-center">
+            <button type="submit" [disabled]="!loginForm.valid || disabled" class="btn btn-secondary btn-submit-stf">Valider mes réponses</button>
+          </div>
+          <div class="col text-center">
+          <span class="Publi-le-02022023 Body---16---Semi-Bold">
+            Attention: une fois vos réponses validées, vous ne pourrez plus les modifier
+          </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--
 <div class="container justify-content-center">
   <form novalidate class="form my-form-connection" [formGroup]="loginForm" (ngSubmit)="submit()">
     <alert type="warning" *ngIf="warning">
@@ -116,3 +260,5 @@
     </div>
   </form>
 </div>
+
+-->

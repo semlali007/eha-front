@@ -9,6 +9,7 @@ import { SatisfactionService } from 'src/app/core/services/satisfaction.service'
 @Component({
   selector: 'app-satisfaction',
   templateUrl: './satisfaction.component.html',
+  styleUrls: ['./satisfaction.component.css']
 })
 export class SatisfactionComponent implements OnInit, OnDestroy {
   cockpitId:string='';
@@ -17,6 +18,7 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   disabled :boolean = false;
   warning :boolean = false;
   success :boolean = false;
+  postedNni :string = '';
   loginForm: FormGroup;
   public user: User = null;
   public subscription: Subscription;
@@ -29,7 +31,9 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   ) {
   }
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+
+
+ this.loginForm = this.fb.group({
       'accompaniement': ['', [
         Validators.required,
       ]],
@@ -52,8 +56,14 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
                                     if(!!data && data.nni.length>0){
                                        this.disabled = true;
                                        this.warning = true;
+                                       this.loginForm.disable();
+                                       this.accompaniement.setValue(data.accompaniement);
+                                       this.contractual.setValue(data.contractual);
+                                       this.timing.setValue(data.timing);
+                                       this.strong_points.setValue(data.strong_points);
+                                       this.improvement.setValue(data.improvement);
+                                       this.postedNni = data.nni
                                     }
-                                       
                                   });
         }
         );
@@ -68,7 +78,9 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   get timing() { return this.loginForm.get('timing'); }
   get strong_points() { return this.loginForm.get('strong_points'); }
   get improvement() { return this.loginForm.get('improvement'); }
-
+  navigate(url) {
+      this.router.navigate([url]);
+  }
   submit(): void {
     const params = {
       cockpit_id: this.cockpitId,
@@ -84,6 +96,7 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
       if(!!response){
          this.success = true;
          this.disabled = true;
+         this.loginForm.disable();
       }
     });
 

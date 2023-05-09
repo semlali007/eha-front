@@ -24,7 +24,7 @@ export class SatisfactionComponent implements OnInit {
     this.satisfactions$ = this.satisfactionService.getList();
   }
 
-  download() {
+  download(type:string) {
     this.satisfactions$.subscribe((response: any) => {
       const purchases: any = [];
       response.forEach(data => {
@@ -41,11 +41,27 @@ export class SatisfactionComponent implements OnInit {
         });
       });
 
-      this.excelService.generateExcel({header:[
-        "Date",'Cockpit', 'PGI', 'NNI', "Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce dossier?", "Les clauses contractuelles validées sont-elles pertinentes ?",
-        "Le marché a-t-il été mis à disposition au bon moment ?", "Quels sont les points forts à souligner (notre collaboration, nos conseils en amont de la consultation, la connaissance du segment, les initiatives en matières de RSE, d'innovation, etc...)", "Avez-vous des axes d'amélioration à nous soumettre ?"
-      ],data:purchases}, { sheet: 'DA', name: "enquête de satisfaction.xlsx" });
+      if (type == 'csv') {
+        this.excelService.exportToCsv(purchases, 'enquête de satisfaction.csv', [
+          "created_at", 'cockpit_id', 'da_pgi', 'nni', "contractual", "timing",
+          "strong_points", "accompaniement", 'improvement'
+        ]);
+      }
+
+      if (type == 'excel') {
+        this.excelService.generateExcel({
+          header: [
+            "Date", 'Cockpit', 'PGI', 'NNI', "Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce dossier?", "Les clauses contractuelles validées sont-elles pertinentes ?",
+            "Le marché a-t-il été mis à disposition au bon moment ?", "Quels sont les points forts à souligner (notre collaboration, nos conseils en amont de la consultation, la connaissance du segment, les initiatives en matières de RSE, d'innovation, etc...)", "Avez-vous des axes d'amélioration à nous soumettre ?"
+          ], data: purchases
+        }, { sheet: 'DA', name: "enquête de satisfaction.xlsx" });
+      }
+
+      if (type == 'json') {
+        this.excelService.exportToJson(purchases, 'enquête de satisfaction.json'
+        );
+      }
+
     });
   }
-
 }

@@ -1,9 +1,18 @@
 <h1>Enquête de satisfaction</h1>
+
 <div class="form-group row" style="margin-left:0 !important">
-     <div  style=" position: absolute; right: 2px; ">
-         <a class="titre-listing" style="color: #001A70!important" (click)="download()">Télécharger mes DA (CSV)</a>
-     </div>
- </div>
+    Télécharger les réponses:
+    <div>
+        <a class="titre-listing link" style="color: #001A70!important" (click)="download('csv')"> (CSV) </a>
+    </div>
+    <div>
+        <a class="titre-listing link" style="color: #001A70!important" (click)="download('excel')"> (Excel) </a>
+    </div>
+    <div>
+        <a class="titre-listing link" style="color: #001A70!important" (click)="download('json')"> (JSON) </a>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>

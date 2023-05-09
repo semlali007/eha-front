@@ -12,6 +12,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     CollapseModule.forRoot(),
     TypeaheadModule.forRoot(),
     TooltipModule.forRoot(),
+    ButtonsModule.forRoot(),
   ],
   exports: [
     AlertModule,
@@ -44,6 +46,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     AccordionModule,
     CollapseModule,
     TooltipModule,
+    ButtonsModule
    ]
 })
 export class NgxBootstrapModule { }

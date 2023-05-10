@@ -35,12 +35,14 @@
           Numéro de DA PGI : {{daPGI}}
         </li>
       </ul>
-    </span>
+
       <span
-        class="Lorem-ipsum-dolor-sit-amet-consectetur-nesta-adipiscing-elit-lectus-nunc-commodo-in-at-ultricies-id Body---16---Semi-Bold---Underlined">
-        A des fins d'amélioration de nos processus, nous vous remercions de bien vouloir prendre quelques instants pour
-        répondre à cette enquête de satisfaction.
-      </span>
+      class="Lorem-ipsum-dolor-sit-amet-consectetur-nesta-adipiscing-elit-lectus-nunc-commodo-in-at-ultricies-id Body---16---Semi-Bold---Underlined">
+      A des fins d'amélioration de nos processus, nous vous remercions de bien vouloir prendre quelques instants pour
+      répondre à cette enquête de satisfaction.
+    </span>
+    </span>
+     
     </div>
   </div>
 <br>
@@ -48,10 +50,10 @@
     <div>
       <div class="Frame-315" >
         <alert class="Actualit Body---16---Semi-Bold" type="warning" *ngIf="warning && postedNni == user.nni">
-          Vous avez déjà répondu à ce questionnaire
+          Vous avez déjà répondu à ce questionnaire.
         </alert>
         <alert class="Actualit Body---16---Semi-Bold" type="warning" *ngIf="warning && postedNni != user.nni">
-          Une réponse à déjà été validée pour cette enquête
+          Une réponse a déjà été validée pour cette enquête.
         </alert>
         <alert  class="Actualit Body---16---Semi-Bold" type="success" *ngIf="success">
           <p>Merci pour votre participation.</p>
@@ -59,10 +61,10 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row"  [hidden]="warning && postedNni != user.nni">
     <ul>
       <li>
-        Les questions dont les réponses sont obligatoires sont ondiquées en <strong>gras</strong> et avec <strong>*</strong>.
+        Les questions dont les réponses sont obligatoires sont indiquées en <strong>gras</strong> et avec <strong>*</strong>.
       </li>
       <li>
         Attention : une fois le formulaire validé, vous ne pourrez plus le modifier.
@@ -135,7 +137,9 @@
           <span class="Publi-le-02022023 Body---16---Semi-Bold">
             Attention: une fois vos réponses validées, vous ne pourrez plus les modifier
           </span>
+          
           </div>
+          <br>
         </div>
       </form>
     </div>

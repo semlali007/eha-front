@@ -128,12 +128,10 @@
 
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Fournisseurs</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let provider of providers">
-                            {{provider.label}}
-                        </li>
-                    </ul>
+                <div *ngFor="let provider of providers" class="StatutEn-instruction">
+                    <span class="En-instruction Body---16---Regular">
+                        {{provider.label}}
+                    </span>
                 </div>
             </li>
 

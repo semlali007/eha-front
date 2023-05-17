@@ -4,5 +4,5 @@ export const environment = {
   encryptionKey:'coucou',
   encryptionHead: '$ANSIBLE_VAULT;1.1;AES256\n',
   configPath: '/assets/e_config.json',
-  maxuploadsize: 10000000
+  maxuploadsize: 20000000
 };

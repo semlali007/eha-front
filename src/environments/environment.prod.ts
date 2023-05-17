@@ -3,5 +3,5 @@ export const environment = {
   appVersion: require('../../package.json').version,
   encryptionHead: '$ANSIBLE_VAULT;1.1;AES256\n',
   configPath: '/assets/e_config.json',
-  maxuploadsize: 10000000
+  maxuploadsize: 20000000
 };

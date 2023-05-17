@@ -24,6 +24,7 @@ export class HotlineViewComponent implements OnInit {
   public sha: string = '';
   public isHotliner: boolean = false;
   public isRequester: boolean = false;
+  public isCurrentFowarded:string = '';
   public informations: any = {};
   public timeline: any = {};
   public warningMessage: string = '';
@@ -59,6 +60,7 @@ export class HotlineViewComponent implements OnInit {
   initHotline(hotline: any) {
     this.isRequester = hotline.isRequester;
     this.isHotliner = hotline.isHotliner;
+    this.isCurrentFowarded = hotline.current_forward ;
     this.informations = hotline.info;
     this.timeline = hotline.timeline;
     this.subscription = this.authService.user$.subscribe(user => this.user = user);

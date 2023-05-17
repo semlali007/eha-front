@@ -101,6 +101,11 @@
             class="list-group-item">
             Texte de bienvenue Vitrine
             </li>
+            <li   (click)="navigate(contactPath)"
+            [class.list-group-item-success]="isActive(contactPath)"
+            class="list-group-item">
+            Contact
+            </li>
         </ul>
     </accordion-group>
     <accordion-group  *ngIf="!!user && (user.hasRole('EHA_ADMIN'))"  heading="Actualités">

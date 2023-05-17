@@ -60,6 +60,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public subDomain: Object[] = [];
   public history: any[] = [];
   public category: any = '';
+  isCollapsed = true;
   
 
   @ViewChild('content') content:ElementRef;

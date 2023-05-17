@@ -48,7 +48,7 @@
 		<div class="row justify-content-end" *ngIf="isHotliner">
 			<div class="col-6">
 				<p>
-					<button type="button" class="btn btn-info btn-left"  (click)="openPostMessage()">Poster un message</button>
+					<button type="button" class="btn btn-info btn-left"  (click)="openPostMessage()">Poster un messages</button>
 					<button type="button" class="btn btn-info btn-center"  (click)="openAddFile()">Ajouter un fichier</button>
 					<button type="button" class="btn btn-info btn-right"  (click)="openForward()">Faire suivre</button>
 				</p>
@@ -60,7 +60,7 @@
 					<button type="button" class="btn btn-warning btn-left"  (click)="openPostMessage()" *ngIf="isRequester" >Poster un message</button>
 					<button type="button" class="btn btn-warning btn-center"  (click)="openForward()" *ngIf="isRequester">Faire suivre</button>
 					<button type="button" class="btn btn-warning btn-center"  (click)="openAddFile()" *ngIf="isRequester">Ajouter un fichier</button>
-					<button type="button" class="btn btn-warning btn-right"  (click)="openCloseHotline()" *ngIf="(isRequester || (!!user && user.hasRole('EHA_GESTIONNAIRE'))) && informations.step!='end' ">Clore</button>
+					<button type="button" class="btn btn-warning btn-right"  (click)="openCloseHotline()" *ngIf="(isRequester || (!!user && user.hasRole('EHA_GESTIONNAIRE')) || isCurrentFowarded == user.email) && informations.step!='end' ">Clore</button>
 				</p>
 			</div>
 		</div>

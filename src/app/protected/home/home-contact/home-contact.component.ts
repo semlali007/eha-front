@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PageService } from 'src/app/core/services/page.service';
 
 @Component({
   selector: 'app-home-contact',
@@ -12,10 +13,22 @@ export class HomeContactComponent implements OnInit {
   communityPath = "https://www.myelectricnetwork.fr/group/achat" ;
   directionPath = "https://edfonline.sharepoint.com/sites/DAG-RC-INFOS/SitePages/Organisation---Informations-Pratiques.aspx" ;
   accountingAgencyPath = "https://edfonline.sharepoint.com/sites/DAG-RC-INFOS/Lists/Annuaire%20Comptable/AllItems.aspx";
-
-  constructor(private router: Router) { }
+active:boolean=false;
+content:string='';
+  constructor(
+    private router: Router,
+    private pageService: PageService
+    ) { }
 
   ngOnInit(): void {
+    this.loadPage();
+  }
+
+  loadPage() {
+    this.pageService.getPage({ page: 'contact', cache:'cache' }).subscribe(response => {
+    this.content = response.content;
+    this.active = response.active;      
+    })
   }
 
   navigate(url, target?:string){

@@ -326,8 +326,8 @@
     </div>
     
 
-
-<div class="col-md-4 mb-4">
+    <div class="col-11 col-md-10" >
+<div class="col-md-5 mb-5" *ngIf="!!history && history?.length>0">
     <button class="list-group-item filter-header smaller-text" (click)="isCollapsed = !isCollapsed"
         [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
         Historique des modifications <i class="fleche fleche-droite" [class.fleche-bas]="isCollapsed == false"></i>
@@ -336,8 +336,9 @@
 <div class="col-md-5 mb-5">
 
 </div>
+</div>
     <div id="collapseBasic" [collapse]="isCollapsed" class="col-11 col-md-10" >
-        <h4 *ngIf="!!history && history?.length>0"><strong >Historique des modifications</strong></h4>
+        <h4 *ngIf="!!history && history?.length>0"><strong >Historique des modifications </strong></h4>
         <br>
     <ul *ngFor="let h of history ; let isFirst = first;" class="list-group" id="print-section">
         <li>

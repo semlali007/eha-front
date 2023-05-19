@@ -48,16 +48,16 @@ export class SheetFormKitComponent {
   upload(){
     let list = ['application/pdf', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.presentationml.presentation'];
     this.uploader?.queue?.forEach((element,index) => {
-      console.log(element?.file?.type);
-      if(!list.includes(element?.file?.type)){
-        this.uploader.queue.splice(index);
-        this.bsModalRef =  this.modalService.show(this.templateType, {class: 'modal-sm'});
-      }
+      if (element.file.type != 'text/htm') {
+        if (!list.includes(element?.file?.type)) {
+          this.uploader.queue.splice(index);
+          this.bsModalRef = this.modalService.show(this.templateType, { class: 'modal-sm' });
+        }
 
-      if(element?.file?.size > this.maxsize)
-      {
-        this.uploader.queue.splice(index);
-        this.bsModalRef =  this.modalService.show(this.template, {class: 'modal-sm'});
+        if (element?.file?.size > this.maxsize) {
+          this.uploader.queue.splice(index);
+          this.bsModalRef = this.modalService.show(this.template, { class: 'modal-sm' });
+        }
       }
     })
   }

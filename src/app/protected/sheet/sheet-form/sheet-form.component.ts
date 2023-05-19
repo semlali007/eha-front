@@ -368,7 +368,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     });
   }
     sheet.documents.forEach((document) => {
-      var blob = new Blob([""], { type: 'text/html' });
+      var blob = new Blob([""], { type: 'text/htm' });
       blob["lastModifiedDate"] = "";
       blob["name"] = document.name;
       let f = <File>blob;

@@ -3,13 +3,30 @@
     <div class="col-6">
       <p class="titre-cadre"> <img src="../../../../assets/img/icon-contact.png">&nbsp;Contacter</p>
     </div>
-    <br>
-    
-
     <div class="col-md-12">
       <p>&nbsp;</p>
+      <p class="p" >Vous pouvez <span class="titre-2 link" (click)="navigate('/app/hotline/create')">nous poser vos questions </span>à propos des contrats négociés par la Direction des Achats.</p>
     </div>
-    <div class="col-md-12" [innerHtml]="content | safe: 'html'"> </div> 
-  </div>
+    <div class="col-md-12">
+      <p><strong>Vous pouvez également contacter :</strong></p>
+      <ul>
+        <li class="titre-2 link" (click)="externalNavigate(agentPath, '_blank')">
+          Votre correspondant local achat
+        </li>
+        <li class="titre-2 link" (click)="externalNavigate(agencyPath, '_blank')">
+          Votre agence d’approvisionnement
+        </li>
+        <li class="titre-2 link" (click)="externalNavigate(accountingAgencyPath, '_blank')">
+          Votre agence d’approvisionnement
+        </li>
+        <li class="titre-2" (click)="externalNavigate(communityPath, '_blank')">
+          La communauté des achats
+        </li>
+        <li class="titre-2 link" (click)="externalNavigate(directionPath, '_blank')">
+          Votre contact à la Direction des Achats
+        </li>
+      </ul>
 
-</div>
+      <p class="link" (click)="externalNavigate('mailto:gu@supportdag.edf.fr', '_self')">Enfin, pour toute question sur les applications du SI de la Direction des Achats Groupe, <span class="titre-2 link">écrivez nous un email</span></p>
+    </div>
+  </div>

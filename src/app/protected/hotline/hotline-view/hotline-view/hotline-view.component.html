@@ -22,7 +22,8 @@
 				</div>
 				<div class="timeline-panel">
 					<div class="timeline-body" >
-						<p *ngIf="row.nature != 'N'" [innerHtml]="row.message">
+						<p *ngIf="row.nature != 'N'" [innerHtml]="row.message"> </p>
+						<p *ngIf="row.nature != 'N'">
 							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn-link">visualiser</a>
 						</p>
 						<p *ngIf="row.nature == 'N'">

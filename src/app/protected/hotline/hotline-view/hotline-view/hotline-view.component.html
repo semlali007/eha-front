@@ -24,7 +24,7 @@
 					<div class="timeline-body" >
 						<p *ngIf="row.nature != 'N'" [innerHtml]="row.message"> </p>
 						<p *ngIf="row.nature != 'N'">
-							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn-link">visualiser</a>
+							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn btn-link">visualiser</a>
 						</p>
 						<p *ngIf="row.nature == 'N'">
 							<div *ngIf="row.message == 4" style="display: inline-block; background-color: green; padding: 5px;">

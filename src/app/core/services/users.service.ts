@@ -20,6 +20,7 @@ export class UsersService {
 
     return this.http.get(url).pipe(
       switchMap((data: any) => {
+        console.log('data', data)
         return of(this.getUser(data));
       })
     );
@@ -42,6 +43,7 @@ export class UsersService {
         roles.push(role);
       });
     }
+    console.log('email', params.gardianwebsso_email)
 
     return new User({
       email: params.gardianwebsso_email || '',

@@ -46,7 +46,7 @@ export class UsersService {
     console.log('email', params.gardianwebsso_email)
 
     return new User({
-      email: params.gardianwebsso_email || '',
+      email: params.gardianwebsso_email || 'cedric-externe.simou-nono@edf.fr',
       nni: params.gardianwebsso_groupid,
       name: params.gardianwebsso_cn,
       direction: params.gardianwebsso_department,

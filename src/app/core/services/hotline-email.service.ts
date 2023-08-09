@@ -46,7 +46,7 @@ export class HotlineEmailService {
 
   public edit(params: any): Observable<any> {
     var data = {
-      email: params.email || 'cedric-externe.simou-nono@edf.fr',
+      email: params.email,
       id: params.id
     }
 

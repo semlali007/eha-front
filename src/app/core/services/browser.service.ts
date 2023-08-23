@@ -41,7 +41,7 @@ export class Browser {
       public checkIfFirefox() {
           var browsername = this.detectName() ;
           localStorage.setItem('checkbrowser',browsername);
-          if(browsername !== Browser.FIREFOX){
+          if(browsername !== Browser.FIREFOX && browsername !== Browser.CHROME){
             this.toastrService.showGlobalToastr({
               category: 'danger',
               message: "Le navigateur FIREFOX est recommandé pour une navigation optimale."

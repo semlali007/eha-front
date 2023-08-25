@@ -44,7 +44,7 @@ export class UsersService {
     }
 
     return new User({
-      email: params.gardianwebsso_email || 'lamya.tidjani@edf.fr',
+      email: params.gardianwebsso_email || '',
       nni: params.gardianwebsso_groupid,
       name: params.gardianwebsso_cn,
       direction: params.gardianwebsso_department,

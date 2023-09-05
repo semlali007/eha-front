@@ -57,6 +57,10 @@ export class AuthService {
 
   public autoLogin(user: User) {
     this.user.next(user);
+    console.log("valeur de status", this.user.getValue().status[0]);
+    console.log('retour de value',this.user.getValue().status[0] === 'P');
+    console.log('retour getvalue()',this.user.getValue());
+
   }
 
 }

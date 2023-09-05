@@ -49,7 +49,8 @@ export class UsersService {
       name: params.gardianwebsso_cn,
       direction: params.gardianwebsso_department,
       roles: roles,
-      id: params.gardianwebsso_id
+      id: params.gardianwebsso_id,
+      status: params.gardianwebsso_status
     });
   }
 

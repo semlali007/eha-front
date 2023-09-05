@@ -35,7 +35,9 @@ export class AuthService {
     let destUrl = "/api/saml/login";
     let url = this.router.url;
     if ('/login' == this.router.url || '/logout' == this.router.url) {
-      url = '/app/accueil';
+      if(this.user.getValue().status !== 'P') {
+        url = '/app/accueil';
+      }
     }
     
     destUrl += '/' + encodeURIComponent(targetUrl || url);

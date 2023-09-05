@@ -6,7 +6,8 @@ export class User {
     name: string; // nom de l’utilisateur
     nni: string; // nni de l’utilisateur
     direction: string;
-    roles: Role[] = []
+    roles: Role[] = [];
+    status: string;
 
     constructor(options: {
         id?: string,
@@ -15,6 +16,7 @@ export class User {
         name?: string,
         direction?: string,
         roles?: Role[],
+        status?: string,
     } = {}) {
         this.id = options.id || null;
         this.email = options.email || '';
@@ -22,6 +24,7 @@ export class User {
         this.nni = options.nni || '';
         this.direction = options.direction || '';
         this.roles = options.roles;
+        this.status = options.status
     }
 
     hasRole(role: string): boolean {

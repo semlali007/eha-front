@@ -35,7 +35,10 @@ export class AuthService {
     let destUrl = "/api/saml/login";
     let url = this.router.url;
     if ('/login' == this.router.url || '/logout' == this.router.url) {
-      if(this.user.getValue().status !== 'P') {
+      if (this.user.getValue() && this.user.getValue().status === 'P') {
+        console.error("Accès non autorisé : statut 'P'");
+        return; // Quitte la fonction sans effectuer de redirection
+      } else {
         url = '/app/accueil';
       }
     }

@@ -50,7 +50,6 @@ export class AuthService {
 
   public autoLogin(user: User) {
     this.user.next(user);
-    console.log(this.getUserStatus())
   }
 
 }

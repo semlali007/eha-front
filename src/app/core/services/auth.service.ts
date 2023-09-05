@@ -35,13 +35,8 @@ export class AuthService {
     let destUrl = "/api/saml/login";
     let url = this.router.url;
     if ('/login' == this.router.url || '/logout' == this.router.url) {
-      if (this.getUserStatus() === "P") {
-        console.error("Accès non autorisé : statut 'P'");
-        return; // Quitte la fonction sans effectuer de redirection
-      } else {
-        url = '/app/accueil';
+      url = '/app/accueil';
 
-      }
     }
     
     destUrl += '/' + encodeURIComponent(targetUrl || url);
@@ -52,11 +47,6 @@ export class AuthService {
     return this.user.getValue();
   }
 
-  public getUserStatus() {
-    console.log('retour getvalue()',this.user.getValue());
-    console.log('userstatus', this.user.getValue().status);
-    return this.user.getValue().status[0];
-}
 
   public autoLogin(user: User) {
     this.user.next(user);

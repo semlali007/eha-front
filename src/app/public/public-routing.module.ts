@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule)
    },
+   {
+    path: 'unauthorized',
+    loadChildren: () => import('./unauthorized/unauthorized.module').then(m => m.UnauthorizedModule)
+   },
  ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

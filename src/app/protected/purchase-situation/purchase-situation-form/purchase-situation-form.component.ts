@@ -88,7 +88,7 @@ ngOnDestroy(): void {
       });
 
       this.excelService.generateExcel({header:[
-        'Numéro', 'Libellé', 'Crée le', 'Statut', 'Statut modifié le', 'Responsable', 'Déscription','Catégorie Achat','Direction', 'Direction', 'Division', 'Numéro de contrat'
+        'Numéro', 'Libellé', 'Crée le', 'Statut', 'Statut modifié le', 'Responsable', 'Déscription','Catégorie Achat','Direction', 'Division', 'Numéro de contrat'
       ],data:purchases}, { sheet: 'DA', name: "Mes demandes d'achat.xlsx" });
     });
   }

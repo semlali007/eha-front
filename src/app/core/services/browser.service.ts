@@ -39,15 +39,15 @@ export class Browser {
       }
 
       public checkIfFirefox() {
-          var browsername = this.detectName() ;
-          localStorage.setItem('checkbrowser',browsername);
-          if(browsername !== Browser.EDGE){
-            this.toastrService.showGlobalToastr({
-              category: 'danger',
-              message: ""
-              // Le navigateur EDGE est recommandé pour une navigation optimale.
-            });
-          }
+          // var browsername = this.detectName() ;
+          // localStorage.setItem('checkbrowser',browsername);
+          // if(browsername !== Browser.EDGE){
+          //   this.toastrService.showGlobalToastr({
+          //     category: 'danger',
+          //     message: ""
+          //     // Le navigateur EDGE est recommandé pour une navigation optimale.
+          //   });
+          // }
       }
         
     }

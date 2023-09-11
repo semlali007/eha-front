@@ -41,10 +41,10 @@ export class Browser {
       public checkIfFirefox() {
           var browsername = this.detectName() ;
           localStorage.setItem('checkbrowser',browsername);
-          if(browsername !== Browser.FIREFOX && browsername !== Browser.EDGE){
+          if(browsername !== Browser.EDGE){
             this.toastrService.showGlobalToastr({
               category: 'danger',
-              message: "Le navigateur FIREFOX est recommandé pour une navigation optimale."
+              message: "Le navigateur EDGE est recommandé pour une navigation optimale."
             });
           }
       }

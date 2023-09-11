@@ -44,7 +44,7 @@ export class Browser {
           if(browsername !== Browser.EDGE){
             this.toastrService.showGlobalToastr({
               category: 'danger',
-              message: "Le navigateur EDGE est recommandé pour une navigation optimale."
+              // message: "Le navigateur EDGE est recommandé pour une navigation optimale."
             });
           }
       }

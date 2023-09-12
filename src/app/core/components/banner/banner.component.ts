@@ -18,7 +18,7 @@ export class BannerComponent implements OnInit {
   public notification$: Observable<any|null>;
   homePath = 'app/accueil';
   sheetPath ="app/fiches/liste" ;
-  purchasePath ="app/ma-situation-achat" ;
+  purchasePath ="/app/mes-demandes-achat" ;
   public user: User;
   bsModalRef?: BsModalRef;
   data:any={};

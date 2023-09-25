@@ -131,14 +131,23 @@ export class HotlineViewComponent implements OnInit {
     });
   }
 
-  openCloseHotline(){
-    const initialState = {
-      id: this.hotlineId,
-      sha: this.sha
-    };
-    this.bsModalRef = this.modalService.show(HotlineModalCloseComponent, { initialState });
-    this.bsModalRef.content.closeBtnName = 'Fermer';
-    this.bsModalRef.content.closeEvent.subscribe(response => {
+  // openCloseHotline(){
+  //   const initialState = {
+  //     id: this.hotlineId,
+  //     sha: this.sha
+  //   };
+  //   this.bsModalRef = this.modalService.show(HotlineModalCloseComponent, { initialState });
+  //   this.bsModalRef.content.closeBtnName = 'Fermer';
+  //   this.bsModalRef.content.closeEvent.subscribe(response => {
+  //     if (!!response && !!response.message) {
+  //       this.warningMessage = response.message;
+  //     }
+  //     this.loadHotline();
+  //   });
+  // }
+  openCloseHotline() {
+    const params = { id: this.hotlineId, sha: this.sha };
+    this.hotlineService.close(params).subscribe(response => {
       if (!!response && !!response.message) {
         this.warningMessage = response.message;
       }

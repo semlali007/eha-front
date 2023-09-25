@@ -8,7 +8,7 @@
     <div class="modal-body">
         <form [formGroup]="closeForm" (ngSubmit)="submit()">
             <div class="row">
-                <div class="col-3 text-center">
+                <!-- <div class="col-3 text-center">
                     <div style="background-color: green; padding: 5px;">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" name="note" id="note4" type="radio" [formControl]="note"
@@ -47,7 +47,7 @@
                             <label class="form-check-label" for="note1">😠</label>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-12">
                     <div class="form-group">
                         <span class="form-help">&nbsp;<br>Vous pouvez nous laisser un retour ci-dessous avant d'appuyer
@@ -59,7 +59,8 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" [disabled]="!closeForm.valid" (click)="submit()">Valider</button>
+        <button type="button" class="btn btn-primary" (click)="submit()">Valider</button>
+        <!-- <button type="button" class="btn btn-primary" [disabled]="!closeForm.valid" (click)="submit()">Valider</button> -->
         <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
     </div>
 </div>

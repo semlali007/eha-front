@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title">Ajout d'un élément</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form novalidate (ngSubmit)="submit()" [formGroup]="factsheetAddForm">
+        <div class="form-group">
+            <label for="label" ><strong>Nom :</strong><span class="required">*</span></label>
+            <input id="label" [formControl]="label" type="label" class="form-control"  autocorrect="off"
+                autocomplete="off" />
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <strong>Actif</strong>
+            </div>
+            <div class="col-sm-9">
+                <div class="form-check">
+                    <input type="checkbox" formControlName="living" id="living"  class="form-check-input"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submit()"
+        [disabled]="!factsheetAddForm.valid">Valider</button>
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
+</div>

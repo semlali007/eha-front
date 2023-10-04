@@ -6,7 +6,7 @@ import { HotlineGroupRoutingModule } from './hotline-group-routing.module'
 
 
 @NgModule({
-  declarations: [HotlineGroupComponent],
+  declarations: [HotlineGroupComponent, HotlineGroupFormComponent],
   imports: [
     SharedModule,
     HotlineGroupRoutingModule

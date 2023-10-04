@@ -26,11 +26,20 @@
                 {{group.label}}
             </td>
             <td>
-                {{group.living}}
+                {{group.living | showBooleanText}}
             </td>
             <td>
-                <button (click)="update(group)">Modifier</button>
+                <!-- <button class="btn btn-primary" (click)="openAdd(group.id)">Modifier</button> -->
+                <button class="btn btn-primary" (click)="openAdd(group.id.toString())">Modifier</button>
+
             </td>
         </tr>
     </tbody>
 </table>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >true</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >false</button>
+    </div>
+  </ng-template>

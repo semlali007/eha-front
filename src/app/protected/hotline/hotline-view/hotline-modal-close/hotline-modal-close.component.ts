@@ -24,9 +24,10 @@ export class HotlineModalCloseComponent implements OnInit {
   ngOnInit(): void {
     this.closeForm = this.fb.group({
       'message': [''],
-      'note': ['', [
-        Validators.required
-      ]]
+      'note': [''] 
+      // 'note': ['', [
+      //   Validators.required
+      // ]]
     });
   }
 

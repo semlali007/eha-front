@@ -20,24 +20,31 @@ export class HotlineModalCloseComponent implements OnInit {
     private hotlineService: HotlineService,
   ) { }
   get message() { return this.closeForm.get('message') }
-  // get note() { return this.closeForm.get('note') }
+  get note() { return this.closeForm.get('note') }
   ngOnInit(): void {
     this.closeForm = this.fb.group({
       'message': [''],
-      // 'note': [''] 
-      // 'note': ['', [
-      //   Validators.required
-      // ]]
+      'note': ['', [
+        Validators.required
+      ]]
     });
   }
 
   submit(): void {
+    const noteValue = 4;
+
     const params = {
       id: this.id,
       sha: this.sha,
-      // note: this.note.value.trim(),
+      note: noteValue.toString(),
       feedback: this.message.value,
     }
+    // const params = {
+    //   id: this.id,
+    //   sha: this.sha,
+    //   note: this.note.value.trim(),
+    //   feedback: this.message.value,
+    // }
 
     this.hotlineService.close(params).subscribe(response => {
       this.bsModalRef.hide();

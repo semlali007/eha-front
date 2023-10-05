@@ -24,6 +24,8 @@ import { SheetFormPartnershipComponent } from './sheet-form-partnership/sheet-fo
 import { SheetFormProtectedSectorComponent } from './sheet-form-protected-sector/sheet-form-protected-sector.component';
 import { SheetFormModalComponent } from './sheet-form-modal/sheet-form-modal.component';
 import { SheetFormBeneficiariesComponent } from './sheet-form-beneficiaries/sheet-form-beneficiaries.component';
+//
+import { SheetFormStipulationAutruiComponent } from './sheet-form-stipulationAutrui/sheet-form-stipulationAutrui.component';
 import { SheetFormAreasComponent } from './sheet-form-areas/sheet-form-areas.component';
 import { SheetFormDirectionsComponent } from './sheet-form-directions/sheet-form-directions.component';
 import { SheetFormDomainComponent } from './sheet-form-domain/sheet-form-domain.component';
@@ -64,6 +66,7 @@ defineLocale('fr', frLocale);
     SheetFormProtectedSectorComponent,
     SheetFormModalComponent,
     SheetFormBeneficiariesComponent,
+    SheetFormStipulationAutruiComponent,
     SheetFormAreasComponent,
     SheetFormDirectionsComponent,
     SheetFormDomainComponent,

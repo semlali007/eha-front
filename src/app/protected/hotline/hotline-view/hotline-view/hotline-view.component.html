@@ -26,7 +26,7 @@
 						<p *ngIf="row.nature != 'N'">
 							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn btn-link">visualiser</a>
 						</p>
-						<p *ngIf="row.nature == 'N'">
+						<!-- <p *ngIf="row.nature == 'N'">
 							<div *ngIf="row.message == 4" style="display: inline-block; background-color: green; padding: 5px;">
 								<label class="form-check-label">😃</label>
 							</div>
@@ -38,7 +38,7 @@
 							</div>
 							<div *ngIf="row.message == 1" style="display: inline-block; background-color: red; padding: 5px;">
 								<label class="form-check-label">😠</label>
-							</div>
+							</div> -->
 					</div>
 					<div class="timeline-heading">
 						<p><small class="text-muted">{{row.quand| slice:0:10}}</small></p>

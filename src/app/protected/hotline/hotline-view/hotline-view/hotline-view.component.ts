@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HotlineService } from 'src/app/core/services/hotline.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -31,6 +31,7 @@ export class HotlineViewComponent implements OnInit {
   bsModalRef: BsModalRef;
   public subscription: Subscription;
   public user: User;
+  public closeEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private route: ActivatedRoute,
@@ -131,20 +132,35 @@ export class HotlineViewComponent implements OnInit {
     });
   }
 
+  // openCloseHotline(){
+  //   const initialState = {
+  //     id: this.hotlineId,
+  //     sha: this.sha
+  //   };
+  //   this.bsModalRef = this.modalService.show(HotlineModalCloseComponent, { initialState });
+  //   this.bsModalRef.content.closeBtnName = 'Fermer';
+  //   this.bsModalRef.content.closeEvent.subscribe(response => {
+  //     if (!!response && !!response.message) {
+  //       this.warningMessage = response.message;
+  //     }
+  //     this.loadHotline();
+  //   });
+  // }
   openCloseHotline(){
-    const initialState = {
-      id: this.hotlineId,
-      sha: this.sha
+    this.submit(this.hotlineId, this.sha);
+  }
+  submit(id: string, sha: string): void {
+    const params = {
+      id: id,
+      sha: sha,
     };
-    this.bsModalRef = this.modalService.show(HotlineModalCloseComponent, { initialState });
-    this.bsModalRef.content.closeBtnName = 'Fermer';
-    this.bsModalRef.content.closeEvent.subscribe(response => {
-      if (!!response && !!response.message) {
-        this.warningMessage = response.message;
-      }
-      this.loadHotline();
+
+    this.hotlineService.close(params).subscribe(response => {
+      this.bsModalRef.hide();
+      this.closeEvent.emit(response);
     });
   }
+
 
   downloadFile(file){
     this.fileService.sheetDocument({ url: file }).subscribe((response: any) => {

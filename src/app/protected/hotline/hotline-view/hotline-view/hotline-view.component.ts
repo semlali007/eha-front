@@ -158,13 +158,10 @@ export class HotlineViewComponent implements OnInit {
     };
 
     this.hotlineService.close(params).subscribe(response => {
+      if (!!response && !!response.message) {
+        this.warningMessage = response.message;
+        }
       this.isDiscussionClosed = true;
-      this.bsModalRef.hide();
-      // Récupération du message de réponse
-      const message = response.message;
-      this.warningMessage = message;
-
-      // Mettre à jour la hotline
       this.loadHotline();
     });
   }

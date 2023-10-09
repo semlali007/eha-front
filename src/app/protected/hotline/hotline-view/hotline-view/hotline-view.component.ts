@@ -158,6 +158,8 @@ export class HotlineViewComponent implements OnInit {
     this.hotlineService.close(params).subscribe(response => {
       this.bsModalRef.hide();
       this.closeEvent.emit(response);
+
+      this.loadHotline();
     });
   }
 

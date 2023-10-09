@@ -146,6 +146,8 @@ export class HotlineViewComponent implements OnInit {
   //     this.loadHotline();
   //   });
   // }
+  isDiscussionClosed: boolean = false;
+
   openCloseHotline(){
     this.submit(this.hotlineId, this.sha);
   }
@@ -156,9 +158,10 @@ export class HotlineViewComponent implements OnInit {
     };
 
     this.hotlineService.close(params).subscribe(response => {
+      this.isDiscussionClosed = true;
       this.bsModalRef.hide();
       this.closeEvent.emit(response);
-
+    
       this.loadHotline();
     });
   }

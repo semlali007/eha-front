@@ -1,60 +1,176 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+// import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+// import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+// import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
+// import { ContractService } from 'src/app/core/services/contract.service';
+// @Component({
+//   selector: 'app-sheet-form-contracts',
+//   templateUrl: './sheet-form-contracts.component.html',
+//   styles: [
+//   ]
+// })
+// export class SheetFormContractsComponent implements OnInit {
+//   @Input() contracts: FormArray;
+//   @Input() sheetForm: FormGroup;
+//   @Input() lotsList: FormControl;
+//   currentIndex:number;
+  
+//   constructor(private fb: FormBuilder, private contractService: ContractService) { }
+
+//   ngOnInit(): void {
+
+//   }
+
+  
+
+//   onOpenClose(data:any) {
+//     if(data.index == this.currentIndex) {
+//       this.currentIndex = -1;
+//     } else {
+//       this.currentIndex = data.index;
+//     }
+//   }
+
+//   onAddedContract() {
+//     const contractGroup = this.fb.group({
+//       'code': ['', [
+// 				Validators.required,
+// 				Validators.minLength(9),
+// 				Validators.maxLength(10),
+// 			  Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
+// 			],
+//     ],
+//       'provider': '',
+//       'lots': [[]],
+//       'contacts': '',
+      
+//     },
+    
+//    );
+//     this.contracts.push(contractGroup);
+//   }
+
+//    onRemovedContract(index: number) {
+//     this.contracts.removeAt(index);
+//    }
+
+//    isActive(index):boolean {
+//     return index == this.currentIndex;
+//   }
+
+// }
+import { Component, OnInit, Input } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
 import { ContractService } from 'src/app/core/services/contract.service';
+import * as XLSX from 'xlsx';
+
+// Interface pour le type des données du fichier Excel
+interface ExcelDataRow {
+  Code: string;
+  provider: string;
+  Lots: string;
+  Contacts: string;
+}
+
 @Component({
   selector: 'app-sheet-form-contracts',
   templateUrl: './sheet-form-contracts.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class SheetFormContractsComponent implements OnInit {
   @Input() contracts: FormArray;
   @Input() sheetForm: FormGroup;
-  @Input() lotsList: FormControl;
-  currentIndex:number;
-  
-  constructor(private fb: FormBuilder, private contractService: ContractService) { }
+  currentIndex: number;
+  validContracts: FormArray = this.fb.array([]);
+
+  constructor(private fb: FormBuilder, private contractService: ContractService) {}
 
   ngOnInit(): void {
-
+    this.currentIndex = -1;
   }
 
-  
+  onAddedContract() {
+    const contractGroup = this.fb.group({
+      code: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(9),
+          Validators.maxLength(10),
+          Validators.pattern('^C[a-zA-Z0-9]{8,9}$'),
+        ],
+        // [invalidContractCodeValidator(this.contractService)],
+      ],
+      provider: '',
+      lots: [''],
+      contacts: '',
+    });
 
-  onOpenClose(data:any) {
-    if(data.index == this.currentIndex) {
+    this.contracts.push(contractGroup);
+  }
+
+  onRemovedContract(index: number) {
+    this.contracts.removeAt(index);
+  }
+
+  onOpenClose(data: any) {
+    if (data.index === this.currentIndex) {
       this.currentIndex = -1;
     } else {
       this.currentIndex = data.index;
     }
   }
 
-  onAddedContract() {
-    const contractGroup = this.fb.group({
-      'code': ['', [
-				Validators.required,
-				Validators.minLength(9),
-				Validators.maxLength(10),
-			  Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
-			],
-    ],
-      'provider': '',
-      'lots': [[]],
-      'contacts': '',
-      
-    },
-    
-   );
-    this.contracts.push(contractGroup);
+  isActive(index: number): boolean {
+    return index === this.currentIndex;
   }
 
-   onRemovedContract(index: number) {
-    this.contracts.removeAt(index);
-   }
+  handleFileInput(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
 
-   isActive(index):boolean {
-    return index == this.currentIndex;
+      reader.onload = (e: any) => {
+        const workbook = XLSX.read(e.target.result, { type: 'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+
+        const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
+
+        console.log('Données du fichier Excel avant ajout :', data);
+
+        data.forEach((row) => {
+          const contractGroup = this.fb.group({
+            code: [
+              row.Code,
+              [
+                Validators.required,
+                Validators.minLength(9),
+                Validators.maxLength(10),
+                Validators.pattern('^C[a-zA-Z0-9]{8,9}$'),
+              ],
+              // [invalidContractCodeValidator(this.contractService)],
+            ],
+            provider: row.provider,
+            lots: row.Lots,
+            contacts: row.Contacts,
+          });
+
+          if (contractGroup.valid) {
+            this.validContracts.push(contractGroup);
+            console.log('ContratGroup valide ajouté :', contractGroup.value);
+          } else {
+            console.log('ContratGroup invalide. Non ajouté :', contractGroup.value);
+          }
+        });
+      };
+
+      reader.readAsBinaryString(file);
+    }
   }
 
+  removeValidContract(index: number) {
+    this.validContracts.removeAt(index);
+  }
 }
+

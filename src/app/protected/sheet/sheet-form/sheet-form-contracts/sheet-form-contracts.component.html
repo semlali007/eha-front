@@ -1,4 +1,4 @@
-<div [formGroup]="sheetForm" class="form-group">
+<!-- <div [formGroup]="sheetForm" class="form-group">
     <label for="lots"><strong>Contrats :</strong><span class="required">*</span></label>
     <div formArrayName="contracts" class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3" style="max-height: 500px;">
         <app-sheet-form-contracts-item [actualState]="obj" [lotsListForContract]="lotsList.value" *ngFor="let contract of contracts.controls;
@@ -16,4 +16,29 @@
        
     </small>
 
-</div>
+</div> -->
+<div [formGroup]="sheetForm" class="form-group">
+    <label for="lots"><strong>Contrats :</strong><span class="required">*</span></label>
+    <br>
+    <input type="file" id="fileInput" (change)="handleFileInput($event)" accept=".xlsx">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Fournisseur</th>
+          <th scope="col">Lots</th>
+          <th scope="col">Contacts</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contractGroup of validContracts.controls; let i = index">
+          <td>{{ contractGroup.get('code').value }}</td>
+          <td>{{ contractGroup.get('provider').value }}</td>
+          <td>{{ contractGroup.get('lots').value }}</td>
+          <td>{{ contractGroup.get('contacts').value }}</td>
+          <td><button (click)="removeValidContract(i)" class="remove" >-</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

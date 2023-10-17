@@ -245,20 +245,21 @@ export class SheetService {
   }
 
   private getContractForApi(contract: Contract): any {
-    let lotsList = [];
+    // let lotsList = [];
 
-    contract.lots.forEach(lot => {
-      if (!!lot.name && lot.name.length != 0) {
-        lotsList.push(({
-          name: lot.name
-        }));
-      }
-    });
+    // contract.lots.forEach(lot => {
+    //   if (!!lot.name && lot.name.length != 0) {
+    //     lotsList.push(({
+    //       name: lot.name
+    //     }));
+    //   }
+    // });
 
     return {
       contract_code: contract.code,
       provider: contract.provider,
-      lots: lotsList,
+      // lots: lotsList,
+      lots: contract.lots,
       contacts: contract.contacts
     }
   }

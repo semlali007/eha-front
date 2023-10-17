@@ -51,7 +51,7 @@
     <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
     <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
 
-    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm"[contracts]="contracts" [lotsList]="lots" >
+    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm"[contracts]="contracts">  <!-- [lotsList]="lots" > -->
     </app-sheet-form-contracts>
     <app-sheet-form-content [content]="content" *ngIf="fromNetAchat==true" ></app-sheet-form-content>
     <app-sheet-form-status [status]="status"></app-sheet-form-status>

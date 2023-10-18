@@ -136,6 +136,10 @@ handleFileInput(event: any) {
 
       const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
 
+      while (this.contracts.length > 0) {
+        this.contracts.removeAt(0);
+      }
+
       data.forEach((row) => {
         const contractGroup = this.fb.group({
           code: [
@@ -144,7 +148,7 @@ handleFileInput(event: any) {
               Validators.required,
               Validators.minLength(9),
               Validators.maxLength(10),
-              Validators.pattern('^C[a-zA-Z0-9]{8,9}$'),
+              Validators.pattern('^[C]{1}[a-zA-Z0-9]*$'),
             ],
           ],
           provider: row.provider,

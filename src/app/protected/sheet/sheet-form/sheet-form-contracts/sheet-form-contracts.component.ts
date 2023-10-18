@@ -158,6 +158,7 @@ handleFileInput(event: any) {
 
         if (contractGroup.get('code').valid) {
           this.contracts.push(contractGroup);
+          console.log(" les contractsGroup valid", contractGroup);
         } else {
           this.invalidContractsCount++;
         }

@@ -18,62 +18,25 @@
 
 </div> -->
 <div [formGroup]="sheetForm" class="form-group">
-  <label class="form-label"><strong>Contrats :</strong><span class="required">*</span></label>
+  <label for="lots"><strong>Contrats :</strong><span class="required">*</span></label>
   <br>
-  <input type="file" id="fileInput" (change)="handleFileInput($event)" accept=".xlsx">
+  <input type="file" (change)="handleFileInput($event)" accept=".xlsx">
   <div *ngIf="invalidContractsCount > 0" class="alert alert-danger">{{ invalidContractsMessage }}</div>
-  <table class="table table-sm">
-    <thead>
-      <tr>
-        <th scope="col">Code</th>
-        <th scope="col">Fournisseur</th>
-        <th scope="col">Lots</th>
-        <th scope="col">Contacts</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let contractGroup of contracts.controls; let i = index">
-        <td>
-          <div>
-            <input type="text" class="form-control" [formControl]="contractGroup.get('code')" [ngClass]="{'is-invalid': contractGroup.get('code').invalid}"
-              (input)="validateCode(contractGroup)">
-            <div class="spinner-border text-primary" role="status" *ngIf="contractGroup.get('code').pending">
-              <span class="sr-only">Loading...</span>
-            </div>
-            <small *ngIf="contractGroup.get('code').errors && isActive" class="form-text text-danger">
-              <span [hidden]="!contractGroup.get('code').hasError('required')">- Code requis.<br></span>
-              <span [hidden]="!contractGroup.get('code').hasError('minlength')">- Le code doit faire plus de 9 caractères.<br></span>
-              <span [hidden]="!contractGroup.get('code').hasError('maxlength')">- Le code doit faire moins de 10 caractères.<br></span>
-              <span [hidden]="!contractGroup.get('code').hasError('pattern')">- Le code doit commencer par un 'C'.<br></span>
-              <span [hidden]="!contractGroup.get('code').hasError('invalidContractCode')">- Le code n'existe pas.<br></span>
-            </small>
-            <small *ngIf="!contractGroup.get('code').errors && isActive && !contractGroup.get('code').pending" class="form-text text-success">
-              <span [hidden]="!!contractGroup.get('code').errors">- Votre code contrat est valide.<br></span>
-            </small>
-          </div>
-        </td>
-        <td>
-          <input type="text" class="form-control" [formControl]="contractGroup.get('provider')">
-        </td>
-        <td>
-          <input type="text" class="form-control" [formControl]="contractGroup.get('lots')" >
-        </td>
-        <td>
-          <input type="text" class="form-control" [formControl]="contractGroup.get('contacts')" >
-        </td>
-        <td>
-          <button (click)="removeValidContract(i)" class="btn btn-danger">-</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+  <div formArrayName="contracts" class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3" style="max-height: 500px;">
+      <app-sheet-form-contracts-item [actualState]="obj" [lotsListForContract]="lotsList.value" *ngFor="let contract of contracts.controls;
+        index as i;" [index]="i" [contract]="contract" [isActive]="isActive(i)"  (openClose)="onOpenClose($event)" (removedContract)="onRemovedContract($event)" >
+      </app-sheet-form-contracts-item>
+  </div>
   <div class="text">
-      <button (click)="addManualContract()" class="btn btn-primary">Ajouter un contrat</button>
+      <app-sheet-form-contracts-add  (addedContract)="onAddedContract()"  >
+      </app-sheet-form-contracts-add>
   </div>
   <small *ngIf="contracts.errors" class="form-text text-danger">
       <span [hidden]="!contracts.errors.required">
           contrats requis.
       </span>
+     
   </small>
+
 </div>

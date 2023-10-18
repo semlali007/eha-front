@@ -58,70 +58,71 @@
 //   }
 
 // }
-import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
+import { ContractService } from 'src/app/core/services/contract.service';
 import * as XLSX from 'xlsx';
 
 interface ExcelDataRow {
-  Code: string;
+  code: string;
   provider: string;
-  Lots: string;
-  Contacts: string;
+  lots: string;
+  contacts: string;
 }
-  
 @Component({
   selector: 'app-sheet-form-contracts',
   templateUrl: './sheet-form-contracts.component.html',
-  styles: [],
+  styles: [
+  ]
 })
-
 export class SheetFormContractsComponent implements OnInit {
   @Input() contracts: FormArray;
   @Input() sheetForm: FormGroup;
-  currentIndex: number;
+  @Input() lotsList: FormControl;
+  currentIndex:number;
   invalidContractsCount: number = 0;
   invalidContractsMessage: string = '';
-
-  constructor(private fb: FormBuilder) {}
+  
+  constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
   ngOnInit(): void {
-    this.currentIndex = -1;
+
+  }
+  onOpenClose(data:any) {
+    if(data.index == this.currentIndex) {
+      this.currentIndex = -1;
+    } else {
+      this.currentIndex = data.index;
+    }
   }
 
   onAddedContract() {
     const contractGroup = this.fb.group({
-      code: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(9),
-          Validators.maxLength(10),
-          Validators.pattern('^C[a-zA-Z0-9]{8,9}$'),
-        ],
-      ],
-      provider: '',
-      lots: [''],
-      contacts: '',
-    });
-
+      'code': ['', [
+				Validators.required,
+				Validators.minLength(9),
+				Validators.maxLength(10),
+			  Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
+			],
+    ],
+      'provider': '',
+      'lots': [[]],
+      'contacts': '',
+      
+    },
+    
+   );
     this.contracts.push(contractGroup);
   }
 
-  onRemovedContract(index: number) {
+   onRemovedContract(index: number) {
     this.contracts.removeAt(index);
-  }
+   }
 
-onOpenClose(data: any) {
-  if (data.index === this.currentIndex) {
-    this.currentIndex = -1;
-  } else {
-    this.currentIndex = data.index;
+   isActive(index):boolean {
+    return index == this.currentIndex;
   }
-}
-
-isActive(index: number): boolean {
-  return index === this.currentIndex;
-}
 
 handleFileInput(event: any) {
   const file = event.target.files[0];
@@ -138,7 +139,7 @@ handleFileInput(event: any) {
       data.forEach((row) => {
         const contractGroup = this.fb.group({
           code: [
-            row.Code,
+            row.code,
             [
               Validators.required,
               Validators.minLength(9),
@@ -147,8 +148,8 @@ handleFileInput(event: any) {
             ],
           ],
           provider: row.provider,
-          lots: row.Lots,
-          contacts: row.Contacts,
+          lots: row.lots,
+          contacts: row.contacts,
         });
 
         if (contractGroup.get('code').valid) {
@@ -165,41 +166,4 @@ handleFileInput(event: any) {
   }
 }
 
-addManualContract() {
-  const contractGroup = this.fb.group({
-    code: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(9),
-        Validators.maxLength(10),
-        Validators.pattern('^C[a-zA-Z0-9]{8,9}$'),
-      ],
-    ],
-    provider: [''],
-    lots: [''],
-    contacts: [''],
-  });
-
-  this.contracts.push(contractGroup);
-
-  //validation du formulaire
-  this.sheetForm.markAsTouched();
-  this.sheetForm.updateValueAndValidity();
-}
-
-validateCode(contractGroup: FormGroup) {
-  const codeControl = contractGroup.get('code');
-
-  if (codeControl.invalid) {
-    codeControl.markAsTouched();
-    codeControl.setErrors({ invalidCode: true });
-  } else {
-    codeControl.setErrors(null);
-  }
-}
-
-removeValidContract(index: number) {
-  this.contracts.removeAt(index);
-}
 }

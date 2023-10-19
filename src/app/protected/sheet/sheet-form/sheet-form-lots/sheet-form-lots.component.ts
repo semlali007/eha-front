@@ -85,6 +85,7 @@ export class SheetFormLotsComponent implements OnInit {
           });
 
           this.lots.push(lotGroup);
+          console.log("les Lots", this.lots);
         });
       };
 

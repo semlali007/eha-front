@@ -156,6 +156,7 @@ export class SheetFormContractsComponent implements OnInit {
           });
   
           this.contracts.push(contractGroup);
+          console.log("les contracts", this.contracts);
   
           if (!contractGroup.get('code').valid) {
             this.invalidContractsCount++;

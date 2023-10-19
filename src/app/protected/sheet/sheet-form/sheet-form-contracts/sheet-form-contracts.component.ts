@@ -164,9 +164,9 @@ export class SheetFormContractsComponent implements OnInit {
   
         this.invalidContractsMessage = `Il y a ${this.invalidContractsCount} contrat(s) non valide(s).`;
   
-        this.contracts.controls.forEach((contractControl) => {
-          contractControl.get('isActive').setValue(true);
-        });
+        // this.contracts.controls.forEach((contractControl) => {
+        //   contractControl.get('isActive').setValue(true);
+        // });
       };
   
       reader.readAsBinaryString(file);

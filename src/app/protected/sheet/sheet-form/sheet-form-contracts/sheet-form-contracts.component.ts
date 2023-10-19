@@ -181,13 +181,11 @@ handleFileInput(event: any) {
       const worksheet = workbook.Sheets[sheetName];
 
       const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
-      
-      // Clear existing contracts
+
       while (this.contracts.length > 0) {
         this.contracts.removeAt(0);
       }
 
-      // Initialize the counter for invalid contracts
       this.invalidContractsCount = 0;
 
       data.forEach((row) => {
@@ -206,21 +204,27 @@ handleFileInput(event: any) {
           contacts: row.contacts,
         });
 
-        // Add the contract to the FormArray
+        // Ajouter les contracts au FormArray
         this.contracts.push(contractGroup);
 
-        // Check if the 'code' control is valid
+        // vérifier si 'code' control est valid
         if (!contractGroup.get('code').valid) {
           this.invalidContractsCount++;
         }
       });
 
-      // Update the invalidContractsMessage
+      // changé invalidContractsMessage
       this.invalidContractsMessage = `Il y a ${this.invalidContractsCount} contrat(s) non valide(s).`;
+
+      // définir isActive à true for all contracts
+      this.contracts.controls.forEach((contractControl) => {
+        contractControl.get('isActive').setValue(true);
+      });
     };
 
     reader.readAsBinaryString(file);
   }
 }
+
 
 }

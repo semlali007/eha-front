@@ -124,6 +124,52 @@ export class SheetFormContractsComponent implements OnInit {
     return index == this.currentIndex;
   }
 
+// handleFileInput(event: any) {
+//   const file = event.target.files[0];
+//   if (file) {
+//     const reader = new FileReader();
+
+//     reader.onload = (e: any) => {
+//       const workbook = XLSX.read(e.target.result, { type: 'binary' });
+//       const sheetName = workbook.SheetNames[0];
+//       const worksheet = workbook.Sheets[sheetName];
+
+//       const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
+
+//       while (this.contracts.length > 0) {
+//         this.contracts.removeAt(0);
+//       }
+
+//       data.forEach((row) => {
+//         const contractGroup = this.fb.group({
+//           code: [
+//             row.code,
+//             [
+//               Validators.required,
+//               Validators.minLength(9),
+//               Validators.maxLength(10),
+//               Validators.pattern('^[C]{1}[a-zA-Z0-9]*$'),
+//             ],
+//           ],
+//           provider: row.provider,
+//           lots: row.lots,
+//           contacts: row.contacts,
+//         });
+
+//         if (contractGroup.get('code').valid) {
+//           this.contracts.push(contractGroup);
+//           console.log(" les contractsGroup valid", contractGroup);
+//         } else {
+//           this.invalidContractsCount++;
+//         }
+//       });
+
+//       this.invalidContractsMessage = `Il y a ${this.invalidContractsCount} contrat(s) non valide(s).`;
+//     };
+
+//     reader.readAsBinaryString(file);
+//   }
+// }
 handleFileInput(event: any) {
   const file = event.target.files[0];
   if (file) {
@@ -135,10 +181,14 @@ handleFileInput(event: any) {
       const worksheet = workbook.Sheets[sheetName];
 
       const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
-
+      
+      // Clear existing contracts
       while (this.contracts.length > 0) {
         this.contracts.removeAt(0);
       }
+
+      // Initialize the counter for invalid contracts
+      this.invalidContractsCount = 0;
 
       data.forEach((row) => {
         const contractGroup = this.fb.group({
@@ -148,7 +198,7 @@ handleFileInput(event: any) {
               Validators.required,
               Validators.minLength(9),
               Validators.maxLength(10),
-              Validators.pattern('^[C]{1}[a-zA-Z0-9]*$'),
+              Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
             ],
           ],
           provider: row.provider,
@@ -156,14 +206,16 @@ handleFileInput(event: any) {
           contacts: row.contacts,
         });
 
-        if (contractGroup.get('code').valid) {
-          this.contracts.push(contractGroup);
-          console.log(" les contractsGroup valid", contractGroup);
-        } else {
+        // Add the contract to the FormArray
+        this.contracts.push(contractGroup);
+
+        // Check if the 'code' control is valid
+        if (!contractGroup.get('code').valid) {
           this.invalidContractsCount++;
         }
       });
 
+      // Update the invalidContractsMessage
       this.invalidContractsMessage = `Il y a ${this.invalidContractsCount} contrat(s) non valide(s).`;
     };
 

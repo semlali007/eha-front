@@ -152,7 +152,7 @@ export class SheetFormContractsComponent implements OnInit {
           });
           
           this.contracts.push(contractGroup);
-          console.log("contract Ajouter:", contractGroup.value);
+          console.log("contract Ajouter:", contractGroup);
 
          
           if (!contractGroup.get('code').valid) {

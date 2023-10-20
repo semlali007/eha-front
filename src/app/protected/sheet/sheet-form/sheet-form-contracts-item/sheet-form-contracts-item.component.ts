@@ -28,6 +28,8 @@ export class SheetFormContractsItemComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // lotsList
+  console.log("lots list", lotsListForContract);
   }
 
   changeState(index): void {
@@ -49,5 +51,7 @@ export class SheetFormContractsItemComponent implements OnInit {
 	}
 
   get code() { return this.contract.get('code'); }
+
+  
 
 }

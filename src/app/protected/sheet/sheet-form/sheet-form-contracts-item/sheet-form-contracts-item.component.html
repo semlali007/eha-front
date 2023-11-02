@@ -1,48 +1,39 @@
-<div [formGroup]="contract" class="form-group row">
-    <div class="col-2">
-        <input [readonly]="!isActive" formControlName="code" type="text" class="form-control" [placeholder]="'Code contrat'">
-        <div class="spinner-border text-primary" role="status" *ngIf="code.pending">
-            <span class="sr-only">Loading...</span>
-          </div>
-        <small *ngIf="code.errors && isActive" class="form-text text-danger">
-            <span [hidden]="!code.errors.required">- Code requis.<br></span>
-            <span [hidden]="!code.errors.minlength">- Le code doit faire plus de 9 caractères.<br></span>
-            <span [hidden]="!code.errors.maxlength">- Le code doit faire moins de 10 caractères.<br></span>
-            <span [hidden]="!code.errors.pattern">- Le code doit commencer par un 'C'.<br></span>
-            <span [hidden]="!code?.errors?.invalidContractCode">- Le code n'existe pas.<br></span>
-          </small>
-          <small *ngIf="!code.errors && isActive && !code.pending" class="form-text text-success">
-            <span [hidden]="!!code?.errors">- Votre code contrat est valide.<br></span>
-          </small>
-    </div>
-    <div class="col-2">
-        <textarea [readonly]="!isActive" formControlName="provider" class="form-control" [placeholder]="'Fournisseur'"></textarea>
-    </div>
-    <div class="col-5">
-        <editor *ngIf ="isActive" formControlName="contacts" id="contact{{index}}" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
-        <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>
-    </div>
-
-    <div class="col-2">
-        <tag-input formControlName="lots" [onlyFromAutocomplete]="false" [placeholder]="'Entrer un lot'"
-            [secondaryPlaceholder]="'Entrer un lot'" [onlyFromAutocomplete]="true">
-            <tag-input-dropdown [showDropdownIfEmpty]="false" [dynamicUpdate]="false" [focusFirstElement]="false"
-                [displayBy]="'name'" [identifyBy]="'name'" [autocompleteItems]="lotsListForContract">
-                <ng-template let-item="item" let-index="index">
-                    {{ item.name }}
-                </ng-template>
-            </tag-input-dropdown>
-        </tag-input>
-    </div>
-    <div class="col">
-        <div class="row">
-            <button class="remove col" (click)="confirmation(template)" type="button">-</button>
-            <button class="edit col" (click)="changeState(index)" type="button"><i>&#9998;</i></button>
-        </div> 
-    </div>
-
-</div>
-
+<!-- <div [formGroup]="contract" class="form-group row" >
+<table class="table table-striped table-hover">				
+	<tbody [ngClass]="{'bg-light text-dark': !isActive, 'bg-white text-black': isActive}">
+		<tr >
+			<td>
+                <input [readonly]="!isActive" formControlName="code" type="text" class="form-control" [placeholder]="'Code contrat'">
+                <div class="spinner-border text-primary" role="status" *ngIf="code.pending">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <small *ngIf="code.errors && isActive" class="form-text text-danger">
+                    <span [hidden]="!code.errors.required">- Code requis.<br></span>
+                    <span [hidden]="!code.errors.minlength">- Le code doit faire plus de 9 caractères.<br></span>
+                    <span [hidden]="!code.errors.maxlength">- Le code doit faire moins de 10 caractères.<br></span>
+                    <span [hidden]="!code.errors.pattern">- Le code doit commencer par un 'C'.<br></span>
+                    <span [hidden]="!code?.errors?.invalidContractCode">- Le code n'existe pas.<br></span>
+                </small>
+                <small *ngIf="!code.errors && isActive && !code.pending" class="form-text text-success">
+                    <span [hidden]="!!code?.errors">- Votre code contrat est valide.<br></span>
+                </small>
+            </td>
+			<td>
+                <textarea [readonly]="!isActive" formControlName="provider" class="form-control" style="height: 250px;" [placeholder]="'Fournisseur'"></textarea>
+            </td>
+			<td>
+                <textarea [readonly]="!isActive" formControlName="contacts" class="form-control" style="height: 250px;" [placeholder]="'Contacts'"></textarea>
+            </td>
+			<td>
+                <input [readonly]="!isActive" formControlName="lots" class="form-control" [placeholder]="'lots'">
+            </td>
+			<td>
+				<button class="remove" style="width: 40px; height: 40px;padding: 5;" (click)="confirmation(template)" type="button">-</button>
+            <button class="edit" style="width: 40px; height: 40px;padding: 5;" (click)="changeState(index)" type="button"><i>&#9998;</i></button>
+			</td>
+		</tr>
+	</tbody>				
+</table>
 <br><br>
 <ng-template #template>
   <div class="modal-body text-center">
@@ -51,3 +42,94 @@
     <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
   </div>
 </ng-template>
+ -->
+ <!-- <div [formGroup]="contract" class="form-group row">
+    <table class="table table-striped table-hover">
+        <tbody [ngClass]="{'bg-light text-dark': !isActive, 'bg-white text-black': isActive}">
+            <tr>
+                <td>
+                    <input [readonly]="!isActive" formControlName="code" type="text" class="form-control border-0" [placeholder]="'Code contrat'">
+                    <div class="spinner-border text-primary" role="status" *ngIf="code.pending">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <small *ngIf="code.errors && isActive" class="form-text text-danger">
+                        <span [hidden]="!code.errors.required">- Code requis.<br></span>
+                        <span [hidden]="!code.errors.minlength">- Le code doit faire plus de 9 caractères.<br></span>
+                        <span [hidden]="!code.errors.maxlength">- Le code doit faire moins de 10 caractères.<br></span>
+                        <span [hidden]="!code.errors.pattern">- Le code doit commencer par un 'C'.<br></span>
+                        <span [hidden]="!code?.errors?.invalidContractCode">- Le code n'existe pas.<br></span>
+                    </small>
+                    <small *ngIf="!code.errors && isActive && !code.pending" class="form-text text-success">
+                        <span [hidden]="!!code?.errors">- Votre code contrat est valide.<br></span>
+                    </small>
+                </td>
+                <td>
+                    <textarea [readonly]="!isActive" formControlName="provider" class="form-control border-0" style="max-height: 400px; width: 250px;" [placeholder]="'Fournisseur'"></textarea>
+                </td>
+                <td>
+                    <textarea [readonly]="!isActive" formControlName="contacts" class="form-control border-0" style="max-height: 400px; width: 350px;" [placeholder]="'Contacts'"></textarea>
+                </td>
+                <td>
+                    <input [readonly]="!isActive" formControlName="lots" class="form-control border-0" style="width: 100px;"[placeholder]="'lots'">
+                </td>
+                <td>
+                    <button class="remove" style="width: 40px; height: 40px; padding: 5;" (click)="confirmation(template)" type="button">-</button>
+                    <button class="edit" style="width: 40px; height: 40px; padding: 5;" (click)="changeState(index)" type="button"><i>&#9998;</i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <ng-template #template>
+        <div class="modal-body text-center">
+            <p>Voulez-vous confirmer la suppression ?</p>
+            <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
+            <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+        </div>
+    </ng-template>
+</div> -->
+<div [formGroup]="contract" class="form-group row">
+    <table class="table table-striped table-hover" style="background-color: #59a1a079;">
+        <tbody [ngClass]="{'bg-light text-dark': !isActive, 'bg-white text-black': isActive}">
+            <tr>
+                <td>
+                    <input [readonly]="!isActive" formControlName="code" type="text" class="form-control border-0" [placeholder]="'Code contrat'">
+                    <div class="spinner-border text-primary" role="status" *ngIf="code.pending">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <small *ngIf="code.errors && isActive" class="form-text text-danger">
+                        <span [hidden]="!code.errors.required">- Code requis.<br></span>
+                        <span [hidden]="!code.errors.minlength">- Le code doit faire plus de 9 caractères.<br></span>
+                        <span [hidden]="!code.errors.maxlength">- Le code doit faire moins de 10 caractères.<br></span>
+                        <span [hidden]="!code.errors.pattern">- Le code doit commencer par un 'C'.<br></span>
+                        <span [hidden]="!code?.errors?.invalidContractCode">- Le code n'existe pas.<br></span>
+                    </small>
+                    <small *ngIf="!code.errors && isActive && !code.pending" class="form-text text-success">
+                        <span [hidden]="!!code?.errors">- Votre code contrat est valide.<br></span>
+                    </small>
+                </td>
+                <td>
+                    <textarea [readonly]="!isActive" formControlName="provider" class="form-control border-0" style="max-height: 400px; width: 250px; " [placeholder]="'Fournisseur'"></textarea>
+                </td>
+                <td>
+                    <textarea [readonly]="!isActive" formControlName="contacts" class="form-control border-0" style="max-height: 400px; width: 350px; " [placeholder]="'Contacts'"></textarea>
+                </td>
+                <td>
+                    <input [readonly]="!isActive" formControlName="lots" class="form-control border-0" style="width: 100px;" [placeholder]="'lots'">
+                </td>
+                <td>
+                    <button class="remove" style="width: 40px; height: 40px; padding: 5;" (click)="confirmation(template)" type="button">-</button>
+                    <button class="edit" style="width: 40px; height: 40px; padding: 5;" (click)="changeState(index)" type="button"><i>&#9998;</i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <ng-template #template>
+        <div class="modal-body text-center">
+            <p>Voulez-vous confirmer la suppression ?</p>
+            <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
+            <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+        </div>
+    </ng-template>
+</div>

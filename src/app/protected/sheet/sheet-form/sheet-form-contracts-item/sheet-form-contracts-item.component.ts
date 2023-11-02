@@ -17,7 +17,7 @@ export class SheetFormContractsItemComponent implements OnInit {
   @Input() actualState: boolean;
   
   @Input() isActive: boolean;
-  @Input() lotsListForContract: FormControl;
+  // @Input() lotsListForContract: FormControl;
 
   @Output() removedContract = new EventEmitter<number>();
   @Output() openClose = new EventEmitter<{index:number}>();
@@ -27,10 +27,7 @@ export class SheetFormContractsItemComponent implements OnInit {
   constructor(private modalService: BsModalService) { }
 
 
-  ngOnInit(): void {
-    // lotsList
-  console.log("lots list for contract", this.lotsListForContract);
-  }
+  ngOnInit(): void { }
 
   changeState(index): void {
     this.openClose.emit({index:index});

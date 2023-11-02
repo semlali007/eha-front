@@ -12,6 +12,7 @@ import { LoaderService } from './loader.service';
 import { tap, catchError, finalize, switchMap } from 'rxjs/operators'; // ajouter switchMap
 import { of, Observable } from 'rxjs';
 import { Beneficiary } from 'src/app/shared/models/beneficiary';
+import { Stipulation } from 'src/app/shared/models/stipulation';//**************** */
 import { Area } from 'src/app/shared/models/area';
 import { Direction } from 'src/app/shared/models/direction';
 import { DateService } from 'src/app/core/services/date.service';
@@ -56,7 +57,7 @@ export class SheetService {
     const data = this.getSheetForApi(sheet);
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
-    console.log('data', data);
+    console.log('les data ********', data);
     return this.http.post(url, fd).pipe(
       switchMap(data => {
         return of(data);
@@ -133,6 +134,7 @@ export class SheetService {
     const contracts: Object = this.getContractListForApi(sheet.contracts);
     const providers: Object = this.getProviderListForApi(sheet.providers);
     const beneficiaries: Object = this.getBeneficiaryListForApi(sheet.beneficiaries);
+    const stipulationAutrui: Object = this.getStipulationListForApi(sheet.stipulationAutrui);//
     const areas: Object = this.getAreasListForApi(sheet.areas);
     const directions: Object = this.getDirectionsListForApi(sheet.directions);
     return {
@@ -152,6 +154,7 @@ export class SheetService {
       protected_sector: sheet.protectedSector,
       providers: providers || [],
       filiales: beneficiaries || [],
+      filiales0: stipulationAutrui || [],
       zones: areas || [],
       groups: directions || [],
       committee: sheet.committee.code,
@@ -232,6 +235,21 @@ export class SheetService {
     return pList;
   }
 
+  // 
+  private getStipulationListForApi(stipulationAutrui: Stipulation[]): any {
+    let pList = [];
+
+    stipulationAutrui.forEach(p => {
+      if (!!p.code && p.code.length != 0) {
+        pList.push({
+          id: p.code,
+          name: p.label
+        })
+      }
+    });
+    console.log( 'la plist', pList);
+    return pList;
+  }
   private getContractListForApi(contracts: Contract[]): any {
     let contractList = [];
 
@@ -327,6 +345,7 @@ export class SheetService {
             dauphin: sheetData.filter.dauphin,
             status: statusList,
             beneficiaries: sheetData.filter.beneficiaries,
+            stipulationAutrui: sheetData.filter.stipulationAutrui,//**** */
             areas: sheetData.filter.areas,
             providers: sheetData.filter.providers,
             directions: sheetData.filter.directions,
@@ -415,7 +434,15 @@ export class SheetService {
       });
       beneficiaries.push(p);
     });
-
+    //
+    const stipulationAutrui: Stipulation[] = [];
+    fields.filiales0.forEach(data => {
+      const p: Stipulation = new Stipulation({
+        code: data.id,
+        label: data.name,
+      });
+      stipulationAutrui.push(p);
+    });
     const areas: Area[] = [];
     fields.zones.forEach(data => {
       const p: Area = new Area({
@@ -510,6 +537,7 @@ export class SheetService {
       protected_sector: fields.protected_sector,
       providers: providers,
       beneficiaries: beneficiaries,
+      stipulationAutrui: stipulationAutrui,//** */
       areas: areas,
       directions: directions,
       documents: documents,

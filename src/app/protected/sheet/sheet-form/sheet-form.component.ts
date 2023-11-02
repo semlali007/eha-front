@@ -47,6 +47,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   public data = {
     subscribe: [],
     beneficiaries: [],
+    stipulationAutrui: [],// ****
     edfOpen: [],
     partnership: [],
     sector: [],
@@ -74,6 +75,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       protected_sector: '',
       dauphin: '',
       beneficiaries: [],
+      stipulationAutrui: [],
       areas: [],
       providers: [],
       directions: [],
@@ -127,6 +129,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get protected_sector() { return this.sheetForm.get('protected_sector') }
   get providers() { return this.sheetForm.get('providers') as any; }
   get beneficiaries() { return this.sheetForm.get('beneficiaries') as any; }
+  get stipulationAutrui() { return this.sheetForm.get('stipulationAutrui') as any}//*
   get areas() { return this.sheetForm.get('areas') as any; }
   get directions() { return this.sheetForm.get('directions') as any; }
   get domains() { return this.sheetForm.get('domains') as any; }
@@ -185,8 +188,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         Validators.required,
         Validators.minLength(4),
       ]],
-      'contracts': this.fb.array([], [
-			]),
+      'contracts': this.fb.array([]), //*************** */
       'lots': this.fb.array([]),
       'comments': '',
       'words': [''],
@@ -202,6 +204,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'beneficiaries': [[], [
 				Validators.required,
 			]],
+      'stipulationAutrui':[[]],//********* */
       'areas': [[], [
 				Validators.required,
 			]],
@@ -286,6 +289,22 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     });
 
     this.beneficiaries.setValue(beneficiariesList);
+    //
+    let stipulationAutruiList = [];
+    sheet.stipulationAutrui.forEach(stipulation => {
+      stipulationAutruiList.push(
+        {
+          code: stipulation.code,
+          label: stipulation.label,
+          display: stipulation.label,
+          value: stipulation.label,
+        }
+      );
+    });
+
+    this.stipulationAutrui.setValue(stipulationAutruiList);
+    
+    //
     let directionsList = [];
     sheet.directions.forEach(direction => {
       directionsList.push(
@@ -335,17 +354,18 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       });
       this.lots.push(lotField);
     });
+
     if(this.fromNetAchat == false){
     sheet.contracts.forEach(contract => {
-      let contractLots = [];
-      contract.lots.forEach(contractlot => {
-        contractLots.push({
-          name: contractlot.name,
-          description: contractlot.description,
-          display: contractlot.name,
-          value: contractlot.name,
-        });
-      });
+      // let contractLots = [];
+      // contract.lots.forEach(contractlot => {
+      //   contractLots.push({
+      //     name: contractlot.name,
+      //     description: contractlot.description,
+      //     display: contractlot.name,
+      //     value: contractlot.name,
+      //   });
+      // });
      
 
      
@@ -360,11 +380,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       ],
         provider: contract.provider,
         contacts: contract.contacts,
-        lots: [contractLots]
+        lots: contract.lots
       }
       );
 
       this.contracts.push(contractField);
+      console.log(" ici les contrats",this.contracts);
     });
   }
     sheet.documents.forEach((document) => {
@@ -443,6 +464,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       lots: this.lots.value,
       providers: this.providers.value,
       beneficiaries: this.beneficiaries.value,
+      stipulationAutrui: this.stipulationAutrui.value,//
       areas : this.areas.value,
       directions: this.directions.value,
       domains: this.domains.value,

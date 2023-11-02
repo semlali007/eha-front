@@ -36,6 +36,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   public filter = {
     subscribe: [],
     beneficiaries: [],
+    stipulationAutrui: [],//
     edfOpen: [],
     partnership: [],
     sector: [],
@@ -61,6 +62,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       protected_sector: '',
       dauphin: '',
       beneficiaries: [],
+      stipulationAutrui: [],//
       areas: [],
       providers: [],
       directions: [],
@@ -78,6 +80,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     sector: '',
     dauphin: '',
     beneficiaries: [],
+    stipulationAutrui: [],//
     providers: [],
     directions: [],
     committees: [],
@@ -127,6 +130,11 @@ export class SheetListComponent implements OnInit, OnDestroy {
     this.initFilterInput();
     if(this.filterInput.beneficiaries) {
       this.filterInput.beneficiaries.forEach(element => {
+        this.data.push(element);
+      });
+    }
+    if(this.filterInput.stipulationAutrui) {//
+      this.filterInput.stipulationAutrui.forEach(element => {
         this.data.push(element);
       });
     }
@@ -184,6 +192,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
         protected_sector: this.filterInput.sector,
         dauphin: this.filterInput.dauphin,
         beneficiaries: this.filterInput.beneficiaries,
+        stipulationAutrui: this.filterInput.stipulationAutrui,//
         areas: this.filterInput.areas,
         providers: this.filterInput.providers,
         directions: this.filterInput.directions,
@@ -212,6 +221,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       sector: '',
       dauphin: '',
       beneficiaries: [],
+      stipulationAutrui: [],
       providers: [],
       directions: [],
       committees: [],
@@ -260,6 +270,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       sector: this.defaultFilter.search.protected_sector,
       dauphin: this.defaultFilter.search.dauphin,
       beneficiaries: this.defaultFilter.search.beneficiaries,
+      stipulationAutrui: this.defaultFilter.search.stipulationAutrui,//
       providers: this.defaultFilter.search.providers,
       directions: this.defaultFilter.search.directions,
       committees: this.defaultFilter.search.committees,

@@ -3,6 +3,7 @@ import { Lot } from './lot';
 import { Provider } from './provider';
 import { Document } from './document';
 import { Beneficiary } from './beneficiary';
+import { Stipulation } from './stipulation';//*** */
 import { Area } from './area';
 import { Direction } from './direction';
 import { Committee } from './committee';
@@ -26,6 +27,7 @@ export class Sheet {
     protectedSector: boolean;
     providers: Provider[];
     beneficiaries: Beneficiary[];
+    stipulationAutrui: Stipulation[];//*************************************** */
     areas: Area[];
     directions: Direction[];
     documents: Document[];
@@ -60,6 +62,7 @@ export class Sheet {
         protected_sector?: boolean,
         providers?: Provider[],
         beneficiaries?: Beneficiary[],
+        stipulationAutrui?: Stipulation[],//************** */
         areas?: Area[],
         directions?: Direction[],
         documents?: Document[],
@@ -94,6 +97,7 @@ export class Sheet {
         this.protectedSector = options.protected_sector || false;
         this.providers = options.providers || [];
         this.beneficiaries = options.beneficiaries || [];
+        this.stipulationAutrui = options.stipulationAutrui || [];//*************************** */
         this.areas = options.areas || [];
         this.directions = options.directions || [];
         this.documents = options.documents || [];

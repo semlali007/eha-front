@@ -59,7 +59,7 @@
                                         <div>
                                             <strong>{{ item.label }}</strong>
                                             <span style="float:right">
-                                                <button type="button" class="btn btn-danger float-left initial" *ngIf="type == 'provider' || type=='beneficiary'"(click)="remove(item)" >
+                                                <button type="button" class="btn btn-danger float-left initial" *ngIf="type == 'provider' || type=='beneficiary' " (click)="remove(item)" >
                                                     Supprimer
                                                 </button></span>
                                                 <span>&nbsp;</span>
@@ -85,6 +85,7 @@
                               </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <div>

@@ -17,6 +17,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   @Input() filter: any = {
     subscribe: [],
     beneficiaries: [],
+    stipulationAutrui: [],//**** */
     edfOpen: [],
     partnership: [],
     sector: [],
@@ -42,6 +43,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   get sector() { return this.sheetFilterForm.get('sector') }
   get dauphin() { return this.sheetFilterForm.get('dauphin') }
   get beneficiaries() { return this.sheetFilterForm.get('beneficiaries') }
+  get stipulationAutrui() { return this.sheetFilterForm.get('stipulationAutrui')} // ***
   get areas() { return this.sheetFilterForm.get('areas') }
   get providers() { return this.sheetFilterForm.get('providers') }
   get directions() { return this.sheetFilterForm.get('directions') }
@@ -68,6 +70,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'sector': [(this.defaultFilter.protected_sector === '') ? 'all' : this.defaultFilter.protected_sector],
       'dauphin': [(this.defaultFilter.dauphin === '') ? 'all' : this.defaultFilter.dauphin],
       'beneficiaries': [this.defaultFilter.beneficiaries],
+      'stipulationAutrui': [this.defaultFilter.stipulationAutrui],//*** */
       'areas': [this.defaultFilter.areas],
       'providers': [this.defaultFilter.providers],
       'directions': [this.defaultFilter.directions],
@@ -85,6 +88,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'sector': ['all'],
       'dauphin': ['all'],
       'beneficiaries': [[]],
+      'stipulationAutrui': [[]],
       'areas': [[]],
       'providers': [[]],
       'directions': [[]],

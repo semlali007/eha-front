@@ -9,6 +9,7 @@ export class Profil {
     employeeType: string;
     gardianHierarchie: string;
     filiales: Filiale[];
+    filiales0: Filiale[];
     givenName: string;
     roles: Role[];
 
@@ -20,6 +21,7 @@ export class Profil {
         employeeType?: string,
         gardianHierarchie?: string,
         filiales?: Filiale[],
+        filiales0?: Filiale[],
         givenName?: string,
         roles?: Role[]
     } = {}) {
@@ -30,6 +32,7 @@ export class Profil {
         this.employeeType = options.employeeType || '';
         this.gardianHierarchie = options.gardianHierarchie || '';
         this.filiales = options.filiales || [];
+        this.filiales0 = options.filiales0 || [];
         this.givenName = options.givenName || '';
         this.roles = options.roles || [];
     }

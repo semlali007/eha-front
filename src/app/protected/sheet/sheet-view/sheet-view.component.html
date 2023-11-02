@@ -107,12 +107,12 @@
                     {{edf_open | showBooleanText}}
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0">
+            <!-- <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Stipulation pour autrui</strong></div>
                 <div class="col-9">
                     {{stipulation_for_others | showBooleanText}}
                 </div>
-            </li>
+            </li> -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Partenariat de productivité</strong></div>
                 <div class="col-9">
@@ -140,6 +140,15 @@
                 <div *ngFor="let beneficiary of beneficiaries" class="StatutEn-instruction">
                     <span class="En-instruction Body---16---Regular">
                         {{beneficiary.label}}
+                    </span>
+                </div>
+            </li>
+            <!-- ***************************************** -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Stipulation pour autrui</strong></div>
+                <div *ngFor="let stipulation of stipulationAutrui" class="StatutEn-instruction">
+                    <span class="En-instruction Body---16---Regular">
+                        {{stipulation.label}}
                     </span>
                 </div>
             </li>
@@ -277,9 +286,9 @@
                         (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0"
                         (click)="showContract(contract)" class="blue_link">
                         <div class="row" accordion-heading>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" >
                                 <ul class="list-group list-group-horizontal">
-                                    <li *ngFor="let lot of contract.lots" class="list-group-item"> {{lot.name}} </li>
+                                    <li class="list-group-item">  {{contract.lots}} </li>
                                 </ul>
                             </div>
                             <div class="col-sm-3">
@@ -294,7 +303,7 @@
                         </div>
                     </accordion-group>
         
-                    <accordion-group #group [isDisabled]="true" *ngIf="lots.length>0">
+                    <!-- <accordion-group #group [isDisabled]="true" *ngIf="lots.length>0">
                         <div class="row" accordion-heading>
                             <ul>
                                 <li *ngFor="let lot of lots">
@@ -302,7 +311,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </accordion-group>
+                    </accordion-group> -->
         
                 </accordion>
             </div>

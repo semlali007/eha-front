@@ -43,6 +43,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public protected_sector: any;
   public providers: Object[] = [];
   public beneficiaries: Object[] = [];
+  public stipulationAutrui: Object[] = [];
   public areas: Object[] = [];
   public directions: Object[] = [];
   public status: any;
@@ -79,6 +80,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.route.params.subscribe(params => {
       console.log('params', params);
+      console.log("ici les contract", this.contracts);
       if (params.id) {
        // this.router.navigate([`app/fiches/details/${sheetId}`], { queryParams: { history: 'history' } });
         this.sheetId = params.id;
@@ -160,6 +162,15 @@ export class SheetViewComponent implements OnInit, OnDestroy {
         }
       );
     });
+    // ***************
+    sheet.stipulationAutrui.forEach(stipulation => {
+      this.stipulationAutrui.push(
+        {
+          code: stipulation.code,
+          label: stipulation.label,
+        }
+      );
+    });
 
     sheet.directions.forEach(direction => {
       this.directions.push(
@@ -185,14 +196,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     });
 
     sheet.contracts.forEach(contract => {
-      let contractLots = [];
-      contract.lots.forEach(contractlot => {
-        contractLots.push({
-          name: contractlot.name,
-          description: contractlot.description,
-        });
-      });
-
       let systems = [];
       contract.systems.forEach(
         system => {
@@ -209,12 +212,45 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       const contractField = {
         code: contract.code,
         provider: contract.provider,
-        lots: contractLots,
+        lots: contract.lots,
         contacts: contract.contacts,
         systems: systems,
       };
       this.contracts.push(contractField);
+      
     });
+
+    // sheet.contracts.forEach(contract => {
+    //   let contractLots = [];
+    //   contract.lots.forEach(contractlot => {
+    //     contractLots.push({
+    //       name: contractlot.name,
+    //       description: contractlot.description,
+    //     });
+    //   });
+
+    //   let systems = [];
+    //   contract.systems.forEach(
+    //     system => {
+    //       if (!!system) {
+    //         let itemSystem = system.split('__');
+    //         if (itemSystem.length > 0 && !!itemSystem[0] && itemSystem[0].length > 0) {
+    //           systems.push({
+    //             code: itemSystem[0],
+    //             label: itemSystem[1],
+    //           });
+    //         }
+    //       }
+    //     })
+    //   const contractField = {
+    //     code: contract.code,
+    //     provider: contract.provider,
+    //     lots: contractLots,
+    //     contacts: contract.contacts,
+    //     systems: systems,
+    //   };
+    //   this.contracts.push(contractField);
+    // });
 
     sheet.documents.forEach((document) => {
       switch (document.type) {

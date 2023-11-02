@@ -74,7 +74,7 @@ export class SheetFormStipulationAutruiComponent implements OnInit {
 
       this.bsModalRef = this.modalService.show(SheetFormModalComponent, { initialState });
       this.bsModalRef.content.event.subscribe(res => {
-        this.stipulationAutrui.setValue([res.data.value]);
+        this.stipulationAutrui.setValue(res.data.value);
       });
 
       this.bsModalRef.content.addElementEvent.subscribe(res => {

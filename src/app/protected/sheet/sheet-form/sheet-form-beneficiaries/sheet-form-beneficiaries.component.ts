@@ -72,7 +72,7 @@ export class SheetFormBeneficiariesComponent implements OnInit {
 
       this.bsModalRef = this.modalService.show(SheetFormModalComponent, { initialState });
       this.bsModalRef.content.event.subscribe(res => {
-        this.beneficiaries.setValue([res.data.value]);
+        this.beneficiaries.setValue(res.data.value);
       });
 
       this.bsModalRef.content.addElementEvent.subscribe(res => {

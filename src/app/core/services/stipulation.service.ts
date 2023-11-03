@@ -85,7 +85,7 @@ export class StipulationService {
 
   filter(params): Observable<any | null> {
     let url = `${this.appConfigService.basePath}/sheets/filter`;
-    const data = { "type": 'stipulation', "code": params.code };
+    const data = { "type": 'beneficiary', "code": params.code };
     this.loaderService.setLoading(true);
     return this.http.post(url, data).pipe(
       switchMap((response: any) => {

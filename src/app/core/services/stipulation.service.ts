@@ -20,7 +20,7 @@ export class StipulationService {
     ) { };
 
   public requestAutocompleteItems(text: string): Observable<any> {
-    const url = `${this.appConfigService.basePath}/beneficiaries/autocomplete/${text}`;
+    const url = `${this.appConfigService.basePath}/stipulationAutrui/autocomplete/${text}`;
 
     return this.http
       .get<any>(url)
@@ -43,7 +43,7 @@ export class StipulationService {
 
 
   public getList(params: any): Observable<any> {
-    const url = `${this.appConfigService.basePath}/beneficiaries/search`;
+    const url = `${this.appConfigService.basePath}/stipulationAutrui/search`;
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
@@ -69,7 +69,7 @@ export class StipulationService {
   }
 
   public add(stipulation: Stipulation): Observable<any> {
-    const url = `${this.appConfigService.basePath}/beneficiaries/add`;
+    const url = `${this.appConfigService.basePath}/stipulationAutrui/add`;
     const data =  {"name":stipulation.label,"action":"add"};
     this.loaderService.setLoading(true);
 
@@ -85,7 +85,7 @@ export class StipulationService {
 
   filter(params): Observable<any | null> {
     let url = `${this.appConfigService.basePath}/sheets/filter`;
-    const data = { "type": 'beneficiary', "code": params.code };
+    const data = { "type": 'stipulation', "code": params.code };
     this.loaderService.setLoading(true);
     return this.http.post(url, data).pipe(
       switchMap((response: any) => {
@@ -99,7 +99,7 @@ export class StipulationService {
   }
 
   public remove(params): Observable<any> {
-    let url = `${this.appConfigService.basePath}/beneficiaries/remove/${params.code}`;
+    let url = `${this.appConfigService.basePath}/stipulationAutrui/remove/${params.code}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       tap(_ => this.toastrService.showToastr({

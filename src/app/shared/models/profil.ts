@@ -1,4 +1,5 @@
 import { Filiale } from "./filiale";
+import { Filiale0 } from "./filiale0";
 import { Role } from "./role";
 
 export class Profil {
@@ -9,7 +10,7 @@ export class Profil {
     employeeType: string;
     gardianHierarchie: string;
     filiales: Filiale[];
-    filiales0: Filiale[];
+    filiales0: Filiale0[];
     givenName: string;
     roles: Role[];
 
@@ -21,7 +22,7 @@ export class Profil {
         employeeType?: string,
         gardianHierarchie?: string,
         filiales?: Filiale[],
-        filiales0?: Filiale[],
+        filiales0?: Filiale0[],
         givenName?: string,
         roles?: Role[]
     } = {}) {

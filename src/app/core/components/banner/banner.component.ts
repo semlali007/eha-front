@@ -37,6 +37,10 @@ export class BannerComponent implements OnInit {
       this.authService.user$.subscribe(user => {
         this.user = user;
       });
+      //log
+      this.notification$.subscribe(notification => {
+        console.log('Notification data:', notification);
+      });
   }
 
    ngOnDestroy() {

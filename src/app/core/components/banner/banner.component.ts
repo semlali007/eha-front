@@ -59,6 +59,9 @@ export class BannerComponent implements OnInit {
     this.notificationService.getUserNotification({nni:this.user.nni}).subscribe(data => {
       this.list = data;
       console.log('voici les data de Notification :', data);
+      // Mise à jour de la notification$
+      this.notification$ = this.notificationService.notification$;
+      
       const initialState = {
         title: 'test',
         list: this.list,

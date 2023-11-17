@@ -25,27 +25,21 @@
             <td style="padding-top: 8px;" *ngIf="!!user && user.nni">
               <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png"></a>
       
-                <span (click)="openModal()" style="cursor:pointer">
-                  <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
-                  <span *ngIf="(notification$ | async) as notification; else noNotification"
-                        style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">
-                    {{ notification && notification.count }}
-                  </span>
-                </span>
-              <!-- <ng-container *ngIf="(notification$ | async) as notification; else noNotification">
+              <ng-container *ngIf="(notification$ | async) as notification; else noNotification">
+
                 <span (click)="openModal()" style="cursor:pointer">
                   <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
                   <span *ngIf="notification && notification.count > 0" style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">
                     {{ notification.count }}
                   </span>
                 </span>
-              </ng-container> -->
+              </ng-container>
               
-              <!-- <ng-template #noNotification>
+              <ng-template #noNotification>
                 <span (click)="openModal()" style="cursor:pointer">
                   <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" />
                 </span>
-              </ng-template> -->
+              </ng-template>
             </td>
           </tr>
           <tr *ngIf="!!user && user.nni" >

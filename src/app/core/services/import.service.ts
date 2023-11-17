@@ -35,7 +35,7 @@ export class ImportService {
         if (!!data.color && data.color === 'green') {
           this.toastrService.showToastr({
             category: 'success',
-            message: 'Votre Fiche a été enregistrée avec succès.'
+            message: 'Votre fiche a été enregistrée avec succès.'
           })
         }else{
           throw data.message;

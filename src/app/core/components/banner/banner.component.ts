@@ -60,8 +60,8 @@ export class BannerComponent implements OnInit {
       this.list = data;
       console.log('voici les data de Notification :', data);
       // Mise à jour de la notification$
-      this.notification$ = this.notificationService.notification$;
-      
+      this.notificationService.updateNotification(data);
+
       const initialState = {
         title: 'test',
         list: this.list,

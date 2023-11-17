@@ -43,7 +43,7 @@ export class SheetService {
     switch(params.draft) { 
       case false: {
         url = `${this.appConfigService.basePath}/sheets/add`;
-        message = 'Votre Fiche a été enregistrée avec succès.'
+        message = 'Votre fiche a été enregistrée avec succès.'
         this.loaderService.setLoading(true);
          break; 
       } 
@@ -102,7 +102,7 @@ export class SheetService {
     switch(params.draft) { 
       case false: {
         url = `${this.appConfigService.basePath}/sheets/save`;
-        message = 'Votre Fiche a été enregistrée avec succès.'
+        message = 'Votre fiche a été enregistrée avec succès.'
         this.loaderService.setLoading(true);
          break; 
       } 

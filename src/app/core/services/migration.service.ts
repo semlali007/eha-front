@@ -61,7 +61,7 @@ export class MigrationService {
         } else {
           this.toastrService.showToastr({
             category: 'success',
-            message: 'Votre Fiche a été enregistrée avec succès.'
+            message: 'Votre fiche a été enregistrée avec succès.'
           })
         }
         return of(data);
@@ -81,7 +81,7 @@ export class MigrationService {
         } else {
           this.toastrService.showToastr({
             category: 'success',
-            message: 'Votre Fiche a été enregistrée avec succès.'
+            message: 'Votre fiche a été enregistrée avec succès.'
           })
         }
         return of(data);
@@ -101,7 +101,7 @@ export class MigrationService {
         } else {
           this.toastrService.showToastr({
             category: 'success',
-            message: 'Votre Fiche a été enregistrée avec succès.'
+            message: 'Votre fiche a été enregistrée avec succès.'
           })
         }
         return of(data);

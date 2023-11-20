@@ -320,7 +320,7 @@
                             <div class="col-sm-2">
                                 <ul class="list-group list-group-horizontal">
                                     <li class="list-group-item">
-                                        {{ contract.lots ? contract.lots : '' }}
+                                        {{ typeof contract.lots === 'object' ? '' : contract.lots }}
                                     </li>
                                 </ul>
                             </div>

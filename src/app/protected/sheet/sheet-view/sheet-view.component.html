@@ -317,17 +317,13 @@
                         (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0"
                         (click)="showContract(contract)" class="blue_link">
                         <div class="row" accordion-heading>
-                            <!-- <div class="col-sm-2">
+                            <div class="col-sm-2">
                                 <ul class="list-group list-group-horizontal">
                                     <li class="list-group-item">
-                                        {{contract.lots}}
+                                        {{ contract.lots ? contract.lots : '' }}
                                     </li>
                                 </ul>
-                            </div> -->
-                            <div class="col-sm-2">
-                                {{contract.lots}}
                             </div>
-
                             <div class="col-sm-3">
                                 <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)"
                                         [class.icon-minus]="isOpened(contract)"></i>{{contract.code}}</div>

@@ -23,6 +23,8 @@ export class SheetFormContractsComponent implements OnInit {
   currentIndex: number;
   invalidContractsCount: number = 0;
   invalidContractsMessage: string = '';
+  lotsListForContract: string[] = [];
+  tableLot: string[] = [];
 
   constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
@@ -72,6 +74,8 @@ export class SheetFormContractsComponent implements OnInit {
 
         const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
 
+        this.tableLot = [];
+
         while (this.contracts.length > 0) {
           this.contracts.removeAt(0);
         }
@@ -79,6 +83,13 @@ export class SheetFormContractsComponent implements OnInit {
         this.invalidContractsCount = 0;
 
         data.forEach((row) => {
+          const lotsArray = row.lots ? row.lots.split(',').map(lot => lot.trim()) : [];
+          if (lotsArray.length > 0) {
+            this.tableLot.push(...lotsArray);
+          } else {
+            this.tableLot.push(''); 
+          }
+
           const contractGroup = this.fb.group({
             'code': [row.code, [
               Validators.required,
@@ -87,10 +98,10 @@ export class SheetFormContractsComponent implements OnInit {
               Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
             ]],
             'provider': row.provider,
-            'lots': row.lots,
+            'lots': row.lots || '',
             'contacts': row.contacts,
           });
-          
+          console.log(" contracts", this.contracts);
           this.contracts.push(contractGroup);
 
          
@@ -100,6 +111,12 @@ export class SheetFormContractsComponent implements OnInit {
         });
 
         this.invalidContractsMessage = `Il y a ${this.invalidContractsCount} contrat(s) non valide(s).`;
+
+        // Suppression doublons
+        this.tableLot = Array.from(new Set(this.tableLot));
+
+        this.lotsListForContract = this.tableLot;
+        console.log(" tableLot", this.lotsListForContract);
       };
 
       reader.readAsBinaryString(file);

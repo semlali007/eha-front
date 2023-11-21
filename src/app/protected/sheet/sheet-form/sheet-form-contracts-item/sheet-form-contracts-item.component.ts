@@ -18,6 +18,8 @@ export class SheetFormContractsItemComponent implements OnInit {
   
   @Input() isActive: boolean;
   // @Input() lotsListForContract: FormControl;
+  @Input() lotsListForContract: string[];
+  filteredLots: string[] = [];
 
   @Output() removedContract = new EventEmitter<number>();
   @Output() openClose = new EventEmitter<{index:number}>();
@@ -27,7 +29,10 @@ export class SheetFormContractsItemComponent implements OnInit {
   constructor(private modalService: BsModalService) { }
 
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    console.log("le tableLot dans les item", this.lotsListForContract);
+   }
 
   changeState(index): void {
     this.openClose.emit({index:index});
@@ -49,6 +54,17 @@ export class SheetFormContractsItemComponent implements OnInit {
 
   get code() { return this.contract.get('code'); }
 
-  
+  onLotInput(value: string) {
+    // les suggestions
+    this.filteredLots = this.lotsListForContract.filter(lot =>
+      lot.toLowerCase().includes(value.toLowerCase())
+    );
+  }
+
+  selectLot(selectedLot: string) {
+    // Mise à jour du champ "lots" lors de la sélection 
+    this.contract.get('lots')?.setValue(selectedLot);
+    this.filteredLots = []; 
+  }
 
 }

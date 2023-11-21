@@ -115,7 +115,14 @@
                     <textarea [readonly]="!isActive" formControlName="contacts" class="form-control border-0" style="max-height: 400px; width: 350px; " [placeholder]="'Contacts'"></textarea>
                 </td>
                 <td>
-                    <input [readonly]="!isActive" formControlName="lots" type="text" class="form-control border-0" style="width: 100px;" [placeholder]="'lots'">
+                    <div style="display: flex; align-items: center;">
+                        <input [readonly]="!isActive" formControlName="lots" type="text" class="form-control border-0" [placeholder]="'lots'" style="width:90px;"
+                          (input)="onLotInput($event.target.value)">
+                    
+                        <select [disabled]="!isActive" class="form-control border-0" style="width:auto;" (change)="selectLot($event.target.value)">
+                          <option *ngFor="let lot of filteredLots" [value]="" >{{ lot }}</option>
+                        </select>
+                    </div>
                 </td>
                 <td>
                     <button class="remove" style="width: 40px; height: 40px; padding: 5;" (click)="confirmation(template)" type="button">-</button>

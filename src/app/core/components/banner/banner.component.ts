@@ -7,7 +7,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { ModalNotificationComponent } from 'src/app/core/components/modal-notification/modal-notification.component';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { ConfigService } from 'src/app/core/services/config.service';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -23,6 +23,8 @@ export class BannerComponent implements OnInit {
   bsModalRef?: BsModalRef;
   data:any={};
   list: [];
+  public numberOfNotifications: number = 0;
+
   private subscription: Subscription;
   constructor( 
     private authService: AuthService,
@@ -31,16 +33,25 @@ export class BannerComponent implements OnInit {
     private configService: ConfigService,
     private notificationService: NotificationService
     ) { }
+
   ngOnInit() {
     this.notification$ = this.notificationService.notification$;
-    this.subscription =
+    this.subscription = 
       this.authService.user$.subscribe(user => {
-        this.user = user;
-      });
-      //log
-      this.notification$.subscribe(notification => {
-        console.log('Notification data:', notification);
-      });
+          this.user = user;
+    });
+  
+    this.notificationService.getUserNotification({ nni: this.user.nni }).subscribe(data => {
+      this.list = data;
+      console.log('Voici les données de Notification 1 :', data);
+  
+      if (Array.isArray(data)) {
+        this.numberOfNotifications = data.length;
+        console.log('count:', this.numberOfNotifications);
+      } else {
+        this.numberOfNotifications = 0; 
+      }
+    });
   }
 
    ngOnDestroy() {
@@ -58,7 +69,6 @@ export class BannerComponent implements OnInit {
    openModal() {
     this.notificationService.getUserNotification({nni:this.user.nni}).subscribe(data => {
       this.list = data;
-      console.log('voici les data de Notification :', data);
       const initialState = {
         title: 'test',
         list: this.list,

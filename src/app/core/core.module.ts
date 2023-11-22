@@ -16,6 +16,7 @@ import { ModalInfoComponent } from './components/modal-info/modal-info.component
 import { ModalPageComponent } from './components/modal-page/modal-page.component';
 import { ModalNewsComponent } from './components/modal-news/modal-news.component';
 import { ModalNotificationComponent } from './components/modal-notification/modal-notification.component';
+import { NotificationDeletedService } from './services/notification-deleted.service';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -59,6 +60,7 @@ export function storageFactory() {
     AuthService,
     AuthGuard,
     AuthGuardWithForcedLogin,
+    NotificationDeletedService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CacheInterceptor,

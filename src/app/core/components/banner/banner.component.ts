@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { NotificationDeletedService } from  'src/app/core/services/notification-deleted.service';
 import { ModalNotificationComponent } from 'src/app/core/components/modal-notification/modal-notification.component';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { ConfigService } from 'src/app/core/services/config.service';
@@ -31,7 +32,8 @@ export class BannerComponent implements OnInit {
     private router: Router,
     private modalService: BsModalService,
     private configService: ConfigService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private notificationDeletedService: NotificationDeletedService
     ) { }
 
   ngOnInit() {
@@ -41,16 +43,8 @@ export class BannerComponent implements OnInit {
           this.user = user;
     });
   
-    this.notificationService.getUserNotification({ nni: this.user.nni }).subscribe(data => {
-      this.list = data;
-      console.log('Voici les données de Notification 1 :', data);
-  
-      if (Array.isArray(data)) {
-        this.numberOfNotifications = data.length;
-        console.log('count:', this.numberOfNotifications);
-      } else {
-        this.numberOfNotifications = 0; 
-      }
+    this.notificationDeletedService.notificationDeleted$.subscribe(() => {
+      this.refreshNotifications();
     });
   }
 
@@ -86,6 +80,18 @@ export class BannerComponent implements OnInit {
 
   forceNavigate(name: string) {
     this.router.navigate(['/app/accueil'], { fragment: name });
+  }
+
+  private refreshNotifications() {
+    this.notificationService.getUserNotification({ nni: this.user.nni }).subscribe(data => {
+      this.list = data;
+      if (Array.isArray(data)) {
+        this.numberOfNotifications = data.length;
+        console.log('Nombre de notifications:', this.numberOfNotifications);
+      } else {
+        this.numberOfNotifications = 0; 
+      }
+    });
   }
 
 }

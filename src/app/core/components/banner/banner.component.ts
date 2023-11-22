@@ -42,10 +42,12 @@ export class BannerComponent implements OnInit {
       this.authService.user$.subscribe(user => {
           this.user = user;
     });
-  
+    
+    this.refreshNotifications();
+
     this.notificationDeletedService.notificationDeleted$.subscribe(() => {
       this.refreshNotifications();
-    });
+    })
   }
 
    ngOnDestroy() {

@@ -318,11 +318,14 @@
                         (click)="showContract(contract)" class="blue_link">
                         <div class="row" accordion-heading>
                             <div class="col-sm-2">
-                                <ul class="list-group list-group-horizontal">
+                                <ul class="list-group list-group-horizontal" *ngIf="contract.lots && contract.lots.length > 0">
                                     <li class="list-group-item">
                                         {{ contract.lots}}
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="col-sm-2" *ngIf="contract.lots && contract.lots.length === 0">
+                                <!-- Aucun affichage quand il n'y a pas de lots -->
                             </div>
                             <div class="col-sm-3">
                                 <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)"
@@ -331,7 +334,8 @@
                             <div class="col-sm-3">
                                 {{contract.provider}}
                             </div>
-                            <div class="col-sm-4" [innerHTML]="contract.contacts">
+                            <div class="col-sm-3">
+                                {{contract.contacts}}
                             </div>
                         </div>
                     </accordion-group>

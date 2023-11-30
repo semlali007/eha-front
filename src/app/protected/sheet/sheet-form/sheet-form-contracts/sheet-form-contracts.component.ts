@@ -28,7 +28,9 @@ export class SheetFormContractsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.generateLotsList();
+  }
 
   onOpenClose(data: any) {
     if (data.index == this.currentIndex) {
@@ -74,8 +76,6 @@ export class SheetFormContractsComponent implements OnInit {
 
         const data = XLSX.utils.sheet_to_json(worksheet, { raw: true }) as ExcelDataRow[];
 
-        this.tableLot = [];
-
         while (this.contracts.length > 0) {
           this.contracts.removeAt(0);
         }
@@ -83,13 +83,6 @@ export class SheetFormContractsComponent implements OnInit {
         this.invalidContractsCount = 0;
 
         data.forEach((row) => {
-          const lotsArray = row.lots ? row.lots.split(',').map(lot => lot.trim()) : [];
-          if (lotsArray.length > 0) {
-            this.tableLot.push(...lotsArray);
-          } else {
-            this.tableLot.push(''); 
-          }
-
           const contractGroup = this.fb.group({
             'code': [row.code, [
               Validators.required,
@@ -97,11 +90,10 @@ export class SheetFormContractsComponent implements OnInit {
               Validators.maxLength(10),
               Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
             ]],
-            'provider': row.provider,
+            'provider': row.provider.replace(/\\n/g, '\n'),
             'lots': row.lots || '',
-            'contacts': row.contacts,
+            'contacts': row.contacts.replace(/\\n/g, '\n'),
           });
-          console.log(" contracts", this.contracts);
           this.contracts.push(contractGroup);
 
          
@@ -111,15 +103,14 @@ export class SheetFormContractsComponent implements OnInit {
         });
 
         this.invalidContractsMessage = `Il y a ${this.invalidContractsCount} contrat(s) non valide(s).`;
-
-        // Suppression doublons
-        this.tableLot = Array.from(new Set(this.tableLot));
-
-        this.lotsListForContract = this.tableLot;
-        console.log(" tableLot", this.lotsListForContract);
       };
 
       reader.readAsBinaryString(file);
     }
+  }
+  generateLotsList() {
+    this.tableLot = ["lot 1", "lot 2", "lot 3", "lot 4", "lot 5", "lot 6", "lot 7","lot 8", "lot 9","lot 10","lot 11",
+    "lot 12","lot 13","lot 14","lot 15","lot 16","lot 17","lot 18","lot 19","lot 20"];
+    this.lotsListForContract = this.tableLot;
   }
 }

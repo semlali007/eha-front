@@ -113,9 +113,5 @@ export class SheetFormContractsComponent implements OnInit {
     "lot 12","lot 13","lot 14","lot 15","lot 16","lot 17","lot 18","lot 19","lot 20"];
     this.lotsListForContract = this.tableLot;
   }
-
-  displayContacts(contacts: string): string {
-    if (!contacts) return '';
-    return contacts.replace(/\n/g, '<br>');
-  }
+  
 }

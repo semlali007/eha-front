@@ -334,12 +334,9 @@
                             <div class="col-sm-3">
                                 {{contract.provider}}
                             </div>
-                            
-                            <div class="col-sm-3" [innerHTML]="displayContacts(contract.contacts)"></div>
-
-                            <!-- <div class="col-sm-3">
-                                {{contract.contacts}}
-                            </div> -->
+                            <div class="col-sm-4 blue_link">
+                                <pre style="font-size: inherit; color: inherit;">{{ contract.contacts }}</pre>
+                            </div>
                         </div>
                     </accordion-group>
         

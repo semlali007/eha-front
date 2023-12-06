@@ -24,7 +24,7 @@
             </td>
             <td style="padding-top: 8px;" *ngIf="!!user && user.nni">
               <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png"></a>
-              <ng-container *ngIf="numberOfNotifications > 0 ; else noNotification">
+              <!-- <ng-container *ngIf="numberOfNotifications > 0 ; else noNotification">
 
                 <span (click)="openModal()" style="cursor:pointer">
                 <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
@@ -40,7 +40,7 @@
                 <span style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">
                 </span>
               </span>
-              </ng-template>
+              </ng-template> -->
             </td>
           </tr>
           <tr *ngIf="!!user && user.nni" >

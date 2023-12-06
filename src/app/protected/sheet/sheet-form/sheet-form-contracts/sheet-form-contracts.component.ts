@@ -90,9 +90,9 @@ export class SheetFormContractsComponent implements OnInit {
               Validators.maxLength(10),
               Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
             ]],
-            'provider': row.provider.replace(/\\n/g, '\n'),
+            'provider': row.provider.replace(/\\n/g, '<br>'),
             'lots': row.lots || '',
-            'contacts': row.contacts.replace(/\\n/g, '\n'),
+            'contacts': row.contacts.replace(/\\n/g, '<br>'),
           });
           this.contracts.push(contractGroup);
 

@@ -30,8 +30,6 @@ export class SheetFormContractsItemComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    console.log("le tableLot dans les item", this.lotsListForContract);
    }
 
   changeState(index): void {

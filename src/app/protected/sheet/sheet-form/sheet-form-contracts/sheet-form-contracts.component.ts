@@ -90,9 +90,9 @@ export class SheetFormContractsComponent implements OnInit {
               Validators.maxLength(10),
               Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
             ]],
-            'provider': row.provider.replace(/\\n/g, '<br>'),
+            'provider': row.provider,
             'lots': row.lots || '',
-            'contacts': row.contacts.replace(/\\n/g, '<br>'),
+            'contacts': row.contacts,
           });
           this.contracts.push(contractGroup);
 
@@ -109,7 +109,7 @@ export class SheetFormContractsComponent implements OnInit {
     }
   }
   generateLotsList() {
-    this.tableLot = ["lot 1", "lot 2", "lot 3", "lot 4", "lot 5", "lot 6", "lot 7","lot 8", "lot 9","lot 10","lot 11",
+    this.tableLot = [" ","lot 1", "lot 2", "lot 3", "lot 4", "lot 5", "lot 6", "lot 7","lot 8", "lot 9","lot 10","lot 11",
     "lot 12","lot 13","lot 14","lot 15","lot 16","lot 17","lot 18","lot 19","lot 20"];
     this.lotsListForContract = this.tableLot;
   }

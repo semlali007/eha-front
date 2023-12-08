@@ -493,10 +493,14 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
       this.sheetService.update(new Sheet($options), files, { deletedFiles: this.deletedFiles , draft: !!draft }).subscribe(
         _ => {
-          if (!!draft)
+          if (!!draft){
             localStorage.setItem('draftId', this.sheetId);
-          else
-            this.router.navigate(['/app/fiches/liste']);}
+          }else{
+            this.router.navigate(['/app/fiches/liste']);
+          }
+          
+          this.list();
+          }
       );
       return;
     } else {

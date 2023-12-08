@@ -92,7 +92,7 @@ export class SheetFormContractsComponent implements OnInit {
             ]],
             'provider': row.provider,
             'lots': row.lots || '',
-            'contacts': row.contacts.replace(/\r\n/g, '<br>'),
+            'contacts': row.contacts,
           });
           this.contracts.push(contractGroup);
 

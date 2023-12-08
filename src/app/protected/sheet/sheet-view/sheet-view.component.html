@@ -331,10 +331,10 @@
                                 <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)"
                                         [class.icon-minus]="isOpened(contract)"></i>{{contract.code}}</div>
                             </div>
-                            <div class="col-sm-3">
-                                {{contract.provider}}
+                            <div class="col-sm-3" [innerHTML]="contract.provider">
+                                
                             </div>
-                            <div class="col-sm-3 blue_link" [innerHTML]="contract.contacts">
+                            <div class="col-sm-3" [innerHTML]="contract.contacts">
                                 <!-- <pre style="font-size: inherit; color: inherit;">{{ contract.contacts }}</pre> -->
                             </div>
                         </div>

@@ -23,10 +23,11 @@
             </div>
         </div>
     </div>
-
-    <span class="form-text font-italic text-danger">
-        Les champs avec une étoile doivent obligatoirement être remplis.
+    <span *ngIf="sheetForm.invalid" class="form-text font-italic text-danger">
+            Les champs avec une étoile doivent obligatoirement être remplis.
     </span>
+
+    
    
 
     <app-sheet-form-title [title]="title"></app-sheet-form-title>

@@ -21,8 +21,10 @@
                 <td>
                     <textarea [readonly]="!isActive" formControlName="provider" class="form-control border-0" style="max-height: 400px; width: 250px; " [placeholder]="'Fournisseur'"></textarea>
                 </td>
-                <td>
-                    <textarea [readonly]="!isActive" formControlName="contacts" class="form-control border-0" style="max-height: 400px; width: 350px; " [placeholder]="'Contacts'"></textarea>
+                <td class="col-5">
+                    <!-- <textarea [readonly]="!isActive" formControlName="contacts" class="form-control border-0" style="max-height: 400px; width: 350px; " [placeholder]="'Contacts'"></textarea> -->
+                    <editor *ngIf ="isActive" formControlName="contacts" id="contact{{index}}" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
+                    <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>
                 </td>
                 <td>
                     <div style="display: flex; align-items: center;">

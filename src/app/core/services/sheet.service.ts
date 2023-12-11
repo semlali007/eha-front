@@ -57,7 +57,6 @@ export class SheetService {
     const data = this.getSheetForApi(sheet);
     let fd = this.addMediasToFormData(files);
     fd.append('model', JSON.stringify(data));
-    console.log('les data ********', data);
     return this.http.post(url, fd).pipe(
       switchMap(data => {
         return of(data);
@@ -114,7 +113,6 @@ export class SheetService {
    } 
 
     const data = this.getSheetForApi(sheet);
-    console.log('data:::', data);
     data.deletedFiles = this.getDeletedFilesForApi(params.deletedFiles);;
     data.id = sheet.id;
     let fd = this.addMediasToFormData(files);
@@ -247,7 +245,6 @@ export class SheetService {
         })
       }
     });
-    console.log( 'la plist', pList);
     return pList;
   }
   private getContractListForApi(contracts: Contract[]): any {

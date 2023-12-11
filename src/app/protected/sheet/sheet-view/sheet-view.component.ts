@@ -79,8 +79,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
     this.route.params.subscribe(params => {
-      console.log('params', params);
-      console.log("ici les contract", this.contracts);
       if (params.id) {
        // this.router.navigate([`app/fiches/details/${sheetId}`], { queryParams: { history: 'history' } });
         this.sheetId = params.id;

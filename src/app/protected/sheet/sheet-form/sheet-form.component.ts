@@ -366,9 +366,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       //     value: contractlot.name,
       //   });
       // });
-     
-
-     
       const contractField: FormGroup = this.fb.group({
         code: [contract.code, [
           Validators.required,
@@ -385,7 +382,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       );
 
       this.contracts.push(contractField);
-      console.log(" ici les contrats",this.contracts);
     });
   }
     sheet.documents.forEach((document) => {

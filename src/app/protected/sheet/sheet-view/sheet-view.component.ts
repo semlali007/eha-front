@@ -209,9 +209,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
         })
       const contractField = {
         code: contract.code,
-        provider: contract.provider.replace(/\r\n/g, '<br>'),
+        provider: contract.provider,//.replace(/\r\n/g, '<br>'),
         lots: contract.lots,
-        contacts: contract.contacts.replace(/\r\n/g, '<br>'),
+        contacts: contract.contacts,//.replace(/\r\n/g, '<br>'),
         systems: systems,
       };
       this.contracts.push(contractField);

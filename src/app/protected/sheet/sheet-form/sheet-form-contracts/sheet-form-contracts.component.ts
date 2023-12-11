@@ -25,6 +25,7 @@ export class SheetFormContractsComponent implements OnInit {
   invalidContractsMessage: string = '';
   lotsListForContract: string[] = [];
   tableLot: string[] = [];
+  originalFileContent: any;
 
   constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
@@ -70,6 +71,8 @@ export class SheetFormContractsComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
+        this.originalFileContent = e.target.result;
+        
         const workbook = XLSX.read(e.target.result, { type: 'binary' });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];

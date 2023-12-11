@@ -1,7 +1,11 @@
 <div [formGroup]="sheetForm" class="form-group">
     <label for="contracts"><strong>Contrats :</strong><span class="required">*</span></label>
     <br>
-    <input type="file" (change)="handleFileInput($event)" accept=".xlsx">
+    <!-- <input type="file" (change)="handleFileInput($event)" accept=".xlsx">
+    <div *ngIf="invalidContractsCount > 0" class="alert alert-danger">{{ invalidContractsMessage }}</div> -->
+
+    <input type="file" #fileInput (change)="handleFileInput($event)" accept=".xlsx"
+        [attr.title]="originalFileContent ? 'Fichier chargé : ' + fileInput.files[0].name : 'Aucun fichier choisi'">
     <div *ngIf="invalidContractsCount > 0" class="alert alert-danger">{{ invalidContractsMessage }}</div>
 
     <div formArrayName="contracts" class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3" style="max-height: 500px;">

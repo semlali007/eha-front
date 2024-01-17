@@ -99,8 +99,19 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
          this.loginForm.disable();
       }
     });
-
+    this.disabled = true;
   }
+  changeStarColor(type: string,value: number) {
+
+    if(type =='accompaniement'){
+      this.accompaniement.setValue(value);
+    } else if(type== 'contractual'){
+      this.contractual.setValue(value);
+    }else{
+      this.timing.setValue(value);
+    }
+  }
+  
  
   ngOnDestroy() {
     this.sub.unsubscribe();

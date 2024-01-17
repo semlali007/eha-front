@@ -82,10 +82,10 @@
         </div>
         <div class="form-group ">
           <div class="btn-group" btnRadioGroup [formControl]="accompaniement" name="accompaniement">
-            <label btnRadio="special" class="btn  btn-outline-primary btn-space">Mention spéciale</label>
-            <label btnRadio="good_job" class="btn  btn-outline-primary btn-space">Bon travail, professionnalisme à la hauteur</label>
-            <label btnRadio="complicated" class="btn  btn-outline-primary btn-space">Dossier compliqué à faire aboutir</label>
-            <label btnRadio="not_expected" class="btn  btn-outline-primary btn-space">Ce n'est pas à l'attendu</label>
+            <label btnRadio="0" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value >= 0 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 0)" >★</label>
+            <label btnRadio="2" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value >= 2 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 2)" >★</label>
+            <label btnRadio="6" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value >= 6 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 6)" >★</label>
+            <label btnRadio="8" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value == 8 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 8)" >★</label>
           </div>
         </div>
         <div class="Frame-315">
@@ -95,10 +95,10 @@
         </div>
         <div class="form-group mb-3">
           <div class="btn-group" btnRadioGroup [formControl]="contractual" name="contractual">
-            <label btnRadio="special" class="btn  btn-outline-primary btn-space">Mention spéciale</label>
-            <label btnRadio="good_job" class="btn  btn-outline-primary btn-space">Bon travail, professionnalisme à la hauteur</label>
-            <label btnRadio="complicated" class="btn  btn-outline-primary btn-space">Dossier compliqué à faire aboutir</label>
-            <label btnRadio="not_expected" class="btn  btn-outline-primary btn-space">Ce n'est pas à l'attendu</label>
+            <label btnRadio="0" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value >= 0 , 'readonly': disabled}" (click)="changeStarColor('contractual', 0)">★</label>
+            <label btnRadio="2" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value >= 2 , 'readonly': disabled}" (click)="changeStarColor('contractual', 2)">★</label>
+            <label btnRadio="6" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value >= 6 , 'readonly': disabled}" (click)="changeStarColor('contractual', 6)">★</label>
+            <label btnRadio="8" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value == 8 , 'readonly': disabled}" (click)="changeStarColor('contractual', 8)">★</label>
           </div>
         </div>
 
@@ -110,10 +110,10 @@
         </div>
         <div class="form-group mb-3">
           <div class="btn-group" btnRadioGroup [formControl]="timing" name="timing">
-            <label btnRadio="special" class="btn  btn-outline-primary btn-space">Mention spéciale</label>
-            <label btnRadio="good_job" class="btn  btn-outline-primary btn-space">Bon travail, professionnalisme à la hauteur</label>
-            <label btnRadio="complicated" class="btn  btn-outline-primary btn-space">Dossier compliqué à faire aboutir</label>
-            <label btnRadio="not_expected" class="btn  btn-outline-primary btn-space">Ce n'est pas à l'attendu</label>
+            <label btnRadio="0" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value >= 0 , 'readonly': disabled}" (click)="changeStarColor('timing', 0)">★</label>
+            <label btnRadio="2" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value >= 2 , 'readonly': disabled}" (click)="changeStarColor('timing', 2)">★</label>
+            <label btnRadio="6" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value >= 6 , 'readonly': disabled}" (click)="changeStarColor('timing', 6)">★</label>
+            <label btnRadio="8" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value == 8 , 'readonly': disabled}" (click)="changeStarColor('timing', 8)">★</label>
           </div>
         </div>
         <div class="form-group">

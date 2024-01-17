@@ -117,3 +117,23 @@ img.Icone---Achatpedia---Se-documenter {
   text-align: left;
   color: var(--gris-fonce-aa-sonic-silver);
 }
+
+.btn.selected {
+  color: gold;
+}
+
+.readonly {
+  pointer-events: none;
+  opacity: 0.5; 
+}
+
+.btn-star {
+  background-color: inherit;
+  color: silver;
+  width: 100px;
+  font-size: 50px; 
+}
+
+.btn:not(:disabled):not(.disabled) {
+  box-shadow: none;
+}

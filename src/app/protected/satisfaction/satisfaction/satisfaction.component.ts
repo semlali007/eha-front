@@ -31,8 +31,6 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   ) {
   }
   ngOnInit(): void {
-
-
  this.loginForm = this.fb.group({
       'accompaniement': ['', [
         Validators.required,
@@ -57,9 +55,9 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
                                        this.disabled = true;
                                        this.warning = true;
                                        this.loginForm.disable();
-                                       this.accompaniement.setValue(data.accompaniement);
-                                       this.contractual.setValue(data.contractual);
-                                       this.timing.setValue(data.timing);
+                                       this.accompaniement.setValue(data.accompaniement === "0" ? data.accompaniement = "1" : data.accompaniement);
+                                       this.contractual.setValue(data.contractual === "0" ? data.contractual = "1" : data.contractual);
+                                       this.timing.setValue(data.timing === "0" ? data.timing = "1" : data.timing);
                                        this.strong_points.setValue(data.strong_points);
                                        this.improvement.setValue(data.improvement);
                                        this.postedNni = data.nni
@@ -92,6 +90,11 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
       strong_points: this.strong_points.value,
       improvement: this.improvement.value,
     }
+    params.accompaniement === 1 ?  params.accompaniement = 0 :  params.accompaniement
+    params.contractual === 1 ?  params.contractual = 0 :  params.contractual
+    params.timing === 1 ?  params.timing = 0 :  params.timing
+  
+    
     this.satisfactionService.create(params).subscribe(response=>{
       if(!!response){
          this.success = true;

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
 import { SatisfactionService } from 'src/app/core/services/satisfaction.service';
+import { log } from 'console';
 @Component({
   selector: 'app-satisfaction',
   templateUrl: './satisfaction.component.html',
@@ -22,6 +23,8 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   public user: User = null;
   public subscription: Subscription;
+  protected table0 = ['Ce n’est pas l’attendu', 'Dossier compliqué à faire aboutir', 'Bon travail, professionnalisme à la hauteur', 'Mention spéciale'];
+  
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
@@ -55,9 +58,10 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
                                        this.disabled = true;
                                        this.warning = true;
                                        this.loginForm.disable();
-                                       this.accompaniement.setValue(data.accompaniement === "0" ? data.accompaniement = "1" : data.accompaniement);
-                                       this.contractual.setValue(data.contractual === "0" ? data.contractual = "1" : data.contractual);
-                                       this.timing.setValue(data.timing === "0" ? data.timing = "1" : data.timing);
+                                      this.accompaniement.setValue(this.findValueInTable(data.accompaniement, this.table0));
+                                      this.contractual.setValue(this.findValueInTable(data.contractual, this.table0));
+                                      this.timing.setValue(this.findValueInTable(data.timing, this.table0));
+              
                                        this.strong_points.setValue(data.strong_points);
                                        this.improvement.setValue(data.improvement);
                                        this.postedNni = data.nni
@@ -84,17 +88,13 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
       cockpit_id: this.cockpitId,
       da_pgi: this.daPGI,
       nni: this.user.nni,
-      accompaniement: this.accompaniement.value,
-      contractual: this.contractual.value,
-      timing: this.timing.value,
+      accompaniement: this.replaceValue(this.accompaniement.value),
+      contractual: this.replaceValue(this.contractual.value),
+      timing: this.replaceValue(this.timing.value),
       strong_points: this.strong_points.value,
       improvement: this.improvement.value,
     }
-    params.accompaniement === 1 ?  params.accompaniement = 0 :  params.accompaniement
-    params.contractual === 1 ?  params.contractual = 0 :  params.contractual
-    params.timing === 1 ?  params.timing = 0 :  params.timing
-  
-    
+
     this.satisfactionService.create(params).subscribe(response=>{
       if(!!response){
          this.success = true;
@@ -104,6 +104,18 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
     });
     this.disabled = true;
   }
+  replaceValue(value: number): string {
+    if (!isNaN(value) && value >= 1 && value <= this.table0.length) {
+        return this.table0[value - 1];
+    } else {
+        return value.toString();
+    }
+  }
+  
+  private findValueInTable(value: string, table: string[]): number {
+    return table.indexOf(value) + 1;
+  }
+  
   changeStarColor(type: string,value: number) {
 
     if(type =='accompaniement'){

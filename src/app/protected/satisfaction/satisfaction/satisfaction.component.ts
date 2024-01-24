@@ -23,7 +23,7 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   public user: User = null;
   public subscription: Subscription;
-  protected table0 = ['Ce n’est pas l’attendu', 'Dossier compliqué à faire aboutir', 'Bon travail, professionnalisme à la hauteur', 'Mention spéciale'];
+  protected table0 = ['Not_expected', 'Complicated', 'Good_job', 'Special'];
   
   constructor(
     private authService: AuthService,

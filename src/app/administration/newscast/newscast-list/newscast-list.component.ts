@@ -21,7 +21,7 @@ export class NewsCastListComponent implements OnInit, OnDestroy {
   smallnumPages: number = 0;
   public subscription: Subscription;
   public user: User = null;
-  newsList: [] = [];
+  newsList: any[] = [];
   private draggedIndex: number;
   public draggedOverIndex: number;
 
@@ -76,8 +76,8 @@ export class NewsCastListComponent implements OnInit, OnDestroy {
   public loadItems() {
     this.newsCastService.getList({'page': this.currentPage.value}).subscribe(
       data => {
-        this.totalItems = data.total;
-        this.newsList = data.data;
+        this.totalItems = data.total; 
+        this.newsList = data.data.sort((a, b) => new Date(b.created_date).getTime() - new Date(a.created_date).getTime());
       }
     );
 

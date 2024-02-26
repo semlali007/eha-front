@@ -13,14 +13,17 @@ export class AnchorCodesComponent implements OnInit {
   selected: any;
   sheetModalForm: FormGroup;
   closeBtnName: string;
+  filteredCodes: any[] = [];
   constructor(public bsModalRef: BsModalRef,
     private fb: FormBuilder,
     private messageService: MessageService,
     ) { }
     get codeFilter() { return this.codesForm.get('codeFilter') as any; }
+   get labelFilter() { return this.codesForm.get('labelFilter') as any; }
   ngOnInit(): void {
     this.codesForm = this.fb.group({
       'codeFilter': '',
+      'labelFilter': '',
     });
   }
 
@@ -48,4 +51,28 @@ export class AnchorCodesComponent implements OnInit {
   isSelected(item){
     return this.selected.indexOf(item[0])>=0;
   }
+toggleFilter(type: string) {
+  if (type === 'code') {
+    this.codesForm.get('labelFilter').disable();
+    this.codesForm.get('codeFilter').enable();
+  } else if (type === 'label') {
+    this.codesForm.get('codeFilter').disable();
+    this.codesForm.get('labelFilter').enable();
+  }
+  this.applyFilter();
+}
+
+applyFilter() {
+  if (this.codesForm.get('codeFilter').enabled) {
+    this.filteredCodes = this.codes.filter((item: any) => item[0].indexOf(this.codesForm.get('codeFilter').value) !== -1);
+  } else {
+    this.filteredCodes = this.codes.filter((item: any) => item[1].toLowerCase().indexOf(this.codesForm.get('labelFilter').value.toLowerCase()) !== -1);
+  }
+}
+resetFilters() {
+  this.codesForm.reset();
+  this.codesForm.get('codeFilter').enable();
+  this.codesForm.get('labelFilter').enable();
+  this.applyFilter(); 
+}
 }

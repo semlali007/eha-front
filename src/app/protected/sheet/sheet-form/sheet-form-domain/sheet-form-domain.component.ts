@@ -35,6 +35,15 @@ export class SheetFormDomainComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
+
+    const savedDomains = localStorage.getItem('domains');
+    if (savedDomains) {
+      this.domains.setValue(JSON.parse(savedDomains));
+    }
+
+    this.domains.valueChanges.subscribe(value => {
+      localStorage.setItem('domains', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

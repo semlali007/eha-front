@@ -35,6 +35,14 @@ export class SheetFormAreasComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
+    const savedAreas = localStorage.getItem('areas');
+    if (savedAreas) {
+      this.areas.setValue(JSON.parse(savedAreas));
+    }
+
+    this.areas.valueChanges.subscribe(value => {
+      localStorage.setItem('areas', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

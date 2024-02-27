@@ -36,7 +36,14 @@ export class SheetFormStipulationAutruiComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 5;
 
-  
+    const savedStipulationAutrui = localStorage.getItem('stipulationAutrui');
+    if (savedStipulationAutrui) {
+      this.stipulationAutrui.setValue(JSON.parse(savedStipulationAutrui));
+    }
+
+    this.stipulationAutrui.valueChanges.subscribe(value => {
+      localStorage.setItem('stipulationAutrui', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

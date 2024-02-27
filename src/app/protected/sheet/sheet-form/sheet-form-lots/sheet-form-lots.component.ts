@@ -13,6 +13,21 @@ export class SheetFormLotsComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    const savedLots = localStorage.getItem('lots');
+    if (savedLots) {
+      const parsedLots = JSON.parse(savedLots);
+      parsedLots.forEach((lot: any) => {
+        const lotGroup = this.fb.group({
+          name: lot.name,
+          description: lot.description
+        });
+        this.lots.push(lotGroup);
+      });
+    }
+
+    this.lots.valueChanges.subscribe(value => {
+      localStorage.setItem('lots', JSON.stringify(value));
+    });
   }
 
   onAddedLot() {

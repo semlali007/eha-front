@@ -13,6 +13,13 @@ export class SheetFormEdfOpenComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+    const savedValue = localStorage.getItem('edf_open');
+    if (savedValue) {
+      this.edf_open.setValue(savedValue === 'true');
+    }
 
+    this.edf_open.valueChanges.subscribe(value => {
+      localStorage.setItem('edf_open', value.toString());
+    });
+  }
 }

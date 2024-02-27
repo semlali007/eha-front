@@ -19,5 +19,13 @@ export class SheetFormCommitteeComponent implements OnInit {
         this.committees = committees;
       }
     )
+    const savedCommitteeCode = localStorage.getItem('committeeCode');
+    if (savedCommitteeCode) {
+      this.committeeCode.setValue(JSON.parse(savedCommitteeCode));
+    }
+
+    this.committeeCode.valueChanges.subscribe(value => {
+      localStorage.setItem('committeeCode', JSON.stringify(value));
+    });
   }
 }

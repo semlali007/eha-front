@@ -10,5 +10,13 @@ export class SheetFormTitleComponent implements OnInit {
   @Input() title: FormControl;
   constructor() { }
   ngOnInit(): void {
+    const savedTitle = localStorage.getItem('title');
+    if (savedTitle) {
+      this.title.setValue(savedTitle);
+    }
+
+    this.title.valueChanges.subscribe(value => {
+      localStorage.setItem('title', value);
+    });
   }
 }

@@ -32,6 +32,15 @@ export class SheetFormProvidersComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
+    
+    const savedProviders = localStorage.getItem('providers');
+    if (savedProviders) {
+      this.providers.setValue(JSON.parse(savedProviders));
+    }
+
+    this.providers.valueChanges.subscribe(value => {
+      localStorage.setItem('providers', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

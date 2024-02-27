@@ -19,5 +19,13 @@ export class SheetFormCategoryComponent implements OnInit {
         this.categories = categories;
       }
     )
+    const savedCategoryCode = localStorage.getItem('categoryCode');
+    if (savedCategoryCode) {
+      this.categoryCode.setValue(JSON.parse(savedCategoryCode));
+    }
+
+    this.categoryCode.valueChanges.subscribe(value => {
+      localStorage.setItem('categoryCode', JSON.stringify(value));
+    });
   }
 }

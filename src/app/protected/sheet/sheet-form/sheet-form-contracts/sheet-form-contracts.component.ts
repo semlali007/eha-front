@@ -31,6 +31,29 @@ export class SheetFormContractsComponent implements OnInit {
 
   ngOnInit(): void {
     this.generateLotsList();
+
+    const savedContracts = localStorage.getItem('contracts');
+    if (savedContracts) {
+      const parsedContracts = JSON.parse(savedContracts);
+      parsedContracts.forEach((contract: any) => {
+        const contractGroup = this.fb.group({
+          'code': [contract.code, [
+            Validators.required,
+            Validators.minLength(9),
+            Validators.maxLength(10),
+            Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
+          ]],
+          'provider': contract.provider,
+          'lots': contract.lots || '',
+          'contacts': contract.contacts.replace(/\r\n/g, '<br>'),
+        });
+        this.contracts.push(contractGroup);
+      });
+    }
+
+    this.contracts.valueChanges.subscribe(value => {
+      localStorage.setItem('contracts', JSON.stringify(value));
+    });
   }
 
   onOpenClose(data: any) {

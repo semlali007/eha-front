@@ -35,6 +35,15 @@ export class SheetFormSubdomainComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
+    
+    const savedSubdomains = localStorage.getItem('subdomains');
+    if (savedSubdomains) {
+      this.subdomains.setValue(JSON.parse(savedSubdomains));
+    }
+
+    this.subdomains.valueChanges.subscribe(value => {
+      localStorage.setItem('subdomains', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

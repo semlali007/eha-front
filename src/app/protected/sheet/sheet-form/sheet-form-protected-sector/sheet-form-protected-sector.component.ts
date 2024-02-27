@@ -12,6 +12,13 @@ export class SheetFormProtectedSectorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+    const savedValue = localStorage.getItem('protected_sector');
+    if (savedValue) {
+      this.protected_sector.setValue(savedValue === 'true');
+    }
 
+    this.protected_sector.valueChanges.subscribe(value => {
+      localStorage.setItem('protected_sector', value.toString());
+    });
+  }
 }

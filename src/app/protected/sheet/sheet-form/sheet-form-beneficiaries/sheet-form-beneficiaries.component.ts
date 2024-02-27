@@ -35,6 +35,14 @@ export class SheetFormBeneficiariesComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
+    const savedBeneficiaries = localStorage.getItem('beneficiaries');
+    if (savedBeneficiaries) {
+      this.beneficiaries.setValue(JSON.parse(savedBeneficiaries));
+    }
+
+    this.beneficiaries.valueChanges.subscribe(value => {
+      localStorage.setItem('beneficiaries', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

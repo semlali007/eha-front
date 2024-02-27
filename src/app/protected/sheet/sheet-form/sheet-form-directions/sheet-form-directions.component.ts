@@ -35,6 +35,14 @@ export class SheetFormDirectionsComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
+    const savedDirections = localStorage.getItem('directions');
+    if (savedDirections) {
+      this.directions.setValue(JSON.parse(savedDirections));
+    }
+
+    this.directions.valueChanges.subscribe(value => {
+      localStorage.setItem('directions', JSON.stringify(value));
+    });
   }
 
   public requestAutocompleteItems = (text: string): Observable<any> => {

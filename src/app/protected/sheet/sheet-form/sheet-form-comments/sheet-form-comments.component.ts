@@ -12,6 +12,14 @@ export class SheetFormCommentsComponent implements OnInit {
   @Input() comments: FormControl;
   constructor() { }
   ngOnInit(): void {
+    const savedComments = localStorage.getItem('comments');
+    if (savedComments) {
+      this.comments.setValue(savedComments);
+    }
+
+    this.comments.valueChanges.subscribe(value => {
+      localStorage.setItem('comments', value);
+    });
   }
 }
 

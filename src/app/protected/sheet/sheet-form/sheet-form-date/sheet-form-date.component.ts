@@ -16,6 +16,23 @@ export class SheetFormDateComponent implements OnInit {
     private sheetService: SheetService) { }
   ngOnInit(): void {
     this.localeService.use('fr');
+    const savedStartDate = localStorage.getItem('startDate');
+  if (savedStartDate) {
+    this.startDate.setValue(new Date(savedStartDate));
+  }
+
+  const savedEndDate = localStorage.getItem('endDate');
+  if (savedEndDate) {
+    this.endDate.setValue(new Date(savedEndDate));
+  }
+
+  this.startDate.valueChanges.subscribe(value => {
+    localStorage.setItem('startDate', value.toISOString());
+  });
+
+  this.endDate.valueChanges.subscribe(value => {
+    localStorage.setItem('endDate', value.toISOString());
+  });
   }
   onValueChange(value: Date): void {
     if(!!value){

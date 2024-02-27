@@ -12,6 +12,13 @@ export class SheetFormDauphinComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+    const savedDauphin = localStorage.getItem('dauphin');
+    if (savedDauphin) {
+      this.dauphin.setValue(savedDauphin === 'true');
+    }
 
+    this.dauphin.valueChanges.subscribe(value => {
+      localStorage.setItem('dauphin', value.toString());
+    });
+  }
 }

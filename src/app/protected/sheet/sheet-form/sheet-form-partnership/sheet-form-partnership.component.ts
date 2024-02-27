@@ -12,6 +12,13 @@ export class SheetFormPartnershipComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+    const savedValue = localStorage.getItem('partnership');
+    if (savedValue) {
+      this.partnership.setValue(savedValue === 'true');
+    }
 
+    this.partnership.valueChanges.subscribe(value => {
+      localStorage.setItem('partnership', value.toString());
+    });
+  }
 }

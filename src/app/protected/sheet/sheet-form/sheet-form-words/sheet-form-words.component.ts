@@ -10,5 +10,13 @@ export class SheetFormWordsComponent implements OnInit {
   @Input() words: FormControl;
   constructor() { }
   ngOnInit(): void {
+    const savedWords = localStorage.getItem('words');
+    if (savedWords) {
+      this.words.setValue(JSON.parse(savedWords));
+    }
+
+    this.words.valueChanges.subscribe(value => {
+      localStorage.setItem('words', JSON.stringify(value));
+    });
   }
 }

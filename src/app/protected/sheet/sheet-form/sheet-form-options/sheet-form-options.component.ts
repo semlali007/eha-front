@@ -14,8 +14,29 @@ export class SheetFormOptionsComponent implements OnInit {
 
 	constructor(private fb: FormBuilder) { 
 	}
-
 	ngOnInit() {
+		const savedoptions = localStorage.getItem('options');
+		if (savedoptions) {
+		  const parsedoptions = JSON.parse(savedoptions);
+		  parsedoptions.forEach((option: any) => {
+			const optionGroup = this.fb.group({
+			  'id': [option.id],
+			  'startDate': [new Date(option.startDate)],
+			  'endDate': [new Date(option.endDate)],	
+			});
+			this.options.push(optionGroup);
+		  });
+		}
+		this.options.valueChanges.subscribe(value => {
+		  const stringifiedValue = value.map(option => {
+			return {
+			  id: option.id,
+			  startDate: option.startDate.toISOString(),
+			  endDate: option.endDate.toISOString()
+			};
+		  });
+		  localStorage.setItem('options', JSON.stringify(stringifiedValue));
+		});
 	}
 
 	createTaskForm(): FormGroup {

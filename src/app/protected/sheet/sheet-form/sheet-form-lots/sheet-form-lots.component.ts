@@ -24,10 +24,17 @@ export class SheetFormLotsComponent implements OnInit {
         this.lots.push(lotGroup);
       });
     }
-
+    
+    let latestLots: any[];
     this.lots.valueChanges.subscribe(value => {
-      localStorage.setItem('lots', JSON.stringify(value));
+      if (value !== null && value !== undefined) {
+        latestLots = value;
+      }
     });
+
+    if (latestLots !== undefined) {
+      localStorage.setItem('lots', JSON.stringify(latestLots));
+    }
   }
 
   onAddedLot() {

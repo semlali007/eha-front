@@ -33,6 +33,7 @@ export class SheetFormContractsComponent implements OnInit {
     this.generateLotsList();
 
     const savedContracts = localStorage.getItem('contracts');
+
     if (savedContracts) {
       const parsedContracts = JSON.parse(savedContracts);
       parsedContracts.forEach((contract: any) => {
@@ -45,15 +46,23 @@ export class SheetFormContractsComponent implements OnInit {
           ]],
           'provider': contract.provider,
           'lots': contract.lots || '',
-          'contacts': contract.contacts.replace(/\r\n/g, '<br>'),
+          'contacts': contract.contacts ? contract.contacts.replace(/\r\n/g, '<br>') : '', 
         });
         this.contracts.push(contractGroup);
       });
     }
 
+    let latestContracts: any[];
     this.contracts.valueChanges.subscribe(value => {
-      localStorage.setItem('contracts', JSON.stringify(value));
+      if (value !== null && value !== undefined) {
+        latestContracts = value;
+      }
     });
+
+    if (latestContracts !== undefined) {
+      localStorage.setItem('contracts', JSON.stringify(latestContracts));
+    }
+
   }
 
   onOpenClose(data: any) {
@@ -118,7 +127,7 @@ export class SheetFormContractsComponent implements OnInit {
             ]],
             'provider': row.provider,
             'lots': row.lots || '',
-            'contacts': row.contacts.replace(/\r\n/g, '<br>'),
+            'contacts': row.contacts ? row.contacts.replace(/\r\n/g, '<br>') : '',
           });
           this.contracts.push(contractGroup);
 

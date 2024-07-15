@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { PreviousService } from 'src/app/core/services/previous.service';
 import { PageService } from 'src/app/core/services/page.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   itemsPerPage: number = 20;
   paginationForm: FormGroup;
   smallnumPages: number = 0;
-  welcomeText = '';
+  welcomeText: SafeHtml;
   activeText = true;
   public user: User = null;
   public subscription: Subscription;
@@ -97,7 +98,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private previousService: PreviousService,
     private pageService: PageService,
-
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -282,7 +283,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   loadText() {
     this.pageService.getPage({ page: 'welcome-text' }).subscribe(response => {
-      this.welcomeText = response.content || '';
+      this.welcomeText = this.sanitizer.bypassSecurityTrustHtml(response.content || '');
       this.activeText = response.active || false;
     })
   }

@@ -47,6 +47,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public areas: Object[] = [];
   public directions: Object[] = [];
   public status: any;
+  public statusCode: number;
   public committee: any = '';
   public user: User;
   public subscription: Subscription;
@@ -96,6 +97,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     statusList.forEach(s => {
       if (s.code == sheet.status) {
         this.status = s.label;
+        this.statusCode = s.code;
       }
     })
 

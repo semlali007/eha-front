@@ -1,24 +1,49 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-sheet-form-dauphin',
   templateUrl: './sheet-form-dauphin.component.html',
-  styles: [
-  ]
+  styles: []
 })
-export class SheetFormDauphinComponent implements OnInit {
+export class SheetFormDauphinComponent implements OnInit, OnDestroy {
   @Input() dauphin: FormControl;
+  private valueChangesSubscription: Subscription;
+
   constructor() { }
 
   ngOnInit(): void {
+    if (this.dauphin) {
+      this.loadDauphinFromLocalStorage();
+      this.subscribeToValueChanges();
+    } else {
+      console.error('FormControl dauphin is not initialized.');
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribeFromValueChanges();
+  }
+
+  private loadDauphinFromLocalStorage(): void {
     const savedDauphin = localStorage.getItem('dauphin');
-    if (savedDauphin) {
+    if (savedDauphin !== null) {
       this.dauphin.setValue(savedDauphin === 'true');
     }
+  }
 
-    this.dauphin.valueChanges.subscribe(value => {
-      localStorage.setItem('dauphin', value.toString());
+  private subscribeToValueChanges(): void {
+    this.valueChangesSubscription = this.dauphin.valueChanges.subscribe(value => {
+      if (value !== null && value !== undefined) {
+        localStorage.setItem('dauphin', value.toString());
+      }
     });
+  }
+
+  private unsubscribeFromValueChanges(): void {
+    if (this.valueChangesSubscription) {
+      this.valueChangesSubscription.unsubscribe();
+    }
   }
 }

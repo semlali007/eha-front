@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -96,7 +96,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     private route: ActivatedRoute,
     private dateService: DateService,
     private modalService: BsModalService,
-    private contractService: ContractService
+    private contractService: ContractService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -108,7 +109,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         this.data = data.filter;
       }
     );
-    
+    this.cdr.detectChanges();
    // this.openDraftModal();
    // this.autosaveDraft();
   }

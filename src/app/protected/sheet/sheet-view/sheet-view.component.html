@@ -371,7 +371,7 @@
     
 
     <div class="col-11 col-md-10" >
-        <ng-container *ngIf="status === 1 ">
+        <ng-container *ngIf="statusCode === 1">
             <div class="col-md-5 mb-5" *ngIf="!!history && history?.length>0">
                 <button class="list-group-item filter-header smaller-text" (click)="isCollapsed = !isCollapsed"
                 [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
@@ -384,11 +384,11 @@
         </ng-container>
     </div>
     <div id="collapseBasic" [collapse]="isCollapsed" class="col-11 col-md-10" >
-        <h4 *ngIf="status === 1 && !!history && history?.length > 0"><strong>Historique des modifications</strong></h4>
+        <h4 *ngIf="statusCode === 1 && !!history && history?.length > 0"><strong>Historique des modifications</strong></h4>
         <br>
 
      <ul *ngFor="let h of history; let isFirst = first;" class="list-group" id="print-section">
-        <ng-container *ngIf="status === 1 && !!history && history?.length > 0">
+        <ng-container *ngIf="statusCode === 1 && !!history && history?.length > 0">
             <li>
                 Modifications - {{h.date | customDate : "dd/MM/yyyy à HH:mm:ss" }}
             </li>

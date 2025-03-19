@@ -105,6 +105,8 @@ pipeline {
                
                routeTimeout = myParameters.parameters.ROUTE_TIMEOUT.trim()
 
+               println "Parameters read complete."
+
                if(params.environment == "dev") {
                   pvcName = "pvc-fsm-mtb-preprodmtb1"
                }else if(params.environment == "formation") {

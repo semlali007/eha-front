@@ -1,0 +1,120 @@
+####
+#
+# Openshift template.
+#
+# This template create a BuildConfig file, that build docker_${IMAGE_NAME}-${IMAGE_TAG}
+# image, from Gitlab repository https://dc-gitlab.eei.adam.adroot.edf.fr/DataCenter-EEI_DevOps-EEI/dck_${IMAGE_NAME}.
+#
+# This template also add labels on this image (for exemple release date, maintainer contact, "see labels" section)
+#
+# Use it with oc process, passing parameters using '-p' options, it will generate a BuildConfig that you can apply.
+#
+# Parameters are listed at the end of this file.
+#
+####
+---
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  build-template: dck_image-template
+message: "Build template for EDF's DevOps / CaaS integration dck_image-template"
+metadata:
+  annotations:
+    description: "Build template for EDF's DevOps / CaaS integration dck_image-template"
+  creationTimestamp: null
+  name: dck_image-template
+objects:
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: dck-${IMAGE_NAME}-${IMAGE_TAG}
+      name: dck-${IMAGE_NAME}-${IMAGE_TAG}
+    spec:
+      nodeSelector: null
+      failedBuildsHistoryLimit: 3
+      successfulBuildsHistoryLimit: 2
+      completionDeadlineSeconds: 7200
+      output:
+        to:
+          kind: ImageStreamTag
+          name: dck_${IMAGE_NAME}:${IMAGE_TAG}
+        imageLabels:
+          - name: "fr.edf.project.image.name"
+            value: "${IMAGE_NAME}"
+          - name: "fr.edf.project.image.version"
+            value: "${IMAGE_TAG}"
+          - name: "fr.edf.project.release.date"
+            value: "${IMAGE_RELEASE_DATE}"
+          - name: "fr.edf.project.release.number"
+            value: "${IMAGE_RELEASE_NUMBER}"
+          - name: fr.edf.project.maintainer
+            value: "${MAINTAINER_EMAIL}"
+          - name: description
+            value: "${IMAGE_NAME}"
+      resources:
+        limits:
+          memory: 1.5Gi
+          cpu: "1"
+      runPolicy: Serial      
+      source:
+        git:
+          ref: "${GIT_BRANCH}"
+          uri: ${GIT_URL}
+        secrets:
+          - secret:
+              name: gitlab-devops-eha-url-encoded
+        sourceSecret:
+          name: gitlab-devops-eha
+        type: Git
+        contextDir: ${CONTEXT_DIR}
+      strategy:
+        dockerStrategy:
+          forcePull: true
+          noCache: false 
+          from:
+            kind: ImageStreamTag
+            name: ${FROM_IMAGE}
+            namespace: ${FROM_NAMESPACE}
+          dockerfilePath: docker/Dockerfile
+          env:
+            - name: NEXUS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: eha-gitlab-devops
+            - name: NEXUS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: eha-gitlab-devops          
+        type: Docker
+      triggers:
+        - imageChange:
+          type: ImageChange
+    status:
+      lastVersion: 0
+parameters:
+  - name: IMAGE_NAME
+    required: true
+  - name: IMAGE_RELEASE_DATE
+    required: true
+  - name: IMAGE_RELEASE_NUMBER
+    required: true
+  - name: IMAGE_TAG
+    required: true
+  - name: FROM_NAMESPACE
+    required: true
+  - name: FROM_IMAGE
+    required: true
+  - name: MAINTAINER_EMAIL
+    required: true
+  - name: CONTEXT_DIR
+    required: true   
+  - name: GIT_URL
+    required: true    
+  - name: GIT_BRANCH
+    required: true
+  - name: NPM_MIRROR
+    required: true    

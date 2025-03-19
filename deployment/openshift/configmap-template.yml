@@ -1,0 +1,51 @@
+####
+#
+# Openshift template.
+#
+# Use it with oc process, passing parameters using '-p' options, it will generate a ConfigMap that you can apply.
+#
+# Parameters are listed at the end of this file.
+#
+####
+---
+apiVersion: template.openshift.io/v1
+kind: Template
+message: "Simple ConfigMap template"
+metadata:
+  annotations:
+    description: "Simple ConfigMap template"
+  creationTimestamp: null
+  name: configmap-template
+objects:
+  - apiVersion: v1
+    data:
+      filebeat.yml: |-
+        filebeat.inputs:
+        - input_type: log
+          paths:
+            - /cockpitachat/log/*.log
+        #output.console:
+        #  pretty: true
+        setup.template.enabled: false
+        #setup.template.overwrite: true
+        output.elasticsearch:
+          hosts: ["${ELASTICSEARCH_HOST}"]
+          protocol: "https"
+          username: ${SECRETS_PADAONE_USERNAME:PUSERNAME}
+          password: ${SECRETS_PADAONE_PASSWORD:PPASSWORD}
+          index: pp1-padaone-events-dag-poc-achatpedia-logs-%{+yyyy.MM}
+    kind: ConfigMap
+    metadata:
+      labels:
+        app: app-${APPLICATION_NAME}-${ENV}-${VERSION}
+      name: cm-app-${APPLICATION_NAME}-${ENV}-${VERSION}
+parameters:
+  - name: APPLICATION_NAME
+    required: true
+  - name: VERSION
+    required: true
+  - name: ENV
+    required: true    
+  - name: ELASTICSEARCH_HOST
+    required: true
+    value: "padaone-preprod.edf.fr:29443"

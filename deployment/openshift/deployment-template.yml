@@ -1,0 +1,170 @@
+####
+#
+# Openshift template.
+#
+# Use it with oc process, passing parameters using '-p' options, it will generate a BuildConfig that you can apply.
+#
+# Parameters are listed at the end of this file.
+#
+####
+---
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  build-template: devops_openshift-simple-deploy-template-Deployment
+message: "Simple Deployment template for EDF's DevOps / CaaS integration devops_openshift-simple-deploy-template"
+metadata:
+  annotations:
+    description: "Simple Deployment template for EDF's DevOps / CaaS integration devops_openshift-simple-deploy-template"    
+  creationTimestamp: null
+  name: devops_openshift-simple-deploy-template
+objects:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:      
+          image.openshift.io/triggers: >-
+            [{"from":{"kind":"ImageStreamTag","name":"${FROM_IMAGE}:${VERSION}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"app-${APPLICATION_NAME}-${ENV}-${VERSION}\")].image"}]
+      labels:
+        app: app-${APPLICATION_NAME}-${ENV}-${VERSION}
+      name: app-${APPLICATION_NAME}-${ENV}-${VERSION}
+    spec:
+      revisionHistoryLimit: 3
+      replicas: 1
+      selector:
+        matchLabels:
+          app: app-${APPLICATION_NAME}-${ENV}-${VERSION}
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app: app-${APPLICATION_NAME}-${ENV}-${VERSION}
+        spec:
+          containers:
+            - args:
+                - /start_rails.sh;
+              command:
+                - sh
+                - '-c'
+              envFrom:
+              - secretRef: 
+                  name: eha-${ENV}-env
+              image: >-
+                ${LOCAL_REGISTRY}/${FROM_NAMESPACE}/${FROM_IMAGE}:${VERSION}
+              imagePullPolicy: Always
+              name: app-${APPLICATION_NAME}-${ENV}-${VERSION}
+              ports:
+                - containerPort: 80
+                  protocol: TCP              
+              resources:
+                limits:
+                  cpu: '${CPU_LIMIT}'
+                  memory: '${MEMORY_LIMIT}'
+                requests:
+                  cpu: '${CPU_REQUEST}'
+                  memory: '${MEMORY_REQUEST}'
+              securityContext:
+                readOnlyRootFilesystem: false
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                - mountPath: /var/achatpedia_home
+                  name: achatpedia-home
+                - mountPath: /tmp
+                  name: achatpedia-tmp
+                - mountPath: /opt/achatpedia/log/
+                  name: achatpedia-logs           
+            - env:
+                - name: SECRETS_PADAONE_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      key: PUSERNAME
+                      name: padaone-credentials-${ENV}
+                - name: SECRETS_PADAONE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: PPASSWORD
+                      name: padaone-credentials-${ENV}
+              image: ${LOCAL_REGISTRY}/openshift/dck_filebeat-ubi:7.9.3
+              imagePullPolicy: IfNotPresent
+              name: filebeat-container
+              ports:
+                - containerPort: 80
+                  protocol: TCP
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                - mountPath: /opt/achatpedia/log/
+                  name: achatpedia-logs
+                - mountPath: /opt/filebeat/config/
+                  name: filebeat-config-volume
+                  readOnly: true
+                - mountPath: /opt/filebeat/data/
+                  name: filebeat-data-volume
+            - resources: {}
+              terminationMessagePath: /dev/termination-log
+              name: haproxy-container
+              command:
+                - haproxy
+                - '-f'
+                - /etc/haproxy/haproxy.cfg
+              ports:
+                - containerPort: 5433
+                  protocol: TCP
+              imagePullPolicy: Always
+              volumeMounts:
+                - name: haproxy-secret-volume
+                  readOnly: true
+                  mountPath: /etc/haproxy/
+              terminationMessagePolicy: File
+              image: >-
+                ${LOCAL_REGISTRY}/${FROM_NAMESPACE}/dck_haproxy:2.8.2
+          restartPolicy: Always
+          securityContext: {}
+          serviceAccount: achatpedia-caas-mtb-mtb
+          serviceAccountName: achatpedia-caas-mtb-mtb
+          terminationGracePeriodSeconds: 30
+          volumes:
+            - emptyDir: {}
+              name: achatpedia-home
+            - emptyDir: {}
+              name: achatpedia-logs
+            - emptyDir: {}
+              name: achatpedia-tmp
+            - emptyDir: {}
+              name: filebeat-data-volume
+            - configMap:
+                defaultMode: 420
+                name: cm-app-${APPLICATION_NAME}-${ENV}-${VERSION}
+              name: filebeat-config-volume
+            - name: haproxy-secret-volume
+              secret:
+                secretName: eha-${ENV}-haproxy
+                defaultMode: 440           
+parameters:
+  - name: FROM_NAMESPACE
+    required: true
+  - name: FROM_IMAGE
+    required: true
+  - name: APPLICATION_NAME
+    required: true
+  - name: VERSION
+    required: true
+  - name: ENV
+    required: true
+  - name: PVC_NAME
+    required: true
+  - name: CPU_LIMIT
+    required: true
+  - name: CPU_REQUEST
+    required: true
+  - name: MEMORY_LIMIT
+    required: true    
+  - name: MEMORY_REQUEST
+    required: true                
+  - name: LOCAL_REGISTRY
+    required: true
+    value: "image-registry.openshift-image-registry.svc:5000"
+

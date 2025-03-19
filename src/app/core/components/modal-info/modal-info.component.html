@@ -1,0 +1,22 @@
+
+  <div *ngIf="(error$ | async) as error" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade modal-bg" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+ 
+    <div class="modal-dialog modal-dialog-hlk">
+  <div class="modal-content modal-content-hlk">
+    <div class="modal-header modal-header-hlk">
+      <h4 id="dialog-auto-name" class="modal-title pull-left  font-weight-bold">&nbsp;</h4>
+      <center>
+      <button type="button" class="btn-close close btn-close-hlk" aria-label="Close" (click)="hideModal()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </center>
+    </div>
+    <div class="modal-body font-weight-bold" >
+     <p>Nous sommes désolés, votre recherche n'a pas pu aboutir. <br>Merci de ré-essayer ultérieurement.<p></p>
+     <p>Pour tout renseignement complémentaire ou si le problème persiste, vous pouvez <u><a class="white-color" href="mailto:gu@supportdag.edf.fr?subject=EHA - HLK indisponible">nous écrire</a></u></p>
+    </div>
+  </div>
+ </div>
+</div>
+

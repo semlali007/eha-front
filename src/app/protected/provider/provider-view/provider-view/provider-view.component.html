@@ -1,0 +1,101 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center" style="margin-bottom: 3%;">
+	<div class="col-11 col-md-10">
+		<div *ngIf="!!provider && !!provider.infos">
+			<h1 class="cover-heading">
+				Fournisseur <span class="text-primary">{{provider.infos.supplier_business_legal_registration_name}}</span>
+			</h1>
+			<h1 class="cover-heading">
+				Informations générales sur le fournisseur :
+			</h1>
+			<table class="table table-hover">
+				<tr>
+					<th scope="row">Code PGI</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_app_id}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Raison sociale ou dénomination</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_name_common}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Dénomination usuelle de l'établissement</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_legal_registration_name}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Société mère</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_holding_use_name}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Numéro de SIRET</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_registration_id}}</td>
+				</tr>
+				<tr>
+					<th scope="row">N° TVA Intracommunautaire</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_id}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Identifiant DUNS (si fournisseur étranger)</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_duns_id}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Date de création de l'entreprise</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_registration_date_created}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Activité principale exercée (APE)</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_main_activity_label}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Code APE</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_main_activity_code}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Terme de paiement du fournisseur selon l'activité</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_payment_term}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Type d'établissement du fournisseur</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_type}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Forme juridique</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_legal_legal_form}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Catégorie juridique</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_legal_business_category_fr}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Rue</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_address_street}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Code postal</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_address_postal_zone}}</td>
+				</tr>
+				<tr>
+					<th scope="row">Ville</th>
+					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_address_town}}</td>
+				</tr>
+			</table>
+			<div *ngIf="provider.contracts.length > 0 && provider.contracts[0].contract_code != null">
+				<h1 class="cover-heading">
+					Liste des contrats actifs :
+				</h1>
+				<form [formGroup]="filterForm" *ngIf="provider.contracts.length > 9">
+					<div class="row" >
+						<div class="col-sm-6">
+							<input class="form-control" type="text" placeholder="rechercher" [formControl]="contractFilterText">
+						</div>
+					</div>
+				</form>
+				<ul class="list-group my-items-for-searches">
+					<a class="list-group-item link" *ngFor='let result  of provider.contracts | filterAllProperty:contractFilterText.value:["contract_code","contract_label","contract_date_end"]'
+						(click)="showContract(result.contract_code)">
+						<span *ngIf="result.contract_code">{{result.contract_system}}, {{result.contract_code}},</span> <span *ngIf="result.contract_label"><b> {{result.contract_label}}</b>,</span> <span *ngIf="result.contract_date_end"> fin le {{result.contract_date_end}}</span>
+					</a>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

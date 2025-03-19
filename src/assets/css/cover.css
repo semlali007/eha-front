@@ -1,0 +1,249 @@
+:root {
+  --my-color-orange: RGB(254,88,21);
+  --my-color-darkblue: RGB(9,53,122);
+  --my-color-green: RGB(80,158,47);
+  --my-color-blue: RGB(0,91,187);
+}
+
+html,
+body {
+  height: 100%;
+  color:black;
+  margin: 0;
+}
+/*
+body {
+  display: -ms-flexbox;
+  display: flex;
+}*/
+
+.my-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 100%; */
+} 
+
+.my-logout {
+  display: block;
+  float: right;
+  font-size: 0.8em;
+}
+
+.my-header {
+  /* background-color: var(--my-color-darkblue); */
+  background-image: url('../img/bandeau2.png');
+  background-size: cover;
+  color: white;
+}
+
+.my-content {
+  flex: 1;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: white;
+  min-height: calc(100% - 90px);
+}
+.my-footer {
+  text-align: center;
+  width:100%;
+  color: grey;
+  font-size: 0.8em;
+  background-color: white;
+  padding: 0.25px 0;
+  margin-top: auto;
+}
+
+.my-form-border {
+  border: 1px solid var(--my-color-darkblue);
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.my-form-connection {
+  border: 2px solid var(--my-color-darkblue);
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.version {
+  position: fixed;
+  top: 0;
+  right: 0;
+  writing-mode: sideways-lr;
+  text-orientation: mixed;
+  background: orange;
+  color: white;
+  padding: 6px 3px;
+  border-radius: 6px;
+}
+
+.my-box-border-left {
+  border-left: 1px solid grey;
+  border-radius: 5px;
+}
+.my-box-border-right {
+  border-right: 1px solid grey;
+  border-radius: 5px;
+}
+
+.my-title-for-trainings {
+  text-align: center;
+  color: white;
+  background-color: var(--my-color-orange);
+  margin-top: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.my-title-for-searches {
+  text-align: center;
+  color: white;
+  background-color: var(--my-color-green);
+  margin-top: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.my-title-for-contacts {
+  text-align: center;
+  color: white;
+  background-color: var(--my-color-blue);
+  margin-top: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.my-items-for-trainings > .list-group-item {
+  color: var(--my-color-orange);
+}
+
+.my-items-for-trainings > .breadcrumb-item > a {
+  color: var(--my-color-orange);
+}
+.my-items-for-searches > .list-group-item {
+  color: var(--my-color-green);
+}
+.my-items-for-searches > .breadcrumb-item > a {
+  color: var(--my-color-green);
+}
+.my-items-for-searches > .nav-link {
+  color: var(--my-color-green);
+}
+.my-items-for-searches > .nav-link > .badge {
+  background-color: var(--my-color-green);
+  color: white;
+}
+.my-items-for-contacts > .list-group-item {
+  color: var(--my-color-blue);
+}
+
+.my-form-for-searches > .form-control {
+  color: var(--my-color-green);
+  border: 1px solid var(--my-color-green);
+}
+
+.border-orange {
+  color: var(--my-color-orange);
+  border: 1px solid var(--my-color-orange);
+  }
+
+.border-bleu {
+  color: var(--my-color-blue);
+  border: 1px solid var(--my-color-blue);
+  }
+
+.border-green {
+  color: var(--my-color-green);
+  border: 1px solid var(--my-color-green);
+  }
+
+.btn-search {
+  margin-top: 10px;
+  background: white;
+  color: var(--my-color-green);
+  border: 1px solid var(--my-color-green);
+  font-weight: bold;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.row > [class*='col-'] {
+   display: flex;
+   flex-direction: column;
+}
+
+.breadcrumb {
+  background-color: white;
+}
+.modal-dialog {
+  max-width: 800px;
+}
+.link{
+  cursor: pointer;
+}
+.btn-edf{
+  background: var(--my-color-blue);
+  color: white;
+}
+.btn-edf:hover {
+  color:  white !important;
+}
+
+.blue_link {
+  color: var(--my-color-blue);
+}
+
+.fleche {
+  border:solid black;
+  border-width: 0 3px 3px 0;
+  display:inline-block;
+  padding: 3px;
+  margin-top:3%;
+  float: right;
+}
+
+.fleche-droite {
+  transform:rotate(-45deg);
+}
+
+.fleche-bas {
+  transform: rotate(45deg);
+}
+
+.smaller-text {
+  font-size: 0.95rem;
+}
+
+/* Edit padding envoyer un message partie hotline */
+#form-message { margin:0px 15px 3px 15px; }
+
+/* Edit bouton partie hotline */
+.btn-center { margin:0 0.2rem; }
+.btn-left { margin-right:0.2rem; }
+.btn-right { margin-left:0.2rem; }
+.my-btn-login:hover,
+.my-btn-login {
+  text-align: center;
+  color: white;
+  background-color: var(--my-color-orange);
+  margin-top: 100px;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 30%;
+}
+.favorite-btn {
+  /*...*/
+background: white;
+color: var(--my-color-orange);
+}
+
+.not-favorite-btn {
+  /*...*/
+background: white;
+color: black;
+}
+.required {
+  color: red;
+}

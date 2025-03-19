@@ -1,0 +1,47 @@
+<div class="modal-body">
+ <!-- *ngIf="status === 1"> -->
+  <div class="row">
+    <div class="col-2">
+      <img class="img-notif mt-3" src="../../../../assets/img/icone-notification-noir.png" />
+    </div>
+    <div class="col-10 text-justify">
+      <div class="offset-11">
+        <span aria-hidden="true" style="cursor:pointer" class="visually-hidden close d-inline" (click)="hideModal()"
+          aria-label="Close">&times;</span>
+      </div>
+      <div class="row">
+      <div class="col-md-8">
+      <h1 class="font-weight-bold pt-2" style="color:var(--my-color-darkblue); font-size: 18px;">Liste des notifications</h1>
+      </div>
+      <div class="col-md-4" *ngIf="list?.length > 0;" > <button class="btn btn-outline-danger" style="margin-top: 16px" > 
+        <span  aria-label="Close" (click)="deleteAll()" style="cursor: pointer;"  class="d-inline">Tout supprimer</span>  
+      </button>
+    </div>
+  </div>
+      <p class="pr-3"></p>
+     
+
+      <table class="table">
+        <tbody>
+          <ul *ngIf="list?.length > 0;else ngelse">
+          <tr *ngFor="let i of list">
+            <td> 
+              <li (click)="putViewed(i.id, i.sheet_id)" style="cursor:pointer"><p class="font-weight-light">La fiche marché <strong>{{ i.label}}</strong > a été modifiée le <strong style="color:var(--my-color-green)">{{ i.updated_at|customDate:'dd/MM/yyyy \à HH:mm' }}</strong></p></li> 
+            </td>
+            <td>
+              <button class="btn btn-outline-danger" > 
+                <span (click)="delete(i)" aria-label="Close" class="close-X d-inline" style="cursor: pointer;">×</span>  
+              </button>
+            </td>
+          </tr> 
+        </ul>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-template #ngelse>
+  
+      <p class="font-weight-light">Aucune nouvelle notification</p>
+    
+</ng-template>

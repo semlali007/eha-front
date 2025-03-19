@@ -1,0 +1,23 @@
+
+     .page-item.active .page-link { 
+        background-color:var(--my-color-blue);
+        border-color: var(--my-color-blue);
+         }
+         .page-link {
+            color: var(--my-color-blue);
+        }
+        .sidenav {
+         min-height: 100vh;
+       }
+       .card {
+         margin-bottom: 10px;
+     }
+
+     .noSub{
+      margin-left: 20%; 
+      margin-bottom: 10%;
+     }
+
+     .filter-header{
+      background-color: rgba(0, 0, 0, 0.03);
+     }

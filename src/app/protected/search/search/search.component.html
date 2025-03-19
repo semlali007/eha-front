@@ -1,0 +1,11 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center">
+    <div class="col-11">
+        <div class="list-group my-items-for-searches">
+            <div class="list-group-item">
+                <app-search-form (loadedResults)="onLoadedResults($event)" (resetedSearchForm)="onResetedSearchForm()"></app-search-form>
+            </div>
+        </div>
+        <app-search-result [results]="results" [reset]='reset'></app-search-result>
+    </div>
+</div>

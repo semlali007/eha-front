@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { CanActivate,Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivateChild } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EhaAdminRoleGuard implements CanActivate, CanActivateChild {
+
+  constructor(private authService: AuthService,private router: Router) {}
+
+  canActivate(): Observable<any> {
+
+    return this.authService.user$.pipe(
+      map(user => {
+        const hasRoleAdmin =  !!user && user.hasRole('EHA_ADMIN') ;
+          return hasRoleAdmin ||  this.router.navigate(['/app/accueil']);
+      })
+    );
+  }
+
+  canActivateChild(): Observable<boolean> {
+    return this.canActivate();
+   }
+}

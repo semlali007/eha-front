@@ -1,0 +1,63 @@
+<form class="row" [formGroup]="option">
+  <div class="col-sm-3">
+    <div class="pt-2">
+      <label>Option {{index + 1}} :</label>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="align-items-center d-flex">
+    <span class="pr-4">Du</span>
+    <input
+        formControlName="startDate" 
+        placeholder="Date de début"
+        class="form-control"
+        [bsConfig]="{ containerClass: 'theme-dark-blue' }"
+        bsDatepicker>
+    </div>
+    <small *ngIf="startDate.errors" class="form-text text-danger">
+      <span [hidden]="!startDate.errors.required">
+        Date de début requis.
+      </span>
+      <span [hidden]="!startDate.errors?.minDateNotValid || startDate.errors.required ">
+        La date de début de l'option ne doit pas être antérieure à la date de fin du marché.
+      </span>
+  </small>
+  <small *ngIf="option?.errors" class="form-text text-danger">
+    <span [hidden]="!option.errors?.customValidator ||startDate.errors?.required || endDate.errors?.required">
+      La date de début ne doit pas être postérieure à la date de fin.
+    </span>
+  </small>
+
+  </div>
+
+  <div class="col-sm-4">
+    <div class="align-items-center d-flex">
+    <span class="pr-4">au</span>
+    <input  
+        formControlName="endDate"
+        placeholder="Date de fin"
+        class="form-control"
+        [bsConfig]="{ containerClass: 'theme-dark-blue' }"
+        bsDatepicker>
+    </div>
+    <small *ngIf="endDate.errors" class="form-text text-danger">
+      <span [hidden]="!endDate.errors.required">
+        Date de fin requis.
+      </span>
+  </small>
+  </div>
+  <div class="col-sm-1">
+    <button class="remove" (click)="confirmation(template)">-</button>
+  </div>
+  
+</form>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Voulez-vous confirmer la suppression ?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+  </div>
+</ng-template>
+
+

@@ -1,0 +1,61 @@
+<h1>Gérer les E-mails :</h1>
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
+<p>{{emails.length}} entrées :</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                groupe
+            </th>
+            <th>
+                catégorie
+            </th>
+            <th>
+                E-mail
+            </th>
+            <th>
+                living
+            </th>
+            <th>
+                Changer le statut
+            </th>
+            <th>
+                Modifier
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let email of emails">
+            <td>
+                {{email.id}}
+            </td>
+            <td>
+                {{email.groupe}}
+            </td>
+            <td>
+                {{email.category}}
+            </td>
+            <td>
+                {{email.email}}
+            </td>
+            <td>
+                {{email.living}}
+            </td>
+            <td>
+                <button (click)="update(email)">Changer statut</button>
+            </td>
+            <td>
+                <button (click)="openEdit(email)">Modifier</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

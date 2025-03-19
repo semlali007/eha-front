@@ -1,0 +1,101 @@
+.title {
+  font-weight: bold;
+  color: var(--my-color-orange);
+}
+.full-width{
+  width:107% ;
+  margin-top:30px;
+  margin-bottom: -28px;
+}
+.p-danger{
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  color: #B20C1F;
+  margin-top:5px;
+}
+.titre-cadre{
+  margin-bottom:0 ;
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  /* identical to box height, or 127% */
+  /* Gris fonce ++ (AAA, Jet) */
+  color: #333333;
+
+
+
+
+}
+.titre-2{
+  /* Body - 16 - Semi Bold */
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  /* identical to box height, or 150% */
+
+  /* Bleu fonce (Charte) */
+  color: #001A70;
+  margin-top: 0px;
+  margin-bottom: -16px;
+}
+.hr{
+  /* Inside auto layout */
+  border: 1px solid B2B2B2;
+  width:100%;
+}
+.row-table {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cadre{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height:100%;
+  margin-top: 15px;
+  padding-right: 32px ;
+  background: #F1F3F9;
+  /* Ombre légère sur bloc */
+  box-shadow: 1px 2px 2px #DADADA;
+  border-radius: 3px;
+  align-self: stretch;
+}
+
+.link {
+  cursor:pointer ;
+}
+.p{
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333333;
+  margin-bottom:-8px;
+  margin-top:8px;
+}
+
+.table-se-doc{
+  border-collapse: collapse;
+  width: 100%;
+  margin-left:8px;
+  height:50%;
+}
+
+.td{
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.image-info{
+  margin-bottom: 10px;
+}

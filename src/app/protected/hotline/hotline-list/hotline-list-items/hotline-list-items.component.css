@@ -1,0 +1,82 @@
+form {
+    margin-top: 1%;
+}
+
+.perPage {
+    text-align: right;
+}
+
+.ddown-per-page{ 
+    height: 37px;
+    left: 0px;
+    right: 0px;
+    /* Blanc (Charte) */
+    background: #FFFFFF;
+    
+    /* Noir (Charte) */
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 5px;
+    text-align:left;
+}
+
+.reversed{
+    transform: rotate(0.5turn);
+}
+
+::ng-deep .card.customClass,
+::ng-deep .card.customClass .card-header,
+::ng-deep .panel.customClass {
+  background-color: #fff;
+  border-width: 0px;
+  
+}
+
+::ng-deep .card.customClass .card-header {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: white;
+    border-width: 0px;
+
+}
+
+::ng-deep .paginationClass .page-item.active .page-link{
+    background-color: #fff;
+    color:#001A70;
+}
+
+::ng-deep .paginationClass .page-item.disabled .page-link{
+    background-color: #fff;
+    color: #001A70;
+}
+
+::ng-deep .paginationClass .page-item .page-link{
+    margin-left: 10px;
+    margin-top: 4px;
+    color:#fff;
+    background-color: #001A70;
+    width: 30px;
+    height: 30px;
+    padding-top:3px;
+    padding-left:10px;
+}
+
+::ng-deep .paginationClass .pagination-prev .page-link{
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #fff;
+    border: 0px;
+    padding: 0px;
+}
+
+::ng-deep .paginationClass .pagination-next .page-link{
+    margin-left: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #fff;
+    border: 0px;
+    padding: 0px;
+}

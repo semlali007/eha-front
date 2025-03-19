@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label>1/ Le <b>thème</b> de votre question</label>
+    <select class="form-control" required [formControl]="theme" class="form-control">
+        <option value="" disabled>Choisissez un thème</option>
+        <option *ngFor="let item of themesList" [ngValue]="item.code">
+            {{item.label}}
+        </option>
+    </select>
+</div>

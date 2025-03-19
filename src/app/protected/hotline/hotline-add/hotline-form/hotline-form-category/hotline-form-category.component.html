@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label>2/ La <b>catégorie</b> d'achat relative à votre question</label>
+    <select class="form-control" required [formControl]="family" (change)="changeFamily($event)">
+        <option value="" disabled>Choisissez une famille</option>
+        <option *ngFor="let item of familiesList" [value]="item.code">
+            {{item.label}}
+        </option>
+    </select>
+
+    <select class="form-control" required [formControl]="category">
+        <option value="" disabled>Choisissez une catégorie</option>
+        <option *ngFor="let item of selectedCategories" [ngValue]="item.code">
+            {{item.label}}
+        </option>
+    </select>
+</div>

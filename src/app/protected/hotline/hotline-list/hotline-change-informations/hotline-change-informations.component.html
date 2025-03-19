@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-12">
+        <table><tr>
+        <td><a (click)="export()" class="link">Exporter tous les échanges</a></td>
+        <td *ngIf="email == currentEmail">&nbsp;/&nbsp;</td>
+        <td><a *ngIf="email == currentEmail" class="link" (click)="createHotline()">Poser une question</a></td>
+        </tr></table>
+    </div>
+</div>

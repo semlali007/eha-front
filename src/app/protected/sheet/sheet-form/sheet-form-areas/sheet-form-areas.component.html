@@ -1,0 +1,24 @@
+<div class="form-group">
+    <strong>Zones :</strong><span class="required">*</span>
+    <div class="row">
+        <div class="col-sm-10">
+            <tag-input [formControl]="areas"  [placeholder]="''" [onTextChangeDebounce]="500"
+                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
+                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
+                    [identifyBy]="'code'" [displayBy]="'label'">
+                </tag-input-dropdown>
+            </tag-input>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-edf"
+            (click)="openModalWithComponent()"
+               >Zones</button>
+        </div>
+    </div>
+    <small *ngIf="areas.errors" class="form-text text-danger">
+        <span [hidden]="!areas.errors.required">
+            Zones requis.
+        </span>
+       
+    </small>
+</div>

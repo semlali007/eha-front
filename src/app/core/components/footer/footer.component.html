@@ -1,0 +1,113 @@
+
+
+<footer id="footer-desktop" class="cadre-footer my-footer" role="contentinfo">
+  <p class="p-footer" style="margin-bottom: 0px;">Application proposée par la Direction des Achats Groupe, une direction de la DTEO</p>
+ <!---- <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm white"  href="documentation.pdf" target="_blank">
+            Télécharger la documentation
+        </a>
+    </span> ---->
+
+  <span class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <button class="btn btn-link btn-sm white" data-toggle="modal" (click)="staticModal.show()">
+            Mentions légales
+        </button>
+    </span>
+
+  <span *ngIf="!!user && (user.hasRole('EHA_ADMIN')|| user.hasRole('EHA_GESTIONNAIRE'))" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm white" (click)="navigate('admin/dashboard')">
+            Administration
+        </a>
+    </span>
+
+  <span *ngIf="!!user && user.hasRole('EHA_ADMIN')" class="textFooter">
+        &nbsp;|&nbsp;&nbsp;
+        <a class="btn btn-link btn-sm white" (click)="navigate('version.html')">
+            Version
+        </a>
+    </span>
+</footer>
+
+
+<!-- Footer mobile -->
+<footer id="footer-mobile" class="page-footer font-small indigo fixed-bottom mt-auto flex-column">
+
+  <!-- Footer Links -->
+  <div class="container text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6">
+        <!-- Links -->
+        <p class="p-footer">Application proposée par la Direction des Achats Groupe, une direction de la DTEO</p>
+      </div>
+      <!-- Grid column -->
+      <div class="col-md-2">
+        <!-- Links -->
+        <p class="p-footer link" (click)="staticModal.show()">Mentions légales</p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-1"  >
+        <!-- Links -->
+        <p  *ngIf="!!user && user.hasRole('EHA_ADMIN')" (click)="navigate('admin/dashboard')" class="p-footer link">Administration</p>
+      </div>
+      <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="left" >
+          <!-- Links -->
+          <p *ngIf="!!user && user.hasRole('EHA_ADMIN')" (click)="navigate('version.html')" class="p-footer link">Version</p>
+        </div>
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+</footer>
+
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+     aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Mentions légales</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        La Direction des Achats met en œuvre le traitement de DCP Achatpédia dans son intérêt légitime de
+        faciliter l'accès des salariés d'EDF aux références des fournisseurs et des contrats passés par
+        l'Entreprise ainsi qu'aux acheteurs en charge de ces dossiers. Le traitement collecte des données
+        d'identification et de vie professionnelle associés aux acheteurs et accessibles à tout salarié de
+        l'Entreprise utilisateur du service. Il permet aussi à chacun d'interroger, via des boites de dialogues,
+        les achats sur un fournisseur ou un contrat particulier. Les données sont conservées tant que le contrat
+        / fournisseur reste sous contrat avec l'Entreprise et au plus 3 ans pour les questions. Conformément aux
+        dispositions de la loi « Informatique et Libertés » et du Règlement Général sur la Protection des
+        Données (RGPD), chaque personne concernée peut exercer ses droit d'accès, de rectification,
+        d’effacement, d’opposition et son droit à la limitation du traitement en contactant : <a
+        href="mailto:gu@supportdag.edf.fr&subject=Achatpédia">gu@supportdag.edf.fr</a>. Pour toute question
+        sur le traitement des données, il est possible de contacter le Délégué à la Protection des Données (DPO)
+        désigné par EDF SA par voie électronique à l’adresse suivante : informatique-et-libertes@edf.fr ou par
+        voie postale à l’adresse suivante : Délégué à la Protection des Données (DPO) EDF - Direction des
+        Systèmes d’Information Groupe Mission Informatique et Libertés Tour PB6, 20 place de la Défense 92050
+        Paris La Défense CEDEX. Il est également possible de déposer une réclamation auprès de la Commission
+        Nationale de l’Informatique et des Libertés (CNIL).
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                (click)="staticModal.hide()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

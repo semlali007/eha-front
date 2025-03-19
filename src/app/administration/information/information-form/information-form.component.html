@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h4 class="modal-title">Ajout d'un élément</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form novalidate (ngSubmit)="submit()" [formGroup]="informationAddForm">
+        <div class="form-group">
+            <label for="short_description"><strong>Titre :</strong></label>
+            <editor id="short_description" formControlName="short_description"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
+            </editor>
+            <small *ngIf="short_description.errors" class="form-text text-danger">
+                <span [hidden]="!short_description.errors.required">
+                    Description courte requis.
+                </span>
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="long_description"><strong>Description :</strong></label>
+            <div>
+                <editor id="long_description" formControlName="long_description"
+                    [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
+                </editor>
+                <small *ngIf="long_description.errors" class="form-text text-danger">
+                    <span [hidden]="!long_description.errors.required">
+                        Description longue requise.
+                    </span>
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="start_date" class="mr-3"><strong>Date de début de validité :</strong></label>
+            <input bsDatepicker [formControl]="start_date" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"  type="text"
+                class="form-control form-control-sm align-middle" placement="top" />
+                <small *ngIf="start_date.errors" class="form-text text-danger">
+                    <span [hidden]="!start_date.errors.required">  Date requise.</span>
+                    <span [hidden]="!start_date.errors.bsDate">  Date invalide.</span>
+                </small>
+        </div>
+        <div class="form-group">
+            <label for="end_date" class="mr-3"><strong>Date de fin de validité :</strong></label>
+            <input bsDatepicker [formControl]="end_date" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
+                class="form-control form-control-sm align-middle"  placement="top" />
+                <small *ngIf="end_date.errors" class="form-text text-danger">
+                    <span [hidden]="!end_date.errors.required">  Date requise.</span>
+                    <span [hidden]="!end_date.errors.bsDate">  Date invalide.</span>
+                </small>
+        </div>
+        
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submit()"
+        [disabled]="!informationAddForm.valid">Valider</button>
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
+</div>

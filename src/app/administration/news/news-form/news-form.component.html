@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title">Ajout d'un élément</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form novalidate (ngSubmit)="submit()" [formGroup]="NewsAddForm">
+        <div class="form-group">
+            <label for="title"><strong>Titre :</strong></label>
+            <editor id="title" formControlName="title"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
+            </editor>
+            <small *ngIf="title.errors" class="form-text text-danger">
+                <span [hidden]="!title.errors.required">
+                    Titre requis.
+                </span>
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="description"><strong>Description :</strong></label>
+            <div>
+                <editor id="description" formControlName="description"
+                    [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
+                </editor>
+                <small *ngIf="description.errors" class="form-text text-danger">
+                    <span [hidden]="!description.errors.required">
+                        Description requise.
+                    </span>
+                </small>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="!NewsAddForm.valid">Valider</button>
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
+</div>

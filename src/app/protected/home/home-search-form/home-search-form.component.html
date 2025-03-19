@@ -1,0 +1,12 @@
+<form class="my-form-for-searches" role="search" novalidate [formGroup]="homeSearchForm" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-8">
+        <input type="search" class="form-control input-edf" [formControl]="searchText"
+               placeholder="Saisissez votre recherche" id="searchText">
+      </div>
+      <div class="col-4">
+        <button type="submit" class="btn btn-edf-v2" [disabled]="!homeSearchForm.valid">Valider</button>
+      </div>
+    </div>
+</form>
+

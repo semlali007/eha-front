@@ -1,0 +1,55 @@
+<h1>Autoriser un externe :</h1>
+<form [formGroup]="externalForm" (ngSubmit)="submit()">
+    <div class="form-group">
+        <label>E-mail du demandeur : </label>
+        <input type="adminEmail" class="form-control"  [formControl]="adminEmail">
+        <small *ngIf="adminEmail.errors && adminEmail.dirty" class="form-text text-muted">
+            <span [hidden]="!adminEmail.errors.email">Entrez une adresse email valide.</span>
+        </small>
+    </div>
+    <div class="form-group">
+        <label>E-mail de l'externe: </label>
+        <input type="userEmail" class="form-control"  [formControl]="userEmail">
+        <small *ngIf="userEmail.errors && userEmail.dirty" class="form-text text-muted">
+            <span [hidden]="!userEmail.errors.email">Entrez une adresse email valide.</span>
+        </small>
+    </div>
+    <div class="text-right mt-3">
+        <button type="submit" [disabled]="!externalForm.valid" class="btn btn-primary">Sauvegarder</button>
+    </div>
+</form>
+<p>{{externals.length}} entrées :</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                E-mail de l'externe 
+            </th>
+            <th>
+                E-mail du demandeur 
+            </th>
+            <th>
+                Date de fin 
+            </th>
+            <th>
+                Supprimer
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let external of externals">
+            <td>
+                {{external.externe_email}}
+            </td>
+            <td>
+                {{external.demandeur_email}}
+            </td>
+            <td>
+                {{external.date_fin}}
+            </td>
+            <td>
+                <button (click)="delete(external)">Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

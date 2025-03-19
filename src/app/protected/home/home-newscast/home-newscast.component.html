@@ -1,0 +1,70 @@
+<div class="row " *ngIf="(data$ | async) as data">
+    <div  *ngIf="!!data && !!data.total && data.total>0" class="col-12 col-md-12">
+        <div class="Bloc-actualit">
+            <div class="row Frame-931">
+                <div class="col-8 col-md-8 ">
+                    <div class="list-group Frame-315">
+                        <img src="../../../../assets/img/mdi_announcement.png"
+                            srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
+                            class="mdiannouncement">
+                        <span class="Actualit H2---26---Semi-Bold">
+                            Actualités
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="col-4 col-md-4 ">
+                    <div class="list-group Frame-315">
+                        <span class="Consulter-toute-lactualit Body---14---Semi-Bold" (click)="navigateToList()">
+                            Consulter toute l’actualité
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row Frame-930">
+                <div class="col-12 col-md-12 ">
+                    <div class="list-group Frame-934">
+                        <tabset [vertical]="true" customClass="customClass">
+                            <tab *ngFor="let news of data.data |  slice:0:3;">
+                                <ng-template tabHeading>
+                                    <div class="Frame-938">
+                                        <div class="Frame-933">
+                                            <span class="Nascetur-diam-arcu-ut-neque-purus-maur Body---14---Semi-Bold">
+                                                {{news.title|slice:0:35}}<span *ngIf="news.title.length > 35">...</span>
+                                            </span>
+                                            <span class="Modification-de-march---Publi-le-22012023 Body---12---Regular">
+                                                {{news.categ}} - Publié le {{news.published_date| customDate: "dd.MM.yyyy"  }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                   
+                                </ng-template>
+                                <div class="Frame-316">
+                                    <div class="Frame-410">
+                                        <div class="Frame-937">
+                                          <div >
+                                            <span class="badge {{news.categ_code|newsCastCategoryColor}}" style="float:left"> {{ news.categ }}</span>
+                                          </div>
+                                          <span class="Publi-le-02022023 Body---16---Semi-Bold">
+                                           Publié le {{news.published_date| customDate: "dd.MM.yyyy" }}
+                                          </span>
+                                      </div>
+                                      <span class="Elit-donec-fermentum-dignissim-amet-massa-sed-dolor-enim H3---22---Regular">
+                                        {{news.title}}
+                                      </span>
+                                      <span *ngIf="(news.short_description|striphtml).length<=250" [innerHtml]="(news.short_description|striphtml|slice:0:250)" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular"></span>
+                                      <span *ngIf="(news.short_description|striphtml).length>250" [innerHtml]="(news.short_description|striphtml|slice:0:250) + '...'" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular"></span>
+                                      <span class="Lire-la-suite Body---16---Semi-Bold" (click)="navigate(news.id)">
+                                        Lire la suite
+                                      </span>
+                                    </div>
+                                  </div>
+                               
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

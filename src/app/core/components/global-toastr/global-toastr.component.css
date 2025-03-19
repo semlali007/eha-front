@@ -1,0 +1,21 @@
+#uiNotificationContainer {
+	position: fixed;
+	width: 92%;
+	margin: 0 auto;
+	margin-left: 4%;
+	z-index: 20;
+    top: 0px;
+}
+#uiNotificationContainer > .alert {
+	margin: 0 auto 1rem auto;
+	position: relative;
+	word-break: break-word;
+}
+#uiNotificationContainer .alert-msg {
+	cursor: default;
+}
+.alert-danger {
+	background-color: #fdf7f7;
+	border-color: #d9534f;
+	color: #a02622;
+}

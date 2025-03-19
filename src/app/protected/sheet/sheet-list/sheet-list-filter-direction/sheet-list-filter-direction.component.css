@@ -1,0 +1,19 @@
+::ng-deep .tooltip-inner{
+    background-color: var(--my-color-orange);
+}
+
+::ng-deep .tooltip.top .tooltip-arrow::before { 
+    border-top-color: var(--my-color-orange);
+}
+
+::ng-deep .tooltip.bottom .tooltip-arrow::before { 
+    border-bottom-color: var(--my-color-orange);
+}
+
+::ng-deep .tooltip.right .tooltip-arrow::before { 
+    border-right-color: var(--my-color-orange);
+}
+
+::ng-deep .tooltip.left .tooltip-arrow::before { 
+    border-left-color: var(--my-color-orange);
+}

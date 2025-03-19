@@ -1,0 +1,155 @@
+.textFooter {
+    font-size: .875rem;
+}
+
+.p-footer{
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    /* Blanc (Charte) */
+    color: #FFFFFF;
+}
+
+.white{
+    text-decoration-line: underline ;
+    color: #FFFFFF;
+}
+
+.container, .container-sm, .container-md, .container-lg, .container-xl {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+    color:#fff;
+    /* Bleu fonce (Charte) */
+    background: #001A70;
+    /* Ombre footer bleu */
+    box-shadow: 4px 0px 10px #75787B;
+}
+
+.container[_ngcontent-aen-c24], .container-sm[_ngcontent-aen-c24], .container-md[_ngcontent-aen-c24], .container-lg[_ngcontent-aen-c24], .container-xl[_ngcontent-aen-c24] {
+    padding: 0;
+}
+
+
+.cadre-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* Bleu fonce (Charte) */
+    background: #001A70;
+    /* Ombre footer bleu */
+    box-shadow: 4px 0px 10px #75787B;
+}
+.link{
+    cursor: pointer;
+    text-decoration:underline ;
+}
+@media screen and (min-width: 790px) {
+
+    #footer-desktop{
+        display:inline-flex ;
+      }
+      #footer-mobile{
+        display:none ;
+      }
+
+.row{
+    height: 17px;
+}
+
+.left{
+    margin-left: 46px;
+}
+
+.col-md-2 {
+    flex: 0 0 12.667%;
+    max-width: 12.666667%;
+}
+
+.col-md-6 {
+    flex: 0 0 51%;
+    max-width: 51%;
+}
+
+.margin-1{
+    max-width: 12.667% !important;
+}
+
+.p-footer{
+    font-size:14px;
+}
+.margin-0{
+    max-width: 20%;
+    margin:0;
+}
+}
+
+.responsive-header{
+    box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+
+width: 100%;
+height: 50px;
+
+/* Bleu très clair (AAA, Alice Blue) */
+background: #F1F3F9;
+
+/* Bleu fonce (Charte) */
+border-bottom: 1px solid #001A70;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+@media (max-width: 800px) {
+
+    #footer-desktop{
+        display:none ;
+      }
+      #footer-mobile{
+        display:block ;
+      }
+
+    .fixed-bottom {
+            position:relative ;
+    }
+    
+.left{
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+    .cadre-footer{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        gap: 20px;
+    
+        width: 104%;
+        height: 20%;
+    
+        /* Bleu fonce (Charte) */
+        background: #001A70;
+    
+        /* Ombre footer bleu */
+        box-shadow: 4px 0px 10px #75787B;
+    }
+}
+  

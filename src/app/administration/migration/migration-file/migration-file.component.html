@@ -1,0 +1,12 @@
+<form [formGroup]="fileForm" (ngSubmit)="submit()">
+    <div class="form-group">
+        <label>Sélectionner un fichier CSV :</label>
+        <input type="file" class="form-control-file" id="file" [formControl]="file" (change)="onFileChange($event)">
+        <small *ngIf="file.errors && file.dirty" class="form-text text-muted">
+            <span [hidden]="!file.errors.required">le fichier est obligatoire.</span>
+        </small>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" [disabled]="!fileForm.valid" (click)="submit()">Importer</button>
+    </div>
+</form>

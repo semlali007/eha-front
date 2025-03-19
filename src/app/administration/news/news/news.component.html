@@ -1,0 +1,86 @@
+<h1>Administration de la modal : {{title}}</h1>
+<form [formGroup]="pageForm" (ngSubmit)="submit()" *ngIf="type=='home_page'">
+    <div class="form-group">
+        <label for="content"><strong>Contenu :</strong></label>
+        <div>
+            <editor id="content" formControlName="content"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
+            </editor>
+            <small *ngIf="content.errors" class="form-text text-danger">
+                <span [hidden]="!content.errors.required">
+                    Contenu requise.
+                </span>
+            </small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <strong>Activer</strong>
+        </div>
+        <div class="col-sm-9">
+            <div class="form-check">
+                <input type="checkbox" formControlName="active" id="active"  class="form-check-input"/>
+            </div>
+        </div>
+    </div>
+    <div class="text-right mt-3">
+        <button type="submit" [disabled]="!pageForm.valid" class="btn btn-primary">Sauvegarder</button>
+    </div>
+</form>
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Titre
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let new of news$ | async">
+            <td>
+                {{new.id}}
+            </td>
+
+            <td [innerHtml]="new.title">
+            </td>
+
+            <td [innerHtml]="new.description">
+            </td>
+
+            <td>
+                {{new.date}}
+            </td>
+
+            <td>
+                <button class="btn btn-primary" (click)="openAdd(new.id)">Modifier</button>
+                <button class="btn btn-danger" (click)="openModal(template, new.id)" >Supprimer</button>
+            </td>
+        </tr> 
+
+    </tbody>
+</table>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

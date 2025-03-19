@@ -1,0 +1,36 @@
+<h1>Ajouter un administrateur :</h1>
+<form [formGroup]="administratorForm" (ngSubmit)="submit()">
+    <div class="form-group">
+        <label>E-mail du nouvel administrateur: </label>
+        <input type="email" class="form-control" placeholder="email" [formControl]="email">
+        <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
+            <span [hidden]="!email.errors.email">Entrez une adresse email valide.</span>
+        </small>
+    </div>
+    <div class="text-right mt-3">
+        <button type="submit" [disabled]="!administratorForm.valid" class="btn btn-primary">Sauvegarder</button>
+    </div>
+</form>
+<p>{{administrators.length}} entrées :</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                Supprimer
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let administrator of administrators">
+            <td>
+                {{administrator.email}}
+            </td>
+            <td>
+                <button (click)="delete(administrator)">Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

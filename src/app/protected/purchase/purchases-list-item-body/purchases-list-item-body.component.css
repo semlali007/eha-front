@@ -1,0 +1,122 @@
+/************ Items ******/
+
+.cadre-item-purchase {
+    /* Auto layout */
+    display: flex;
+    align-items: flex-start;
+    padding: 30px;
+    width: 100%;
+    left: 0px;
+    top: 294px;
+    /* Gris tres clair (AAA, Cultured) */
+    background: #F5F5F5;
+}
+
+
+
+ 
+
+.text-flow-source-green{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    /* Gris fonce + (AA, Sonic Silver) */
+    color: #219653;
+    margin-left: 9px;
+}
+
+.text-flow-source{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    /* Gris fonce + (AA, Sonic Silver) */
+    color: #737679;
+    margin-left: 9px;
+}
+
+.text-flow-content{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    /* Noir (Charte) */
+    color: #000000;
+    margin-left:9px;
+}
+
+.title{
+    margin-top: 8px;
+    margin-left: 4px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    /* or 150% */
+    display: flex;
+    align-items: center;
+
+    /* Noir (Charte) */
+    color: #000000;
+}
+
+.flow-grey {
+    width: 182px;
+    height: 135px;
+    left: 0px;
+    top: 0px;
+    /* Blanc (Charte) */
+    background: #FFFFFF;
+    margin-right: -3px;
+    /* Gris fonce + (AA, Sonic Silver) */
+    border: 1px solid #737679;
+    box-sizing: border-box;
+}
+
+.flow-green {
+    width: 182px;
+    height: 135px;
+    left: 0px;
+    top: 0px;
+    /* Blanc (Charte) */
+    background: #EBFBF1;
+    margin-right: -3px;
+    /* Gris fonce + (AA, Sonic Silver) */
+    border: 1px solid #219653;
+    box-sizing: border-box;
+}
+
+
+.text {
+    position: static;
+    width: 100%; 
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+    display: flex;
+    align-items: center;
+    color: #000000;
+
+    margin-bottom: 5px;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0; 
+}
+
+.message{
+    margin-top:4%; 
+    font-style:italic;
+}

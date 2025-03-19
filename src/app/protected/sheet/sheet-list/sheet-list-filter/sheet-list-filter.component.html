@@ -1,0 +1,48 @@
+<div class="sticky-top">
+    <div class="nav flex-column">
+<form novalidate [formGroup]="sheetFilterForm">
+    <app-sheet-list-filter-subscribe [subscribe]='subscribe' [list]="filter.subscribe" (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-subscribe>
+
+    <app-sheet-list-filter-status *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status' [list]="filter.status"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-status>
+    <app-sheet-list-filter-beneficiary [beneficiaries]='beneficiaries' [list]="filter.beneficiaries"
+        (changedFilter)="onChangedFilterSheets($event)" [data]="data"> 
+    </app-sheet-list-filter-beneficiary>
+    <!-- ************* -->
+    <app-sheet-list-filter-stipulation [stipulationAutrui]='stipulationAutrui' [list]="filter.stipulationAutrui"
+        (changedFilter)="onChangedFilterSheets($event)" [data]="data"> 
+    </app-sheet-list-filter-stipulation>
+
+    <app-sheet-list-filter-area [areas]='areas' [list]="filter.areas" (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-area>
+
+    <app-sheet-list-filter-provider [providers]='providers' [list]="filter.providers"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-provider>
+    <app-sheet-list-filter-direction [directions]='directions' [list]="filter.directions"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-direction>
+    <app-sheet-list-filter-edf-open [edfOpen]='edfOpen' [list]="filter.edfOpen"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-edf-open>
+
+    <app-sheet-list-filter-partnership [partnership]='partnership' [list]="filter.partnership"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-partnership>
+
+    <app-sheet-list-filter-sector [sector]='sector' [list]="filter.sector"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-sector>
+
+    <app-sheet-list-filter-dauphin [dauphin]='dauphin' [list]="filter.dauphin"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-dauphin>
+
+    <app-sheet-list-filter-committee [committees]='committees' [list]="filter.committees"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-committee>
+</form>
+    </div>
+</div>

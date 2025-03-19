@@ -1,0 +1,8 @@
+<nav aria-label="Vous êtes ici :" role="navigation">
+    <ol class="breadcrumb my-items-for-contacts">
+        <li *ngFor="let row of breadcrumbs" class="breadcrumb-item{{(row.route == null) ? ' active' : ''}} link"  [attr.aria-current]="row.route == null">
+            <a (click)="navigate(row.route)" *ngIf="row.route != null" class="blue_link">{{row.label}}</a>
+            <span *ngIf="row.route == null">{{row.label}}</span>
+        </li>
+    </ol>
+</nav>

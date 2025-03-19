@@ -1,0 +1,15 @@
+<div class="my-container">
+    <app-banner></app-banner>
+    <app-navbar></app-navbar>
+    <main class="my-content" role="main">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>
+<app-footer></app-footer>
+<app-loader></app-loader>
+<app-toastr></app-toastr>
+<app-inactivity *ngIf="!!(user$|async) && !!(user$|async).nni"></app-inactivity>
+<app-global-toastr></app-global-toastr>
+<app-modal-info></app-modal-info>

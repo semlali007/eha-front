@@ -1,0 +1,28 @@
+<button type="button" (click)="migrate()" class="btn btn-danger">Migrer</button>
+<table class="table table-bordered pagin-table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" (change)="onCheckboxAllChange($event)"></th>
+            <th>Id</th>
+            <th>Titre</th>
+            <th *ngIf="type === 'datp'">Titre DATP 2</th>
+            <th>code</th>
+            <th>message</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of list; let i=index">
+            <td><input type="checkbox" (change)="onCheckboxChange($event)" [value]="data.id"
+                    [checked]="data.isSelected" [disabled]="data.type_d_element == 'success' || data.type_d_element == 'warning'"></td>
+            <td>{{ data.id }}</td>
+            <td>{{ data.titre }}</td>
+            <td *ngIf="type === 'datp'">{{ data.datpb.titre }}</td>
+            
+            <td *ngIf="type === 'datp'">{{ data.datpb.type_d_element }}</td>
+            <ng-template #elseBlock><td>{{ data.type_d_element }}</td></ng-template>
+            <td>
+                <label>{{data.chemin_d_acces}}</label>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,153 @@
+<div class="form-group row">
+    <div class="col-6 col-sm-7 offset-sm-1">
+        <small class="form-text text-muted">Vous pouvez effectuer une recherche à l'aide de mots clés (par exemple :
+            "contrat événementiel"), ou bien saisir votre question en langage naturel (par exemple : "je cherche un
+            contrat pour de l'événementiel"). A noter qu'un mot peut être exclu de la recherche en le précédent du signe
+            moins (exemple "-extracteur").</small>
+    </div>
+    <div class="col-6 col-sm-3">
+        <!-- Button trigger modal -->
+       <!--- --<button class="btn btn-search" (click)="staticModal.show()" style="font-weight: normal"  type="button">
+            exemples
+        </button> --->
+        <!-- Lancer ou effacer une recherche -->
+
+        <button class="btn btn-search"  (click)="clearSearchForm()" 
+            style="font-weight: normal" type="button" *ngIf="!!words && !!words.value && words.value.length>0" >
+            effacer
+        </button> 
+    </div>
+</div>
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exemples de recherche</h5>
+                <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je cherche les contrats pour réaliser une prestation de déménagement</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>Contrat de déménagement</b> »</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je cherche le fournisseur ELIOR</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>fournisseur ELIOR</b> »</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je veux des renseignements sur le code article 1060001299</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>article 1060001299</b> »</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je cherche les contrats rattachés au code article X811RLR4</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>contrats avec le code article X811RLR4</b> »</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je cherche les agences utilisant le plus le code article 1060001299</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>agences utilisant le code article 1060001299</b> »</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je cherche un acheteur ayant travaillé avec le fournisseur DOCUSIGN ?</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>acheteur DOCUSIGN</b> »</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info">?</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je cherche un acheteur ayant travaillé sur un dossier d'achat d'une barge ?</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning">!</div>
+                        <div class="timeline-panel">
+                            <div class="timeline-body">
+                                <p>Je saisi : « <b>acheteur barge -débarge</b> », j'exclue le mot débarge avec un signe
+                                    moins devant ce mot.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="staticModal.hide()">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

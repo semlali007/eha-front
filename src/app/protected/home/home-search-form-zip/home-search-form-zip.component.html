@@ -1,0 +1,11 @@
+<form class="my-form-for-searches" role="search" novalidate [formGroup]="homeSearchFormZip" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-8">
+          <input type="search" class="form-control input-edf"
+                 placeholder="Saisissez un Code Postal"  [formControl]="zipCode"   id="zipCode" >
+        </div>
+        <div class="col-4">
+          <button type="submit" class="btn btn-edf-v2" [disabled]="!homeSearchFormZip.valid" >Valider</button>
+        </div>
+      </div>
+</form>

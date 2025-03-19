@@ -1,0 +1,20 @@
+<form [formGroup]="lot" class="form-group row">
+    <div class="col-sm-2">
+        <input formControlName="name" type="text" class="form-control" [placeholder]="'Entrer un lot'">
+    </div>
+    <div class="col-sm-9">
+        <input formControlName="description" type="text" class="form-control" [placeholder]="'Entrer une description'">
+    </div>
+    <div class="col">
+        <button class="remove" (click)="confirmation(template)">-</button>
+    </div>
+  </form>
+
+<br><br>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Voulez-vous confirmer la suppression ?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+  </div>
+</ng-template>

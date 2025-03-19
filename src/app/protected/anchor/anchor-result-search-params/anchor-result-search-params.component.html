@@ -1,0 +1,22 @@
+<p *ngIf="!!filter.zipcode">
+    Vous avez demandé l'ancrage territorial pour le code postal <b>{{filter.zipcode}}</b>
+</p>
+<p *ngIf="!!filter.nace">
+    Vous avez restreint les fournisseurs aux codes NACE <b>{{filter.nace}}</b>
+</p>
+<p *ngIf="!!filter.articles">
+    Vous avez restreint les fournisseurs aux codes articles <b>{{filter.articles}}</b>
+</p>
+<p *ngIf="!filter.zipcode">
+    Aucun code postal transmis.
+</p>
+<p *ngIf="!!anchor.maxRadius">
+    La rayon de recherche a été restreint à {{anchor.maxRadius}} km autour du code postal.
+</p>
+<p *ngIf="!!anchor.maxProviders">
+    Le nombre de fournisseurs affichés a été restreint à {{anchor.maxProviders}}.
+</p>
+<p *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders">
+    Cliquer sur le bouton ci-après pour exporter les données sous Excel : <button
+        class="btn btn-search btn-sm my-auto" (click)="export()">exporter</button>
+</p>

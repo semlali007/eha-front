@@ -1,0 +1,35 @@
+<p *ngIf="activeProviders.length > 0">
+    <b>{{ activeProviders.length }}</b> fournisseurs <b>avec</b> des contrats actifs :
+</p>
+<div class="list-group my-items-for-searches">
+    <a class="list-group-item link" *ngFor="let row  of activeProviders| slice:startItem:endItem;"  (click) = "showProvider(row.code)">
+        <table>
+            <tr>
+                <td style="width: 35px; padding-right: 10px;">
+                    <img *ngFor="let activity  of row.activities" src="../../../../assets/img/pictogramme-{{activity.code}}.png" height="25px"
+                        style="background-color:green;">
+                </td>
+                <td>
+                    <small ng-if="row.distance > -1">{{row.distance}} km</small> <b> {{row.label}}</b>
+                    <br>
+                    {{row.zipcode}} {{row.town}}
+                </td>
+            </tr>
+        </table>
+    </a>
+</div>
+<div class="alert alert-warning" *ngIf="activeProviders.length == 0">
+    Désolé, je n'ai trouvé aucun fournisseur avec un contrat actif proche de ce code postal.
+</div>
+
+<div class="row" *ngIf="activeProviders.length>0">
+    <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
+    <form  [formGroup]="paginationForm">
+        <nav aria-label="pagination" >
+        <pagination [totalItems]='activeProviders.length' [itemsPerPage]="itemsPerPage"
+        [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+        (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+        </pagination>
+        </nav>
+    </form>
+</div>

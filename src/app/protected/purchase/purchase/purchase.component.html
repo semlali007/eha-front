@@ -1,0 +1,15 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row">
+    <h1 class="titre">
+        Ma situation achat
+    </h1>
+    <div class="col-12">
+        <app-purchase-form (submittedForm)="onSubmittedForm($event)"></app-purchase-form>
+        <hr class="hr">
+        <div>
+            <app-purchase-filter [purchases]="purchases" [filteredlist]="purchases"></app-purchase-filter>
+            <br>
+            <app-purchase-list [params]="params" [purchases]="purchases"></app-purchase-list>
+        </div>
+    </div>
+</div>

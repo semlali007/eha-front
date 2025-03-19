@@ -1,0 +1,12 @@
+.progress {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #fbf2f2;
+    border-radius: .25rem;
+    border-color: #000;
+    border: 1px solid #9a9a9a;
+    color: #000;
+  }

@@ -1,0 +1,13 @@
+    <div>
+        <p>Date de mise à jour: {{updatedDate | date:'dd/MM/YYYY'}}, source : DataLake.</p>
+        <div class="alert alert-warning" *ngIf="item.count == 30">
+            Seuls les 30 premiers résultats sont affichés, vous devriez affiner votre recherche. En rajoutant un mot ?
+        </div>
+        <div class="list-group my-items-for-searches">
+            <a class="list-group-item link" *ngFor="let result  of item.items  | slice:startItem:endItem;" (click)="showDauphin(result)">
+                {{result.code}} <b>{{result.label}}</b>
+                <br>
+                <small>{{result.other}}</small>
+            </a>
+        </div>
+    </div>

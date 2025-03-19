@@ -1,0 +1,52 @@
+<h1>Gérer les groupes:</h1>
+<div class="row">
+    <div class="col-3 margin-tb text-right">
+        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
+            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
+        </div>
+    </div>
+</div>
+<p>{{groups.length}} entrées :</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                label
+            </th>
+            <th>
+                living
+            </th>
+            <th>
+                Changer le statut
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let group of groups">
+            <td>
+                {{group.id}}
+            </td>
+            <td>
+                {{group.label}}
+            </td>
+            <td>
+                {{group.living | showBooleanText}}
+            </td>
+            <td>
+                <!-- <button class="btn btn-primary" (click)="openAdd(group.id)">Modifier</button> -->
+                <button class="btn btn-primary" (click)="openAdd(group.id.toString())">Modifier</button>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >true</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >false</button>
+    </div>
+  </ng-template>

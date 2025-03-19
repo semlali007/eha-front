@@ -1,0 +1,9 @@
+
+<div *ngIf="(globalToastr$ | async) as globalToastr" id="uiNotificationContainer" aria-atomic="false">
+  <div class="alert  alert-danger">
+    <span class="alert-msg">{{ globalToastr.message }} </span>
+    <button type="button" class="close" aria-label="Close" (click)="closeToastr()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

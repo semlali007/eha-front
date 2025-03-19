@@ -1,0 +1,12 @@
+
+.textfield-search-global{ 
+    width: 310px;
+    height: 37px;
+    left: 99px;
+    top: 0px;
+    background: #FFFFFF;
+    /* Gris fonce ++ (AAA, Jet) */
+    border: 1px solid #333333!important;
+    box-sizing: border-box;
+    border-radius: 3px;
+}

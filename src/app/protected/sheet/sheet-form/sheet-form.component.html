@@ -1,0 +1,87 @@
+<form novalidate [formGroup]="sheetForm" (ngSubmit)="submit()">
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div>
+                <button (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
+            </div>
+        </div>
+        <div class="col-lg-3 margin-tb">
+            <div class="row">
+                
+                <div class="ml-auto">
+                    <button type="button" class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();' >
+                        Annuler
+                    </button>
+                </div>
+
+                <div class="ml-auto">
+                    <button type="submit" class="btn btn-edf float-left" [disabled]="sheetForm.invalid">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span *ngIf="sheetForm.invalid" class="form-text font-italic text-danger">
+            Les champs avec une étoile doivent obligatoirement être remplis.
+    </span>
+
+    
+   
+
+    <app-sheet-form-title [title]="title"></app-sheet-form-title>
+    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate" [sheetForm]="sheetForm"></app-sheet-form-date>
+    <app-sheet-form-options [sheetForm]="sheetForm" [options]="options"></app-sheet-form-options>
+    <app-sheet-form-comments [comments]="comments"></app-sheet-form-comments>
+    <app-sheet-form-words [words]="words"></app-sheet-form-words>
+    <app-sheet-form-dauphin [dauphin]="dauphin"></app-sheet-form-dauphin>
+    <app-sheet-form-edf-open [edf_open]="edf_open"></app-sheet-form-edf-open>
+    <!-- <app-sheet-form-stipulation [stipulation_for_others]="stipulation_for_others"></app-sheet-form-stipulation> -->
+    <app-sheet-form-partnership [partnership]="partnership"></app-sheet-form-partnership>
+    <app-sheet-form-protected-sector [protected_sector]="protected_sector"></app-sheet-form-protected-sector>
+    <app-sheet-form-providers [providers]="providers" [allproviders]="data.providers"></app-sheet-form-providers>
+    <app-sheet-form-beneficiaries [beneficiaries]="beneficiaries" [allbeneficiaries]="data.beneficiaries"></app-sheet-form-beneficiaries>
+    <!-- *********** -->
+    <app-sheet-form-stipulationAutrui [stipulationAutrui]="stipulationAutrui" [allstipulationAutrui]="data.stipulationAutrui"></app-sheet-form-stipulationAutrui>
+    <app-sheet-form-areas [areas]="areas" [allareas]="data.areas"></app-sheet-form-areas>
+    <app-sheet-form-directions [directions]="directions" [alldirections]="data.directions"></app-sheet-form-directions>
+    <app-sheet-form-domain [domains]="domains" [allDomains]="[]"></app-sheet-form-domain>
+    <app-sheet-form-subdomain [subdomains]="subdomains" [allSubdomains]="[]"></app-sheet-form-subdomain>
+    <app-sheet-form-category [categoryCode]="categoryCode"></app-sheet-form-category>
+    <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
+    <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
+
+    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm"[contracts]="contracts">  <!-- [lotsList]="lots" > -->
+    </app-sheet-form-contracts>
+    <app-sheet-form-content [content]="content" *ngIf="fromNetAchat==true" ></app-sheet-form-content>
+    <app-sheet-form-status [status]="status"></app-sheet-form-status>
+    <app-sheet-form-kit [uploader]="kitUploader" (removedItem)="onRemovedItem($event)" label="Kit de déploiement (PDF, Word, Excel, PowerPoint)"></app-sheet-form-kit>
+    <div class="row">
+        <div class="col-lg-10">
+        </div>
+        <div class="col-lg-2">
+            <div class="row">
+                <div class="ml-auto">
+                    <button class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();'>
+                        Annuler
+                    </button>
+                </div>
+
+                <div class="ml-auto">
+                    <button type="submit" class="btn btn-edf float-left" [disabled]="sheetForm.invalid">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

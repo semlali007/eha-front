@@ -1,0 +1,18 @@
+<form novalidate [formGroup]="sheetSearchForm" (ngSubmit)="submit()">
+    <div class="form-group row">
+        <app-sheet-list-search-form-text class="col-9 col-sm-9" [searchText]='searchText' [searchProvider]='searchProvider' >
+        </app-sheet-list-search-form-text>
+        <div class="col-3 col-sm-3">
+            <button class="btn btn-sheet-search" style="margin-top:0" type="submit">
+                &raquo; rechercher &laquo;
+            </button>
+        </div>
+        <div class="col-9 col-sm-9">
+        </div>
+        <div class="col-3 col-sm-3">
+            <button class="btn btn-sheet-search" style="margin-top:0" type="button" (click)="resetForm()">
+                Réinitialiser
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,38 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-2">
+            <img class="mt-3" src="../../../../assets/img/info-icon.png" />
+        </div>
+        <div class="col-9" >
+            <div [innerHTML]="page.content" style="margin-top: 50px;">
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row"  *ngIf="checkboxValidation" >
+                <div class="col-12">
+                    <table>
+                        <tr>
+                            <td><input type="checkbox" class="mr-1" #f (change)="onCheckboxAllChange($event)"></td>
+                            <td style="font-size:14px"><span >Ne plus afficher cette fenêtre lors de mes prochaines connexions</span></td>
+                        <td>
+                            <button class="btn text-center btn-edf mt-2 ml-3"  (click)="onCheckboxViewed()">J'ai compris</button>
+                        </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="mx-auto" *ngIf="!checkboxValidation" >
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn text-center btn-edf mt-2 ml-3" (click)="bsModalRef.hide()">J'ai compris (fermer cette fenêtre)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 text-justify">
+            </div>
+    </div>
+        
+</div>

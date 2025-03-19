@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label for="categoryId"><strong>Catégorie :</strong></label>
+    <select class="form-control" [formControl]="categoryId" style="width:auto;">
+        <option value=0>Choisissez une catégorie</option>
+        <option *ngFor="let item of categories" [ngValue]="item.id">
+            {{item.label}}
+        </option>
+    </select>
+</div>

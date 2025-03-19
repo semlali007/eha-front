@@ -1,0 +1,15 @@
+<form novalidate [formGroup]="hotlineForm" (ngSubmit)="submit()">
+    <p>Tous les champs sont obligatoires.</p>
+    <app-hotline-form-theme [theme]='theme' [themesList] = 'themesList'></app-hotline-form-theme>
+    <app-hotline-form-category [category]='category' [familiesList] = 'familiesList' [family]='family'></app-hotline-form-category>
+    <app-hotline-form-question [question]='question'></app-hotline-form-question>
+    <app-hotline-form-entity [entity]='entity'></app-hotline-form-entity>
+    <div class="form-group">
+        <label>5/ Il ne vous reste plus qu'à <b>valider</b> :</label>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit" [disabled]="!hotlineForm.valid">valider</button>
+            </div>
+        </div>
+    </div>
+</form>

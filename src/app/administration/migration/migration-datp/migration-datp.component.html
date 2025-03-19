@@ -1,0 +1,7 @@
+<h1 class="cover-heading">
+    Réprise des fiches DATP
+</h1>
+<app-migration-file (submittedForm)="onSubmittedFormFirst($event)" [type]="typeFirst"></app-migration-file>
+<app-migration-file (submittedForm)="onSubmittedFormSecond($event)" [type]="typeSecond"></app-migration-file>
+<app-migration-list (submittedMigration)="onSubmittedMigration($event)" [type]="type" [list]="list">
+</app-migration-list>

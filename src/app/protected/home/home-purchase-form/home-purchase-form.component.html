@@ -1,0 +1,22 @@
+
+<div class="list-group-item  cadre"  >
+  <p class="titre-cadre"><img src="../../../../assets/img/icon-demande-achat.png"> Ma situation achat</p>
+  <table style="width:100%;margin-bottom: -32px;">
+    <tr>
+      <!-- <td style="width:25%"><p  [hidden]="!page?.active" class="label" >NOUVEAU</p></td> -->
+      <td><p class="savoir-plus link" (click)="openModalWithComponent()" [hidden]="!page?.active"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p></td>
+    </tr>
+  </table>
+  <p class="p">
+    Suivez l’avancement de toutes vos demandes d’achat (DA).
+  </p>
+    <div class="row-table">
+      <button class="btn btn-edf-v3" (click)="purchasev2()">
+        Toutes mes demandes d’achat ({{situations.length}})
+      </button>
+    </div>
+<div class="row-table">
+   <span (click)="show()" class="Consultez-mes-anciennes-demandes-dachat-issues-du-Portail-Achats-v1-12 Body---16---Regular">
+    Consultez mes anciennes demandes d’achat issues du Portail Achats v1 ({{purchases.length}})
+  </span >
+</div>

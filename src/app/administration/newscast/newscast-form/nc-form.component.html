@@ -1,0 +1,62 @@
+<form novalidate [formGroup]="ncForm" (ngSubmit)="submit()">
+
+    <div class="row">
+        <div class="col-lg-9">
+            <div>
+                <button (click)="list()" class="btn btn-edf">Actualités</button>
+            </div>
+        </div>
+        <div class="col-lg-3 margin-tb">
+            <div class="row">
+                
+                <div class="ml-auto">
+                    <button type="button" class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();' >
+                        Annuler
+                    </button>
+                </div>
+
+                <div class="ml-auto">
+                    <button type="submit" class="btn btn-edf float-left" [disabled]="ncForm.invalid">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <app-nc-form-title [title]="title"></app-nc-form-title>
+    <app-nc-form-short [short_description]="short_description"></app-nc-form-short>
+    <app-nc-form-description [description]="long_description"></app-nc-form-description>
+    <app-nc-form-category [categoryId]="categoryId"></app-nc-form-category>
+    <app-nc-form-status [status]="status"></app-nc-form-status>
+    <app-nc-form-home [is_home]="is_home"></app-nc-form-home>
+    <div class="row">
+        <div class="col-lg-10">
+        </div>
+        <div class="col-lg-2">
+            <div class="row">
+                <div class="ml-auto">
+                    <button class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();'>
+                        Annuler
+                    </button>
+                </div>
+
+                <div class="ml-auto">
+                    <button type="submit" class="btn btn-edf float-left" [disabled]="ncForm.invalid">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Voulez-vous supprimer l'élément?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+    </div>
+  </ng-template>

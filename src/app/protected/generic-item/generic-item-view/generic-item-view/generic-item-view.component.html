@@ -1,0 +1,60 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="row justify-content-center">
+	<div class="col-11 col-md-10" *ngIf="!!item && !!item.infos">
+    <h1 class="cover-heading">
+        Article <span class="text-primary">{{code}}</span>
+    </h1>
+    <h1 class="cover-heading">
+        Informations générales sur l'article :
+    </h1>
+    <table class="table table-hover">
+        <tr>
+            <th scope="row">Libellé&nbsp;court</th>
+            <td class="font-weight-bold text-primary">{{item.infos.item_label}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.item_label_long">
+            <th scope="row">Libellé long</th>
+            <td class="font-weight-bold text-primary">{{item.infos.item_label_long}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.item_notice">
+            <th scope="row">Notice</th>
+            <td class="font-weight-bold text-primary">{{item.infos.item_notice}}</td>
+        </tr>
+        <tr *ngIf="!!item.infos.item_level_1">
+            <th scope="row">Segment</th>
+            <td class="font-weight-bold text-primary"><span *ngIf="!!item.infos.item_level_1">&diams; {{item.infos.item_level_1}}<br></span><span *ngIf="!!item.infos.item_level_2">&diams; {{item.infos.item_level_2}}<br></span><span *ngIf="!!item.infos.item_level_3">&diams; {{item.infos.item_level_3}}</span></td>
+        </tr>
+        <tr *ngIf="!!item.infos.comptes_e">
+            <th scope="row">Comptes</th>
+            <td class="font-weight-bold text-primary">
+                d'exploitation : {{item.infos.comptes_e}}<br>
+                d'investissement : {{item.infos.comptes_i}}
+            </td>
+        </tr>
+        <tr *ngIf="!!item.infos.tva">
+            <th scope="row">Taux de TVA</th>
+            <td class="font-weight-bold text-primary">{{item.infos.tva}}</td>
+        </tr>
+    </table>
+    <div *ngIf="!!item.agencies && item.agencies.length > 0">
+        <h1 class="cover-heading">
+            Agences de la Direction des Achats ayant utilisé cet article :
+        </h1>
+        <table class="table table-hover">
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Libellé</th>
+                <th scope="col">Poids</th>
+            </tr>
+            <tr *ngFor="let result of item.agencies">
+                <td>{{result.agency_code}}</td>
+                <td>{{result.agency_label}}</td>
+                <td>
+                    <progressbar 	 [value]="(result.agency_weight<=7)?7:result.agency_weight"
+                     max="100">{{result.agency_weight}}%</progressbar>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>

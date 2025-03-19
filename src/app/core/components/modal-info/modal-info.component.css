@@ -1,0 +1,39 @@
+alert {
+    cursor: pointer;
+    position: absolute;
+    top: 100px;
+    right: 25px;
+    z-index: 1000;
+   }
+.modal-content-hlk{
+    border-radius:1.3rem!important;
+    width:74%!important;
+    color:#cabebe;
+    background-color: rgba(0,0,0,0);
+    border:2px solid rgba(255, 255, 255, 0.7)
+}
+
+.btn-close-hlk{
+    opacity:initial;font-size: 8.5rem !important;
+    color: #fff !important;
+    margin-bottom: -45px;
+    margin-right: -47px;
+    margin-top: -46px;
+}
+
+.modal-dialog-hlk{
+    opacity:1 !important;
+    margin: 6.75rem 22rem !important;
+    width:747px ;
+}   
+
+.modal-header-hlk{
+    width:54%!important;
+    border-bottom:0px solid #dee2e6!important 
+}
+.white-color {
+    color:#fff ;
+}
+.modal-bg{
+    background-color: rgba(0,0,0,0.7);
+}   

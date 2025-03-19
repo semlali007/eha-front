@@ -1,0 +1,39 @@
+<form class="my-form-for-searches" [formGroup]="anchorForm" (ngSubmit)="submit()">
+    <div class="row">
+        <label class="col-sm-4 col-form-label">
+            Filtrer sur les codes/libellés NACE :
+        </label>
+        <!--<div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="0111,...,9900" [formControl]="nace" autocorrect="off">
+        </div>-->
+            <div class="col-sm-6">
+                <tag-input formControlName="nace" style="padding-top: 0%;" class="form-control" [onlyFromAutocomplete]="false" [placeholder]="' '"
+            [secondaryPlaceholder]="'0111,...,9900'" [onlyFromAutocomplete]="false">
+            <tag-input-dropdown [showDropdownIfEmpty]="false" [dynamicUpdate]="false" [focusFirstElement]="false"
+                [displayBy]="'code'" [identifyBy]="'code'" [autocompleteItems]="codes">
+                <ng-template let-item="item" let-index="index" class="list-group">
+                    <b >{{item.code}}</b> {{item.name}}
+                </ng-template>
+            </tag-input-dropdown>
+        </tag-input>
+            </div>
+            
+        
+        <div class="col-sm-2">
+            <button class="btn-search" data-toggle="modal" type="button" (click)="openModalCodes()">codes/libellés</button>
+        </div>
+        <label class="col-sm-4 col-form-label">
+            Filtrer sur les codes articles :
+        </label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="1060000100,...,1060000678" [formControl]="codeArticle"
+                autocorrect="off" style="padding-left: 20px;">
+        </div>
+        <div class="col-sm-2">
+            <button class="btn-search"type="button" (click)="resetForm()">Réinitialiser</button>
+        </div>
+        <div class="col-sm-3 offset-sm-4">
+            <button type="submit" class="btn btn-search">appliquer</button>
+        </div>
+    </div>
+</form>

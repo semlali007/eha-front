@@ -1,0 +1,70 @@
+<div class="container">
+	<app-breadcrumb></app-breadcrumb>
+		<div class="alert alert-info" *ngIf="warningMessage.length > 0">
+			<div class="row align-items-center">
+				<div class="col-12">
+					<div [innerHTML]="warningMessage"></div>
+				</div>
+			</div>
+		</div>
+
+	<p class="text-center">
+		<a class="link" (click)="showList(informations.step)">retour</a>
+	</p>
+	<p>Question <b>n° {{informations.id}}</b> rattachée au thème <b>{{informations.info_theme}}</b>, à la catégorie
+		<b>{{informations.info_category}}</b>, posée par <b>{{informations.email_from}}</b> de l'entité
+		<b>{{informations.info_entity}}</b>.</p>
+
+		<ul class="timeline" *ngIf="timeline.length > 0">
+			<li *ngFor="let row of timeline| slice:0:16"  [ngClass]="{'timeline-inverted' : row.is_hotline}" >
+				<div class="timeline-badge {{row.is_hotline ? 'info' : 'warning'}}">
+					<img src="../../../../assets/img/picto-{{row.nature}}_white.png" height="30px">
+				</div>
+				<div class="timeline-panel">
+					<div class="timeline-body" >
+						<p *ngIf="row.nature != 'N'" [innerHtml]="row.message"> </p>
+						<p *ngIf="row.nature != 'N'">
+							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn btn-link">visualiser</a>
+						</p>
+						<!-- <p *ngIf="row.nature == 'N'">
+							<div *ngIf="row.message == 4" style="display: inline-block; background-color: green; padding: 5px;">
+								<label class="form-check-label">😃</label>
+							</div>
+							<div *ngIf="row.message == 3" style="display: inline-block; background-color: lightgreen; padding: 5px;">
+								<label class="form-check-label">😊</label>
+							</div>
+							<div *ngIf="row.message == 2" style="display: inline-block; background-color: orange; padding: 5px;">
+								<label class="form-check-label">😟</label>
+							</div>
+							<div *ngIf="row.message == 1" style="display: inline-block; background-color: red; padding: 5px;">
+								<label class="form-check-label">😠</label>
+							</div> -->
+					</div>
+					<div class="timeline-heading">
+						<p><small class="text-muted">{{row.quand| slice:0:10}}</small></p>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="row justify-content-end" *ngIf="isHotliner">
+			<div class="col-6">
+				<p>
+					<button type="button" class="btn btn-info btn-left"  (click)="openPostMessage()">Poster un messages</button>
+					<button type="button" class="btn btn-info btn-center"  (click)="openAddFile()">Ajouter un fichier</button>
+					<button type="button" class="btn btn-info btn-right"  (click)="openForward()">Faire suivre</button>
+				</p>
+			</div>
+		</div>
+		<div class="row justify-content-start" >
+			<div class="col-6">
+				<div *ngIf="!isDiscussionClosed">
+					<p>
+						<button type="button" class="btn btn-warning btn-left"  (click)="openPostMessage()" *ngIf="isRequester">Poster un message</button> 
+						<button type="button" class="btn btn-warning btn-center"  (click)="openForward()" *ngIf="isRequester">Faire suivre</button>
+						<button type="button" class="btn btn-warning btn-center"  (click)="openAddFile()" *ngIf="isRequester">Ajouter un fichier</button>
+						<button type="button" class="btn btn-warning btn-right"  (click)="openCloseHotline()" *ngIf="(isRequester || (!!user && user.hasRole('EHA_GESTIONNAIRE')) || isCurrentFowarded == user.email) && informations.step!='end' ">Clore</button>
+					</p>
+				</div>
+			</div>
+		</div>
+</div>

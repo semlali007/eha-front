@@ -74,21 +74,9 @@ objects:
                   mountPath: /var/lib/nginx/cache/proxy_cache
                 - name: proxy-temp
                   mountPath: /opt/nginx/1.24.0/proxy_temp
-                - name: fastcgi-temp
-                  mountPath: /opt/nginx/1.24.0/fastcgi_temp
-                - name: uwsgi-temp
-                  mountPath: /opt/nginx/1.24.0/uwsgi_temp
-                - name: scgi-temp
-                  mountPath: /opt/nginx/1.24.0/scgi_temp
                 - name: pid-vol
                   mountPath: /opt/nginx/1.24.0/logs/
                   subPath: nginx.pid
-                - name: simple-saml-config
-                  mountPath: /opt/app-root/etc/simplesamlphp/config
-                - name: simplesaml-public
-                  mountPath: /opt/app-root/etc/simplesamlphp/public
-                - name: simplesaml-cache
-                  mountPath: /var/cache/simplesamlphp
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
               imagePullPolicy: Always

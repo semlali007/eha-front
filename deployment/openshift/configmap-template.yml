@@ -33,7 +33,7 @@ objects:
           protocol: "https"
           username: ${SECRETS_PADAONE_USERNAME:PUSERNAME}
           password: ${SECRETS_PADAONE_PASSWORD:PPASSWORD}
-          index: pp1-padaone-events-dag-poc-achatpedia-logs-%{+yyyy.MM}
+          index: pp1-padaone-events-dag-achatpedia-logs-%{+yyyy.MM}
     kind: ConfigMap
     metadata:
       labels:

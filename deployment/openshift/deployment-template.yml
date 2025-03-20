@@ -74,6 +74,12 @@ objects:
                   mountPath: /var/lib/nginx/cache/proxy_cache
                 - name: proxy-temp
                   mountPath: /opt/nginx/1.24.0/proxy_temp
+                - name: fastcgi-temp
+                  mountPath: /opt/nginx/1.24.0/fastcgi_temp
+                - name: uwsgi-temp
+                  mountPath: /opt/nginx/1.24.0/uwsgi_temp
+                - name: scgi-temp
+                  mountPath: /opt/nginx/1.24.0/scgi_temp
                 - name: pid-vol
                   mountPath: /opt/nginx/1.24.0/logs/
                   subPath: nginx.pid
@@ -131,6 +137,12 @@ objects:
             - name: client-cache
               emptyDir: {}
             - name: proxy-temp
+              emptyDir: {}
+            - name: fastcgi-temp
+              emptyDir: {}
+            - name: scgi-temp
+              emptyDir: {}
+            - name: uwsgi-temp
               emptyDir: {}
             - name: pid-vol
               emptyDir: {}

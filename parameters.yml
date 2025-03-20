@@ -10,11 +10,11 @@ parameters:
   deploy: 
     APPLICATION_NAME: "achatpedia-front"
     FROM_IMAGE: "dck_achatpedia-front"  
-    NAMESPACE_DEPLOY: "eha-achatpedia-ext-ns-be-p"
+    NAMESPACE_DEPLOY: "eha-achatpedia-ext-ns-fe-p"
     SOURCE_REGISTRY: "registry.apps.caas-int-hp.automation.edf.fr"
     TARGET_REGISTRY: "registry.apps.caas-ext-p.automation.edf.fr"
     recette:
-      EXTERNAL_HOST: "achatpedia-preprod-front.ext-ns-be-p.caas-ext-p.automation.edf.fr"
+      EXTERNAL_HOST: "achatpedia-preprod-front.ext-ns-fe-p.caas-ext-p.automation.edf.fr"
       CPU_REQUEST: "500m"
       CPU_LIMIT: "1"
       MEMORY_REQUEST: "2Gi"

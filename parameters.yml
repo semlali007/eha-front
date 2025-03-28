@@ -5,7 +5,7 @@ parameters:
   MAINTAINER_EMAIL: "luca-externe.dall-olio@edf.fr"
   CONTEXT_DIR: "./"
   ROUTE_TIMEOUT: "15m"
-  FROM_IMAGE: "dck_nginx-ubi8:1.24"
+  FROM_IMAGE: "dck_nginx-ubi8:1.26"
   NPM_MIRROR: "https://si-devops-mirror.edf.fr/repository/registry.npmjs.org/"
   deploy: 
     APPLICATION_NAME: "achatpedia-front"

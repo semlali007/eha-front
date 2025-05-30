@@ -4,7 +4,7 @@ parameters:
   BUILD_NAMESPACE: "eha-achatpedia-grp-hp"
   MAINTAINER_EMAIL: "luca-externe.dall-olio@edf.fr"
   CONTEXT_DIR: "./"
-  ROUTE_TIMEOUT: "15m"
+  ROUTE_TIMEOUT: "10m"
   FROM_IMAGE: "dck_nginx-ubi8:1.26"
   NPM_MIRROR: "https://si-devops-mirror.edf.fr/repository/registry.npmjs.org/"
   deploy: 

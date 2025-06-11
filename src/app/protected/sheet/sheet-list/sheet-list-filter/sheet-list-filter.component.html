@@ -4,6 +4,10 @@
     <app-sheet-list-filter-subscribe [subscribe]='subscribe' [list]="filter.subscribe" (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-subscribe>
 
+    <app-sheet-list-filter-contrat-groupe [contratGroupe]='contratGroupe' [list]="filter.contratGroupe"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-contrat-groupe>
+
     <app-sheet-list-filter-status *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status' [list]="filter.status"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-status>
@@ -22,14 +26,14 @@
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-provider>
     <app-sheet-list-filter-direction [directions]='directions' [list]="filter.directions"
-        (changedFilter)="onChangedFilterSheets($event)">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
     </app-sheet-list-filter-direction>
     <app-sheet-list-filter-edf-open [edfOpen]='edfOpen' [list]="filter.edfOpen"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-edf-open>
 
     <app-sheet-list-filter-partnership [partnership]='partnership' [list]="filter.partnership"
-        (changedFilter)="onChangedFilterSheets($event)">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
     </app-sheet-list-filter-partnership>
 
     <app-sheet-list-filter-sector [sector]='sector' [list]="filter.sector"
@@ -37,16 +41,12 @@
     </app-sheet-list-filter-sector>
 
     <app-sheet-list-filter-dauphin [dauphin]='dauphin' [list]="filter.dauphin"
-        (changedFilter)="onChangedFilterSheets($event)">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
     </app-sheet-list-filter-dauphin>
 
     <app-sheet-list-filter-committee [committees]='committees' [list]="filter.committees"
-        (changedFilter)="onChangedFilterSheets($event)">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
     </app-sheet-list-filter-committee>
-
-    <app-sheet-list-filter-contrat-groupe [contratGroupe]='contratGroupe' [list]="filter.contratGroupe"
-        (changedFilter)="onChangedFilterSheets($event)">
-    </app-sheet-list-filter-contrat-groupe>
 </form>
     </div>
 </div>

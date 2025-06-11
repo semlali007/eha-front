@@ -65,7 +65,11 @@
 
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Contrat groupe</strong></div>
-                <div class="col-9">{{contratGroupe === 'true' ? 'Oui' : (contratGroupe === 'false' ? 'Non' : 'Non renseigné')}}</div>
+                <div class="LabelContratGroupVert">
+                     <span class="En-instruction Body---16---Regular">
+                        {{contratGroupe === 'true' ? 'Oui' : (contratGroupe === 'false' ? 'Non' : 'Non renseigné')}}
+                    </span>
+                </div>
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
@@ -99,7 +103,7 @@
                 <div class="col-9 ">{{words}}</div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
                 <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
                 <div class="col-9">
                     {{dauphin | showBooleanText}}
@@ -118,7 +122,7 @@
                     {{stipulation_for_others | showBooleanText}}
                 </div>
             </li> -->
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
                 <div class="col-3"><strong>Partenariat de productivité</strong></div>
                 <div class="col-9">
                     {{partnership | showBooleanText}}
@@ -166,7 +170,7 @@
                     </span>
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
                 <div class="col-3"><strong>Directions opérationnelles (DOA)</strong></div>
                 <div class="col-9">
                     <ul>
@@ -177,14 +181,14 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
                 <div class="col-3"><strong>Comité de Gestion de la Demande</strong></div>
                 <div class="col-9">
                    {{committee.label}}
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
                 <div class="col-3"><strong>Segments</strong></div>
                 <div class="col-9">
                     <ul>
@@ -194,7 +198,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
                 <div class="col-3"><strong>Sous-ensemble</strong></div>
                 <div class="col-9">
                     <ul>

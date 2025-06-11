@@ -13,7 +13,7 @@
          *ngFor="let item of list" 
         (click)="changeFilter(item.code)"
         [class.list-group-item-success]="isActive(item.code)" [attr.aria-pressed]="isActive(item.code)">
-            {{item.label}} ({{item.count}})
+            <span>{{item.label}}</span> ({{item.count}})
         </button>
     </div>
     </div>

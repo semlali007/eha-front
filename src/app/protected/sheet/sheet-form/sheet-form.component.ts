@@ -110,6 +110,15 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       }
     );
     this.cdr.detectChanges();
+    
+    // Watch for changes in contratGroupe to update validators dynamically
+    this.sheetForm.get('contratGroupe')?.valueChanges.subscribe(() => {
+      this.updateValidatorsForContratGroupe();
+    });
+    
+    // Initial validator update
+    this.updateValidatorsForContratGroupe();
+    
    // this.openDraftModal();
    // this.autosaveDraft();
   }
@@ -140,6 +149,37 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get showcase() { return this.sheetForm.get('showcase') as any; }
   get subdomains() { return this.sheetForm.get('subdomains') as any; }
   get contratGroupe() { return this.sheetForm.get('contratGroupe') as any; }
+  
+  // Property to determine if certain fields should be hidden when contrat groupe is 'true'
+  get shouldHideFieldsForContratGroupe(): boolean {
+    return this.contratGroupe?.value === 'true';
+  }
+  
+  /**
+   * Updates validators for fields that should be non-required when contrat groupe is 'true'
+   * These fields are: providers, beneficiaries, areas, directions
+   */
+  private updateValidatorsForContratGroupe(): void {
+    const isContratGroupe = this.contratGroupe?.value === 'true';
+    
+    // Fields that should become non-required when contrat groupe is 'true'
+    const fieldsToUpdate = ['providers', 'beneficiaries', 'areas', 'directions'];
+    
+    fieldsToUpdate.forEach(fieldName => {
+      const control = this.sheetForm.get(fieldName);
+      if (control) {
+        if (isContratGroupe) {
+          // Remove required validator when contrat groupe is 'true'
+          control.clearValidators();
+        } else {
+          // Add required validator when contrat groupe is 'false'
+          control.setValidators([Validators.required]);
+        }
+        control.updateValueAndValidity();
+      }
+    });
+  }
+  
   get options() { return this.sheetForm.get('options') as FormArray; }
   resetSheetForm() {
     this.sheetForm.reset();
@@ -251,6 +291,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.categoryCode.setValue(sheet.category.code);
     this.showcase.setValue(sheet.showcase);
     this.contratGroupe.setValue(sheet.contratGroupe || 'false');
+    
     let providersList = [];
     sheet.providers.forEach(provider => {
       providersList.push(
@@ -440,6 +481,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
       this.options.push(optionField);
     });
+    
+    // Update validators after all form values are set
+    this.updateValidatorsForContratGroupe();
   }
 
   submit(draft? : boolean): void {

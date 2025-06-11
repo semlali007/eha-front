@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Input,OnDestroy, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
@@ -9,7 +9,7 @@ import { MessageService } from 'src/app/core/services/message.service';
   ]
 })
 
-export class SheetListFilterComponent implements OnInit, OnDestroy  {
+export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
   sheetFilterForm: FormGroup;
   @Input() defaultFilter : any;
   @Input() user : any = {};
@@ -53,6 +53,28 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   get committees() { return this.sheetFilterForm.get('committees') }
   get contratGroupe() { return this.sheetFilterForm.get('contratGroupe') }
   
+  /**
+   * Détermine si les filtres spécifiques doivent être masqués quand contrat groupe = 'true'
+   * Filtres concernés: Directions opérationnelles, Partenariat de productivité, 
+   * Approvisionnement sous dauphin, Comité de Gestion de la Demande
+   */
+  get shouldHideFiltersForContratGroupe(): boolean {
+    return this.contratGroupe?.value === 'true';
+  }
+  
+  /**
+   * Réinitialise les filtres masqués quand contrat groupe change
+   */
+  private resetHiddenFiltersForContratGroupe(): void {
+    if (this.shouldHideFiltersForContratGroupe) {
+      // Réinitialiser les filtres masqués à leurs valeurs par défaut
+      this.directions?.setValue([]);
+      this.partnership?.setValue('all');
+      this.dauphin?.setValue('all');
+      this.committees?.setValue([]);
+    }
+  }
+
   ngOnInit(): void {
     this.initForm();
     this.subscription = this.messageService.getMessage().subscribe({
@@ -65,26 +87,34 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
         console.error('Error in message service subscription:', error);
       }
     });
+    
+    // Surveiller les changements du filtre contratGroupe pour réinitialiser les filtres masqués
+    this.contratGroupe?.valueChanges.subscribe(() => {
+      this.resetHiddenFiltersForContratGroupe();
+    });
   }
 
-  ngOnChange(changes:SimpleChange) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['defaultFilter'] && changes['defaultFilter'].currentValue) {
+      this.initForm();
+    }
   }
   initForm() {
     this.sheetFilterForm = this.fb.group({
-      'edfOpen': [(this.defaultFilter?.search?.edf_open === '' || !this.defaultFilter?.search?.edf_open) ? 'all' : this.defaultFilter.search.edf_open],
-      'subscribe': [(this.defaultFilter?.search?.subscribe === '' || !this.defaultFilter?.search?.subscribe) ? false : this.defaultFilter.search.subscribe],
-      'partnership': [(this.defaultFilter?.search?.partnership === '' || !this.defaultFilter?.search?.partnership) ? 'all' : this.defaultFilter.search.partnership],
-      'sector': [(this.defaultFilter?.search?.protected_sector === '' || !this.defaultFilter?.search?.protected_sector) ? 'all' : this.defaultFilter.search.protected_sector],
-      'dauphin': [(this.defaultFilter?.search?.dauphin === '' || !this.defaultFilter?.search?.dauphin) ? 'all' : this.defaultFilter.search.dauphin],
-      'beneficiaries': [this.defaultFilter?.search?.beneficiaries || []],
-      'stipulationAutrui': [this.defaultFilter?.search?.stipulationAutrui || []],//*** */
-      'areas': [this.defaultFilter?.search?.areas || []],
-      'providers': [this.defaultFilter?.search?.providers || []],
-      'directions': [this.defaultFilter?.search?.directions || []],
-      'committees': [this.defaultFilter?.search?.committees || []],
-      'status': [this.defaultFilter?.search?.status || []],
-      'showcase': [(this.defaultFilter?.search?.showcase === '' || !this.defaultFilter?.search?.showcase) ? 'all' : this.defaultFilter.search.showcase],
-      'contratGroupe': [(this.defaultFilter?.search?.contratGroupe === '' || !this.defaultFilter?.search?.contratGroupe) ? 'all' : this.defaultFilter.search.contratGroupe]
+      'edfOpen': [(this.defaultFilter?.edf_open === '' || !this.defaultFilter?.edf_open) ? 'all' : this.defaultFilter.edf_open],
+      'subscribe': [(this.defaultFilter?.subscribe === '' || !this.defaultFilter?.subscribe) ? false : this.defaultFilter.subscribe],
+      'partnership': [(this.defaultFilter?.partnership === '' || !this.defaultFilter?.partnership) ? 'all' : this.defaultFilter.partnership],
+      'sector': [(this.defaultFilter?.protected_sector === '' || !this.defaultFilter?.protected_sector) ? 'all' : this.defaultFilter.protected_sector],
+      'dauphin': [(this.defaultFilter?.dauphin === '' || !this.defaultFilter?.dauphin) ? 'all' : this.defaultFilter.dauphin],
+      'beneficiaries': [this.defaultFilter?.beneficiaries || []],
+      'stipulationAutrui': [this.defaultFilter?.stipulationAutrui || []],//*** */
+      'areas': [this.defaultFilter?.areas || []],
+      'providers': [this.defaultFilter?.providers || []],
+      'directions': [this.defaultFilter?.directions || []],
+      'committees': [this.defaultFilter?.committees || []],
+      'status': [this.defaultFilter?.status || []],
+      'showcase': [(this.defaultFilter?.showcase === '' || !this.defaultFilter?.showcase) ? 'all' : this.defaultFilter.showcase],
+      'contratGroupe': [(this.defaultFilter?.contratGroupe === '' || !this.defaultFilter?.contratGroupe) ? 'all' : this.defaultFilter.contratGroupe]
     });
   }
 

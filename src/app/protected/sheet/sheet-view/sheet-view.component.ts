@@ -62,6 +62,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public subDomain: Object[] = [];
   public history: any[] = [];
   public category: any = '';
+  public contratGroupe: any = '';
   isCollapsed = true;
   
 
@@ -108,6 +109,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.committee = sheet.committee;
     this.category = sheet.category;
     this.showcase = sheet.showcase;
+    this.contratGroupe = sheet.contratGroupe;
     this.edf_open = sheet.edfOpen;
     this.stipulation_for_others = sheet.stipulationForOthers;
     this.partnership = sheet.partnership;

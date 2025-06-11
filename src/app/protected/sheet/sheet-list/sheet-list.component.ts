@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Sheet } from 'src/app/shared/models/sheet';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -47,7 +47,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
     status: [],
     directions: [],
     committees: [],
-    showcase: []
+    showcase: [],
+    contratGroupe: []
   };
 
   public params: any = {
@@ -68,7 +69,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
       providers: [],
       directions: [],
       committees: [],
-      showcase: ''
+      showcase: '',
+      contratGroupe: ''
     },
     sortBy: this.sortBy,
     sortDirection: this.sortDirection
@@ -87,7 +89,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
     committees: [],
     status:  [],
     areas: [],
-    showcase: ''
+    showcase: '',
+    contratGroupe: ''
   };
 
 
@@ -95,6 +98,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private sheetService: SheetService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private previousService: PreviousService,
     private pageService: PageService,
@@ -102,9 +106,22 @@ export class SheetListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.authService.user$.subscribe(user => this.user = user);
+    this.subscription = this.authService.user$.subscribe({
+      next: (user) => this.user = user,
+      error: (error) => console.error('Error in user subscription:', error)
+    });
     this.paginationForm = this.fb.group({
       'currentPage': 1,
+    });
+
+    // Check for query parameters to auto-apply filters
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['contratGroupe'] === 'true') {
+        // Auto-apply contrat groupe filter
+        this.params.search.contratGroupe = 'true';
+        this.filterInput.contratGroupe = 'true';
+        this.defaultFilter = { ...this.params };
+      }
     });
 
     if (this.previousService.getPreviousUrl().includes('details')) {
@@ -198,19 +215,23 @@ export class SheetListComponent implements OnInit, OnDestroy {
         providers: this.filterInput.providers,
         directions: this.filterInput.directions,
         committees: this.filterInput.committees,
-        showcase: this.filterInput.showcase
+        showcase: this.filterInput.showcase,
+        contratGroupe: this.filterInput.contratGroupe
       },
       sortBy: this.sortBy,
       sortDirection: this.sortDirection
     };
 
-    this.sheetService.getSheets(this.params).subscribe(
-      data => {
+    this.sheetService.getSheets(this.params).subscribe({
+      next: (data) => {
         this.totalItems = data.total;
         this.sheets = data.sheets;
         this.filter = data.filter;
+      },
+      error: (error) => {
+        console.error('Error loading sheets:', error);
       }
-    );
+    });
 
   }
 
@@ -228,7 +249,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
       committees: [],
       status:  [],
       areas: [],
-      showcase: ''
+      showcase: '',
+      contratGroupe: ''
     };
   }
 
@@ -253,38 +275,50 @@ export class SheetListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   public loadFilterFromStorage() {
     this.defaultFilter = JSON.parse(localStorage.getItem('params'));
+    if (!this.defaultFilter) {
+      this.defaultFilter = this.params;
+      return;
+    }
     this.currentPage.setValue(this.defaultFilter.page);
     this.itemsPerPage = this.defaultFilter.perpage;
-    this.searchText = this.defaultFilter.search.searchText;
-    this.searchProvider = this.defaultFilter.search.searchProvider;
+    this.searchText = this.defaultFilter.search.searchText || '';
+    this.searchProvider = this.defaultFilter.search.searchProvider || '';
     this.sortBy = this.defaultFilter.sortBy;
     this.sortDirection = this.defaultFilter.sortDirection;
     this.filterInput = {
-      subscribe: this.defaultFilter.search.subscribe,
-      edfOpen: this.defaultFilter.search.edf_open,
-      partnership: this.defaultFilter.search.partnership,
-      sector: this.defaultFilter.search.protected_sector,
-      dauphin: this.defaultFilter.search.dauphin,
-      beneficiaries: this.defaultFilter.search.beneficiaries,
-      stipulationAutrui: this.defaultFilter.search.stipulationAutrui,//
-      providers: this.defaultFilter.search.providers,
-      directions: this.defaultFilter.search.directions,
-      committees: this.defaultFilter.search.committees,
-      status: this.defaultFilter.search.status,
-      areas: this.defaultFilter.search.areas,
-      showcase: this.defaultFilter.search.showcase
+      subscribe: this.defaultFilter.search.subscribe || '',
+      edfOpen: this.defaultFilter.search.edf_open || '',
+      partnership: this.defaultFilter.search.partnership || '',
+      sector: this.defaultFilter.search.protected_sector || '',
+      dauphin: this.defaultFilter.search.dauphin || '',
+      beneficiaries: this.defaultFilter.search.beneficiaries || [],
+      stipulationAutrui: this.defaultFilter.search.stipulationAutrui || [],//
+      providers: this.defaultFilter.search.providers || [],
+      directions: this.defaultFilter.search.directions || [],
+      committees: this.defaultFilter.search.committees || [],
+      status: this.defaultFilter.search.status || [],
+      areas: this.defaultFilter.search.areas || [],
+      showcase: this.defaultFilter.search.showcase || '',
+      contratGroupe: this.defaultFilter.search.contratGroupe || ''
     };
   }
 
   loadText() {
-    this.pageService.getPage({ page: 'welcome-text' }).subscribe(response => {
-      this.welcomeText = this.sanitizer.bypassSecurityTrustHtml(response.content || '');
-      this.activeText = response.active || false;
-    })
+    this.pageService.getPage({ page: 'welcome-text' }).subscribe({
+      next: (response) => {
+        this.welcomeText = this.sanitizer.bypassSecurityTrustHtml(response.content || '');
+        this.activeText = response.active || false;
+      },
+      error: (error) => {
+        console.error('Error loading welcome text:', error);
+      }
+    });
   }
 }

@@ -27,7 +27,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
     status:[],
     directions:[],
     showcase: [],
-    committees: []
+    committees: [],
+    contratGroupe: []
   };
   public subscription: Subscription;
   @Output() submittedFilterSheets = new EventEmitter<Object>();
@@ -50,12 +51,18 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   get status() { return this.sheetFilterForm.get('status') }
   get showcase() { return this.sheetFilterForm.get('showcase') }
   get committees() { return this.sheetFilterForm.get('committees') }
+  get contratGroupe() { return this.sheetFilterForm.get('contratGroupe') }
   
   ngOnInit(): void {
     this.initForm();
-    this.subscription = this.messageService.getMessage().subscribe((init) => {
-      if (!!init && !!init.initSheetFilter && (init.initSheetFilter === true)) {
-        this.resetForm();
+    this.subscription = this.messageService.getMessage().subscribe({
+      next: (init) => {
+        if (!!init && !!init.initSheetFilter && (init.initSheetFilter === true)) {
+          this.resetForm();
+        }
+      },
+      error: (error) => {
+        console.error('Error in message service subscription:', error);
       }
     });
   }
@@ -64,19 +71,20 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
   }
   initForm() {
     this.sheetFilterForm = this.fb.group({
-      'edfOpen': [(this.defaultFilter.edf_open === '') ? 'all' : this.defaultFilter.edf_open],
-      'subscribe': [(this.defaultFilter.subscribe === '') ? false : this.defaultFilter.subscribe],
-      'partnership': [(this.defaultFilter.partnership === '') ? 'all' : this.defaultFilter.partnership],
-      'sector': [(this.defaultFilter.protected_sector === '') ? 'all' : this.defaultFilter.protected_sector],
-      'dauphin': [(this.defaultFilter.dauphin === '') ? 'all' : this.defaultFilter.dauphin],
-      'beneficiaries': [this.defaultFilter.beneficiaries],
-      'stipulationAutrui': [this.defaultFilter.stipulationAutrui],//*** */
-      'areas': [this.defaultFilter.areas],
-      'providers': [this.defaultFilter.providers],
-      'directions': [this.defaultFilter.directions],
-      'committees': [this.defaultFilter.committees],
-      'status': [this.defaultFilter.status],
-      'showcase': [(this.defaultFilter.showcase === '') ? 'all' : this.defaultFilter.showcase]
+      'edfOpen': [(this.defaultFilter?.search?.edf_open === '' || !this.defaultFilter?.search?.edf_open) ? 'all' : this.defaultFilter.search.edf_open],
+      'subscribe': [(this.defaultFilter?.search?.subscribe === '' || !this.defaultFilter?.search?.subscribe) ? false : this.defaultFilter.search.subscribe],
+      'partnership': [(this.defaultFilter?.search?.partnership === '' || !this.defaultFilter?.search?.partnership) ? 'all' : this.defaultFilter.search.partnership],
+      'sector': [(this.defaultFilter?.search?.protected_sector === '' || !this.defaultFilter?.search?.protected_sector) ? 'all' : this.defaultFilter.search.protected_sector],
+      'dauphin': [(this.defaultFilter?.search?.dauphin === '' || !this.defaultFilter?.search?.dauphin) ? 'all' : this.defaultFilter.search.dauphin],
+      'beneficiaries': [this.defaultFilter?.search?.beneficiaries || []],
+      'stipulationAutrui': [this.defaultFilter?.search?.stipulationAutrui || []],//*** */
+      'areas': [this.defaultFilter?.search?.areas || []],
+      'providers': [this.defaultFilter?.search?.providers || []],
+      'directions': [this.defaultFilter?.search?.directions || []],
+      'committees': [this.defaultFilter?.search?.committees || []],
+      'status': [this.defaultFilter?.search?.status || []],
+      'showcase': [(this.defaultFilter?.search?.showcase === '' || !this.defaultFilter?.search?.showcase) ? 'all' : this.defaultFilter.search.showcase],
+      'contratGroupe': [(this.defaultFilter?.search?.contratGroupe === '' || !this.defaultFilter?.search?.contratGroupe) ? 'all' : this.defaultFilter.search.contratGroupe]
     });
   }
 
@@ -94,7 +102,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
       'directions': [[]],
       'committees': [[]],
       'status': [[]],
-      'showcase': ['all']
+      'showcase': ['all'],
+      'contratGroupe': ['all']
     });
   }
   
@@ -104,6 +113,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy  {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-   }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

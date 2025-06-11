@@ -16,6 +16,7 @@ export class ErrorService {
         status: error.error.status,
         message: error.error.error
       });
+      return throwError(error);
     }
     else if(error instanceof HttpErrorResponse){
       if(error.status==504){
@@ -24,6 +25,7 @@ export class ErrorService {
           message: "Votre session a expiré, veuillez vous reconnecter !"
         });
       }
+      return throwError(error);
     } 
     else {
       error = (typeof error === 'string') ? error : 'Une erreur est survenue, essayez plus tard.'

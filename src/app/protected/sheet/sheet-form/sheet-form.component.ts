@@ -139,6 +139,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get categoryCode() { return this.sheetForm.get('categoryCode') as any; }
   get showcase() { return this.sheetForm.get('showcase') as any; }
   get subdomains() { return this.sheetForm.get('subdomains') as any; }
+  get contratGroupe() { return this.sheetForm.get('contratGroupe') as any; }
   get options() { return this.sheetForm.get('options') as FormArray; }
   resetSheetForm() {
     this.sheetForm.reset();
@@ -218,7 +219,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'committeeCode': 0,
       'categoryCode': 0,
       'kits': this.fb.array([File]),
-      'showcase': false
+      'showcase': false,
+      'contratGroupe': 'false'
     },{ validators : customValidator });
   }
 
@@ -248,6 +250,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.committeeCode.setValue(sheet.committee.code);
     this.categoryCode.setValue(sheet.category.code);
     this.showcase.setValue(sheet.showcase);
+    this.contratGroupe.setValue(sheet.contratGroupe || 'false');
     let providersList = [];
     sheet.providers.forEach(provider => {
       providersList.push(
@@ -470,6 +473,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       committee: new Committee({code:this.committeeCode.value}),
       category: new Category({code:this.categoryCode.value}),
       showcase: this.showcase.value,
+      contratGroupe: this.contratGroupe.value,
       options : dateOptions
     };
 

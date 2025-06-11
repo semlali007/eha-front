@@ -44,6 +44,7 @@ export class Sheet {
     subDomains: Domain[];
     history: any[];
     category: Category;
+    contratGroupe: string;
 
     constructor(options: {
         id?: string,
@@ -79,6 +80,7 @@ export class Sheet {
         domains?: Domain[];
         subDomains?: Domain[];
         history?: any[];
+        contratGroupe?: string;
 
     } = {}) {
         this.id = options.id || null;
@@ -114,6 +116,7 @@ export class Sheet {
         this.domains = options.domains || [new Domain()];
         this.subDomains = options.subDomains || [new Domain()];
         this.history = options.history || [];
+        this.contratGroupe = options.contratGroupe || '';
     }
 
 }

@@ -135,6 +135,7 @@ export class SheetService {
     const stipulationAutrui: Object = this.getStipulationListForApi(sheet.stipulationAutrui);//
     const areas: Object = this.getAreasListForApi(sheet.areas);
     const directions: Object = this.getDirectionsListForApi(sheet.directions);
+    
     return {
       label: sheet.title,
       description: sheet.comments,
@@ -160,7 +161,8 @@ export class SheetService {
       showcase: sheet.showcase,
       options: sheet.options,
       domains: sheet.domains,
-      subdomains: sheet.subDomains
+      subdomains: sheet.subDomains,
+      contrat_groupe: sheet.contratGroupe || 'false'
     }
   }
 
@@ -347,7 +349,8 @@ export class SheetService {
             providers: sheetData.filter.providers,
             directions: sheetData.filter.directions,
             committees: sheetData.filter.committees,
-            showcase: sheetData.filter.showcase
+            showcase: sheetData.filter.showcase,
+            contratGroupe: sheetData.filter.contratGroupe
           }
         });
       }),
@@ -549,7 +552,8 @@ export class SheetService {
       content: fields.content,
       domains: domains,
       subDomains: subDomains,
-      history: fields.history
+      history: fields.history,
+      contratGroupe: fields.contrat_groupe
     });
   }
 

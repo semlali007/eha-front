@@ -24,6 +24,7 @@ import { SheetListExportComponent } from './sheet-list-export/sheet-list-export.
 import { SheetListShowcaseComponent } from './sheet-list-showcase/sheet-list-showcase.component';
 import { SheetListFilterShowcaseComponent } from './sheet-list-filter-showcase/sheet-list-filter-showcase.component';
 import { SheetListFilterSubscribeComponent } from './sheet-list-filter-subscribe/sheet-list-filter-subscribe.component';
+import { SheetListFilterContratGroupeComponent } from './sheet-list-filter-contrat-groupe/sheet-list-filter-contrat-groupe.component';
 
 defineLocale('fr', frLocale);
 @NgModule({
@@ -48,7 +49,8 @@ defineLocale('fr', frLocale);
     SheetListExportComponent,
     SheetListFilterShowcaseComponent,
     SheetListShowcaseComponent,
-    SheetListFilterSubscribeComponent
+    SheetListFilterSubscribeComponent,
+    SheetListFilterContratGroupeComponent
   ],
   imports: [
     SharedModule,

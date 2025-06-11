@@ -1,0 +1,8 @@
+<div class="form-group" *ngIf="miseAJourDonnee">
+    <label for="mise_a_jour_donnee"><strong>Mise à jour de la donnée :</strong></label>
+    <select id="mise_a_jour_donnee" [formControl]="miseAJourDonnee" class="form-control" style="width: 200px;">
+        <option value="non">Non</option>
+        <option value="en_cours">En cours</option>
+        <option value="oui">Oui</option>
+    </select>
+</div>

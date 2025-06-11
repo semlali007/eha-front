@@ -149,6 +149,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get showcase() { return this.sheetForm.get('showcase') as any; }
   get subdomains() { return this.sheetForm.get('subdomains') as any; }
   get contratGroupe() { return this.sheetForm.get('contratGroupe') as any; }
+  get miseAJourDonnee() { return this.sheetForm.get('miseAJourDonnee') as any; }
   
   // Property to determine if certain fields should be hidden when contrat groupe is 'true'
   get shouldHideFieldsForContratGroupe(): boolean {
@@ -260,7 +261,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'categoryCode': 0,
       'kits': this.fb.array([File]),
       'showcase': false,
-      'contratGroupe': 'false'
+      'contratGroupe': 'false',
+      'miseAJourDonnee': 'non'
     },{ validators : customValidator });
   }
 
@@ -291,6 +293,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.categoryCode.setValue(sheet.category.code);
     this.showcase.setValue(sheet.showcase);
     this.contratGroupe.setValue(sheet.contratGroupe || 'false');
+    this.miseAJourDonnee.setValue(sheet.miseAJourDonnee || 'non');
     
     let providersList = [];
     sheet.providers.forEach(provider => {
@@ -518,6 +521,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       category: new Category({code:this.categoryCode.value}),
       showcase: this.showcase.value,
       contratGroupe: this.contratGroupe.value,
+      miseAJourDonnee: this.miseAJourDonnee.value,
       options : dateOptions
     };
 

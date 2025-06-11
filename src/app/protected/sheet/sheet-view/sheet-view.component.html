@@ -52,11 +52,6 @@
                     </span>
                 </h1>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <h3 class="cover-heading">
-                    Informations générales sur la fiche :
-                </h3>
-            </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Titre</strong></div>
@@ -65,9 +60,25 @@
 
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Contrat groupe</strong></div>
-                <div class="LabelContratGroupVert">
-                     <span class="En-instruction Body---16---Regular">
+                <div class="borderBadge">
+                     <span [ngClass]="{
+                        'text-miseAJourDonnee-oui': contratGroupe === 'true',
+                        'text-miseAJourDonnee-non': contratGroupe === 'false'
+                    }">
                         {{contratGroupe === 'true' ? 'Oui' : (contratGroupe === 'false' ? 'Non' : 'Non renseigné')}}
+                    </span>
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Mise à jour de la donnée</strong></div>
+                <div class="borderBadge">
+                    <span [ngClass]="{
+                        'text-miseAJourDonnee-oui': miseAJourDonnee === 'oui',
+                        'text-miseAJourDonnee-en-cours': miseAJourDonnee === 'en_cours',
+                        'text-miseAJourDonnee-non': miseAJourDonnee === 'non'
+                    }">
+                        {{miseAJourDonnee === 'oui' ? 'Oui' : (miseAJourDonnee === 'en_cours' ? 'En cours' : (miseAJourDonnee === 'non' ? 'Non' : 'Non renseigné'))}}
                     </span>
                 </div>
             </li>

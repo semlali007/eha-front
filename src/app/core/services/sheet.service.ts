@@ -136,7 +136,7 @@ export class SheetService {
     const areas: Object = this.getAreasListForApi(sheet.areas);
     const directions: Object = this.getDirectionsListForApi(sheet.directions);
     
-    return {
+    const result = {
       label: sheet.title,
       description: sheet.comments,
       words: sheet.words,
@@ -162,8 +162,11 @@ export class SheetService {
       options: sheet.options,
       domains: sheet.domains,
       subdomains: sheet.subDomains,
-      contrat_groupe: sheet.contratGroupe || 'false'
-    }
+      contrat_groupe: sheet.contratGroupe || 'false',
+      mise_a_jour_donnee: sheet.miseAJourDonnee || 'non'
+    };
+    
+    return result;
   }
 
   private getDeletedFilesForApi(documents: Document[]): any {
@@ -350,7 +353,8 @@ export class SheetService {
             directions: sheetData.filter.directions,
             committees: sheetData.filter.committees,
             showcase: sheetData.filter.showcase,
-            contratGroupe: sheetData.filter.contratGroupe
+            contratGroupe: sheetData.filter.contratGroupe,
+            miseAJourDonnee: sheetData.filter.miseAJourDonnee
           }
         });
       }),
@@ -553,7 +557,8 @@ export class SheetService {
       domains: domains,
       subDomains: subDomains,
       history: fields.history,
-      contratGroupe: fields.contrat_groupe
+      contratGroupe: fields.contrat_groupe,
+      miseAJourDonnee: fields.mise_a_jour_donnee
     });
   }
 

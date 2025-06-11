@@ -8,6 +8,10 @@
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-contrat-groupe>
 
+    <app-sheet-list-filter-mise-a-jour-donnee [miseAJourDonnee]='miseAJourDonnee' [list]="filter.miseAJourDonnee"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-mise-a-jour-donnee>
+
     <app-sheet-list-filter-status *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status' [list]="filter.status"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-status>

@@ -45,6 +45,7 @@ export class Sheet {
     history: any[];
     category: Category;
     contratGroupe: string;
+    miseAJourDonnee: string;
 
     constructor(options: {
         id?: string,
@@ -81,6 +82,7 @@ export class Sheet {
         subDomains?: Domain[];
         history?: any[];
         contratGroupe?: string;
+        miseAJourDonnee?: string;
 
     } = {}) {
         this.id = options.id || null;
@@ -117,6 +119,7 @@ export class Sheet {
         this.subDomains = options.subDomains || [new Domain()];
         this.history = options.history || [];
         this.contratGroupe = options.contratGroupe || '';
+        this.miseAJourDonnee = options.miseAJourDonnee || '';
     }
 
 }

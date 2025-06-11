@@ -10,6 +10,7 @@ import { SheetFormContractsAddComponent } from './sheet-form-contracts-add/sheet
 import { SheetFormCommentsComponent } from './sheet-form-comments/sheet-form-comments.component';
 import { SheetFormContentComponent } from './sheet-form-content/sheet-form-content.component';
 import { SheetFormContratGroupeComponent } from './sheet-form-contrat-groupe/sheet-form-contrat-groupe.component';
+import { SheetFormMiseAJourDonneeComponent } from './sheet-form-mise-a-jour-donnee/sheet-form-mise-a-jour-donnee.component';
 import { SheetFormLotsComponent } from './sheet-form-lots/sheet-form-lots.component';
 import { SheetFormLotsItemComponent } from './sheet-form-lots-item/sheet-form-lots-item.component';
 import { SheetFormLotsAddComponent } from './sheet-form-lots-add/sheet-form-lots-add.component';
@@ -80,7 +81,8 @@ defineLocale('fr', frLocale);
     SheetFormModalDraftComponent,
     SheetFormSubdomainComponent,
     SheetFormCategoryComponent,
-    SheetFormContratGroupeComponent
+    SheetFormContratGroupeComponent,
+    SheetFormMiseAJourDonneeComponent
   ],
   imports: [
     SharedModule,

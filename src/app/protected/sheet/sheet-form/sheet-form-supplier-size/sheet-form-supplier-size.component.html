@@ -1,0 +1,7 @@
+<div class="form-group" *ngIf="supplierSize">
+    <label for="supplier_size"><strong>Fournisseur Taille :</strong></label>
+    <select id="supplier_size" [formControl]="supplierSize" class="form-control" style="width: 200px;">
+        <option value="">-- Sélectionner --</option>
+        <option *ngFor="let supplierSize of supplierSizes" [value]="supplierSize.id">{{ supplierSize.name }}</option>
+    </select>
+</div>

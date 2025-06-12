@@ -149,6 +149,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get showcase() { return this.sheetForm.get('showcase') as any; }
   get subdomains() { return this.sheetForm.get('subdomains') as any; }
   get contratGroupe() { return this.sheetForm.get('contratGroupe') as any; }
+  get supplierSize() { return this.sheetForm.get('supplierSize') as any; }
   get miseAJourDonnee() { return this.sheetForm.get('miseAJourDonnee') as any; }
   
   // Property to determine if certain fields should be hidden when contrat groupe is 'true'
@@ -262,7 +263,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'kits': this.fb.array([File]),
       'showcase': false,
       'contratGroupe': 'false',
-      'miseAJourDonnee': 'non'
+      'miseAJourDonnee': 'non',
+      'supplierSize': ''
     },{ validators : customValidator });
   }
 
@@ -294,6 +296,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.showcase.setValue(sheet.showcase);
     this.contratGroupe.setValue(sheet.contratGroupe || 'false');
     this.miseAJourDonnee.setValue(sheet.miseAJourDonnee || 'non');
+    this.supplierSize.setValue(sheet.supplierSize?.id || '');
     
     let providersList = [];
     sheet.providers.forEach(provider => {
@@ -522,6 +525,10 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       showcase: this.showcase.value,
       contratGroupe: this.contratGroupe.value,
       miseAJourDonnee: this.miseAJourDonnee.value,
+      supplierSize: this.supplierSize.value ? {
+        id: parseInt(this.supplierSize.value),
+        name: ''
+      } : null,
       options : dateOptions
     };
 

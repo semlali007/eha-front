@@ -49,7 +49,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
     committees: [],
     showcase: [],
     contratGroupe: [],
-    miseAJourDonnee: []
+    miseAJourDonnee: [],
+    supplierSize: []
   };
 
   public params: any = {
@@ -72,7 +73,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
       committees: [],
       showcase: '',
       contratGroupe: '',
-      miseAJourDonnee: ''
+      miseAJourDonnee: '',
+      supplierSize: ''
     },
     sortBy: this.sortBy,
     sortDirection: this.sortDirection
@@ -220,7 +222,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
         committees: this.filterInput.committees,
         showcase: this.filterInput.showcase,
         contratGroupe: this.filterInput.contratGroupe,
-        miseAJourDonnee: this.filterInput.miseAJourDonnee
+        miseAJourDonnee: this.filterInput.miseAJourDonnee,
+        supplierSize: this.filterInput.supplierSize
       },
       sortBy: this.sortBy,
       sortDirection: this.sortDirection
@@ -255,7 +258,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
       areas: [],
       showcase: '',
       contratGroupe: '',
-      miseAJourDonnee: ''
+      miseAJourDonnee: '',
+      supplierSize: []
     };
   }
 
@@ -312,7 +316,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
       areas: this.defaultFilter.search.areas || [],
       showcase: this.defaultFilter.search.showcase || '',
       contratGroupe: this.defaultFilter.search.contratGroupe || '',
-      miseAJourDonnee: this.defaultFilter.search.miseAJourDonnee || ''
+      miseAJourDonnee: this.defaultFilter.search.miseAJourDonnee || '',
+      supplierSize: this.defaultFilter.search.supplierSize || []
     };
   }
 

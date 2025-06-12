@@ -29,7 +29,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
     showcase: [],
     committees: [],
     contratGroupe: [],
-    miseAJourDonnee: []
+    miseAJourDonnee: [],
+    supplierSize: []
   };
   public subscription: Subscription;
   @Output() submittedFilterSheets = new EventEmitter<Object>();
@@ -54,6 +55,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
   get committees() { return this.sheetFilterForm.get('committees') }
   get contratGroupe() { return this.sheetFilterForm.get('contratGroupe') }
   get miseAJourDonnee() { return this.sheetFilterForm.get('miseAJourDonnee') }
+  get supplierSize() { return this.sheetFilterForm.get('supplierSize') }
   
   /**
    * Détermine si les filtres spécifiques doivent être masqués quand contrat groupe = 'true'
@@ -117,7 +119,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
       'status': [this.defaultFilter?.status || []],
       'showcase': [(this.defaultFilter?.showcase === '' || !this.defaultFilter?.showcase) ? 'all' : this.defaultFilter.showcase],
       'contratGroupe': [(this.defaultFilter?.contratGroupe === '' || !this.defaultFilter?.contratGroupe) ? 'all' : this.defaultFilter.contratGroupe],
-      'miseAJourDonnee': [(this.defaultFilter?.miseAJourDonnee === '' || !this.defaultFilter?.miseAJourDonnee) ? 'all' : this.defaultFilter.miseAJourDonnee]
+      'miseAJourDonnee': [(this.defaultFilter?.miseAJourDonnee === '' || !this.defaultFilter?.miseAJourDonnee) ? 'all' : this.defaultFilter.miseAJourDonnee],
+      'supplierSize': [this.defaultFilter?.supplierSize || []]
     });
   }
 
@@ -137,7 +140,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
       'status': [[]],
       'showcase': ['all'],
       'contratGroupe': ['all'],
-      'miseAJourDonnee': ['all']
+      'miseAJourDonnee': ['all'],
+      'supplierSize': [[]]
     });
   }
   

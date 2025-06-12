@@ -84,6 +84,19 @@
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Fournisseur Taille</strong></div>
+                <div class="borderBadge">
+                    <span [ngClass]="{
+                        'text-miseAJourDonnee-oui': supplierSize?.name === 'PME',
+                        'text-miseAJourDonnee-en-cours': supplierSize?.name === 'ETI',
+                        'text-miseAJourDonnee-non': supplierSize?.name === 'GE'
+                    }">
+                        {{supplierSize?.name || 'Non renseigné'}}
+                    </span>
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Date de début de validité</strong></div>
                 <div class="col-9">{{startDate}}</div>
             </li>

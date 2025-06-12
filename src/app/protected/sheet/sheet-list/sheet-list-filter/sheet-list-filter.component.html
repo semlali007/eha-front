@@ -12,6 +12,10 @@
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-mise-a-jour-donnee>
 
+    <app-sheet-list-filter-supplier-size [supplierSize]='supplierSize' [list]="filter.supplierSize"
+        (changedFilter)="onChangedFilterSheets($event)">
+    </app-sheet-list-filter-supplier-size>
+
     <app-sheet-list-filter-status *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status' [list]="filter.status"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-status>

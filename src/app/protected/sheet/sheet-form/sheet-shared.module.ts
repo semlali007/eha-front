@@ -11,6 +11,7 @@ import { SheetFormCommentsComponent } from './sheet-form-comments/sheet-form-com
 import { SheetFormContentComponent } from './sheet-form-content/sheet-form-content.component';
 import { SheetFormContratGroupeComponent } from './sheet-form-contrat-groupe/sheet-form-contrat-groupe.component';
 import { SheetFormMiseAJourDonneeComponent } from './sheet-form-mise-a-jour-donnee/sheet-form-mise-a-jour-donnee.component';
+import { SheetFormSupplierSizeComponent } from './sheet-form-supplier-size/sheet-form-supplier-size.component';
 import { SheetFormLotsComponent } from './sheet-form-lots/sheet-form-lots.component';
 import { SheetFormLotsItemComponent } from './sheet-form-lots-item/sheet-form-lots-item.component';
 import { SheetFormLotsAddComponent } from './sheet-form-lots-add/sheet-form-lots-add.component';
@@ -82,7 +83,8 @@ defineLocale('fr', frLocale);
     SheetFormSubdomainComponent,
     SheetFormCategoryComponent,
     SheetFormContratGroupeComponent,
-    SheetFormMiseAJourDonneeComponent
+    SheetFormMiseAJourDonneeComponent,
+    SheetFormSupplierSizeComponent
   ],
   imports: [
     SharedModule,

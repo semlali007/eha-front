@@ -46,6 +46,7 @@ export class Sheet {
     category: Category;
     contratGroupe: string;
     miseAJourDonnee: string;
+    supplierSize: {id: number, name: string};
 
     constructor(options: {
         id?: string,
@@ -83,6 +84,7 @@ export class Sheet {
         history?: any[];
         contratGroupe?: string;
         miseAJourDonnee?: string;
+        supplierSize?: {id: number, name: string};
 
     } = {}) {
         this.id = options.id || null;
@@ -120,6 +122,7 @@ export class Sheet {
         this.history = options.history || [];
         this.contratGroupe = options.contratGroupe || '';
         this.miseAJourDonnee = options.miseAJourDonnee || '';
+        this.supplierSize = options.supplierSize || null;
     }
 
 }

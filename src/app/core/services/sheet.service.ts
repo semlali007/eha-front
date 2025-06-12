@@ -163,7 +163,8 @@ export class SheetService {
       domains: sheet.domains,
       subdomains: sheet.subDomains,
       contrat_groupe: sheet.contratGroupe || 'false',
-      mise_a_jour_donnee: sheet.miseAJourDonnee || 'non'
+      mise_a_jour_donnee: sheet.miseAJourDonnee || 'non',
+      id_supplier_size: sheet.supplierSize?.id || null
     };
     
     return result;
@@ -354,7 +355,8 @@ export class SheetService {
             committees: sheetData.filter.committees,
             showcase: sheetData.filter.showcase,
             contratGroupe: sheetData.filter.contratGroupe,
-            miseAJourDonnee: sheetData.filter.miseAJourDonnee
+            miseAJourDonnee: sheetData.filter.miseAJourDonnee,
+            supplierSize: sheetData.filter.supplierSize || []
           }
         });
       }),
@@ -558,9 +560,14 @@ export class SheetService {
       subDomains: subDomains,
       history: fields.history,
       contratGroupe: fields.contrat_groupe,
-      miseAJourDonnee: fields.mise_a_jour_donnee
+      miseAJourDonnee: fields.mise_a_jour_donnee,
+      supplierSize: fields.supplier_size ? {
+        id: fields.supplier_size.id,
+        name: fields.supplier_size.name
+      } : null
     });
   }
+
 
 
   public remove(params): Observable<any> {

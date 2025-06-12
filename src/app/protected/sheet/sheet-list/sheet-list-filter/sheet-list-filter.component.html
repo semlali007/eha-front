@@ -13,7 +13,7 @@
     </app-sheet-list-filter-mise-a-jour-donnee>
 
     <app-sheet-list-filter-supplier-size [supplierSize]='supplierSize' [list]="filter.supplierSize"
-        (changedFilter)="onChangedFilterSheets($event)">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFilterInContratGroupeMode('supplierSize')">
     </app-sheet-list-filter-supplier-size>
 
     <app-sheet-list-filter-status *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status' [list]="filter.status"
@@ -24,7 +24,7 @@
     </app-sheet-list-filter-beneficiary>
     <!-- ************* -->
     <app-sheet-list-filter-stipulation [stipulationAutrui]='stipulationAutrui' [list]="filter.stipulationAutrui"
-        (changedFilter)="onChangedFilterSheets($event)" [data]="data"> 
+        (changedFilter)="onChangedFilterSheets($event)" [data]="data" *ngIf="!shouldHideFilterInContratGroupeMode('stipulationAutrui')"> 
     </app-sheet-list-filter-stipulation>
 
     <app-sheet-list-filter-area [areas]='areas' [list]="filter.areas" (changedFilter)="onChangedFilterSheets($event)">
@@ -34,14 +34,14 @@
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-provider>
     <app-sheet-list-filter-direction [directions]='directions' [list]="filter.directions"
-        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFilterInContratGroupeMode('directions')">
     </app-sheet-list-filter-direction>
     <app-sheet-list-filter-edf-open [edfOpen]='edfOpen' [list]="filter.edfOpen"
         (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-edf-open>
 
     <app-sheet-list-filter-partnership [partnership]='partnership' [list]="filter.partnership"
-        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFilterInContratGroupeMode('partnership')">
     </app-sheet-list-filter-partnership>
 
     <app-sheet-list-filter-sector [sector]='sector' [list]="filter.sector"
@@ -49,11 +49,11 @@
     </app-sheet-list-filter-sector>
 
     <app-sheet-list-filter-dauphin [dauphin]='dauphin' [list]="filter.dauphin"
-        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFilterInContratGroupeMode('dauphin')">
     </app-sheet-list-filter-dauphin>
 
     <app-sheet-list-filter-committee [committees]='committees' [list]="filter.committees"
-        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFiltersForContratGroupe">
+        (changedFilter)="onChangedFilterSheets($event)" *ngIf="!shouldHideFilterInContratGroupeMode('committees')">
     </app-sheet-list-filter-committee>
 </form>
     </div>

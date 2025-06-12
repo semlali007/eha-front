@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { PreviousService } from 'src/app/core/services/previous.service';
 import { PageService } from 'src/app/core/services/page.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ViewModeService, ViewMode } from 'src/app/core/services/view-mode.service';
 
 
 @Component({
@@ -26,14 +27,14 @@ export class SheetListComponent implements OnInit, OnDestroy {
   welcomeText: SafeHtml;
   activeText = true;
   public user: User = null;
-  public subscription: Subscription;
+  private subscriptions: Subscription[] = [];
   public searchText = '';
   public searchProvider = '';
   public sortBy = 'date';
   public sortDirection = 'desc';
   public defaultFilter: any;
-  public isSearch = false; 
-  public data:any = [];
+  public isSearch = false;
+  public data: any = [];
   public filter = {
     subscribe: [],
     beneficiaries: [],
@@ -60,7 +61,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       searchText: this.searchText,
       searchProvider: this.searchProvider,
       subscribe: '',
-      status:  [],
+      status: [],
       edf_open: '',
       partnership: '',
       protected_sector: '',
@@ -91,7 +92,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     providers: [],
     directions: [],
     committees: [],
-    status:  [],
+    status: [],
     areas: [],
     showcase: '',
     contratGroupe: '',
@@ -107,33 +108,42 @@ export class SheetListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private previousService: PreviousService,
     private pageService: PageService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private viewModeService: ViewModeService
   ) { }
 
   ngOnInit() {
-    this.subscription = this.authService.user$.subscribe({
-      next: (user) => this.user = user,
-      error: (error) => console.error('Error in user subscription:', error)
-    });
+    // Initialiser d'abord le formulaire de pagination
     this.paginationForm = this.fb.group({
       'currentPage': 1,
     });
 
-    // Check for query parameters to auto-apply filters
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (params['contratGroupe'] === 'true') {
-        // Auto-apply contrat groupe filter
-        this.params.search.contratGroupe = 'true';
-        this.filterInput.contratGroupe = 'true';
-        this.defaultFilter = { ...this.params };
+    const userSub = this.authService.user$.subscribe({
+      next: (user) => this.user = user,
+      error: (error) => console.error('Error in user subscription:', error)
+    });
+    this.subscriptions.push(userSub);
+
+    // S'abonner aux changements de mode d'affichage
+    const modeSub = this.viewModeService.mode$.subscribe(() => {
+      this.applyViewMode();
+      // Recharger les items après application du mode seulement si tout est initialisé
+      if (this.user && this.paginationForm) {
+        this.loadItems();
       }
     });
+    this.subscriptions.push(modeSub);
 
+    // Initialiser le defaultFilter AVANT d'appliquer le mode
     if (this.previousService.getPreviousUrl().includes('details')) {
       this.loadFilterFromStorage();
     } else {
       this.defaultFilter = this.params;
     }
+
+    // Gestion des modes d'affichage - APRÈS l'initialisation du defaultFilter
+    this.applyViewMode();
+
     this.loadItems();
     this.loadText();
   }
@@ -141,22 +151,22 @@ export class SheetListComponent implements OnInit, OnDestroy {
   get currentPage() { return this.paginationForm.get('currentPage') }
 
   public onsSubmittedSearchSheets(filter: any) {
-    
-    if((!!filter.searchText && filter.searchText.length>0)
-      ||  (!!filter.searchProvider && filter.searchProvider.length>0)){
-        this.initSortBy('rank', 'desc');
-        this.isSearch = true;
-      }else{
-        this.isSearch = false;
-        this.initSortBy('updated_at', 'desc');
-      }
+
+    if ((!!filter.searchText && filter.searchText.length > 0)
+      || (!!filter.searchProvider && filter.searchProvider.length > 0)) {
+      this.initSortBy('rank', 'desc');
+      this.isSearch = true;
+    } else {
+      this.isSearch = false;
+      this.initSortBy('updated_at', 'desc');
+    }
     this.initFilterInput();
-    if(this.filterInput.beneficiaries) {
+    if (this.filterInput.beneficiaries) {
       this.filterInput.beneficiaries.forEach(element => {
         this.data.push(element);
       });
     }
-    if(this.filterInput.stipulationAutrui) {//
+    if (this.filterInput.stipulationAutrui) {//
       this.filterInput.stipulationAutrui.forEach(element => {
         this.data.push(element);
       });
@@ -197,8 +207,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
   }
 
   public loadItems() {
+
     let status = this.filterInput.status;
-    if (!this.user || !(this.user.hasRole('EHA_ADMIN') || this.user.hasRole('EHA_GESTIONNAIRE')) ) {
+    if (!this.user || !(this.user.hasRole('EHA_ADMIN') || this.user.hasRole('EHA_GESTIONNAIRE'))) {
       status = 1;
     }
     this.params = {
@@ -254,7 +265,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
       providers: [],
       directions: [],
       committees: [],
-      status:  [],
+      status: [],
       areas: [],
       showcase: '',
       contratGroupe: '',
@@ -284,9 +295,11 @@ export class SheetListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscriptions.forEach(sub => {
+      if (sub) {
+        sub.unsubscribe();
+      }
+    });
   }
 
   public loadFilterFromStorage() {
@@ -324,12 +337,83 @@ export class SheetListComponent implements OnInit, OnDestroy {
   loadText() {
     this.pageService.getPage({ page: 'welcome-text' }).subscribe({
       next: (response) => {
-        this.welcomeText = this.sanitizer.bypassSecurityTrustHtml(response.content || '');
+        const originalText = response.content || '';
+        this.welcomeText = this.sanitizer.bypassSecurityTrustHtml(this.getModifiedWelcomeText(originalText));
         this.activeText = response.active || false;
       },
       error: (error) => {
         console.error('Error loading welcome text:', error);
       }
     });
+  }
+
+  /**
+   * Modifie le texte d'accueil selon le mode d'affichage
+   */
+  private getModifiedWelcomeText(originalText: string): string {
+    if (this.isContratGroupeMode()) {
+      // Remplacer "Vitrine de l'Offre" par "Vitrine de l'Offre (Contrat Groupe)"
+      return originalText.replace(
+        /Vitrine de l[''']Offre/gi,
+        'Vitrine de l\'Offre (Contrat Groupe)'
+      );
+    }
+    return originalText;
+  }
+
+  /**
+   * Applique le mode d'affichage selon le service ViewMode
+   */
+  private applyViewMode(): void {
+    const currentMode = this.viewModeService.getCurrentMode();
+
+    if (currentMode === 'contrat-groupe') {
+      // Appliquer automatiquement le filtre contrat groupe = true (le backend retourne "true" ou "false")
+      this.filterInput.contratGroupe = 'true';
+      // Appliquer le filtre immédiatement
+      this.params.search.contratGroupe = 'true';
+      // Mettre à jour aussi le defaultFilter pour que le composant de filtre affiche la bonne valeur
+      if (this.defaultFilter && this.defaultFilter.search) {
+        this.defaultFilter.search.contratGroupe = 'true';
+      }
+    } else {
+      // Mode normal - pas de contrainte spéciale
+      this.filterInput.contratGroupe = '';
+      this.params.search.contratGroupe = '';
+
+      // Remettre le defaultFilter à sa valeur normale
+      if (this.defaultFilter && this.defaultFilter.search) {
+        this.defaultFilter.search.contratGroupe = '';
+      }
+    }
+
+    // Recharger le texte d'accueil pour refléter le nouveau mode
+    this.loadText();
+  }
+
+  /**
+   * Vérifie si on est en mode contrat groupe
+   */
+  public isContratGroupeMode(): boolean {
+    return this.viewModeService.isContratGroupeMode();
+  }
+
+  /**
+   * Vérifie si un champ doit être masqué en mode contrat groupe
+   */
+  public shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+    if (!this.isContratGroupeMode()) {
+      return false;
+    }
+
+    const hiddenFields = ['dauphin', 'directions', 'partnership', 'stipulationAutrui', 'committees', 'supplierSize'];
+    return hiddenFields.includes(fieldName);
+  }
+
+  /**
+   * Quitte le mode contrat groupe et revient au mode normal
+   */
+  public accederVitrineOffre(): void {
+    this.viewModeService.setNormalMode();
   }
 }

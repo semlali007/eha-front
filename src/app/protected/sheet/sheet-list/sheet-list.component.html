@@ -27,6 +27,21 @@
             </div>
           </div>
           <div>
+            <!-- Indicateur de mode Contrat Groupe -->
+            <div *ngIf="isContratGroupeMode()" class="alert alert-info contrat-groupe-indicator d-flex align-items-center mb-3" role="alert">
+              <i class="fas fa-handshake me-2" style="font-size: 1.3em; color: #2196f3;"></i>
+              <div class="flex-grow-1">
+                <strong style="color: #1976d2;">Mode Contrat Groupe activé</strong>
+                <small class="d-block text-muted mt-1">Affichage filtré sur les fiches avec contrat groupe uniquement</small>
+              </div>
+              <button type="button" class="btn btn-outline-secondary btn-sm ms-3" (click)="accederVitrineOffre()" title="Quitter le mode Contrat Groupe">
+                <i class="fas fa-times me-1"></i>
+                Quitter
+              </button>
+            </div>
+          </div>
+
+          <div>
             <div>
               <div class="tab-content">
                 <div class="active">

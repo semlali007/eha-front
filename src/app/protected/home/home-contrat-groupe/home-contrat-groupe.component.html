@@ -2,15 +2,15 @@
 <div class="list-group my-items-for-contacts cadre">
   <p class="titre-cadre"><img src="../../../../assets/img/icon-marche-cadre.png"> Vitrine de l'offre</p>
   <table style="width:100%;margin-bottom:-28px">
-    <tr>
-      <!-- <td style="width:25%"><p [hidden]="!page?.active" class="label ">NOUVEAU</p></td> -->
-      <td><p class="savoir-plus link" [hidden]="!page?.active" (click)="openModalWithComponent()"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p></td>
-    </tr>
   </table>
   <p class="p">
     Consultez le catalogue des accords-cadres transverses Groupe.
   </p>
-  <button class="btn btn-blanc" (click)="call(sheetPath)" >
-    CONSULTEZ LES CONTRATS GROUPE
-  </button>
+  
+  <!-- Boutons de navigation -->
+  <div class="mt-3">
+    <button class="btn btn-outline-primary btn-blanc mb-2 w-100" (click)="consultezContratsGroupe()">
+      CONSULTEZ LES CONTRATS GROUPE
+    </button>
+  </div>
 </div>

@@ -21,3 +21,27 @@
      .filter-header{
       background-color: rgba(0, 0, 0, 0.03);
      }
+
+/* Styles pour l'indicateur de mode Contrat Groupe */
+.contrat-groupe-indicator {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 1px solid #2196f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contrat-groupe-indicator:hover {
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.15);
+}
+
+.contrat-groupe-indicator .btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  transition: all 0.2s ease;
+}
+
+.contrat-groupe-indicator .btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}

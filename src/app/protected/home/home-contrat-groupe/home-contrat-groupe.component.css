@@ -206,3 +206,11 @@
 .no-space{
   padding-bottom: 0px;
 }
+
+.btn-blanc:hover {
+  background-color: #007bff !important;
+  color: white !important;
+  border-color: #007bff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}

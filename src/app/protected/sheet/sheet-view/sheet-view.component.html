@@ -3,13 +3,13 @@
 
     <div id="htmlData" class="col-11 col-md-10">
         <app-breadcrumb data-html2canvas-ignore="true"></app-breadcrumb>
-        <div class="row" data-html2canvas-ignore="true">
+        <div class="row">
             <div class="col-lg-6">
                 <div >
                     <button  (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
                 </div>
             </div>
-            <div  class="col-lg-3 initial" >
+            <div  class="col-lg-3 initial" data-html2canvas-ignore="true">
                 <button *ngIf="!!subscribed" type="button" class="btn btn-edf float-right" (click)="unsubscribe(sheetId)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  fill="rgb(255, 158, 44)" class="mrsvg bi bi-star-fill"
                         viewBox="0 0 16 16">
@@ -46,11 +46,6 @@
 
         <ul class="list-group" id="print-section">
             <li class="list-group-item row border-right-0 border-left-0 border-top-0">
-                <h1 >
-                    <span >{{title}}
-
-                    </span>
-                </h1>
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
@@ -83,7 +78,7 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('supplierSize')">
                 <div class="col-3"><strong>Fournisseur Taille</strong></div>
                 <div class="borderBadge">
                     <span [ngClass]="{
@@ -127,7 +122,7 @@
                 <div class="col-9 ">{{words}}</div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('dauphin')">
                 <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
                 <div class="col-9">
                     {{dauphin | showBooleanText}}
@@ -146,7 +141,7 @@
                     {{stipulation_for_others | showBooleanText}}
                 </div>
             </li> -->
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('partnership')">
                 <div class="col-3"><strong>Partenariat de productivité</strong></div>
                 <div class="col-9">
                     {{partnership | showBooleanText}}
@@ -177,7 +172,7 @@
                 </div>
             </li>
             <!-- ***************************************** -->
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('stipulationAutrui')">
                 <div class="col-3"><strong>Stipulation pour autrui</strong></div>
                 <div *ngFor="let stipulation of stipulationAutrui" class="StatutEn-instruction">
                     <span class="En-instruction Body---16---Regular">
@@ -194,7 +189,7 @@
                     </span>
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('directions')">
                 <div class="col-3"><strong>Directions opérationnelles (DOA)</strong></div>
                 <div class="col-9">
                     <ul>
@@ -205,14 +200,14 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('committees')">
                 <div class="col-3"><strong>Comité de Gestion de la Demande</strong></div>
                 <div class="col-9">
                    {{committee.label}}
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('domain')">
                 <div class="col-3"><strong>Segments</strong></div>
                 <div class="col-9">
                     <ul>
@@ -222,7 +217,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="contratGroupe !== 'true'">
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!shouldHideFieldInContratGroupeMode('subDomain')">
                 <div class="col-3"><strong>Sous-ensemble</strong></div>
                 <div class="col-9">
                     <ul>
@@ -244,7 +239,7 @@
             </li>
 
         <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
-            <div class="col-3"><strong>Kit de déploiement</strong> </div>
+            <div class="col-3"><strong>Kit de portage</strong> </div>
             <div class="col-9">
                 <ul>
                     <li *ngFor="let kit of kits">

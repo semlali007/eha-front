@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { PageService } from 'src/app/core/services/page.service';
 import { ModalPageComponent } from 'src/app/core/components/modal-page/modal-page.component';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { ViewModeService } from 'src/app/core/services/view-mode.service';
 
 @Component({
   selector: 'app-home-contrat-groupe',
@@ -13,28 +14,18 @@ import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 export class homeContratGroupeComponent implements OnInit {
   bsModalRef?: BsModalRef;
   subscription: Subscription;
-  sheetPath ="app/fiches/liste" ;
   page: any = {};
 
   section: any = [];
   constructor(
-    private router: Router,
     private pageService: PageService,
-    private modalService: BsModalService
-
+    private modalService: BsModalService,
+    private router: Router,
+    private viewModeService: ViewModeService
   ) { }
 
   ngOnInit(): void {
     this.loadSheetPage();
-  }
-
-
-  call(path:any){
-    this.router.navigate([path], { 
-      queryParams: { 
-        contratGroupe: 'true' 
-      } 
-    });
   }
 
 
@@ -43,14 +34,20 @@ export class homeContratGroupeComponent implements OnInit {
       this.page = data;
     })
   }
-  openModalWithComponent() {
-    const initialState = {
-      title: 'test',
-      list:[],
-      page: this.page
-    };
-    this.bsModalRef = this.modalService.show(ModalPageComponent, {initialState});
-    this.bsModalRef.content.closeBtnName = 'Close';
+  /**
+   * Active le mode contrat groupe et redirige vers la liste des fiches
+   */
+  consultezContratsGroupe(): void {
+    this.viewModeService.setContratGroupeMode();
+    this.router.navigate(['/app/fiches/liste']);
+  }
+
+  /**
+   * Active le mode normal et redirige vers la liste des fiches
+   */
+  accederVitrineOffre(): void {
+    this.viewModeService.setNormalMode();
+    this.router.navigate(['/app/fiches/liste']);
   }
 
 }

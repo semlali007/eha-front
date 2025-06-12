@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import * as fileSaver from 'file-saver';
 import { FileService } from 'src/app/core/services/file.service';
+import { ViewModeService } from 'src/app/core/services/view-mode.service';
 
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -78,6 +79,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private authService: AuthService,
     private fileService: FileService,
+    private viewModeService: ViewModeService
   ) { }
 
   ngOnInit(): void {
@@ -405,5 +407,25 @@ onScroll(): void {
       this.totalHistory = data.history.total;
       this.page++;
     });
+}
+
+/**
+ * Vérifie si on est en mode contrat groupe
+ */
+isContratGroupeMode(): boolean {
+  return this.viewModeService.isContratGroupeMode();
+}
+
+/**
+ * Détermine si un champ doit être masqué en mode contrat groupe
+ * @param fieldName - Le nom du champ ('dauphin' ou 'directions')
+ */
+shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+  if (!this.isContratGroupeMode()) {
+    return false;
+  }
+  
+  const hiddenFields = ['dauphin', 'directions', 'partnership', 'stipulationAutrui', 'committees', 'supplierSize', 'domain','subDomain'];
+  return hiddenFields.includes(fieldName);
 }
 }

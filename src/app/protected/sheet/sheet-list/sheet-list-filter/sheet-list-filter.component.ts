@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, Input, OnDestroy, OnChanges, S
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
+import { ViewModeService } from 'src/app/core/services/view-mode.service';
 @Component({
   selector: 'app-sheet-list-filter',
   templateUrl: './sheet-list-filter.component.html',
@@ -37,6 +38,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
+    private viewModeService: ViewModeService
   ) {
   }
 
@@ -56,28 +58,6 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
   get contratGroupe() { return this.sheetFilterForm.get('contratGroupe') }
   get miseAJourDonnee() { return this.sheetFilterForm.get('miseAJourDonnee') }
   get supplierSize() { return this.sheetFilterForm.get('supplierSize') }
-  
-  /**
-   * Détermine si les filtres spécifiques doivent être masqués quand contrat groupe = 'true'
-   * Filtres concernés: Directions opérationnelles, Partenariat de productivité, 
-   * Approvisionnement sous dauphin, Comité de Gestion de la Demande
-   */
-  get shouldHideFiltersForContratGroupe(): boolean {
-    return this.contratGroupe?.value === 'true';
-  }
-  
-  /**
-   * Réinitialise les filtres masqués quand contrat groupe change
-   */
-  private resetHiddenFiltersForContratGroupe(): void {
-    if (this.shouldHideFiltersForContratGroupe) {
-      // Réinitialiser les filtres masqués à leurs valeurs par défaut
-      this.directions?.setValue([]);
-      this.partnership?.setValue('all');
-      this.dauphin?.setValue('all');
-      this.committees?.setValue([]);
-    }
-  }
 
   ngOnInit(): void {
     this.initForm();
@@ -90,11 +70,6 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
       error: (error) => {
         console.error('Error in message service subscription:', error);
       }
-    });
-    
-    // Surveiller les changements du filtre contratGroupe pour réinitialiser les filtres masqués
-    this.contratGroupe?.valueChanges.subscribe(() => {
-      this.resetHiddenFiltersForContratGroupe();
     });
   }
 
@@ -149,6 +124,17 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
     this.submittedFilterSheets.emit(itemFilter);
   }
 
+  /**
+   * Vérifie si un filtre doit être masqué en mode contrat groupe
+   */
+  public shouldHideFilterInContratGroupeMode(filterName: string): boolean {
+    if (!this.viewModeService.isContratGroupeMode()) {
+      return false;
+    }
+    
+    const hiddenFilters = ['dauphin', 'directions', 'partnership', 'stipulationAutrui', 'committees', 'supplierSize'];
+    return hiddenFilters.includes(filterName);
+  }
 
   ngOnDestroy() {
     if (this.subscription) {

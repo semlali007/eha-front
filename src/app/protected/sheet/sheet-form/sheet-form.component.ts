@@ -20,6 +20,7 @@ import { SheetFormModalDraftComponent } from './sheet-form-modal-draft/sheet-for
 import { of } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Category } from 'src/app/shared/models/category';
+import { ViewModeService } from 'src/app/core/services/view-mode.service';
 
 @Component({
   selector: 'app-sheet-form',
@@ -97,7 +98,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     private dateService: DateService,
     private modalService: BsModalService,
     private contractService: ContractService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private viewModeService: ViewModeService
   ) {
   }
 
@@ -110,14 +112,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       }
     );
     this.cdr.detectChanges();
-    
-    // Watch for changes in contratGroupe to update validators dynamically
-    this.sheetForm.get('contratGroupe')?.valueChanges.subscribe(() => {
-      this.updateValidatorsForContratGroupe();
-    });
-    
-    // Initial validator update
-    this.updateValidatorsForContratGroupe();
     
    // this.openDraftModal();
    // this.autosaveDraft();
@@ -149,38 +143,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get showcase() { return this.sheetForm.get('showcase') as any; }
   get subdomains() { return this.sheetForm.get('subdomains') as any; }
   get contratGroupe() { return this.sheetForm.get('contratGroupe') as any; }
-  get supplierSize() { return this.sheetForm.get('supplierSize') as any; }
   get miseAJourDonnee() { return this.sheetForm.get('miseAJourDonnee') as any; }
-  
-  // Property to determine if certain fields should be hidden when contrat groupe is 'true'
-  get shouldHideFieldsForContratGroupe(): boolean {
-    return this.contratGroupe?.value === 'true';
-  }
-  
-  /**
-   * Updates validators for fields that should be non-required when contrat groupe is 'true'
-   * These fields are: providers, beneficiaries, areas, directions
-   */
-  private updateValidatorsForContratGroupe(): void {
-    const isContratGroupe = this.contratGroupe?.value === 'true';
-    
-    // Fields that should become non-required when contrat groupe is 'true'
-    const fieldsToUpdate = ['providers', 'beneficiaries', 'areas', 'directions'];
-    
-    fieldsToUpdate.forEach(fieldName => {
-      const control = this.sheetForm.get(fieldName);
-      if (control) {
-        if (isContratGroupe) {
-          // Remove required validator when contrat groupe is 'true'
-          control.clearValidators();
-        } else {
-          // Add required validator when contrat groupe is 'false'
-          control.setValidators([Validators.required]);
-        }
-        control.updateValueAndValidity();
-      }
-    });
-  }
+  get supplierSize() { return this.sheetForm.get('supplierSize') as any; }
   
   get options() { return this.sheetForm.get('options') as FormArray; }
   resetSheetForm() {
@@ -197,6 +161,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.privateEdfEnedisUploader = this.uploaderService.initKit();
     this.route.params.subscribe(params => {
       if (params.id) {
+        // Mode modification - conserver le mode actuel
         this.sheetId = params.id;
         
         this.sheetService.getSheet(params.id).subscribe(sheet => {
@@ -205,7 +170,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
           if (!sheet) return;
           this.initEditForm(sheet);
         });
-      }else{
+      } else {
+        // Mode création - basculer automatiquement en mode normal pour accéder à tous les champs
+        if (this.viewModeService.isContratGroupeMode()) {
+          console.log('SheetForm: Mode création détecté, passage en mode normal pour accéder à tous les champs');
+          this.viewModeService.setNormalMode();
+        }
         this.contracts.setValidators(Validators.required);
       }
     });
@@ -487,9 +457,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
       this.options.push(optionField);
     });
-    
-    // Update validators after all form values are set
-    this.updateValidatorsForContratGroupe();
   }
 
   submit(draft? : boolean): void {
@@ -652,6 +619,25 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
   }
   
+
+  /**
+   * Vérifie si on est en mode contrat groupe
+   */
+  public isContratGroupeMode(): boolean {
+    return this.viewModeService.isContratGroupeMode();
+  }
+
+  /**
+   * Vérifie si un champ doit être masqué en mode contrat groupe
+   */
+  public shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+    if (!this.isContratGroupeMode()) {
+      return false;
+    }
+    
+    const hiddenFields = ['dauphin', 'directions', 'partnership', 'stipulationAutrui', 'committees', 'supplierSize'];
+    return hiddenFields.includes(fieldName);
+  }
 
   ngOnDestroy() {
 		this.subscription.unsubscribe();

@@ -1,1 +1,29 @@
 /* Styles pour le composant mise à jour de la donnée */
+
+/* Classe pour l'icône d'information */
+.info-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../../../assets/img/info-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Classe pour aligner le texte et l'icône */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0;
+}
+
+/* Classe pour la largeur du select */
+.select-width {
+    width: 200px;
+}

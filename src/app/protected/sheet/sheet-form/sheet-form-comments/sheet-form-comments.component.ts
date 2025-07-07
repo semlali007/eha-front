@@ -5,8 +5,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-sheet-form-comments',
   templateUrl: './sheet-form-comments.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-comments.component.css']
 })
 export class SheetFormCommentsComponent implements OnInit {
   @Input() comments: FormControl;

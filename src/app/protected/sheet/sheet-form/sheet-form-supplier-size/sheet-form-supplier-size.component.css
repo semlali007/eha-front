@@ -1,0 +1,83 @@
+/* Styles pour le composant taille fournisseur */
+
+/* Classe pour l'icône d'information */
+.info-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../../../assets/img/info-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Style pour le contenu du tooltip */
+::ng-deep .tooltip-content {
+    max-width: 250px;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+}
+
+::ng-deep .tooltip-inner {
+    max-width: 400px;
+    text-align: left;
+}
+
+/* Classe pour aligner le texte et l'icône */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0;
+}
+
+/* Styles pour les badges du tooltip */
+::ng-deep .badge-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+::ng-deep .badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+::ng-deep .badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+/* Styles spécifiques pour le tooltip de taille fournisseur */
+::ng-deep .supplier-size-tooltip {
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+::ng-deep .size-definition {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.4;
+}
+
+::ng-deep .size-definition .badge {
+    margin-right: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 40px;
+    text-align: center;
+}
+
+::ng-deep .size-detail {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #dee2e6;
+    font-size: 0.9em;
+    line-height: 1.4;
+}

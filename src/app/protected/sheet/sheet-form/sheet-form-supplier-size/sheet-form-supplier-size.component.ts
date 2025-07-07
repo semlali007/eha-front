@@ -5,7 +5,7 @@ import { SupplierSizeService } from 'src/app/core/services/supplier-size.service
 @Component({
   selector: 'app-sheet-form-supplier-size',
   templateUrl: './sheet-form-supplier-size.component.html',
-  styleUrls: ['./sheet-form-supplier-size.component.scss']
+  styleUrls: ['./sheet-form-supplier-size.component.css']
 })
 export class SheetFormSupplierSizeComponent implements OnInit {
 

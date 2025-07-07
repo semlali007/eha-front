@@ -1,5 +1,10 @@
 <div [formGroup]="sheetForm" class="form-group">
-    <label for="contracts"><strong>Contrats :</strong><span class="required">*</span></label>
+    <label for="contracts" class="label-with-icon">
+        <strong>Contrats :</strong><span class="required">*</span>
+        <span class="info-icon"
+            tooltip="L'objet du contrat (se limiter à 3 lignes maximum en cas de l'objet long)"
+            placement="top" role="img" aria-label="Information"></span>
+    </label>
     <br>
     <!-- <input type="file" (change)="handleFileInput($event)" accept=".xlsx">
     <div *ngIf="invalidContractsCount > 0" class="alert alert-danger">{{ invalidContractsMessage }}</div> -->

@@ -1,5 +1,10 @@
 <div class="form-group">
-    <strong>Stipulation pour autrui:</strong>
+    <div class="label-with-icon">
+        <strong>Stipulation pour autrui:</strong>
+        <span class="info-icon"
+            tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc ; si toutes les entités Groupe, également le préciser)"
+            placement="top" role="img" aria-label="Information"></span>
+    </div>
     <div class="row">
         <div class="col-sm-10">
             <tag-input [formControl]="stipulationAutrui" [placeholder]="''" [onTextChangeDebounce]="500"

@@ -5,8 +5,7 @@ import { CommitteeService } from 'src/app/core/services/committee.service';
 @Component({
   selector: 'app-sheet-form-committee',
   templateUrl: './sheet-form-committee.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-committee.component.css']
 })
 export class SheetFormCommitteeComponent implements OnInit {
   @Input() committeeCode: FormControl;

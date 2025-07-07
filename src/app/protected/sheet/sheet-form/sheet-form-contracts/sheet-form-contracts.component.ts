@@ -13,8 +13,7 @@ interface ExcelDataRow {
 @Component({
   selector: 'app-sheet-form-contracts',
   templateUrl: './sheet-form-contracts.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-contracts.component.css']
 })
 export class SheetFormContractsComponent implements OnInit {
   @Input() contracts: FormArray;

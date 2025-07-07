@@ -1,5 +1,10 @@
 <div class="form-group">
-    <strong>Bénéficiaires :</strong><span class="required">*</span>
+    <div class="label-with-icon">
+        <strong>Bénéficiaires :</strong><span class="required">*</span>
+        <span class="info-icon"
+            tooltip="Si entités spécifiques à EDF SA / ENEDIS, le précisez ici (par ex: CNPE Golfech), si uniquement EDF SA ou ENEDIS, l'indiquer dans les bénéficiaires"
+            placement="top" role="img" aria-label="Information"></span>
+    </div>
     <div class="row">
         <div class="col-sm-10">
             <tag-input [formControl]="beneficiaries"  [placeholder]="''" [onTextChangeDebounce]="500"

@@ -1,6 +1,11 @@
 <div class="form-group">
     <div class="row">
-        <label for="name"><strong>{{label}}:</strong> </label>
+        <div class="label-with-icon mr-2">
+            <label for="name"><strong>{{label}}:</strong> </label>
+            <i class="info-icon"
+                tooltip="Insérer le ppt unique pour l'ensemble des contrats de l'affaire"
+                placement="top" role="img" aria-label="Information"></i>
+        </div>
         <input (change)="upload()" id="upload" type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
 
         <div class="col-md-9" style="margin-bottom: 40px">

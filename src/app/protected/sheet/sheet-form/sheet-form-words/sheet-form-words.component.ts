@@ -3,8 +3,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-sheet-form-words',
   templateUrl: './sheet-form-words.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-words.component.css']
 })
 export class SheetFormWordsComponent implements OnInit {
   @Input() words: FormControl;

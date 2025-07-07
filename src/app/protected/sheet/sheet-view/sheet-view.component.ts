@@ -67,7 +67,6 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public miseAJourDonnee: any = '';
   public supplierSize: {id: number, name: string} | null = null;
   isCollapsed = true;
-  
 
   @ViewChild('content') content:ElementRef;
 

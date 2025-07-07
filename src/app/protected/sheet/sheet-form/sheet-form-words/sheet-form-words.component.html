@@ -1,5 +1,10 @@
 <div class="form-group">
-    <label for="words" ><strong>Mots clés :</strong></label>
+    <label for="words" class="label-with-icon">
+        <strong>Mots clés :</strong>
+        <span class="info-icon"
+            tooltip="Proposer un maximum de mots clés pour favoriser les recherches des utilisateurs EDF SA et filiales (mettre les mots en singulier)"
+            placement="top" role="img" aria-label="Information"></span>
+    </label>
     <input id="words" [formControl]="words" type="words" class="form-control" placeholder="Mots clés" autocorrect="off"
         autocomplete="off" />
 </div>

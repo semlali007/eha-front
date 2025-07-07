@@ -302,6 +302,41 @@
                 <div class="col-9">{{status}}</div>
             </li>
 
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="supplierVatNumber">
+                <div class="col-3 label-with-icon pr-1">
+                    <strong>Fournisseur numéro TVA intracommunautaire</strong>
+                    <span class="info-icon"
+                        tooltip="Numéro de TVA intracommunautaire du fournisseur"
+                        placement="top" 
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div class="col-9">{{supplierVatNumber}}</div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3 label-with-icon">
+                    <strong>Contract manager / Acheteur</strong>
+                    <span class="info-icon"
+                        tooltip="Si contract manager, le préciser (avec son accord), si absence du CM, le nom de l'acheteur"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                <div class="col-9 ">{{contractManager || 'Non renseigné'}}</div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="pcmLink">
+                <div class="col-3 label-with-icon">
+                    <strong>Lien PCM</strong>
+                    <span class="info-icon"
+                        tooltip="Lien PCM"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                <div class="col-9 ">
+                    <a [href]="pcmLink" target="_blank" rel="noopener noreferrer" *ngIf="pcmLink; else noLink">{{pcmLink}}</a>
+                    <ng-template #noLink>Non renseigné</ng-template>
+                </div>
+            </li>
+
             <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
                 <div class="col-3 label-with-icon">
                     <strong>Kit de portage</strong>

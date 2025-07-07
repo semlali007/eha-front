@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label for="contractManager">Contract manager / Acheteur</label>
+    <span class="info-icon" 
+          tooltip="Si contract manager, le préciser (avec son accord), si absence du CM, le nom de l'acheteur" 
+          placement="top" 
+          role="img" 
+          aria-label="Information"></span>
+    <input type="text" 
+           class="form-control" 
+           id="contractManager"
+           [formControl]="control"
+           placeholder="Nom du contract manager ou acheteur">
+    <div *ngIf="control?.invalid && control?.touched" class="text-danger">
+        <small *ngIf="control?.errors?.['minlength']">Minimum 2 caractères requis</small>
+    </div>
+</div>

@@ -118,6 +118,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   get title() { return this.sheetForm.get('title') }
+  get supplierVatNumber() { return this.sheetForm.get('supplierVatNumber') }
+  get contractManager() { return this.sheetForm.get('contractManager') }
+  get pcmLink() { return this.sheetForm.get('pcmLink') }
   get startDate() { return this.sheetForm.get('startDate') }
   get endDate() { return this.sheetForm.get('endDate') }
   get contracts() { return this.sheetForm.get('contracts') as FormArray; }
@@ -202,6 +205,14 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         Validators.required,
         Validators.minLength(4),
       ]],
+      'supplierVatNumber': [''],
+      'contractManager': ['', [
+        Validators.minLength(2),
+      ]],
+      'pcmLink': ['', [
+        Validators.minLength(10),
+        //Validators.pattern('https?://.+')
+      ]],
       'contracts': this.fb.array([]), //*************** */
       'lots': this.fb.array([]),
       'comments': '',
@@ -243,6 +254,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.comments.setValue(sheet.comments);
     this.content.setValue(sheet.content);
     this.title.setValue(sheet.title);
+    this.supplierVatNumber.setValue(sheet.supplierVatNumber || '');
+    this.contractManager.setValue(sheet.contractManager || '');
+    this.pcmLink.setValue(sheet.pcmLink || '');
     this.words.setValue(sheet.words);
     this.status.setValue(sheet.status);
     this.edf_open.setValue(sheet.edfOpen);
@@ -460,6 +474,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   submit(draft? : boolean): void {
+    console.log('DEBUG submit - supplierVatNumber.value:', this.supplierVatNumber.value, typeof this.supplierVatNumber.value);
     let dateOptions = [];
     this.options.value.forEach(op => {
       dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));
@@ -467,6 +482,9 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     let $options = {
       id: null,
       title: this.title.value,
+      supplierVatNumber: this.supplierVatNumber.value,
+      contractManager: this.contractManager.value,
+      pcmLink: this.pcmLink.value,
       startDate: this.startDate.value,
       endDate: this.endDate.value,
       comments: this.comments.value,

@@ -138,6 +138,9 @@ export class SheetService {
     
     const result = {
       label: sheet.title,
+      supplier_vat_number: sheet.supplierVatNumber,
+      contract_manager: sheet.contractManager,
+      pcm_link: sheet.pcmLink,
       description: sheet.comments,
       words: sheet.words,
       status: sheet.status,
@@ -529,6 +532,9 @@ export class SheetService {
     return new Sheet({
       id: fields.id,
       title: fields.label,
+      supplierVatNumber: fields.supplier_vat_number,
+      contractManager: fields.contract_manager,
+      pcmLink: fields.pcm_link,
       comments: fields.description,
       words: fields.search_words,
       startDate: fields.start_date,

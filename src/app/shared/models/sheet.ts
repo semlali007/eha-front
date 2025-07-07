@@ -13,6 +13,9 @@ import { Category } from './category';
 export class Sheet {
     readonly id: string;
     title: string;
+    supplierVatNumber: string;
+    contractManager: string;
+    pcmLink: string;
     comments: string;
     words: string;
     startDate: string;
@@ -51,6 +54,9 @@ export class Sheet {
     constructor(options: {
         id?: string,
         title?: string,
+        supplierVatNumber?: string,
+        contractManager?: string,
+        pcmLink?: string,
         comments?: string,
         words?: string,
         startDate?: string,
@@ -89,6 +95,9 @@ export class Sheet {
     } = {}) {
         this.id = options.id || null;
         this.title = options.title || '';
+        this.supplierVatNumber = options.supplierVatNumber || '';
+        this.contractManager = options.contractManager || '';
+        this.pcmLink = options.pcmLink || '';
         this.comments = options.comments || '';
         this.words = options.words || '';
         this.startDate = options.startDate || '';

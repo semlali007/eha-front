@@ -24,6 +24,9 @@ import html2canvas from 'html2canvas';
 export class SheetViewComponent implements OnInit, OnDestroy {
   public sheetId: string;
   public title: any = '';
+  public supplierVatNumber: any = '';
+  public contractManager: any = '';
+  public pcmLink: any = '';
   public page = 0;
   public totalHistory = 0;
   public startDate: any;
@@ -109,6 +112,9 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.comments = sheet.comments;
     this.words = sheet.words;
     this.title = sheet.title;
+    this.supplierVatNumber = sheet.supplierVatNumber;
+    this.contractManager = sheet.contractManager;
+    this.pcmLink = sheet.pcmLink;
     this.committee = sheet.committee;
     this.category = sheet.category;
     this.showcase = sheet.showcase;

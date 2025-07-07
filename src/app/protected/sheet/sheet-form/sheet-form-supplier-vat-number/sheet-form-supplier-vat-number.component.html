@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label for="supplierVatNumber" class="label-with-icon">
+        <strong>Fournisseur numéro TVA intracommunautaire :</strong>
+        <span class="info-icon"
+            tooltip="Numéro d'identification fiscale du fournisseur dans l'UE (ex: FR12345678901)"
+            placement="top" role="img" aria-label="Information"></span>
+    </label>
+    <input id="supplierVatNumber" [formControl]="supplierVatNumber" type="text" class="form-control" 
+           placeholder="Ex: FR12345678901" autocorrect="off" autocomplete="off" />
+    <small *ngIf="supplierVatNumber.errors" class="form-text text-danger">
+        <span [hidden]="!supplierVatNumber.errors.required">
+            Numéro TVA intracommunautaire requis.
+        </span>
+        <span [hidden]="!supplierVatNumber.errors.pattern">
+            Format de numéro TVA invalide.
+        </span>
+    </small>
+</div>

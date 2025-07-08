@@ -49,7 +49,12 @@
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Titre</strong></div>
+                <div class="col-3 label-with-icon">
+                    <strong>Nom fiche</strong>
+                    <span class="info-icon"
+                        tooltip="L'objet de la fiche (se limiter à 3 lignes maximum en cas d'objet long)"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
                 <div class="col-9 ">{{title}}</div>
             </li>
 
@@ -69,7 +74,7 @@
                 <div class="col-3 label-with-icon">
                     <strong>Mise à jour de la donnée</strong>
                     <span class="info-icon"
-                        tooltip="Une donnée temporaire utilisée dans le cadre de la mise à jour globale de la vitrine"
+                        tooltip="une donnée temporaire utilisée dans le cadre de la mise à jour globale achatpédia S2 2025"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
                 <div class="borderBadge">
@@ -169,7 +174,12 @@
             </li> -->
             <li class="list-group-item row border-right-0 border-left-0"
                 *ngIf="!shouldHideFieldInContratGroupeMode('partnership')">
-                <div class="col-3"><strong>Partenariat de productivité</strong></div>
+                <div class="col-3 label-with-icon">
+                    <strong>Partenariat de productivité</strong>
+                    <span class="info-icon"
+                        tooltip="Détail à préciser dans le kit de portage"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
                 <div class="col-9">
                     {{partnership | showBooleanText}}
                 </div>
@@ -199,7 +209,7 @@
                 <div class="col-3 label-with-icon">
                     <strong>Bénéficiaires</strong>
                     <span class="info-icon"
-                        tooltip="Si entités spécifiques à EDF SA / ENEDIS, le précisez ici (par ex: CNPE Golfech), si uniquement EDF SA ou ENEDIS, l'indiquer dans les bénéficiaires"
+                        tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc ; si toutes les entités Groupe,  préciser tel que défini dans les CPA : ex 'toutes entités du Groupe')"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
                 <div *ngFor="let beneficiary of beneficiaries" class="StatutEn-instruction">
@@ -232,7 +242,7 @@
                     </span>
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0"
+<!--             <li class="list-group-item row border-right-0 border-left-0"
                 *ngIf="!shouldHideFieldInContratGroupeMode('directions')">
                 <div class="col-3"><strong>Directions opérationnelles (DOA)</strong></div>
                 <div class="col-9">
@@ -242,7 +252,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
 
             <li class="list-group-item row border-right-0 border-left-0"
                 *ngIf="!shouldHideFieldInContratGroupeMode('committees')">
@@ -260,7 +270,7 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0"
+            <!-- <li class="list-group-item row border-right-0 border-left-0"
                 *ngIf="!shouldHideFieldInContratGroupeMode('domain')">
                 <div class="col-3"><strong>Segments</strong></div>
                 <div class="col-9">
@@ -281,7 +291,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Catégorie Achats</strong></div>
                 <div class="col-9">
@@ -316,27 +326,13 @@
 
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
-                    <strong>Contract manager / Acheteur</strong>
+                    <strong>Contract manager & Acheteur</strong>
                     <span class="info-icon"
-                        tooltip="Si contract manager, le préciser (avec son accord), si absence du CM, le nom de l'acheteur"
+                        tooltip="Si contract manager, le préciser (avec son accord) ET le nom de l'acheteur"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
                 <div class="col-9 ">{{contractManager || 'Non renseigné'}}</div>
             </li>
-
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="pcmLink">
-                <div class="col-3 label-with-icon">
-                    <strong>Lien PCM</strong>
-                    <span class="info-icon"
-                        tooltip="Lien PCM"
-                        placement="top" role="img" aria-label="Information"></span>
-                </div>
-                <div class="col-9 ">
-                    <a [href]="pcmLink" target="_blank" rel="noopener noreferrer" *ngIf="pcmLink; else noLink">{{pcmLink}}</a>
-                    <ng-template #noLink>Non renseigné</ng-template>
-                </div>
-            </li>
-
             <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
                 <div class="col-3 label-with-icon">
                     <strong>Kit de portage</strong>
@@ -428,7 +424,7 @@
                 <div class="col-3 label-with-icon">
                     <strong>Contrats</strong>
                     <span class="info-icon"
-                        tooltip="L'objet du contrat (se limiter à 3 lignes maximum en cas de l'objet long)"
+                        tooltip="Indiquer tous les numéros rattachés au contrat"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
                 <div class="col-9"></div>

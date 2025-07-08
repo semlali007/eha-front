@@ -3,8 +3,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-sheet-form-title',
   templateUrl: './sheet-form-title.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-title.component.css']
 })
 export class SheetFormTitleComponent implements OnInit {
   @Input() title: FormControl;

@@ -89,7 +89,6 @@ export class BannerComponent implements OnInit {
       this.list = data;
       if (Array.isArray(data)) {
         this.numberOfNotifications = data.length;
-        console.log('Nombre de notifications:', this.numberOfNotifications);
       } else {
         this.numberOfNotifications = 0; 
       }

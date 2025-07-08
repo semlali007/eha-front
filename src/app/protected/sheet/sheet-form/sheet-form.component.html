@@ -48,18 +48,14 @@
     <!-- *********** -->
     <app-sheet-form-stipulationAutrui [stipulationAutrui]="stipulationAutrui" [allstipulationAutrui]="data.stipulationAutrui" *ngIf="!shouldHideFieldInContratGroupeMode('stipulationAutrui')"></app-sheet-form-stipulationAutrui>
     <app-sheet-form-areas [areas]="areas" [allareas]="data.areas"></app-sheet-form-areas>
-    <app-sheet-form-directions [directions]="directions" [alldirections]="data.directions" *ngIf="!shouldHideFieldInContratGroupeMode('directions')"></app-sheet-form-directions>
+    <!-- <app-sheet-form-directions [directions]="directions" [alldirections]="data.directions" *ngIf="!shouldHideFieldInContratGroupeMode('directions')"></app-sheet-form-directions> -->
     <app-sheet-form-committee [committeeCode]="committeeCode" *ngIf="!shouldHideFieldInContratGroupeMode('committees')"></app-sheet-form-committee>
-    <app-sheet-form-domain [domains]="domains" [allDomains]="[]"></app-sheet-form-domain>
-    <app-sheet-form-subdomain [subdomains]="subdomains" [allSubdomains]="[]"></app-sheet-form-subdomain>
+    <!-- <app-sheet-form-domain [domains]="domains" [allDomains]="[]"></app-sheet-form-domain>
+    <app-sheet-form-subdomain [subdomains]="subdomains" [allSubdomains]="[]"></app-sheet-form-subdomain> -->
     <app-sheet-form-category [categoryCode]="categoryCode"></app-sheet-form-category>
-    <app-sheet-form-status [status]="status"></app-sheet-form-status>
     <app-sheet-form-supplier-vat-number [supplierVatNumber]="supplierVatNumber"></app-sheet-form-supplier-vat-number>
     <app-sheet-form-contract-manager [control]="contractManager"></app-sheet-form-contract-manager>
-    <app-sheet-form-pcm-link [control]="pcmLink"></app-sheet-form-pcm-link>
-    <app-sheet-form-kit [uploader]="kitUploader" (removedItem)="onRemovedItem($event)" label="Kit de portage (PDF, Word, Excel, PowerPoint)"></app-sheet-form-kit>
     <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
-
     <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm"[contracts]="contracts">  <!-- [lotsList]="lots" > -->
     </app-sheet-form-contracts>
     <app-sheet-form-content [content]="content" *ngIf="fromNetAchat==true" ></app-sheet-form-content>

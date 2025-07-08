@@ -233,9 +233,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'areas': [[], [
 				Validators.required,
 			]],
-      'directions': [[], [
-				Validators.required,
-			]],
+      'directions': [[]],
       'domains': [[]],
       'subdomains': [[]],
       'status': 0,
@@ -474,7 +472,6 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   submit(draft? : boolean): void {
-    console.log('DEBUG submit - supplierVatNumber.value:', this.supplierVatNumber.value, typeof this.supplierVatNumber.value);
     let dateOptions = [];
     this.options.value.forEach(op => {
       dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));

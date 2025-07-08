@@ -89,8 +89,7 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('supplierSize')">
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Fournisseur Taille</strong>
                     <span class="info-icon"
@@ -152,8 +151,7 @@
                 <div class="col-9 ">{{words}}</div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('dauphin')">
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
                 <div class="col-9">
                     {{dauphin | showBooleanText}}
@@ -172,8 +170,7 @@
                     {{stipulation_for_others | showBooleanText}}
                 </div>
             </li> -->
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('partnership')">
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Partenariat de productivité</strong>
                     <span class="info-icon"
@@ -219,8 +216,7 @@
                 </div>
             </li>
             <!-- ***************************************** -->
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('stipulationAutrui')">
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Stipulation pour autrui</strong>
                     <span class="info-icon"
@@ -235,7 +231,15 @@
             </li>
 
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Zone géographique d’application des marchés</strong></div>
+                 <div class="col-3 label-with-icon pr-1">
+                    <strong>Zone géographique d'application des marchés</strong>
+                    <span class="info-icon"
+                        [tooltip]="geographicZoneTooltipTemplate"
+                        placement="top"
+                        container="body"
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
                 <div *ngFor="let area of areas" class="StatutEn-instruction">
                     <span class="En-instruction Body---16---Regular">
                         {{area.label}}
@@ -254,8 +258,7 @@
                 </div>
             </li> -->
 
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('committees')">
+            <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Comité de Gestion de la Demande</strong>
                     <span class="info-icon"
@@ -607,6 +610,17 @@
         <div class="size-detail">
             <strong>Définition ETI :</strong><br>
             Une entreprise de taille intermédiaire (ETI) est une entreprise qui a entre 250 et 4 999 salariés, et soit un chiffre d'affaires n'excédant pas 1,5 milliard d'euros soit un total de bilan n'excédant pas 2 milliards d'euros.
+        </div>
+    </div>
+</ng-template>
+<!-- Template pour le tooltip de zone géographique -->
+<ng-template #geographicZoneTooltipTemplate>
+    <div class="tooltip-content geographic-zone-tooltip">
+        <div class="zone-options">
+            <div class="zone-item">• France métropolitaine (hors Corse)</div>
+            <div class="zone-item">• France métropolitaine + Corse</div>
+            <div class="zone-item">• France métropolitaine + Corse + DROM</div>
+            <div class="zone-item">• France et international</div>
         </div>
     </div>
 </ng-template>

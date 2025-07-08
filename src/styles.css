@@ -6,3 +6,15 @@
 @import "./assets/css/sheet.css";
 @import "./assets/css/font-style.css";
 @import "./assets/css/font-news.css";
+
+/* Style pour le tooltip */
+bs-tooltip-container .tooltip-inner {
+    max-width: 300px;
+    text-align: left;
+    background-color: #0c0c0c;
+    color: #fff;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+}

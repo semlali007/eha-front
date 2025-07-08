@@ -119,6 +119,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
   get title() { return this.sheetForm.get('title') }
   get supplierVatNumber() { return this.sheetForm.get('supplierVatNumber') }
+  get entitesBeneficiairesEdfEnedis() { return this.sheetForm.get('entitesBeneficiairesEdfEnedis') }
   get contractManager() { return this.sheetForm.get('contractManager') }
   get pcmLink() { return this.sheetForm.get('pcmLink') }
   get startDate() { return this.sheetForm.get('startDate') }
@@ -206,6 +207,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         Validators.minLength(4),
       ]],
       'supplierVatNumber': [''],
+      'entitesBeneficiairesEdfEnedis': [''],
       'contractManager': ['', [
         Validators.minLength(2),
       ]],
@@ -253,6 +255,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.content.setValue(sheet.content);
     this.title.setValue(sheet.title);
     this.supplierVatNumber.setValue(sheet.supplierVatNumber || '');
+    this.entitesBeneficiairesEdfEnedis.setValue(sheet.entitesBeneficiairesEdfEnedis || '');
     this.contractManager.setValue(sheet.contractManager || '');
     this.pcmLink.setValue(sheet.pcmLink || '');
     this.words.setValue(sheet.words);
@@ -480,6 +483,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       id: null,
       title: this.title.value,
       supplierVatNumber: this.supplierVatNumber.value,
+      entitesBeneficiairesEdfEnedis: this.entitesBeneficiairesEdfEnedis.value,
       contractManager: this.contractManager.value,
       pcmLink: this.pcmLink.value,
       startDate: this.startDate.value,

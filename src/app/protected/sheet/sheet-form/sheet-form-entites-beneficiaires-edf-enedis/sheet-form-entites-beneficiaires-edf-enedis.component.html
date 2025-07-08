@@ -1,0 +1,17 @@
+<div class="form-group">
+    <label for="entitesBeneficiairesEdfEnedis" class="label-with-icon">
+        <strong>Entités bénéficiaires d'EDF SA / ENEDIS :</strong>
+        <span class="info-icon"
+            tooltip="Si entités spécifiques à EDF SA / ENEDIS, préciser ici (par ex: CNPE Golfech), si uniquement EDF SA ou ENEDIS, l'indiquer dans les bénéficiaires"
+            placement="top" role="img" aria-label="Information"></span>
+    </label>
+    <textarea id="entitesBeneficiairesEdfEnedis" [formControl]="entitesBeneficiairesEdfEnedis" 
+              class="form-control" rows="3"
+              placeholder="Indiquez les entités bénéficiaires..." 
+              autocorrect="off" autocomplete="off"></textarea>
+    <small *ngIf="entitesBeneficiairesEdfEnedis.errors" class="form-text text-danger">
+        <span [hidden]="!entitesBeneficiairesEdfEnedis.errors.required">
+            Entités bénéficiaires requises.
+        </span>
+    </small>
+</div>

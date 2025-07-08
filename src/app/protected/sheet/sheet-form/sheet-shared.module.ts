@@ -17,6 +17,7 @@ import { SheetFormLotsItemComponent } from './sheet-form-lots-item/sheet-form-lo
 import { SheetFormLotsAddComponent } from './sheet-form-lots-add/sheet-form-lots-add.component';
 import { SheetFormTitleComponent } from './sheet-form-title/sheet-form-title.component';
 import { SheetFormSupplierVatNumberComponent } from './sheet-form-supplier-vat-number/sheet-form-supplier-vat-number.component';
+import { SheetFormEntitesBeneficiairesEdfEnedisComponent } from './sheet-form-entites-beneficiaires-edf-enedis/sheet-form-entites-beneficiaires-edf-enedis.component';
 import { SheetFormContractManagerComponent } from './sheet-form-contract-manager/sheet-form-contract-manager.component';
 import { SheetFormPcmLinkComponent } from './sheet-form-pcm-link/sheet-form-pcm-link.component';
 import { SheetFormWordsComponent } from './sheet-form-words/sheet-form-words.component';
@@ -63,6 +64,7 @@ defineLocale('fr', frLocale);
     SheetFormLotsAddComponent,
     SheetFormTitleComponent,
     SheetFormSupplierVatNumberComponent,
+    SheetFormEntitesBeneficiairesEdfEnedisComponent,
     SheetFormContractManagerComponent,
     SheetFormPcmLinkComponent,
     SheetFormWordsComponent,

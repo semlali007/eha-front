@@ -89,7 +89,8 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0"
+                *ngIf="!shouldHideFieldInContratGroupeMode('supplierSize')">
                 <div class="col-3 label-with-icon">
                     <strong>Fournisseur Taille</strong>
                     <span class="info-icon"
@@ -170,7 +171,8 @@
                     {{stipulation_for_others | showBooleanText}}
                 </div>
             </li> -->
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0"
+                *ngIf="!shouldHideFieldInContratGroupeMode('partnership')">
                 <div class="col-3 label-with-icon">
                     <strong>Partenariat de productivité</strong>
                     <span class="info-icon"
@@ -181,7 +183,8 @@
                     {{partnership | showBooleanText}}
                 </div>
             </li>
-            <li class="list-group-item row border-right-0 border-left-0">
+            <li class="list-group-item row border-right-0 border-left-0"
+                *ngIf="!shouldHideFieldInContratGroupeMode('protected_sector')">
                 <div class="col-3"><strong>Secteur protégé</strong></div>
                 <div class="col-9">
                     {{protected_sector | showBooleanText}}

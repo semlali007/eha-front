@@ -648,13 +648,21 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
   /**
    * Vérifie si un champ doit être masqué en mode contrat groupe
+   * OU si c'est un champ définitivement masqué
    */
   public shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+    // Champs masqués définitivement
+    const permanentlyHiddenFields = ['partnership', 'protected_sector', 'supplierSize', 'pcmLink', 'showcase'];
+    if (permanentlyHiddenFields.includes(fieldName)) {
+      return true;
+    }
+
+    // Champs masqués en mode contrat groupe uniquement
     if (!this.isContratGroupeMode()) {
       return false;
     }
     
-    const hiddenFields = ['dauphin', 'directions', 'partnership', 'stipulationAutrui', 'committees', 'supplierSize'];
+    const hiddenFields = ['dauphin', 'directions', 'stipulationAutrui', 'committees'];
     return hiddenFields.includes(fieldName);
   }
 

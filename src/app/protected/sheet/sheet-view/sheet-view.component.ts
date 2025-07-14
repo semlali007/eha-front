@@ -425,14 +425,22 @@ isContratGroupeMode(): boolean {
 
 /**
  * Détermine si un champ doit être masqué en mode contrat groupe
- * @param fieldName - Le nom du champ ('dauphin' ou 'directions')
+ * OU si c'est un champ définitivement masqué
+ * @param fieldName - Le nom du champ à vérifier
  */
 shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+  // Champs masqués définitivement
+  const permanentlyHiddenFields = ['partnership', 'protected_sector', 'supplierSize', 'pcmLink', 'showcase'];
+  if (permanentlyHiddenFields.includes(fieldName)) {
+    return true;
+  }
+
+  // Champs masqués en mode contrat groupe uniquement
   if (!this.isContratGroupeMode()) {
     return false;
   }
   
-  const hiddenFields = ['dauphin', 'directions', 'partnership', 'stipulationAutrui', 'committees', 'supplierSize', 'domain','subDomain'];
+  const hiddenFields = ['dauphin', 'directions', 'stipulationAutrui', 'committees', 'domain', 'subDomain'];
   return hiddenFields.includes(fieldName);
 }
 }

@@ -7,7 +7,7 @@
     </label>
     <textarea id="entitesBeneficiairesEdfEnedis" [formControl]="entitesBeneficiairesEdfEnedis" 
               class="form-control" rows="3"
-              placeholder="Indiquez les entités bénéficiaires..." 
+              placeholder="Indiquez les entités bénéficiaires d'EDF SA / ENEDIS..." 
               autocorrect="off" autocomplete="off"></textarea>
     <small *ngIf="entitesBeneficiairesEdfEnedis.errors" class="form-text text-danger">
         <span [hidden]="!entitesBeneficiairesEdfEnedis.errors.required">

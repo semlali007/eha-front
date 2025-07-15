@@ -7,5 +7,5 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./sheet-form-contract-manager.component.css']
 })
 export class SheetFormContractManagerComponent {
-  @Input() control: FormControl;
+  @Input() contractManager: FormControl;
 }

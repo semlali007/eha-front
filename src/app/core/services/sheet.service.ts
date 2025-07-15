@@ -168,7 +168,9 @@ export class SheetService {
       contrat_groupe: sheet.contratGroupe || 'false',
       mise_a_jour_donnee: sheet.miseAJourDonnee || 'non',
       id_supplier_size: sheet.supplierSize?.id || null,
-      entites_beneficiaires_edf_enedis: sheet.entitesBeneficiairesEdfEnedis || null
+      entites_beneficiaires_edf_enedis: sheet.entitesBeneficiairesEdfEnedis || null,
+      geographic_detail: sheet.geographicDetail || null,
+      acheteur: sheet.acheteur || null
     };
     
     return result;
@@ -569,6 +571,8 @@ export class SheetService {
       contratGroupe: fields.contrat_groupe,
       miseAJourDonnee: fields.mise_a_jour_donnee,
       entitesBeneficiairesEdfEnedis: fields.entites_beneficiaires_edf_enedis,
+      geographicDetail: fields.geographic_detail,
+      acheteur: fields.acheteur,
       supplierSize: fields.supplier_size ? {
         id: fields.supplier_size.id,
         name: fields.supplier_size.name

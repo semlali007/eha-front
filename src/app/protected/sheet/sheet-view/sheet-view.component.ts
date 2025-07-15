@@ -26,6 +26,8 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public title: any = '';
   public supplierVatNumber: any = '';
   public entitesBeneficiairesEdfEnedis: any = '';
+  public geographicDetail: any = '';
+  public acheteur: any = '';
   public contractManager: any = '';
   public pcmLink: any = '';
   public page = 0;
@@ -115,6 +117,8 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.title = sheet.title;
     this.supplierVatNumber = sheet.supplierVatNumber;
     this.entitesBeneficiairesEdfEnedis = sheet.entitesBeneficiairesEdfEnedis;
+    this.geographicDetail = sheet.geographicDetail;
+    this.acheteur = sheet.acheteur;
     this.contractManager = sheet.contractManager;
     this.pcmLink = sheet.pcmLink;
     this.committee = sheet.committee;

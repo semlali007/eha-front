@@ -34,6 +34,8 @@ import { SheetFormBeneficiariesComponent } from './sheet-form-beneficiaries/shee
 //
 import { SheetFormStipulationAutruiComponent } from './sheet-form-stipulationAutrui/sheet-form-stipulationAutrui.component';
 import { SheetFormAreasComponent } from './sheet-form-areas/sheet-form-areas.component';
+import { SheetFormGeographicDetailComponent } from './sheet-form-geographic-detail/sheet-form-geographic-detail.component';
+import { SheetFormAcheteurComponent } from './sheet-form-acheteur/sheet-form-acheteur.component';
 import { SheetFormDirectionsComponent } from './sheet-form-directions/sheet-form-directions.component';
 import { SheetFormDomainComponent } from './sheet-form-domain/sheet-form-domain.component';
 
@@ -79,6 +81,8 @@ defineLocale('fr', frLocale);
     SheetFormBeneficiariesComponent,
     SheetFormStipulationAutruiComponent,//
     SheetFormAreasComponent,
+    SheetFormGeographicDetailComponent,
+    SheetFormAcheteurComponent,
     SheetFormDirectionsComponent,
     SheetFormDomainComponent,
     SheetFormStatusComponent,

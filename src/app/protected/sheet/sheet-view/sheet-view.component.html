@@ -48,6 +48,7 @@
             <li class="list-group-item row border-right-0 border-left-0 border-top-0">
             </li>
 
+            <!-- 1. Nom fiche -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Nom fiche</strong>
@@ -58,6 +59,7 @@
                 <div class="col-9 ">{{title}}</div>
             </li>
 
+            <!-- 2. Contrat groupe -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3"><strong>Contrat groupe</strong></div>
                 <div class="borderBadge">
@@ -70,78 +72,15 @@
                 </div>
             </li>
 
+            <!-- 3. Catégorie Achats -->
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3 label-with-icon">
-                    <strong>Mise à jour de la donnée</strong>
-                    <span class="info-icon"
-                        tooltip="une donnée temporaire utilisée dans le cadre de la mise à jour globale achatpédia S2 2025"
-                        placement="top" role="img" aria-label="Information"></span>
-                </div>
-                <div class="borderBadge">
-                    <span [ngClass]="{
-                        'text-miseAJourDonnee-oui': miseAJourDonnee === 'oui',
-                        'text-miseAJourDonnee-en-cours': miseAJourDonnee === 'en_cours',
-                        'text-miseAJourDonnee-non': miseAJourDonnee === 'non'
-                    }">
-                        {{miseAJourDonnee === 'oui' ? 'Oui' : (miseAJourDonnee === 'en_cours' ? 'En cours' :
-                        (miseAJourDonnee === 'non' ? 'Non' : 'Non renseigné'))}}
-                    </span>
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('supplierSize')">
-                <div class="col-3 label-with-icon">
-                    <strong>Fournisseur Taille</strong>
-                    <span class="info-icon"
-                        [tooltip]="supplierSizeTooltipTemplate"
-                        placement="top"
-                        container="body"
-                        role="img" 
-                        aria-label="Information"></span>
-                </div>
-                <div class="borderBadge">
-                    <span [ngClass]="{
-                        'text-miseAJourDonnee-oui': supplierSize?.name === 'PME',
-                        'text-miseAJourDonnee-en-cours': supplierSize?.name === 'ETI',
-                        'text-miseAJourDonnee-non': supplierSize?.name === 'GE'
-                    }">
-                        {{supplierSize?.name || 'Non renseigné'}}
-                    </span>
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de début de validité</strong></div>
-                <div class="col-9">{{startDate}}</div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de fin de validité</strong></div>
-                <div class="col-9">{{endDate}}</div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Options</strong></div>
+                <div class="col-3"><strong>Catégorie Achats</strong></div>
                 <div class="col-9">
-                    <ul>
-                        <li *ngFor="let option of options;index as i;">
-                            <label>Option {{i + 1}} : du {{option.startDate}} au {{option.endDate}}</label>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3 label-with-icon">
-                    <strong>Commentaires</strong>
-                    <span class="info-icon"
-                        tooltip="Zone libre pour communiquer toute information nécessaire non communiquée ailleurs"
-                        placement="top" role="img" aria-label="Information"></span>
-                </div>
-                <div [innerHTML]="comments" class="col-9">
+                    {{category.label}}
                 </div>
             </li>
 
+            <!-- 4. Mots clés -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Mots clés</strong>
@@ -152,45 +91,40 @@
                 <div class="col-9 ">{{words}}</div>
             </li>
 
+            <!-- 5. Date de début de validité -->
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
+                <div class="col-3"><strong>Date de début de validité</strong></div>
+                <div class="col-9">{{startDate}}</div>
+            </li>
+
+            <!-- 6. Date de fin de validité -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Date de fin de validité</strong></div>
+                <div class="col-9">{{endDate}}</div>
+            </li>
+
+            <!-- 7. Options (Date de fin du contrat yc options) -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Options</strong></div>
                 <div class="col-9">
-                    {{dauphin | showBooleanText}}
+                    <ul>
+                        <li *ngFor="let option of options;index as i;">
+                            <label>Option {{i + 1}} : du {{option.startDate}} au {{option.endDate}}</label>
+                        </li>
+                    </ul>
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Marché ouvert au personnel EDF</strong></div>
-                <div class="col-9">
-                    {{edf_open | showBooleanText}}
-                </div>
-            </li>
-            <!-- <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Stipulation pour autrui</strong></div>
-                <div class="col-9">
-                    {{stipulation_for_others | showBooleanText}}
-                </div>
-            </li> -->
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('partnership')">
-                <div class="col-3 label-with-icon">
-                    <strong>Partenariat de productivité</strong>
-                    <span class="info-icon"
-                        tooltip="Détail à préciser dans le kit de portage"
-                        placement="top" role="img" aria-label="Information"></span>
-                </div>
-                <div class="col-9">
-                    {{partnership | showBooleanText}}
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('protected_sector')">
-                <div class="col-3"><strong>Secteur protégé</strong></div>
-                <div class="col-9">
-                    {{protected_sector | showBooleanText}}
+            <!-- 8. Contenu -->
+            <li class="list-group-item row border-right-0 border-left-0 border-bottom-0"
+                *ngIf="!!netachatId && netachatId>0">
+                <div class="col-3"><strong>Contenu</strong></div>
+                <div class="col-9"></div>
+                <div class="col-12 content-width" [innerHTML]="fullContent | safe: 'html'">
                 </div>
             </li>
 
+            <!-- 9. Fournisseurs -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Fournisseurs</strong>
@@ -205,6 +139,20 @@
                 </div>
             </li>
 
+            <!-- 10. Fournisseur numéro TVA intracommunautaire -->
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="supplierVatNumber">
+                <div class="col-3 label-with-icon pr-1">
+                    <strong>Fournisseur numéro TVA intracommunautaire</strong>
+                    <span class="info-icon"
+                        tooltip="Numéro de TVA intracommunautaire du fournisseur"
+                        placement="top" 
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div class="col-9">{{supplierVatNumber}}</div>
+            </li>
+
+            <!-- 11. Bénéficiaires -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Bénéficiaires</strong>
@@ -218,7 +166,8 @@
                     </span>
                 </div>
             </li>
-            <!-- ***************************************** -->
+
+            <!-- 12. Stipulation pour autrui -->
             <li class="list-group-item row border-right-0 border-left-0">
                 <div class="col-3 label-with-icon">
                     <strong>Stipulation pour autrui</strong>
@@ -233,103 +182,7 @@
                 </div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                 <div class="col-3 label-with-icon pr-1">
-                    <strong>Zone géographique d'application des marchés</strong>
-                    <span class="info-icon"
-                        [tooltip]="geographicZoneTooltipTemplate"
-                        placement="top"
-                        container="body"
-                        role="img" 
-                        aria-label="Information"></span>
-                </div>
-                <div *ngFor="let area of areas" class="StatutEn-instruction">
-                    <span class="En-instruction Body---16---Regular">
-                        {{area.label}}
-                    </span>
-                </div>
-            </li>
-<!--             <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('directions')">
-                <div class="col-3"><strong>Directions opérationnelles (DOA)</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let direction of directions">
-                            {{direction.label}}
-                        </li>
-                    </ul>
-                </div>
-            </li> -->
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3 label-with-icon">
-                    <strong>Comité de Gestion de la Demande</strong>
-                    <span class="info-icon"
-                        [tooltip]="committeesTooltipTemplate"
-                        placement="top"
-                        container="body"
-                        role="img" 
-                        aria-label="Information"></span>
-                </div>
-                <div class="col-9">
-                    {{committee.label}}
-                </div>
-            </li>
-
-            <!-- <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('domain')">
-                <div class="col-3"><strong>Segments</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let d of domain">
-                            {{d.label}}
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0"
-                *ngIf="!shouldHideFieldInContratGroupeMode('subDomain')">
-                <div class="col-3"><strong>Sous-ensemble</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let d of subDomain">
-                            {{d.label}}
-                        </li>
-                    </ul>
-                </div>
-            </li> -->
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Catégorie Achats</strong></div>
-                <div class="col-9">
-                    {{category.label}}
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3 label-with-icon">
-                    <strong>Statut</strong>
-                    <span class="info-icon"
-                        [tooltip]="statusTooltipTemplate"
-                        placement="top" 
-                        [isOpen]="false"
-                        container="body"
-                        role="img" 
-                        aria-label="Information"></span>
-                </div>
-                <div class="col-9">{{status}}</div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="supplierVatNumber">
-                <div class="col-3 label-with-icon pr-1">
-                    <strong>Fournisseur numéro TVA intracommunautaire</strong>
-                    <span class="info-icon"
-                        tooltip="Numéro de TVA intracommunautaire du fournisseur"
-                        placement="top" 
-                        role="img" 
-                        aria-label="Information"></span>
-                </div>
-                <div class="col-9">{{supplierVatNumber}}</div>
-            </li>
-
+            <!-- 13. Entités bénéficiaires d'EDF SA / ENEDIS -->
             <li class="list-group-item row border-right-0 border-left-0" *ngIf="entitesBeneficiairesEdfEnedis">
                 <div class="col-3 label-with-icon pr-1">
                     <strong>Entités bénéficiaires d'EDF SA / ENEDIS</strong>
@@ -342,71 +195,7 @@
                 <div class="col-9">{{entitesBeneficiairesEdfEnedis}}</div>
             </li>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3 label-with-icon">
-                    <strong>Contract manager & Acheteur</strong>
-                    <span class="info-icon"
-                        tooltip="Si contract manager, le préciser (avec son accord) ET le nom de l'acheteur"
-                        placement="top" role="img" aria-label="Information"></span>
-                </div>
-                <div class="col-9 ">{{contractManager || 'Non renseigné'}}</div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
-                <div class="col-3 label-with-icon">
-                    <strong>Kit de portage</strong>
-                    <span class="info-icon"
-                        tooltip="Insérer le ppt unique pour l'ensemble des contrats de l'affaire"
-                        placement="top" role="img" aria-label="Information"></span>
-                </div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let kit of kits">
-                            <a (click)="downloadKit(kit)" class="link">{{kit.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="privates.length > 0">
-                <div class="col-3"><strong>Contenu privé</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let private of privates">
-                            <a (click)="downloadKit(private)" class="link">{{private.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEnedis.length > 0">
-                <div class="col-3"><strong>Contenu privé (Enedis)</strong> </div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let privateEnedis of privatesEnedis">
-                            <a (click)="downloadKit(privateEnedis)" class="link">{{privateEnedis.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEdfEnedis.length > 0">
-                <div class="col-3"><strong>Contenu privé (Groupe EDF / Enedis)</strong> </div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let privateEdfEnedis of privatesEdfEnedis">
-                            <a (click)="downloadKit(privateEdfEnedis)" class="link">{{privateEdfEnedis.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0 border-bottom-0"
-                *ngIf="!!netachatId && netachatId>0">
-                <div class="col-3"><strong>Contenu</strong></div>
-                <div class="col-9"></div>
-                <div class="col-12 content-width" [innerHTML]="fullContent | safe: 'html'">
-                </div>
-            </li>
+            <!-- 14. Lots -->
             <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!netachatId">
                 <div class="col-3"><strong>Lots</strong></div>
                 <div class="col-9"></div>
@@ -438,9 +227,10 @@
                 </div>
             </li>
 
+            <!-- 15. Numéros de contrats -->
             <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!netachatId">
                 <div class="col-3 label-with-icon">
-                    <strong>Contrats</strong>
+                    <strong>Numéros de contrats</strong>
                     <span class="info-icon"
                         tooltip="Indiquer tous les numéros rattachés au contrat"
                         placement="top" role="img" aria-label="Information"></span>
@@ -492,18 +282,192 @@
                                 </div>
                             </div>
                         </accordion-group>
-
-                        <!-- <accordion-group #group [isDisabled]="true" *ngIf="lots.length>0">
-                        <div class="row" accordion-heading>
-                            <ul>
-                                <li *ngFor="let lot of lots">
-                                    <strong>{{lot.name}} :</strong> {{lot.description}}
-                                </li>
-                            </ul>
-                        </div>
-                    </accordion-group> -->
-
                     </accordion>
+                </div>
+            </li>
+
+            <!-- 16. Kit de portage -->
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
+                <div class="col-3 label-with-icon">
+                    <strong>Kit de portage</strong>
+                    <span class="info-icon"
+                        tooltip="Insérer le ppt unique pour l'ensemble des contrats de l'affaire"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let kit of kits">
+                            <a (click)="downloadKit(kit)" class="link">{{kit.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- 17. Comité de Gestion de la Demande -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3 label-with-icon">
+                    <strong>Comité de Gestion de la Demande</strong>
+                    <span class="info-icon"
+                        [tooltip]="committeesTooltipTemplate"
+                        placement="top"
+                        container="body"
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div class="col-9">
+                    {{committee.label}}
+                </div>
+            </li>
+
+            <!-- 18. Zone géographique d'application des marchés -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                 <div class="col-3 label-with-icon pr-1">
+                    <strong>Zone géographique d'application des marchés</strong>
+                    <span class="info-icon"
+                        [tooltip]="geographicZoneTooltipTemplate"
+                        placement="top"
+                        container="body"
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div *ngFor="let area of areas" class="StatutEn-instruction">
+                    <span class="En-instruction Body---16---Regular">
+                        {{area.label}}
+                    </span>
+                </div>
+            </li>
+
+            <!-- 19. Zone géographique détail si région -->
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="geographicDetail">
+                <div class="col-3 label-with-icon pr-1">
+                    <strong>Zone géographique détail si région</strong>
+                    <span class="info-icon"
+                        tooltip="Détails géographiques spécifiques à la région"
+                        placement="top" 
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div class="col-9">{{geographicDetail}}</div>
+            </li>
+
+            <!-- 20. Approvisionnement sous dauphin -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
+                <div class="col-9">
+                    {{dauphin | showBooleanText}}
+                </div>
+            </li>
+
+            <!-- 21. Marché ouvert au personnel EDF -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3"><strong>Marché ouvert au personnel EDF</strong></div>
+                <div class="col-9">
+                    {{edf_open | showBooleanText}}
+                </div>
+            </li>
+
+            <!-- 22. Acheteur -->
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="acheteur">
+                <div class="col-3 label-with-icon pr-1">
+                    <strong>Acheteur</strong>
+                    <span class="info-icon"
+                        tooltip="Acheteur responsable du marché"
+                        placement="top" 
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div class="col-9">{{acheteur}}</div>
+            </li>
+
+            <!-- 23. Contract manager -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3 label-with-icon">
+                    <strong>Contract manager</strong>
+                    <span class="info-icon"
+                        tooltip="Si contract manager, le préciser (avec son accord) ET le nom de l'acheteur"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                <div class="col-9 ">{{contractManager || 'Non renseigné'}}</div>
+            </li>
+
+            <!-- 24. Mise à jour de la donnée -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3 label-with-icon">
+                    <strong>Mise à jour de la donnée</strong>
+                    <span class="info-icon"
+                        tooltip="une donnée temporaire utilisée dans le cadre de la mise à jour globale achatpédia S2 2025"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                <div class="borderBadge">
+                    <span [ngClass]="{
+                        'text-miseAJourDonnee-oui': miseAJourDonnee === 'oui',
+                        'text-miseAJourDonnee-en-cours': miseAJourDonnee === 'en_cours',
+                        'text-miseAJourDonnee-non': miseAJourDonnee === 'non'
+                    }">
+                        {{miseAJourDonnee === 'oui' ? 'Oui' : (miseAJourDonnee === 'en_cours' ? 'En cours' :
+                        (miseAJourDonnee === 'non' ? 'Non' : 'Non renseigné'))}}
+                    </span>
+                </div>
+            </li>
+
+            <!-- 25. Statut -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3 label-with-icon">
+                    <strong>Statut</strong>
+                    <span class="info-icon"
+                        [tooltip]="statusTooltipTemplate"
+                        placement="top" 
+                        [isOpen]="false"
+                        container="body"
+                        role="img" 
+                        aria-label="Information"></span>
+                </div>
+                <div class="col-9">{{status}}</div>
+            </li>
+
+            <!-- 26. Commentaires -->
+            <li class="list-group-item row border-right-0 border-left-0">
+                <div class="col-3 label-with-icon">
+                    <strong>Commentaires</strong>
+                    <span class="info-icon"
+                        tooltip="Zone libre pour communiquer toute information nécessaire non communiquée ailleurs"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                <div [innerHTML]="comments" class="col-9">
+                </div>
+            </li>
+
+            <!-- Documents privés -->
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="privates.length > 0">
+                <div class="col-3"><strong>Contenu privé</strong></div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let private of privates">
+                            <a (click)="downloadKit(private)" class="link">{{private.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEnedis.length > 0">
+                <div class="col-3"><strong>Contenu privé (Enedis)</strong> </div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let privateEnedis of privatesEnedis">
+                            <a (click)="downloadKit(privateEnedis)" class="link">{{privateEnedis.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEdfEnedis.length > 0">
+                <div class="col-3"><strong>Contenu privé (Groupe EDF / Enedis)</strong> </div>
+                <div class="col-9">
+                    <ul>
+                        <li *ngFor="let privateEdfEnedis of privatesEdfEnedis">
+                            <a (click)="downloadKit(privateEdfEnedis)" class="link">{{privateEdfEnedis.name}}</a>
+                        </li>
+                    </ul>
                 </div>
             </li>
         </ul>

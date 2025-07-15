@@ -78,22 +78,28 @@
     <!-- 18. Zone géographique -->
     <app-sheet-form-areas [areas]="areas" [allareas]="data.areas"></app-sheet-form-areas>
     
-    <!-- 19. Approvisionnement sous dauphin -->
+    <!-- 19. Zone géographique détail si région -->
+    <app-sheet-form-geographic-detail [sheetForm]="sheetForm"></app-sheet-form-geographic-detail>
+    
+    <!-- 20. Approvisionnement sous dauphin -->
     <app-sheet-form-dauphin [dauphin]="dauphin"></app-sheet-form-dauphin>
     
-    <!-- 20. Marché ouvert personnel EDF -->
+    <!-- 21. Marché ouvert personnel EDF -->
     <app-sheet-form-edf-open [edf_open]="edf_open"></app-sheet-form-edf-open>
     
-    <!-- 21. Acheteur & Contract manager -->
-    <app-sheet-form-contract-manager [control]="contractManager"></app-sheet-form-contract-manager>
+    <!-- 22. Acheteur -->
+    <app-sheet-form-acheteur [acheteur]="acheteur"></app-sheet-form-acheteur>
     
-    <!-- 22. Mise à jour de la donnée -->
+    <!-- 23. Contract manager -->
+    <app-sheet-form-contract-manager [contractManager]="contractManager"></app-sheet-form-contract-manager>
+    
+    <!-- 24. Mise à jour de la donnée -->
     <app-sheet-form-mise-a-jour-donnee [miseAJourDonnee]="miseAJourDonnee"></app-sheet-form-mise-a-jour-donnee>
     
-    <!-- 23. Statut -->
+    <!-- 25. Statut -->
     <app-sheet-form-status [status]="status"></app-sheet-form-status>
     
-    <!-- 24. Commentaires -->
+    <!-- 26. Commentaires -->
     <app-sheet-form-comments [comments]="comments"></app-sheet-form-comments>
 
     <!-- CHAMPS MASQUÉS (conservés pour compatibilité backend mais cachés) -->

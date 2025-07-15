@@ -51,6 +51,8 @@ export class Sheet {
     miseAJourDonnee: string;
     supplierSize: {id: number, name: string};
     entitesBeneficiairesEdfEnedis: string;
+    geographicDetail: string;
+    acheteur: string;
 
     constructor(options: {
         id?: string,
@@ -59,6 +61,8 @@ export class Sheet {
         contractManager?: string,
         pcmLink?: string,
         entitesBeneficiairesEdfEnedis?: string,
+        geographicDetail?: string,
+        acheteur?: string,
         comments?: string,
         words?: string,
         startDate?: string,
@@ -135,6 +139,8 @@ export class Sheet {
         this.miseAJourDonnee = options.miseAJourDonnee || '';
         this.supplierSize = options.supplierSize || null;
         this.entitesBeneficiairesEdfEnedis = options.entitesBeneficiairesEdfEnedis || '';
+        this.geographicDetail = options.geographicDetail || '';
+        this.acheteur = options.acheteur || '';
     }
 
 }

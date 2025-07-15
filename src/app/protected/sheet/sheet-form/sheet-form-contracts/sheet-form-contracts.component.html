@@ -1,6 +1,6 @@
 <div [formGroup]="sheetForm" class="form-group">
     <label for="contracts" class="label-with-icon">
-        <strong>Contrats :</strong><span class="required">*</span>
+        <strong>Numéros de contrats :</strong><span class="required">*</span>
         <span class="info-icon"
             tooltip="Indiquer tous les numéros rattachés au contrat"
             placement="top" role="img" aria-label="Information"></span>
@@ -9,10 +9,10 @@
     <!-- <input type="file" (change)="handleFileInput($event)" accept=".xlsx">
     <div *ngIf="invalidContractsCount > 0" class="alert alert-danger">{{ invalidContractsMessage }}</div> -->
 
-    <input type="file" #fileInput (change)="handleFileInput($event)" accept=".xlsx"
+<!--     <input type="file" #fileInput (change)="handleFileInput($event)" accept=".xlsx"
         [attr.title]="originalFileContent ? 'Fichier chargé : ' + fileInput.files[0].name : 'Aucun fichier choisi'">
     <div *ngIf="invalidContractsCount > 0" class="alert alert-danger">{{ invalidContractsMessage }}</div>
-
+ -->
     <div formArrayName="contracts" class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3" style="max-height: 500px;">
         <app-sheet-form-contracts-item [actualState]="obj" *ngFor="let contract of contracts.controls;
           index as i;" [index]="i" [contract]="contract" [isActive]="isActive(i)"  [lotsListForContract]="tableLot" (openClose)="onOpenClose($event)" (removedContract)="onRemovedContract($event)" >

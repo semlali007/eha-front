@@ -51,7 +51,6 @@ export class SheetFormAreasComponent implements OnInit {
       next: (data) => {
         // Le backend retourne maintenant directement le format {code, label}
         this.availableAreas = data.data || [];
-        console.log('Zones disponibles chargées:', this.availableAreas);
         this.isLoading = false;
         
         // Initialiser la valeur APRÈS le chargement des zones disponibles
@@ -68,18 +67,14 @@ export class SheetFormAreasComponent implements OnInit {
     // 1. Vérifier s'il y a déjà une valeur dans le FormControl (mode modification)
     const currentValue = this.areas.value;
     if (currentValue && currentValue.code && currentValue.label) {
-      console.log('Valeur existante trouvée dans FormControl:', currentValue);
       
       // Vérifier si cette valeur existe dans les zones disponibles (comparaison flexible sur les types)
       const matchingArea = this.availableAreas.find(area => String(area.code) === String(currentValue.code));
       if (matchingArea) {
         // Utiliser l'objet de la liste disponible pour assurer la correspondance
         this.areas.setValue(matchingArea);
-        console.log('Zone correspondante trouvée et sélectionnée:', matchingArea);
       } else {
         console.warn('Zone non trouvée dans la liste disponible:', currentValue);
-        console.log('Codes disponibles:', this.availableAreas.map(a => `${a.code} (${typeof a.code})`));
-        console.log('Code recherché:', `${currentValue.code} (${typeof currentValue.code})`);
         // Optionnel : garder la valeur existante même si elle n'est pas dans la liste
         // this.areas.setValue(currentValue);
       }

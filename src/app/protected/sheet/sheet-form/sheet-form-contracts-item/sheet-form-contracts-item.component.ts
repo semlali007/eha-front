@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, TemplateRef, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import tinymce from 'tinymce';
@@ -10,7 +10,7 @@ import tinymce from 'tinymce';
   styles: [
   ]
 })
-export class SheetFormContractsItemComponent implements OnInit {
+export class SheetFormContractsItemComponent implements OnInit, OnChanges {
   @Input() contract: FormGroup;
   
   @Input() index: number;
@@ -30,7 +30,21 @@ export class SheetFormContractsItemComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // Initialiser filteredLots avec tous les lots disponibles
+    this.filteredLots = this.lotsListForContract || [];
    }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Surveiller les changements de isActive pour la gestion de l'interface
+    if (changes['isActive']) {
+      // L'état d'édition est géré via les propriétés CSS et la logique du template
+    }
+  }
+
+  private updateFormControlState(): void {
+    // Méthode conservée pour compatibilité
+    // L'état d'édition est maintenant géré via le template uniquement
+  }
 
   changeState(index): void {
     this.openClose.emit({index:index});
@@ -52,17 +66,17 @@ export class SheetFormContractsItemComponent implements OnInit {
 
   get code() { return this.contract.get('code'); }
 
+  // Méthodes conservées au cas où vous voudriez réactiver la fonctionnalité de filtrage
   onLotInput(value: string) {
-    // les suggestions
+    // les suggestions (non utilisée actuellement)
     this.filteredLots = this.lotsListForContract.filter(lot =>
       lot.toLowerCase().includes(value.toLowerCase())
     );
   }
 
   selectLot(selectedLot: string) {
-    // Mise à jour du champ "lots" lors de la sélection 
+    // Méthode conservée pour compatibilité (non utilisée actuellement)
     this.contract.get('lots')?.setValue(selectedLot);
-    this.filteredLots = []; 
   }
 
 }

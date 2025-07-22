@@ -27,14 +27,13 @@
                     <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>
                 </td>
                 <td>
-                    <div style="display: flex; align-items: center;">
-                        <input [readonly]="!isActive" formControlName="lots" type="text" class="form-control border-0" [placeholder]="'lots'" style="width:90px;"
-                          (input)="onLotInput($event.target.value)">
-                    
-                        <select [disabled]="!isActive" class="form-control border-0" style="width:auto;" (change)="selectLot($event.target.value)">
-                          <option *ngFor="let lot of filteredLots" [value]="" >{{ lot }}</option>
-                        </select>
-                    </div>
+                    <select formControlName="lots" class="form-control border-0" 
+                            style="width:auto;"
+                            [style.pointer-events]="isActive ? 'auto' : 'none'"
+                            [style.opacity]="isActive ? '1' : '0.6'">
+                      <option value="">{{ isActive ? 'Sélectionner un lot' : 'Mode lecture' }}</option>
+                      <option *ngFor="let lot of filteredLots" [value]="lot">{{ lot }}</option>
+                    </select>
                 </td>
                 <td>
                     <button class="remove" style="width: 40px; height: 40px; padding: 5;" (click)="confirmation(template)" type="button">-</button>

@@ -52,6 +52,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public beneficiaries: Object[] = [];
   public stipulationAutrui: Object[] = [];
   public areas: Object[] = [];
+  public selectedArea: any = null; // Zone unique sélectionnée
   public directions: Object[] = [];
   public status: any;
   public statusCode: number;
@@ -164,14 +165,26 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       );
     });
 
-    sheet.areas.forEach(area => {
-      this.areas.push(
-        {
+    // Gestion de la zone géographique (migration vers zone unique)
+    if (sheet.areas) {
+      if (Array.isArray(sheet.areas) && sheet.areas.length > 0) {
+        // Ancien format array - prendre le premier élément
+        this.selectedArea = {
+          code: sheet.areas[0].code,
+          label: sheet.areas[0].label,
+        };
+        // Maintenir la compatibilité affichage
+        this.areas = [this.selectedArea];
+      } else if (sheet.areas && !Array.isArray(sheet.areas)) {
+        // Nouveau format objet unique
+        const area = sheet.areas as any; // Cast temporaire pour éviter erreur typage
+        this.selectedArea = {
           code: area.code,
           label: area.label,
-        }
-      );
-    });
+        };
+        this.areas = [this.selectedArea];
+      }
+    }
 
     sheet.beneficiaries.forEach(beneficiary => {
       this.beneficiaries.push(

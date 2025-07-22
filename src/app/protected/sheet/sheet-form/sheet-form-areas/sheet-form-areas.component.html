@@ -9,25 +9,30 @@
             aria-label="Information"></span>
     </label>
     <div class="row">
-        <div class="col-sm-10">
-            <tag-input [formControl]="areas"  [placeholder]="''" [onTextChangeDebounce]="500"
-                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
-                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
-                    [identifyBy]="'code'" [displayBy]="'label'">
-                </tag-input-dropdown>
-            </tag-input>
-        </div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-edf"
-            (click)="openModalWithComponent()"
-               >Zones</button>
+        <div class="col-sm-12">
+            <!-- Nouvelle liste déroulante avec sélection unique -->
+            <select class="form-control" style="width:max-content;" [formControl]="areas" [compareWith]="compareAreas" required>
+                <option value="">Sélectionnez une zone géographique...</option>
+                <option *ngFor="let area of availableAreas" [ngValue]="area">
+                    {{ area.label }}
+                </option>
+            </select>
+            
+            <!-- Indicateur de chargement -->
+            <div *ngIf="isLoading" class="text-muted mt-1">
+                <small><i class="fa fa-spinner fa-spin"></i> Chargement des zones...</small>
+            </div>
+            
+            <!-- Message si aucune zone disponible -->
+            <div *ngIf="!isLoading && availableAreas.length === 0" class="text-warning mt-1">
+                <small><i class="fa fa-exclamation-triangle"></i> Aucune zone disponible</small>
+            </div>
         </div>
     </div>
     <small *ngIf="areas.errors" class="form-text text-danger">
         <span [hidden]="!areas.errors.required">
-            Zones requis.
+            Zone géographique requise.
         </span>
-       
     </small>
 </div>
 

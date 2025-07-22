@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sheet-form-date',
   templateUrl: './sheet-form-date.component.html',
-  styles: []
+  styleUrls: ['./sheet-form-date.component.css']
 })
 export class SheetFormDateComponent implements OnInit, OnDestroy {
   @Input() startDate: FormControl;

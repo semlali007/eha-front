@@ -2,7 +2,7 @@
     <label for="status" class="label-with-icon">
         <strong>Statut :</strong>
         <span class="info-icon" 
-              [tooltip]="statusTooltipTemplate"
+              tooltip="l'acheteur archive la fiche dès la fin du marché"
               placement="top"
               container="body"
               role="img"
@@ -15,18 +15,3 @@
         </label>
     </div>
 </div>
-
-<!-- Template pour le tooltip de statut -->
-<ng-template #statusTooltipTemplate>
-    <div class="tooltip-content">
-        <div class="status-item">
-            <span class="badge badge-danger">Archivé</span> : à l'initiation de l'acheteur dès la fin du marché
-        </div>
-        <div class="status-item">
-            <span class="badge badge-success">Publié</span> : Si création de fiche : à l'initiative du support achat; si modification : à l'initiative de l'acheteur
-        </div>
-        <div class="status-item">
-            <span class="badge badge-warning">En attente</span> : Pour la création des nouvelles fiches, en attente de validation du support achat suite à la transmission des éléments
-        </div>
-    </div>
-</ng-template>

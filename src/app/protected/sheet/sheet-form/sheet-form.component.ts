@@ -309,18 +309,19 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
     let areasList = [];
 
-    sheet.areas.forEach(area => {
-      areasList.push(
-        {
-          code: area.code,
-          label: area.label,
-          display: area.label,
-          value: area.label,
+    // Gestion du nouveau format areas (Area | Area[])
+    if (sheet.areas) {
+      if (Array.isArray(sheet.areas)) {
+        // Ancien format array - migration vers sélection unique (prendre le premier)
+        if (sheet.areas.length > 0) {
+          const firstArea = sheet.areas[0];
+          this.areas.setValue(firstArea);
         }
-      );
-    });
-
-    this.areas.setValue(areasList);
+      } else {
+        // Nouveau format objet unique
+        this.areas.setValue(sheet.areas);
+      }
+    }
 
     let beneficiariesList = [];
     sheet.beneficiaries.forEach(beneficiary => {

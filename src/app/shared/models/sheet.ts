@@ -31,7 +31,7 @@ export class Sheet {
     providers: Provider[];
     beneficiaries: Beneficiary[];
     stipulationAutrui: Stipulation[];//*************************************** */
-    areas: Area[];
+    areas: Area[] | Area; // Support ancien format array et nouveau format objet unique
     directions: Direction[];
     documents: Document[];
     updatedAt: string;

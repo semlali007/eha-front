@@ -1,5 +1,10 @@
 <div class="form-group">
-    <label for="contrat_groupe"><strong>Contrat groupe :</strong></label>
+    <label for="contrat_groupe">
+        <strong>Contrat groupe :</strong>
+        <span class="info-icon"
+            tooltip="Un contrat Groupe est un contrat EDF ou ENEDIS qui est ouvert à au moins une autre entité du Groupe (hors PEI)"
+            placement="top" role="img" aria-label="Information"></span>
+    </label>
     <select id="contrat_groupe" [formControl]="contratGroupe" class="form-control" style="width: 200px;">
         <option value="false">Non</option>
         <option value="true">Oui</option>

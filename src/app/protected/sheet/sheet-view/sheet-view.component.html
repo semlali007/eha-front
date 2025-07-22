@@ -56,19 +56,26 @@
                         tooltip="L'objet de la fiche (se limiter à 3 lignes maximum en cas d'objet long)"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
-                <div class="col-9 ">{{title}}</div>
+                <div class="col-9">{{title}}</div>
             </li>
 
             <!-- 2. Contrat groupe -->
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Contrat groupe</strong></div>
-                <div class="borderBadge">
+                <div class="col-3 label-with-icon">
+                    <strong>Contrat groupe</strong>
+                    <span class="info-icon"
+                        tooltip="Un contrat Groupe est un contrat EDF ou ENEDIS qui est ouvert à au moins une autre entité du Groupe (hors PEI)"
+                        placement="top" role="img" aria-label="Information"></span>
+                </div>
+                 <div class="col-9">
+                   <div class="borderBadge">
                     <span [ngClass]="{
                         'text-miseAJourDonnee-oui': contratGroupe === 'true',
                         'text-miseAJourDonnee-non': contratGroupe === 'false'
                     }">
                         {{contratGroupe === 'true' ? 'Oui' : (contratGroupe === 'false' ? 'Non' : 'Non renseigné')}}
                     </span>
+                 </div>
                 </div>
             </li>
 
@@ -99,7 +106,13 @@
 
             <!-- 6. Date de fin de validité -->
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de fin de validité</strong></div>
+                <div class="col-3 label-with-icon">
+                    <strong>Date de fin de validité</strong>
+                    <span class="info-icon"
+                        tooltip="Date de fin options incluses"
+                        placement="top" role="img" aria-label="Information">
+                    </span>
+                </div>
                 <div class="col-9">{{endDate}}</div>
             </li>
 
@@ -129,7 +142,7 @@
                 <div class="col-3 label-with-icon">
                     <strong>Fournisseurs</strong>
                     <span class="info-icon"
-                        tooltip="Raison sociale"
+                        tooltip="Raison sociale : indiquer tous les fournisseurs du contrat mère"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
                 <div *ngFor="let provider of providers" class="StatutEn-instruction">
@@ -142,7 +155,7 @@
             <!-- 10. Fournisseur numéro TVA intracommunautaire -->
             <li class="list-group-item row border-right-0 border-left-0" *ngIf="supplierVatNumber">
                 <div class="col-3 label-with-icon pr-1">
-                    <strong>Fournisseur numéro TVA intracommunautaire</strong>
+                    <strong>Numéros TVA intracommunautaire pour les fournisseurs UE / ou numéros DUNS pour les fournisseurs hors UE</strong>
                     <span class="info-icon"
                         tooltip="Numéro de TVA intracommunautaire du fournisseur"
                         placement="top" 
@@ -305,14 +318,8 @@
 
             <!-- 17. Comité de Gestion de la Demande -->
             <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3 label-with-icon">
+                <div class="col-3">
                     <strong>Comité de Gestion de la Demande</strong>
-                    <span class="info-icon"
-                        [tooltip]="committeesTooltipTemplate"
-                        placement="top"
-                        container="body"
-                        role="img" 
-                        aria-label="Information"></span>
                 </div>
                 <div class="col-9">
                     {{committee.label}}
@@ -330,10 +337,10 @@
                         role="img" 
                         aria-label="Information"></span>
                 </div>
-                <div *ngFor="let area of areas" class="StatutEn-instruction">
-                    <span class="En-instruction Body---16---Regular">
-                        {{area.label}}
-                    </span>
+                <div *ngIf="selectedArea" class="StatutEn-instruction">
+                        <span class="En-instruction Body---16---Regular">
+                            {{selectedArea.label}}
+                        </span>
                 </div>
             </li>
 
@@ -371,7 +378,7 @@
                 <div class="col-3 label-with-icon pr-1">
                     <strong>Acheteur</strong>
                     <span class="info-icon"
-                        tooltip="Acheteur responsable du marché"
+                        tooltip="Saisir le nom de l'acheteur"
                         placement="top" 
                         role="img" 
                         aria-label="Information"></span>
@@ -384,7 +391,7 @@
                 <div class="col-3 label-with-icon">
                     <strong>Contract manager</strong>
                     <span class="info-icon"
-                        tooltip="Si contract manager, le préciser (avec son accord) ET le nom de l'acheteur"
+                        tooltip="Saisir le nom du contract manager, si pas nommé écrire N/A"
                         placement="top" role="img" aria-label="Information"></span>
                 </div>
                 <div class="col-9 ">{{contractManager || 'Non renseigné'}}</div>
@@ -415,7 +422,7 @@
                 <div class="col-3 label-with-icon">
                     <strong>Statut</strong>
                     <span class="info-icon"
-                        [tooltip]="statusTooltipTemplate"
+                        tooltip="l'acheteur archive la fiche dès la fin du marché"
                         placement="top" 
                         [isOpen]="false"
                         container="body"
@@ -555,21 +562,6 @@
             <div class="committee-item">• Véhicules</div>
             <div class="committee-item">• Travel</div>
             <div class="committee-item">• Intérim</div>
-        </div>
-    </div>
-</ng-template>
-
-<!-- Template pour le tooltip de statut -->
-<ng-template #statusTooltipTemplate>
-    <div class="tooltip-content">
-        <div class="status-item">
-            <span class="badge badge-danger">Archivé</span> : à l'initiation de l'acheteur dès la fin du marché
-        </div>
-        <div class="status-item">
-            <span class="badge badge-success">Publié</span> : Si création de fiche : à l'initiative du support achat; si modification : à l'initiative de l'acheteur
-        </div>
-        <div class="status-item">
-            <span class="badge badge-warning">En attente</span> : Pour la création des nouvelles fiches, en attente de validation du support achat suite à la transmission des éléments
         </div>
     </div>
 </ng-template>

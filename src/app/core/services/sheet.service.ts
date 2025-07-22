@@ -201,10 +201,13 @@ export class SheetService {
     return pList;
   }
 
-  private getAreasListForApi(areas: Area[]): any {
+  private getAreasListForApi(areas: Area[] | Area): any {
     let areaList = [];
 
-    areas.forEach(p => {
+    // Normaliser vers array pour traitement uniforme
+    const areasArray = Array.isArray(areas) ? areas : [areas];
+    
+    areasArray.forEach(p => {
       if (!!p.code && p.code.length != 0) {
         areaList.push({
           id: p.code,

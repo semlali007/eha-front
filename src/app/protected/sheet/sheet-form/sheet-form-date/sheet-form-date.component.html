@@ -22,7 +22,14 @@
     <div class="col-md-6 mx-auto">
         <div class="form-inline">
             <div class="form-group">
-                <label for="endDate" class="mr-3"><strong>Date de fin de validité :</strong><span class="required">*</span></label>
+                <label for="endDate" class="mr-3">
+                    <strong>Date de fin de validité :</strong>
+                    <span class="required">*</span>
+                    <span class="info-icon"
+                        tooltip="Date de fin options incluses"
+                        placement="top" role="img" aria-label="Information">
+                    </span>
+                </label>
                 <input bsDatepicker (bsValueChange)="onValueChange($event)" [formControl]="endDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
                     class="form-control form-control-sm align-middle" />
                     <small *ngIf="endDate.errors" class="form-text text-danger">

@@ -1,12 +1,6 @@
 <div class="form-group">
     <label for="committeeCode" class="label-with-icon">
         <strong>Comité de Gestion de la Demande :</strong>
-        <span class="info-icon"
-            [tooltip]="committeesTooltipTemplate"
-            placement="top"
-            container="body"
-            role="img" 
-            aria-label="Information"></span>
     </label>
     <select class="form-control" [formControl]="committeeCode" style="width:auto;">
         <option value=0>Choisissez un Comité</option>
@@ -15,19 +9,3 @@
         </option>
     </select>
 </div>
-
-<!-- Template pour le tooltip de Comité de Gestion de la Demande -->
-<ng-template #committeesTooltipTemplate>
-    <div class="tooltip-content committees-tooltip">
-        <div class="committees-header">
-            <strong>Choisir dans la liste</strong>
-        </div>
-        <div class="committees-list">
-            <div class="committee-item">• Biens et Services Industriels</div>
-            <div class="committee-item">• Immobilier</div>
-            <div class="committee-item">• Véhicules</div>
-            <div class="committee-item">• Travel</div>
-            <div class="committee-item">• Intérim</div>
-        </div>
-    </div>
-</ng-template>

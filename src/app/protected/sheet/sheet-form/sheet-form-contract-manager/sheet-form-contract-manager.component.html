@@ -9,7 +9,7 @@
            class="form-control" 
            id="contractManager"
            [formControl]="contractManager"
-           placeholder="Nom du contract manager ou acheteur">
+           placeholder="Nom du contract manager">
     <div *ngIf="contractManager?.invalid && contractManager?.touched" class="text-danger">
         <small *ngIf="contractManager?.errors?.['minlength']">Minimum 2 caractères requis</small>
     </div>

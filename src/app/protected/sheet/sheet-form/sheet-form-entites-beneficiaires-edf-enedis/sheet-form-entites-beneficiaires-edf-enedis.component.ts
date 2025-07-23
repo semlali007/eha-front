@@ -8,17 +8,24 @@ import { FormControl } from '@angular/forms';
 })
 export class SheetFormEntitesBeneficiairesEdfEnedisComponent implements OnInit {
   @Input() entitesBeneficiairesEdfEnedis: FormControl;
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   
   constructor() { }
   
   ngOnInit(): void {
-    const savedEntitesBeneficiairesEdfEnedis = localStorage.getItem('entitesBeneficiairesEdfEnedis');
-    if (savedEntitesBeneficiairesEdfEnedis) {
-      this.entitesBeneficiairesEdfEnedis.setValue(savedEntitesBeneficiairesEdfEnedis);
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedEntitesBeneficiairesEdfEnedis = localStorage.getItem('entitesBeneficiairesEdfEnedis');
+      if (savedEntitesBeneficiairesEdfEnedis) {
+        this.entitesBeneficiairesEdfEnedis.setValue(savedEntitesBeneficiairesEdfEnedis);
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.entitesBeneficiairesEdfEnedis.valueChanges.subscribe(value => {
-      localStorage.setItem('entitesBeneficiairesEdfEnedis', value);
+      if (this.mode !== 'create') {
+        localStorage.setItem('entitesBeneficiairesEdfEnedis', value);
+      }
     });
   }
 }

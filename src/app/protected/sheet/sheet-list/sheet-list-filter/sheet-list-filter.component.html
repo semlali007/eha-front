@@ -12,11 +12,11 @@
             <app-sheet-list-filter-mise-a-jour-donnee [miseAJourDonnee]='miseAJourDonnee'
                 [list]="filter.miseAJourDonnee" (changedFilter)="onChangedFilterSheets($event)">
             </app-sheet-list-filter-mise-a-jour-donnee>
-
+            <!-- 
             <app-sheet-list-filter-supplier-size [supplierSize]='supplierSize' [list]="filter.supplierSize"
                 (changedFilter)="onChangedFilterSheets($event)"
                 *ngIf="!shouldHideFilterInContratGroupeMode('supplierSize')">
-            </app-sheet-list-filter-supplier-size>
+            </app-sheet-list-filter-supplier-size> -->
 
             <app-sheet-list-filter-status
                 *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))" [status]='status'

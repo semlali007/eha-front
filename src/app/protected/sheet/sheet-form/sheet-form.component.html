@@ -16,76 +16,76 @@
                 </div>
 
                 <div class="ml-auto">
-                    <button type="submit" class="btn btn-edf float-left" [disabled]="sheetForm.invalid">
+                    <button type="submit" class="btn btn-edf float-left" [disabled]="!sheetForm || sheetForm.invalid">
                         Enregistrer
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <span *ngIf="sheetForm.invalid" class="form-text font-italic text-danger">
+    <span *ngIf="sheetForm && sheetForm.invalid" class="form-text font-italic text-danger">
             Les champs avec une étoile doivent obligatoirement être remplis.
     </span>   
 
     <!-- 1. Nom fiche -->
-    <app-sheet-form-title [title]="title"></app-sheet-form-title>
+    <app-sheet-form-title [title]="title" [mode]="mode"></app-sheet-form-title>
     
     <!-- 2. Contrat groupe -->
     <app-sheet-form-contrat-groupe [contratGroupe]="contratGroupe"></app-sheet-form-contrat-groupe>
     
     <!-- 3. Catégorie -->
-    <app-sheet-form-category [categoryCode]="categoryCode"></app-sheet-form-category>
+    <app-sheet-form-category [categoryCode]="categoryCode" [mode]="mode"></app-sheet-form-category>
     
     <!-- 4. Mots clés -->
-    <app-sheet-form-words [words]="words"></app-sheet-form-words>
+    <app-sheet-form-words [words]="words" [mode]="mode"></app-sheet-form-words>
     
     <!-- 5-6. Date de début et fin -->
-    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate" [sheetForm]="sheetForm"></app-sheet-form-date>
+    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate" [sheetForm]="sheetForm" [mode]="mode"></app-sheet-form-date>
     
     <!-- 7. Date de fin du contrat yc options -->
-    <app-sheet-form-options [sheetForm]="sheetForm" [options]="options"></app-sheet-form-options>
+    <app-sheet-form-options [sheetForm]="sheetForm" [options]="options" [mode]="mode"></app-sheet-form-options>
     
     <!-- 8. Contenu -->
     <app-sheet-form-content [content]="content" *ngIf="fromNetAchat==true"></app-sheet-form-content>
     
     <!-- 9. Fournisseurs -->
-    <app-sheet-form-providers [providers]="providers" [allproviders]="data.providers"></app-sheet-form-providers>
+    <app-sheet-form-providers [providers]="providers" [allproviders]="data.providers" [mode]="mode"></app-sheet-form-providers>
     
     <!-- 10. Fournisseur num TVA intracom -->
-    <app-sheet-form-supplier-vat-number [supplierVatNumber]="supplierVatNumber"></app-sheet-form-supplier-vat-number>
+    <app-sheet-form-supplier-vat-number [supplierVatNumber]="supplierVatNumber" [mode]="mode"></app-sheet-form-supplier-vat-number>
     
     <!-- 11. Bénéficiaires -->
-    <app-sheet-form-beneficiaries [beneficiaries]="beneficiaries" [allbeneficiaries]="data.beneficiaries"></app-sheet-form-beneficiaries>
+    <app-sheet-form-beneficiaries [beneficiaries]="beneficiaries" [allbeneficiaries]="data.beneficiaries" [mode]="mode"></app-sheet-form-beneficiaries>
     
     <!-- 12. Stipulation pour autrui -->
-    <app-sheet-form-stipulationAutrui [stipulationAutrui]="stipulationAutrui" [allstipulationAutrui]="data.stipulationAutrui"></app-sheet-form-stipulationAutrui>
+    <app-sheet-form-stipulationAutrui [stipulationAutrui]="stipulationAutrui" [allstipulationAutrui]="data.stipulationAutrui" [mode]="mode"></app-sheet-form-stipulationAutrui>
     
     <!-- 13. Entités bénéficiaires EDF/ENEDIS -->
-    <app-sheet-form-entites-beneficiaires-edf-enedis [entitesBeneficiairesEdfEnedis]="entitesBeneficiairesEdfEnedis"></app-sheet-form-entites-beneficiaires-edf-enedis>
+    <app-sheet-form-entites-beneficiaires-edf-enedis [entitesBeneficiairesEdfEnedis]="entitesBeneficiairesEdfEnedis" [mode]="mode"></app-sheet-form-entites-beneficiaires-edf-enedis>
     
     <!-- 14. Lots (juste avant contrats) -->
-    <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
+    <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots" [mode]="mode" [sheetId]="sheetId"></app-sheet-form-lots>
     
     <!-- 15. Numéros de contrats -->
-    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [contracts]="contracts"></app-sheet-form-contracts>
+    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [contracts]="contracts" [mode]="mode" [sheetId]="sheetId"></app-sheet-form-contracts>
     
     <!-- 16. Kit de portage -->
     <app-sheet-form-kit [uploader]="kitUploader" (removedItem)="onRemovedItem($event)" label="Kit de portage (PDF, Word, Excel, PowerPoint)"></app-sheet-form-kit>
     
     <!-- 17. Comité de Gestion -->
-    <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
+    <app-sheet-form-committee [committeeCode]="committeeCode" [mode]="mode"></app-sheet-form-committee>
     
     <!-- 18. Zone géographique -->
-    <app-sheet-form-areas [areas]="areas" [allareas]="data.areas"></app-sheet-form-areas>
+    <app-sheet-form-areas [areas]="areas" [allareas]="data.areas" [mode]="mode"></app-sheet-form-areas>
     
     <!-- 19. Zone géographique détail si région -->
     <app-sheet-form-geographic-detail [sheetForm]="sheetForm"></app-sheet-form-geographic-detail>
     
     <!-- 20. Approvisionnement sous dauphin -->
-    <app-sheet-form-dauphin [dauphin]="dauphin"></app-sheet-form-dauphin>
+    <app-sheet-form-dauphin [dauphin]="dauphin" [mode]="mode"></app-sheet-form-dauphin>
     
     <!-- 21. Marché ouvert personnel EDF -->
-    <app-sheet-form-edf-open [edf_open]="edf_open"></app-sheet-form-edf-open>
+    <app-sheet-form-edf-open [edf_open]="edf_open" [mode]="mode"></app-sheet-form-edf-open>
     
     <!-- 22. Acheteur -->
     <app-sheet-form-acheteur [acheteur]="acheteur"></app-sheet-form-acheteur>
@@ -100,7 +100,7 @@
     <app-sheet-form-status [status]="status"></app-sheet-form-status>
     
     <!-- 26. Commentaires -->
-    <app-sheet-form-comments [comments]="comments"></app-sheet-form-comments>
+    <app-sheet-form-comments [comments]="comments" [mode]="mode"></app-sheet-form-comments>
 
     <!-- CHAMPS MASQUÉS (conservés pour compatibilité backend mais cachés) -->
     <app-sheet-form-supplier-size 
@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="ml-auto">
-                    <button type="submit" class="btn btn-edf float-left" [disabled]="sheetForm.invalid">
+                    <button type="submit" class="btn btn-edf float-left" [disabled]="!sheetForm || sheetForm.invalid">
                         Enregistrer
                     </button>
                 </div>

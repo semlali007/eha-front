@@ -7,15 +7,22 @@ import { FormControl } from '@angular/forms';
 })
 export class SheetFormWordsComponent implements OnInit {
   @Input() words: FormControl;
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   constructor() { }
   ngOnInit(): void {
-    const savedWords = localStorage.getItem('words');
-    if (savedWords) {
-      this.words.setValue(JSON.parse(savedWords));
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedWords = localStorage.getItem('words');
+      if (savedWords) {
+        this.words.setValue(JSON.parse(savedWords));
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.words.valueChanges.subscribe(value => {
-      localStorage.setItem('words', JSON.stringify(value));
+      if (this.mode !== 'create') {
+        localStorage.setItem('words', JSON.stringify(value));
+      }
     });
   }
 }

@@ -9,15 +9,22 @@ import { FormControl } from '@angular/forms';
 })
 export class SheetFormCommentsComponent implements OnInit {
   @Input() comments: FormControl;
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   constructor() { }
   ngOnInit(): void {
-    const savedComments = localStorage.getItem('comments');
-    if (savedComments) {
-      this.comments.setValue(savedComments);
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedComments = localStorage.getItem('comments');
+      if (savedComments) {
+        this.comments.setValue(savedComments);
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.comments.valueChanges.subscribe(value => {
-      localStorage.setItem('comments', value);
+      if (this.mode !== 'create') {
+        localStorage.setItem('comments', value);
+      }
     });
   }
 }

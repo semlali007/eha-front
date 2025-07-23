@@ -9,13 +9,17 @@ import { Subscription } from 'rxjs';
 })
 export class SheetFormEdfOpenComponent implements OnInit, OnDestroy {
   @Input() edf_open: FormControl;
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   private valueChangesSubscription: Subscription;
 
   constructor() { }
 
   ngOnInit(): void {
     if (this.edf_open) {
-      this.loadEdfOpenFromLocalStorage();
+      // Ne charger le localStorage QUE si on n'est PAS en mode création
+      if (this.mode !== 'create') {
+        this.loadEdfOpenFromLocalStorage();
+      }
       this.subscribeToValueChanges();
     } else {
       console.error('FormControl edf_open is not initialized.');
@@ -35,7 +39,8 @@ export class SheetFormEdfOpenComponent implements OnInit, OnDestroy {
 
   private subscribeToValueChanges(): void {
     this.valueChangesSubscription = this.edf_open.valueChanges.subscribe(value => {
-      if (value !== null && value !== undefined) {
+      // Sauvegarder dans localStorage - mais pas en mode création
+      if (value !== null && value !== undefined && this.mode !== 'create') {
         localStorage.setItem('edf_open', value.toString());
       }
     });

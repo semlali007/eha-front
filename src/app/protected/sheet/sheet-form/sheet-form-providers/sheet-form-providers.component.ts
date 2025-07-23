@@ -15,6 +15,7 @@ export class SheetFormProvidersComponent implements OnInit {
   @Input() providers: FormControl;
   @Input() sheetForm: FormGroup;
   @Input() allproviders: [];
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   private page: number;
   private items: Provider[];
   private total: number;
@@ -33,13 +34,19 @@ export class SheetFormProvidersComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 5;
     
-    const savedProviders = localStorage.getItem('providers');
-    if (savedProviders) {
-      this.providers.setValue(JSON.parse(savedProviders));
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedProviders = localStorage.getItem('providers');
+      if (savedProviders) {
+        this.providers.setValue(JSON.parse(savedProviders));
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.providers.valueChanges.subscribe(value => {
-      localStorage.setItem('providers', JSON.stringify(value));
+      if (this.mode !== 'create') {
+        localStorage.setItem('providers', JSON.stringify(value));
+      }
     });
   }
 

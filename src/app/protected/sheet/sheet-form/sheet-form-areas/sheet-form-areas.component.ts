@@ -18,6 +18,7 @@ export class SheetFormAreasComponent implements OnInit {
   @Input() areas: FormControl;
   @Input() sheetForm: FormGroup;
   @Input() allareas: [];
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   
   availableAreas: Area[] = [];
   isLoading: boolean = false;
@@ -83,28 +84,30 @@ export class SheetFormAreasComponent implements OnInit {
       return;
     }
 
-    // 2. Sinon, vérifier le localStorage (nouveau formulaire)
-    const savedAreas = localStorage.getItem('areas');
-    if (savedAreas) {
-      try {
-        const parsed = JSON.parse(savedAreas);
-        // Gérer la migration depuis l'ancien format array vers sélection unique
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          // Prendre le premier élément si c'était un array
-          const firstArea = parsed[0];
-          const matchingArea = this.availableAreas.find(area => area.code === firstArea.code);
-          if (matchingArea) {
-            this.areas.setValue(matchingArea);
+    // 2. Sinon, vérifier le localStorage (nouveau formulaire) - mais pas en mode création
+    if (this.mode !== 'create') {
+      const savedAreas = localStorage.getItem('areas');
+      if (savedAreas) {
+        try {
+          const parsed = JSON.parse(savedAreas);
+          // Gérer la migration depuis l'ancien format array vers sélection unique
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // Prendre le premier élément si c'était un array
+            const firstArea = parsed[0];
+            const matchingArea = this.availableAreas.find(area => area.code === firstArea.code);
+            if (matchingArea) {
+              this.areas.setValue(matchingArea);
+            }
+          } else if (parsed && !Array.isArray(parsed)) {
+            // Déjà un objet unique
+            const matchingArea = this.availableAreas.find(area => area.code === parsed.code);
+            if (matchingArea) {
+              this.areas.setValue(matchingArea);
+            }
           }
-        } else if (parsed && !Array.isArray(parsed)) {
-          // Déjà un objet unique
-          const matchingArea = this.availableAreas.find(area => area.code === parsed.code);
-          if (matchingArea) {
-            this.areas.setValue(matchingArea);
-          }
+        } catch (e) {
+          console.warn('Erreur lors du parsing localStorage areas:', e);
         }
-      } catch (e) {
-        console.warn('Erreur lors du parsing localStorage areas:', e);
       }
     }
 
@@ -112,9 +115,11 @@ export class SheetFormAreasComponent implements OnInit {
   }
 
   private setupValueChangeListener(): void {
-    // Sauvegarder les changements dans localStorage
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.areas.valueChanges.subscribe(value => {
-      localStorage.setItem('areas', JSON.stringify(value));
+      if (this.mode !== 'create') {
+        localStorage.setItem('areas', JSON.stringify(value));
+      }
     });
   }
 

@@ -19,6 +19,8 @@ export class SheetFormContractsComponent implements OnInit {
   @Input() contracts: FormArray;
   @Input() sheetForm: FormGroup;
   @Input() lotsList: FormControl;
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
+  @Input() sheetId: string | null = null; // Pour distinguer nouveau vs édition existante
   currentIndex: number;
   invalidContractsCount: number = 0;
   invalidContractsMessage: string = '';
@@ -31,37 +33,45 @@ export class SheetFormContractsComponent implements OnInit {
   ngOnInit(): void {
     this.generateLotsList();
 
-    const savedContracts = localStorage.getItem('contracts');
-
-    if (savedContracts) {
-      const parsedContracts = JSON.parse(savedContracts);
-      parsedContracts.forEach((contract: any) => {
-        const contractGroup = this.fb.group({
-          'code': [contract.code, [
-            Validators.required,
-            Validators.minLength(9),
-            Validators.maxLength(10),
-            Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
-          ]],
-          'provider': contract.provider,
-          'lots': contract.lots || '',
-          'contacts': contract.contacts ? contract.contacts.replace(/\r\n/g, '<br>') : '', 
-        });
-        this.contracts.push(contractGroup);
-      });
+    // Charger localStorage SEULEMENT si :
+    // 1. Mode création (pas d'ID de fiche) OU  
+    // 2. Mode édition mais FormArray vide (nouveau formulaire en cours)
+    // MAIS JAMAIS si on édite une fiche existante (sheetId existe et FormArray a des données)
+    const shouldLoadFromStorage = this.mode !== 'create' && 
+                                 this.contracts.length === 0 && 
+                                 !this.sheetId; // Pas d'édition de fiche existante
+    
+    if (shouldLoadFromStorage) {
+      const savedContracts = localStorage.getItem('contracts');
+      if (savedContracts) {
+        try {
+          const parsedContracts = JSON.parse(savedContracts);
+          parsedContracts.forEach((contract: any) => {
+            const contractGroup = this.fb.group({
+              'code': [contract.code, [
+                Validators.required,
+                Validators.minLength(9),
+                Validators.maxLength(10),
+                Validators.pattern('^[C]{1}[a-zA-Z0-9]*$')
+              ]],
+              'provider': contract.provider,
+              'lots': contract.lots || '',
+              'contacts': contract.contacts ? contract.contacts.replace(/\r\n/g, '<br>') : '', 
+            });
+            this.contracts.push(contractGroup);
+          });
+        } catch (error) {
+          console.warn('Erreur lors du chargement des contrats depuis localStorage:', error);
+        }
+      }
     }
 
-    let latestContracts: any[];
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.contracts.valueChanges.subscribe(value => {
-      if (value !== null && value !== undefined) {
-        latestContracts = value;
+      if (value !== null && value !== undefined && this.mode !== 'create') {
+        localStorage.setItem('contracts', JSON.stringify(value));
       }
     });
-
-    if (latestContracts !== undefined) {
-      localStorage.setItem('contracts', JSON.stringify(latestContracts));
-    }
-
   }
 
   onOpenClose(data: any) {

@@ -17,6 +17,7 @@ export class SheetFormStipulationAutruiComponent implements OnInit {
   @Input() stipulationAutrui: FormControl;
   @Input() sheetForm: FormGroup;
   @Input() allstipulationAutrui: [];
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   private page: number;
   private items: Stipulation[];
   private total: number;
@@ -36,13 +37,19 @@ export class SheetFormStipulationAutruiComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 5;
 
-    const savedStipulationAutrui = localStorage.getItem('stipulationAutrui');
-    if (savedStipulationAutrui) {
-      this.stipulationAutrui.setValue(JSON.parse(savedStipulationAutrui));
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedStipulationAutrui = localStorage.getItem('stipulationAutrui');
+      if (savedStipulationAutrui) {
+        this.stipulationAutrui.setValue(JSON.parse(savedStipulationAutrui));
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.stipulationAutrui.valueChanges.subscribe(value => {
-      localStorage.setItem('stipulationAutrui', JSON.stringify(value));
+      if (this.mode !== 'create') {
+        localStorage.setItem('stipulationAutrui', JSON.stringify(value));
+      }
     });
   }
 

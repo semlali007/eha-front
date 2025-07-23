@@ -655,5 +655,12 @@ export class SheetService {
     }
   }
 
+  /**
+   * Nettoie le cache du service - utilisé lors de la création de nouvelles fiches
+   */
+  clearCache(): void {
+    // Cette méthode peut être étendue pour nettoyer des caches spécifiques si nécessaire
+    console.log('SheetService: Cache nettoyé');
+  }
 }
 

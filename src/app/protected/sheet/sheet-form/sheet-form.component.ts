@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -31,12 +31,15 @@ import { ViewModeService } from 'src/app/core/services/view-mode.service';
 
 export class SheetFormComponent implements OnInit, OnDestroy{
 
+  @Input() mode: 'create' | 'edit' = 'create';
+  @Input() sheetId: string | null = null;
+  @Input() initialData: any = null;
+
   sheetForm: FormGroup;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
   privateEnedisUploader: FileUploader;
   privateEdfEnedisUploader: FileUploader;
-  sheetId: string;
   bsModalRef?: BsModalRef;
   bsConfirmModalRef?: BsModalRef;
   bsDraftModalRef?: BsModalRef;
@@ -44,6 +47,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   public user: User;
   public subscription: Subscription;
   fromNetAchat:boolean=false;
+  private subscriptions: Subscription[] = [];
+  private disableAutoRestore: boolean = false;
 
   public data = {
     subscribe: [],
@@ -105,16 +110,28 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
-    this.init();
-    this.sheetService.getSheets(this.params).subscribe(
-      data => {
-        this.data = data.filter;
-      }
-    );
-    this.cdr.detectChanges();
+    this.subscriptions.push(this.subscription);
     
-   // this.openDraftModal();
-   // this.autosaveDraft();
+    // Initialiser le formulaire de base
+    this.initializeBasicForm();
+    
+    // Déterminer le mode d'opération
+    this.determineMode();
+    
+    // Initialiser selon le mode
+    if (this.mode === 'create') {
+      this.initializeCreateMode();
+    } else if (this.mode === 'edit' && this.sheetId) {
+      this.initializeEditMode();
+    } else {
+      // Fallback - logique existante pour compatibilité
+      this.init();
+    }
+    
+    // Charger les données de filtres
+    this.loadFilterData();
+    
+    this.cdr.detectChanges();
   }
 
   get title() { return this.sheetForm.get('title') }
@@ -185,6 +202,96 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         this.contracts.setValidators(Validators.required);
       }
     });
+  }
+
+  /**
+   * Détermine le mode d'opération basé sur les inputs ou la route
+   */
+  private determineMode(): void {
+    // Si le mode est explicitement passé via @Input ET qu'il vaut 'create', on force la création
+    if (this.mode === 'create' && !this.route.snapshot.params.id) {
+      this.sheetId = null;
+      return;
+    }
+    
+    // Si un sheetId est fourni via @Input, c'est prioritaire
+    if (this.sheetId) {
+      this.mode = 'edit';
+    } else if (this.route.snapshot.params.id) {
+      // Sinon, vérifier les paramètres de route
+      this.mode = 'edit';
+      this.sheetId = this.route.snapshot.params.id;
+    } else {
+      // Pas d'ID, c'est donc une création
+      this.mode = 'create';
+      this.sheetId = null;
+    }
+  }
+
+  /**
+   * Initialise le formulaire de base pour éviter les erreurs de template
+   */
+  private initializeBasicForm(): void {
+    if (!this.sheetForm) {
+      this.deletedFiles = [];
+      this.sheetForm = this.createsheetForm();
+      this.initializeBasicComponents();
+    }
+  }
+
+  /**
+   * Initialise le composant en mode création
+   */
+  private initializeCreateMode(): void {
+    // Réinitialiser les variables de base
+    this.sheetId = '';
+    this.deletedFiles = [];
+    
+    // Basculer en mode normal pour accéder à tous les champs
+    if (this.viewModeService.isContratGroupeMode()) {
+      this.viewModeService.setNormalMode();
+    }
+    
+    // Ajouter les validators requis pour la création
+    this.contracts.setValidators(Validators.required);
+  }
+
+    /**
+   * Initialise les composants de base (uploaders, etc.)
+   */
+  private initializeBasicComponents(): void {
+    this.kitUploader = this.uploaderService.initKit();
+    this.privateUploader = this.uploaderService.initKit();
+    this.privateEnedisUploader = this.uploaderService.initKit();
+    this.privateEdfEnedisUploader = this.uploaderService.initKit();
+  }
+
+  /**
+   * Charge les données de filtres depuis le service
+   */
+  private loadFilterData(): void {
+    const subscription = this.sheetService.getSheets(this.params).subscribe(
+      data => {
+        this.data = data.filter;
+      }
+    );
+    this.subscriptions.push(subscription);
+  }
+
+  /**
+   * Initialise le composant en mode édition
+   */
+  private initializeEditMode(): void {
+    // Charger la fiche existante
+    if (this.sheetId) {
+      const subscription = this.sheetService.getSheet(this.sheetId).subscribe(sheet => {
+        this.fromNetAchat = !!sheet.netachatId && sheet.netachatId > 0;
+        this.resetSheetForm();
+        if (!sheet) return;
+        this.initEditForm(sheet);
+      });
+      this.subscriptions.push(subscription);
+    }
   }
 
   cancel() {
@@ -680,7 +787,17 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-		this.subscription.unsubscribe();
-	}
+    // Nettoyer toutes les subscriptions
+    this.subscriptions.forEach(sub => {
+      if (sub && !sub.closed) {
+        sub.unsubscribe();
+      }
+    });
+    
+    // Nettoyer la subscription principale
+    if (this.subscription && !this.subscription.closed) {
+      this.subscription.unsubscribe();
+    }
+  }
 }
 

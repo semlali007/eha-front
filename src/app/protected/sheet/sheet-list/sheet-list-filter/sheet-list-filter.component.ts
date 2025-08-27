@@ -28,6 +28,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
     status:[],
     directions:[],
     showcase: [],
+    categories: [],
     committees: [],
     contratGroupe: [],
     miseAJourDonnee: [],
@@ -54,6 +55,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
   get directions() { return this.sheetFilterForm.get('directions') }
   get status() { return this.sheetFilterForm.get('status') }
   get showcase() { return this.sheetFilterForm.get('showcase') }
+  get categories() { return this.sheetFilterForm.get('categories') }
   get committees() { return this.sheetFilterForm.get('committees') }
   get contratGroupe() { return this.sheetFilterForm.get('contratGroupe') }
   get miseAJourDonnee() { return this.sheetFilterForm.get('miseAJourDonnee') }
@@ -90,6 +92,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
       'areas': [this.defaultFilter?.areas || []],
       'providers': [this.defaultFilter?.providers || []],
       'directions': [this.defaultFilter?.directions || []],
+      'categories': [this.defaultFilter?.categories || []],
       'committees': [this.defaultFilter?.committees || []],
       'status': [this.defaultFilter?.status || []],
       'showcase': [(this.defaultFilter?.showcase === '' || !this.defaultFilter?.showcase) ? 'all' : this.defaultFilter.showcase],
@@ -111,6 +114,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
       'areas': [[]],
       'providers': [[]],
       'directions': [[]],
+      'categories': [[]],
       'committees': [[]],
       'status': [[]],
       'showcase': ['all'],

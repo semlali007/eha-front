@@ -119,12 +119,7 @@ export class SheetService {
     fd.append('model', JSON.stringify(data));
 
     return this.http.post(url, fd).pipe(
-      tap(_ => this.toastrService.showToastr({
-        category: 'success',
-        message: message
-      })),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => this.loaderService.setLoading(false))
+      catchError(error => this.errorService.handleError(error))
     );
   }
 
@@ -361,6 +356,7 @@ export class SheetService {
             areas: sheetData.filter.areas,
             providers: sheetData.filter.providers,
             directions: sheetData.filter.directions,
+            categories: sheetData.filter.categories,
             committees: sheetData.filter.committees,
             showcase: sheetData.filter.showcase,
             contratGroupe: sheetData.filter.contratGroupe,
@@ -601,18 +597,14 @@ export class SheetService {
     public sheetSubscribe(params): Observable<any> {
     const url = `${this.appConfigService.basePath}/sheets/subscribe`;
     return this.http.post(url, params).pipe(
-      tap(_ => console.log('success')),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => console.log('ok'))
+      catchError(error => this.errorService.handleError(error))
     );
   }
 
   public sheetUnsubscribe(params): Observable<any> {
     const url = `${this.appConfigService.basePath}/sheets/unsubscribe`;
     return this.http.post(url, params).pipe(
-      tap(_ => console.log('success')),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => console.log('ok'))
+      catchError(error => this.errorService.handleError(error))
     );
   }
 
@@ -660,7 +652,6 @@ export class SheetService {
    */
   clearCache(): void {
     // Cette méthode peut être étendue pour nettoyer des caches spécifiques si nécessaire
-    console.log('SheetService: Cache nettoyé');
   }
 }
 

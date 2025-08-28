@@ -1,0 +1,176 @@
+// Style correspondant aux autres filtres de la sidebar
+.list-group.card {
+  margin-bottom: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.filter-header {
+  background-color: #f8f9fa;
+  border: none;
+  color: #495057;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: left;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  
+  &:hover {
+    background-color: #e9ecef;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  i.fa-calendar {
+    margin-right: 8px;
+    color: #007bff;
+  }
+  
+  .badge {
+    font-size: 10px;
+    margin-left: 8px;
+  }
+}
+
+.smaller-text {
+  font-size: 14px !important;
+}
+
+.list-group-flush {
+  border-radius: 0;
+  
+  .form-group {
+    margin-bottom: 16px;
+    
+    &:last-of-type {
+      margin-bottom: 12px;
+    }
+  }
+
+  .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .form-control-sm {
+    font-size: 13px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 6px 8px;
+    
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    &::placeholder {
+      color: #adb5bd;
+      font-style: italic;
+    }
+  }
+
+  .input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    color: #495057;
+    font-size: 12px;
+    padding: 6px 8px;
+    
+    i {
+      font-size: 11px;
+    }
+  }
+
+  .input-group-sm .form-control:not(:last-child) {
+    border-right: 0;
+  }
+
+  .input-group-append .input-group-text {
+    border-left: 0;
+  }
+}
+
+.alert-sm {
+  padding: 6px 10px;
+  font-size: 11px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  
+  i {
+    margin-right: 4px;
+  }
+}
+
+.btn-link {
+  text-decoration: none;
+  font-size: 12px;
+  
+  &:hover:not(:disabled) {
+    text-decoration: none;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Customisation du datepicker ngx-bootstrap
+:host ::ng-deep {
+  .bs-datepicker {
+    .bs-datepicker-head {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    .bs-datepicker-body {
+      .bs-datepicker-button {
+        &.selected {
+          background-color: #007bff;
+          color: white;
+        }
+        
+        &:hover:not(.selected) {
+          background-color: #e9ecef;
+        }
+      }
+    }
+  }
+
+  .theme-default {
+    .bs-datepicker-container {
+      .bs-calendar-container {
+        .bs-datepicker {
+          border-radius: 6px;
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+
+  // Assurer que le dropdown du datepicker apparaît au-dessus
+  .bs-datepicker-container {
+    z-index: 1060 !important;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .list-group.card {
+    width: 100% !important;
+  }
+  
+  .form-control-sm {
+    font-size: 14px;
+  }
+}

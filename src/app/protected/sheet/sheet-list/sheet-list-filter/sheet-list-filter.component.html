@@ -5,6 +5,10 @@
                 (changedFilter)="onChangedFilterSheets($event)">
             </app-sheet-list-filter-subscribe>
 
+            <app-sheet-list-filter-date [resetFilters$]="resetFilters$"
+                (onFiltersChange)="onDateFiltersChange($event)">
+            </app-sheet-list-filter-date>
+
             <app-sheet-list-filter-contrat-groupe [contratGroupe]='contratGroupe' [list]="filter.contratGroupe"
                 (changedFilter)="onChangedFilterSheets($event)">
             </app-sheet-list-filter-contrat-groupe>

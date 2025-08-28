@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
 import { ViewModeService } from 'src/app/core/services/view-mode.service';
 @Component({
@@ -35,6 +35,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
     supplierSize: []
   };
   public subscription: Subscription;
+  public resetFilters$ = new Subject<void>();
   @Output() submittedFilterSheets = new EventEmitter<Object>();
   constructor(
     private fb: FormBuilder,
@@ -122,10 +123,24 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges  {
       'miseAJourDonnee': ['all'],
       'supplierSize': [[]]
     });
+    
+    // Notifier le composant date de se réinitialiser
+    this.resetFilters$.next();
   }
   
   onChangedFilterSheets(itemFilter) {
     this.submittedFilterSheets.emit(itemFilter);
+  }
+
+  /**
+   * Gère les changements du filtre de date
+   */
+  onDateFiltersChange(dateFilters: { dateStart: string, dateEnd: string }) {
+    const filterEvent = {
+      key: 'dateRange',
+      value: dateFilters
+    };
+    this.submittedFilterSheets.emit(filterEvent);
   }
 
   /**

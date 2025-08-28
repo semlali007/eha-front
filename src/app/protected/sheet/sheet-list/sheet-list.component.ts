@@ -76,7 +76,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
       showcase: '',
       contratGroupe: '',
       miseAJourDonnee: '',
-      supplierSize: ''
+      supplierSize: '',
+      dateStart: '',
+      dateEnd: ''
     },
     sortBy: this.sortBy,
     sortDirection: this.sortDirection
@@ -98,7 +100,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
     areas: [],
     showcase: '',
     contratGroupe: '',
-    miseAJourDonnee: ''
+    miseAJourDonnee: '',
+    dateStart: '',
+    dateEnd: ''
   };
 
 
@@ -188,7 +192,14 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
 
   public onSubmittedFilterSheets(filter: any) {
-    this.filterInput[filter.type] = filter.value;
+    // Gestion spéciale pour le filtre de date
+    if (filter.key === 'dateRange') {
+      this.filterInput.dateStart = filter.value.dateStart;
+      this.filterInput.dateEnd = filter.value.dateEnd;
+    } else {
+      this.filterInput[filter.type] = filter.value;
+    }
+    
     this.isSearch = false;
     this.loadItems();
   }
@@ -237,7 +248,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
         showcase: this.filterInput.showcase,
         contratGroupe: this.filterInput.contratGroupe,
         miseAJourDonnee: this.filterInput.miseAJourDonnee,
-        supplierSize: this.filterInput.supplierSize
+        supplierSize: this.filterInput.supplierSize,
+        dateStart: this.filterInput.dateStart,
+        dateEnd: this.filterInput.dateEnd
       },
       sortBy: this.sortBy,
       sortDirection: this.sortDirection

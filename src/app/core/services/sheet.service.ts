@@ -305,7 +305,11 @@ export class SheetService {
 
     options.search = params.search || { searchText: '', status: '', searchProvider:'' };
     options.search.providers = !!options.search.providers? options.search.providers: [];
-    options.search.searchText= this.clear(options.search.searchText)
+    options.search.searchText= this.clear(options.search.searchText);
+    
+    // Ajouter les paramètres de date pour le filtrage
+    options.search.dateStart = params.search?.dateStart || '';
+    options.search.dateEnd = params.search?.dateEnd || '';
 
     switch (params.sortBy) {
       case 'date':

@@ -1,0 +1,95 @@
+<div class="list-group card" style="width: 18rem;">
+  <button class="list-group-item filter-header smaller-text" 
+          (click)="isTotalCollapsed = !isTotalCollapsed"
+          [attr.aria-expanded]="!isTotalCollapsed" 
+          aria-controls="dateFilterList">
+    <i class="fa fa-calendar" aria-hidden="true"></i>
+    Période 
+    <span class="badge badge-primary ml-1" *ngIf="hasActiveFilter()">1</span>
+    <i class="fleche fleche-droite" [class.fleche-bas]="isTotalCollapsed == false"></i>
+  </button>
+  
+  <div id="dateFilterList" [collapse]="isTotalCollapsed" [isAnimated]="true">
+    <div class="list-group list-group-flush p-3">
+      <form [formGroup]="dateForm">
+        <!-- Date de début -->
+        <div class="form-group mb-3">
+          <label for="dateStart" class="form-label small font-weight-bold">Date de début</label>
+          <div class="input-group input-group-sm">
+            <input 
+              type="text"
+              id="dateStart"
+              formControlName="dateStart"
+              class="form-control form-control-sm"
+              placeholder="Sélectionner..."
+              bsDatepicker 
+              [bsConfig]="{ 
+                dateInputFormat: 'DD/MM/YYYY',
+                containerClass: 'theme-default',
+                showWeekNumbers: false,
+                adaptivePosition: true
+              }"
+              readonly>
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-calendar fa-sm" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date de fin -->
+        <div class="form-group mb-3">
+          <label for="dateEnd" class="form-label small font-weight-bold">Date de fin</label>
+          <div class="input-group input-group-sm">
+            <input 
+              type="text"
+              id="dateEnd"
+              formControlName="dateEnd"
+              class="form-control form-control-sm"
+              placeholder="Sélectionner..."
+              bsDatepicker 
+              [bsConfig]="{ 
+                dateInputFormat: 'DD/MM/YYYY',
+                containerClass: 'theme-default',
+                showWeekNumbers: false,
+                adaptivePosition: true
+              }"
+              readonly>
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-calendar fa-sm" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message d'erreur -->
+        <div class="alert alert-warning alert-sm p-2 mb-2" *ngIf="dateRangeError">
+          <small>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            La date de fin doit être postérieure à la date de début.
+          </small>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex justify-content-between align-items-center">
+          <button 
+            type="button" 
+            class="btn btn-link btn-sm text-danger p-0" 
+            (click)="clearFilters()"
+            [disabled]="!hasActiveFilter()"
+            title="Effacer le filtre">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            Effacer
+          </button>
+          
+          <small class="text-success" *ngIf="hasActiveFilter()">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            Actif
+          </small>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

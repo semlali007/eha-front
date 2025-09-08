@@ -38,18 +38,41 @@ export class UsersService {
     );
   }
   /**
-   * Extrait le code organisation depuis les attributs SAML
+   * Extrait le code organisation depuis les attributs SAML (department)
    * 
    * @param params Attributs SAML
    * @returns Code organisation ou null
    */
   private getUserOrganization(params: any): string | null {
-    const userOrg = params.gardianwebsso_org;
+    const userDepartment = params.gardianwebsso_department;
     
-    if (Array.isArray(userOrg) && userOrg.length > 0) {
-      return userOrg[0];
-    } else if (typeof userOrg === 'string') {
-      return userOrg;
+    if (Array.isArray(userDepartment) && userDepartment.length > 0) {
+      return this.extractOrgCodeFromDepartment(userDepartment[0]);
+    } else if (typeof userDepartment === 'string') {
+      return this.extractOrgCodeFromDepartment(userDepartment);
+    }
+    
+    return null;
+  }
+
+  /**
+   * Extrait le code d'organisation depuis le chemin department
+   * Exemple: "/EDF/9651/9803/9708/9708-3/6217M/621727/62172702" → "621727"
+   * 
+   * @param departmentPath Chemin du département
+   * @returns Code d'organisation (position 6) ou null
+   */
+  private extractOrgCodeFromDepartment(departmentPath: string): string | null {
+    if (!departmentPath || typeof departmentPath !== 'string') {
+      return null;
+    }
+    
+    // Diviser le chemin par "/"
+    const segments = departmentPath.split('/').filter(segment => segment.length > 0);
+    
+    // Prendre le segment à la position 6 (7ème élément)
+    if (segments.length > 6) {
+      return segments[6];
     }
     
     return null;

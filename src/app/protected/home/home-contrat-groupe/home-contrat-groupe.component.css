@@ -23,16 +23,16 @@
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 600;
-  font-size: 22px;
-  line-height: 28px;
+  font-size: 20px; /* Réduit de 22px à 20px pour éviter le retour à la ligne */
+  line-height: 26px; /* Ajusté proportionnellement */
   /* identical to box height, or 127% */
   /* Gris fonce ++ (AAA, Jet) */
   color: #333333;
+  /* Empêcher le retour à la ligne pour les titres longs */
+  white-space: nowrap;
 
   /* Inside auto layout */
   flex: none;
-
-
 }
 
 .cadre{

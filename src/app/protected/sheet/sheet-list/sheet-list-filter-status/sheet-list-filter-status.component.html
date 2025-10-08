@@ -1,4 +1,4 @@
-<div class="list-group card" style="width: 18rem;" *ngIf="list.length > 0">
+<div class="list-group card" style="width: 18rem;">
     <button class="list-group-item" style="background-color: rgba(0, 0, 0, 0.03);" (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed" aria-controls="statusList">
         Statut <i class="fleche fleche-droite" [class.fleche-bas]="isTotalCollapsed == false"></i>
@@ -10,6 +10,23 @@
             Tous
         </button>
 
+        <!-- Fallback si la liste API est vide ou incomplete -->
+        <ng-container *ngIf="list.length === 0">
+            <button type="button" class="list-group-item list-group-item-action" (click)="changeFilter(-1)"
+                [class.list-group-item-success]="isActive(-1)" [attr.aria-pressed]="isActive(-1)">
+                Archivée (0)
+            </button>
+            <button type="button" class="list-group-item list-group-item-action" (click)="changeFilter(0)"
+                [class.list-group-item-success]="isActive(0)" [attr.aria-pressed]="isActive(0)">
+                Brouillon (0)
+            </button>
+            <button type="button" class="list-group-item list-group-item-action" (click)="changeFilter(1)"
+                [class.list-group-item-success]="isActive(1)" [attr.aria-pressed]="isActive(1)">
+                Publiée (0)
+            </button>
+        </ng-container>
+
+        <!-- Liste normale depuis l'API -->
         <button type="button" class="list-group-item list-group-item-action" *ngFor="let item of list" (click)="changeFilter(item.code)"
             [class.list-group-item-success]="isActive(item.code)" [attr.aria-pressed]="isActive(item.code)">
             {{item.label}} ({{item.count}})

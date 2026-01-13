@@ -233,7 +233,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
         searchText: this.searchText,
         searchProvider: this.searchProvider,
         subscribe: this.filterInput.subscribe,
-        status: this.filterInput.status,
+        status: status,
         edf_open: this.filterInput.edfOpen,
         partnership: this.filterInput.partnership,
         protected_sector: this.filterInput.sector,

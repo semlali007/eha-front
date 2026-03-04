@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { PreviousService } from 'src/app/core/services/previous.service';
 import { PageService } from 'src/app/core/services/page.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SecurityContext } from '@angular/core';
 import { ViewModeService, ViewMode } from 'src/app/core/services/view-mode.service';
 
 
@@ -356,7 +357,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     this.pageService.getPage({ page: 'welcome-text' }).subscribe({
       next: (response) => {
         const originalText = response.content || '';
-        this.welcomeText = this.sanitizer.bypassSecurityTrustHtml(this.getModifiedWelcomeText(originalText));
+        this.welcomeText = this.sanitizer.sanitize(SecurityContext.HTML, this.getModifiedWelcomeText(originalText)) || '';
         this.activeText = response.active || false;
       },
       error: (error) => {

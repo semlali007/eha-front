@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="miseAJourDonneeList">
-    Mise à jour de la donnée
+    <span class="filter-header-label">Mise à jour de la donnée <span class="filter-active-badge" *ngIf="miseAJourDonnee && miseAJourDonnee.value !== 'all'">1</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="miseAJourDonneeList" [collapse]="isTotalCollapsed" [isAnimated]="true">

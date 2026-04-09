@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="categoryList">
-    Catégorie d'achat
+    <span class="filter-header-label">Catégorie d'achat <span class="filter-active-badge" *ngIf="categories?.value?.length">{{ categories.value.length }}</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="categoryList" [collapse]="isTotalCollapsed" [isAnimated]="true">
@@ -31,8 +31,8 @@
         {{ item.name }} ({{ item.count }})
       </button>
     </div>
+    <button *ngIf="list.length > 5" type="button" class="btn btn-edf" (click)="showMore()">
+      {{ textButton }}
+    </button>
   </div>
-  <button *ngIf="list.length > 5" type="button" class="btn btn-edf" (click)="showMore()">
-    {{ textButton }}
-  </button>
 </div>

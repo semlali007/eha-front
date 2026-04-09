@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="dauphinList">
-    Approvisionnement sous dauphin
+    <span class="filter-header-label">Approvisionnement sous dauphin <span class="filter-active-badge" *ngIf="dauphin && dauphin.value !== 'all'">1</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="dauphinList" [collapse]="isTotalCollapsed" [isAnimated]="true">

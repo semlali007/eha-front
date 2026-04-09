@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="edfOpenList">
-    Marché ouvert au personnel EDF
+    <span class="filter-header-label">Marché ouvert au personnel EDF <span class="filter-active-badge" *ngIf="edfOpen && edfOpen.value !== 'all'">1</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="edfOpenList" [collapse]="isTotalCollapsed" [isAnimated]="true">

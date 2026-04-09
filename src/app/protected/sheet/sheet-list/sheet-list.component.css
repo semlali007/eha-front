@@ -137,6 +137,29 @@
   background: #f0f4ff;
 }
 
+.filter-header-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-active-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fe5815;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 99px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
 .filter-sections { display: flex; flex-direction: column; }
 
 /* ── Cartes des sous-filtres ──────────────────────────────── */

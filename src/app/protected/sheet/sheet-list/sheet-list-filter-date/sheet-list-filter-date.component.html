@@ -3,8 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="dateFilterList">
-    Période
-    <span class="filter-date-badge" *ngIf="hasActiveFilter()">Actif</span>
+    <span class="filter-header-label">Période <span class="filter-active-badge" *ngIf="hasActiveFilter()">1</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
 

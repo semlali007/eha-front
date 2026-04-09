@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="statusList">
-    Statut
+    <span class="filter-header-label">Statut <span class="filter-active-badge" *ngIf="status?.value?.length">{{ status.value.length }}</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="statusList" [collapse]="isTotalCollapsed" [isAnimated]="true">

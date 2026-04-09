@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="committeeList">
-    Comité de Gestion de la Demande
+    <span class="filter-header-label">Comité de Gestion de la Demande <span class="filter-active-badge" *ngIf="committees?.value?.length">{{ committees.value.length }}</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="committeeList" [collapse]="isTotalCollapsed" [isAnimated]="true">
@@ -32,8 +32,8 @@
         {{ item.name }} ({{ item.count }})
       </button>
     </div>
+    <button *ngIf="list.length > 5" type="button" class="btn btn-edf" (click)="showMore()">
+      {{ textButton }}
+    </button>
   </div>
-  <button *ngIf="list.length > 5" type="button" class="btn btn-edf" (click)="showMore()">
-    {{ textButton }}
-  </button>
 </div>

@@ -50,6 +50,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
 
   public resetFilters$ = new Subject<void>();
   public allCollapsed = false;
+  public hasActiveDate = false;
 
   @ViewChild('filterSections', { static: false }) filterSections!: ElementRef;
 
@@ -139,6 +140,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
       miseAJourDonnee: ['all'],
       supplierSize: [[]],
     });
+    this.hasActiveDate = false;
     this.resetFilters$.next();
   }
 
@@ -147,6 +149,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onDateFiltersChange(dateFilters: { dateStart: string; dateEnd: string }): void {
+    this.hasActiveDate = !!(dateFilters.dateStart || dateFilters.dateEnd);
     this.submittedFilterSheets.emit({ key: 'dateRange', value: dateFilters });
   }
 
@@ -155,13 +158,13 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
     if (!f) return 0;
     let count = 0;
     if (f.subscribe) count++;
-    if (f.edfOpen && f.edfOpen !== 'all') count++;
-    if (f.partnership && f.partnership !== 'all') count++;
-    if (f.sector && f.sector !== 'all') count++;
-    if (f.dauphin && f.dauphin !== 'all') count++;
-    if (f.showcase && f.showcase !== 'all') count++;
-    if (f.contratGroupe && f.contratGroupe !== 'all') count++;
-    if (f.miseAJourDonnee && f.miseAJourDonnee !== 'all') count++;
+    if (f.edfOpen != null && f.edfOpen !== 'all') count++;
+    if (f.partnership != null && f.partnership !== 'all') count++;
+    if (f.sector != null && f.sector !== 'all') count++;
+    if (f.dauphin != null && f.dauphin !== 'all') count++;
+    if (f.showcase != null && f.showcase !== 'all') count++;
+    if (f.contratGroupe != null && f.contratGroupe !== 'all') count++;
+    if (f.miseAJourDonnee != null && f.miseAJourDonnee !== 'all') count++;
     if (f.beneficiaries?.length) count++;
     if (f.stipulationAutrui?.length) count++;
     if (f.areas?.length) count++;
@@ -170,6 +173,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
     if (f.categories?.length) count++;
     if (f.committees?.length) count++;
     if (f.status?.length) count++;
+    if (this.hasActiveDate) count++;
     return count;
   }
 

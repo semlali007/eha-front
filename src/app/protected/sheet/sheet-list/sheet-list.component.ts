@@ -263,11 +263,16 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
     this.sheetService.getSheets(this.params).subscribe({
       next: (data) => {
-        this.totalItems = data.total;
-        this.sheets = data.sheets;
-        this.filter = data.filter;
+        if (data && data.sheets) {
+          this.totalItems = data.total;
+          this.sheets = data.sheets;
+          this.filter = data.filter;
+        }
       },
-      error: (err: any) => console.error('Error loading sheets:', err),
+      error: () => {
+        this.sheets = [];
+        this.totalItems = 0;
+      },
     });
   }
 

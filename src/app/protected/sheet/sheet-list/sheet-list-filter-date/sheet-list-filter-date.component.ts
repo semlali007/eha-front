@@ -62,6 +62,7 @@ export class SheetListFilterDateComponent implements OnInit, OnDestroy {
 
   clearFilters(): void {
     this.resetForm();
+    this.onFiltersChange.emit({ dateStart: '', dateEnd: '' });
   }
 
   hasActiveFilter(): boolean {
@@ -81,11 +82,12 @@ export class SheetListFilterDateComponent implements OnInit, OnDestroy {
 
   private resetForm(): void {
     this.isResetting = true;
-    this.dateForm.reset();
+    this.dateForm.reset({ dateStart: null, dateEnd: null }, { emitEvent: false });
     this.isResetting = false;
   }
 
   private formatDate(date: Date): string {
+    if (!date) return '';
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');

@@ -68,8 +68,9 @@ export class SheetListFilterCategoryComponent implements OnInit, OnChanges, OnDe
 
   changeFilter(code: string) {
     this.activeFilter = code;
-    const filter = { type: 'categories', value: code === 'all' ? [] : [code] };
-    this.changedFilter.emit(filter);
+    const value = code === 'all' ? [] : [code];
+    this.categories.setValue(value);
+    this.changedFilter.emit({ type: 'categories', value });
   }
 
   isActive(code: string): boolean {

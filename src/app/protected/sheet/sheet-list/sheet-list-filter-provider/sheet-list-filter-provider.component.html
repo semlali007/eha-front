@@ -7,7 +7,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="providerList">
-    Fournisseurs
+    <span class="filter-header-label">Fournisseurs <span class="filter-active-badge" *ngIf="providers?.value?.length">{{ providers.value.length }}</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="providerList" [collapse]="isTotalCollapsed" [isAnimated]="true">

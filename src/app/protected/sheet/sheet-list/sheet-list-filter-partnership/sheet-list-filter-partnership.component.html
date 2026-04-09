@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="partnershipList">
-    Partenariat de productivité
+    <span class="filter-header-label">Partenariat de productivité <span class="filter-active-badge" *ngIf="partnership && partnership.value !== 'all'">1</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="partnershipList" [collapse]="isTotalCollapsed" [isAnimated]="true">

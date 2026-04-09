@@ -1,6 +1,8 @@
-<div *ngIf="isLoading$ | async"  class="loading-back">
-    <p class="loading-text">Recherche en cours, merci de patienter</p>
-    <div>
-        <img class="loading-logo" src="../../../../assets/img/loading-50.gif" />
+<div *ngIf="isLoading$ | async" class="loader-overlay" @fadeInOut>
+  <div class="loader-box">
+    <div class="loader-spinner">
+      <div class="spinner-ring"></div>
     </div>
+    <p class="loader-text">Chargement en cours…</p>
+  </div>
 </div>

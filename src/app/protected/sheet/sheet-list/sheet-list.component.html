@@ -46,21 +46,37 @@
               <div class="tab-content">
                 <div class="active">
                   <div>
-                    <div class="list-group my-items-for-trainings" *ngIf="sheets">
-                      <app-sheet-list-item *ngFor="let sheet of sheets" [sheet]="sheet" [comments]="sheet.comments"
-                        [title]="sheet.title" [date]="sheet.updatedAt" [createdAt]="sheet.createdAt" [statusCode]="sheet.status" [id]="sheet.id" [subscribed]="sheet.subscribed"
-                        (sheetRemoved)="onSheetRemoved(sheet)" class="list-group my-items-for-trainings" (submittedGetSheet)="onSubmittedGetSheet($event)" (onSubscribe)="loadItems()"  [user]='user'>
+                    <div class="sheets-list" *ngIf="sheets">
+                      <app-sheet-list-item
+                        *ngFor="let sheet of sheets"
+                        [sheet]="sheet"
+                        [comments]="sheet.comments"
+                        [title]="sheet.title"
+                        [date]="sheet.updatedAt"
+                        [createdAt]="sheet.createdAt"
+                        [statusCode]="sheet.status"
+                        [id]="sheet.id"
+                        [subscribed]="sheet.subscribed"
+                        (submittedGetSheet)="onSubmittedGetSheet($event)"
+                        (onSubscribe)="loadItems()"
+                        [user]="user">
                       </app-sheet-list-item>
-                      <h5 *ngIf="filterInput.subscribe && filter.subscribe['count'] == 0" class="noSub">Vous n'êtes abonné à aucune fiche</h5>
-                      <div class="row">
 
-                        <form class="col-xs-12 col-12" [formGroup]="paginationForm">
-                          <nav aria-label="pagination" >
-                          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-                            [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-                            (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
-                            firstText="&laquo;" lastText="&raquo;">
-                          </pagination>
+                      <div *ngIf="sheets.length === 0" class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+                        </svg>
+                        <p class="empty-state-title">Aucun résultat trouvé</p>
+                        <p class="empty-state-sub">Essayez de modifier vos critères de recherche ou de réinitialiser les filtres.</p>
+                      </div>
+                      <div *ngIf="sheets.length > 0" class="pagination-wrapper">
+                        <form [formGroup]="paginationForm">
+                          <nav aria-label="pagination">
+                            <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                              [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
+                              (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
+                              firstText="&laquo;" lastText="&raquo;">
+                            </pagination>
                           </nav>
                         </form>
                       </div>

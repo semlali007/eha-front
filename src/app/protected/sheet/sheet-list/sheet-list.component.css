@@ -13,10 +13,44 @@
          margin-bottom: 10px;
      }
 
-     .noSub{
-      margin-left: 20%; 
-      margin-bottom: 10%;
-     }
+.sheets-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.empty-state svg {
+  margin-bottom: 16px;
+  color: #9ca3af;
+}
+
+.empty-state-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+.empty-state-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
 
      .filter-header{
       background-color: rgba(0, 0, 0, 0.03);

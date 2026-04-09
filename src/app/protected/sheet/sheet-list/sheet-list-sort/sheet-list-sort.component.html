@@ -1,16 +1,11 @@
-<form novalidate [formGroup]="sheetSortForm">
-    <div class="form-group row">
-        <div class="col-9 col-sm-9"></div>
-        <div class="col-3 col-sm-3" *ngIf="stateClosed==true">
-            <button class="btn btn-sheet-search" (click)='changeState()'>Trier</button>
-        </div>
-        <div class="col-3 col-sm-3" *ngIf="stateClosed==false">
-            <select class="form-control" name="sortBy" [formControl]="sortBy" class="form-control" id="sortBy" (change)="changeSort($event)">
-                <option value="date_desc">Date (La plus récente)</option>
-                <option value="date_asc">Date (La plus ancienne)</option>
-                <option value="title_asc">Titre (croissant)</option>
-                <option value="title_desc">Titre (décroissant)</option>
-            </select>
-        </div>
-    </div>
-    </form>
+<form novalidate [formGroup]="sheetSortForm" class="sort-form">
+  <button *ngIf="stateClosed" class="search-btn search-btn-outline" type="button" (click)="changeState()">
+    <i class="fas fa-sort"></i> Trier
+  </button>
+  <select *ngIf="!stateClosed" class="sort-select" name="sortBy" [formControl]="sortBy" id="sortBy" (change)="changeSort($event)">
+    <option value="date_desc">Date (récente)</option>
+    <option value="date_asc">Date (ancienne)</option>
+    <option value="title_asc">Titre (A→Z)</option>
+    <option value="title_desc">Titre (Z→A)</option>
+  </select>
+</form>

@@ -1,8 +1,9 @@
 <div class="container-fluid">
   <app-breadcrumb></app-breadcrumb>
-  <div class="row sidenav">
 
-    <div class="col-md-3">
+  <div class="row sidenav">
+    <!-- Panneau filtres -->
+    <div class="col-md-3 sidebar-col">
       <app-sheet-list-filter
         (submittedFilterSheets)="onSubmittedFilterSheets($event)"
         (clearedAllFilters)="onClearedAllFilters()"
@@ -14,95 +15,98 @@
       </app-sheet-list-filter>
     </div>
 
-    <div class="col-md-9" style="margin-top:-8px;">
-      <div class="row justify-content-center">
-        <div class="col-12">
+    <!-- Contenu principal -->
+    <div class="col-md-9 content-col">
 
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="form-group row">
-                <div class="col-9 col-sm-9">
-                  <span *ngIf="activeText" [innerHtml]="welcomeText"></span>
-                </div>
-                <div class="col-3 col-sm-3" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))">
-                  <a (click)="navigate('fiche_marchee')" class="btn btn-sheet-search">
-                    <i class="fas fa-plus"></i> Ajouter une fiche
-                  </a>
-                </div>
-              </div>
+      <!-- Texte d'accueil + Ajouter -->
+      <div class="content-header">
+        <div class="content-header-text" *ngIf="activeText">
+          <span [innerHtml]="welcomeText"></span>
+        </div>
+        <a *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))"
+          (click)="navigate('fiche_marchee')" class="content-btn content-btn-primary">
+          <i class="fas fa-plus"></i> Ajouter une fiche
+        </a>
+      </div>
 
-              <app-sheet-list-export class="form-group row" [params]="params"></app-sheet-list-export>
+      <!-- Barre de recherche -->
+      <div class="search-bar">
+        <app-sheet-list-search-form
+          (submittedSearchSheets)="onsSubmittedSearchSheets($event)"
+          (resetted)="onReset()"
+          [defaultFilter]="defaultFilter">
+        </app-sheet-list-search-form>
 
-              <app-sheet-list-search-form
-                (submittedSearchSheets)="onsSubmittedSearchSheets($event)"
-                (resetted)="onReset()"
-                [defaultFilter]="defaultFilter">
-              </app-sheet-list-search-form>
-
-              <app-sheet-list-sort (changedSort)="onChangedSort($event)" [defaultFilter]="defaultFilter">
-              </app-sheet-list-sort>
-            </div>
-          </div>
-
-          <div *ngIf="isContratGroupeMode()" class="alert alert-info contrat-groupe-indicator d-flex align-items-center mb-3" role="alert">
-            <i class="fas fa-handshake me-2" style="font-size: 1.3em; color: #2196f3;"></i>
-            <div class="flex-grow-1">
-              <strong style="color: #1976d2;">Mode Contrat Groupe activé</strong>
-              <small class="d-block text-muted mt-1">Affichage filtré sur les fiches avec contrat groupe uniquement</small>
-            </div>
-            <button type="button" class="btn btn-outline-secondary btn-sm ms-3" (click)="accederVitrineOffre()" title="Quitter le mode Contrat Groupe">
-              <i class="fas fa-times me-1"></i> Quitter
-            </button>
-          </div>
-
-          <div class="sheets-list" *ngIf="sheets">
-            <app-sheet-list-item
-              *ngFor="let sheet of sheets"
-              [sheet]="sheet"
-              [comments]="sheet.comments"
-              [title]="sheet.title"
-              [date]="sheet.updatedAt"
-              [createdAt]="sheet.createdAt"
-              [statusCode]="sheet.status"
-              [id]="sheet.id"
-              [subscribed]="sheet.subscribed"
-              (submittedGetSheet)="onSubmittedGetSheet($event)"
-              (onSubscribe)="loadItems()"
-              [user]="user">
-            </app-sheet-list-item>
-
-            <div *ngIf="sheets.length === 0" class="empty-state">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-              </svg>
-              <p class="empty-state-title">Aucun résultat trouvé</p>
-              <p class="empty-state-sub">Essayez de modifier vos critères de recherche ou de réinitialiser les filtres.</p>
-            </div>
-
-            <div *ngIf="sheets.length > 0" class="pagination-wrapper">
-              <form [formGroup]="paginationForm">
-                <nav aria-label="pagination">
-                  <pagination
-                    [boundaryLinks]="true"
-                    [totalItems]="totalItems"
-                    [itemsPerPage]="itemsPerPage"
-                    [formControl]="currentPage"
-                    (pageChanged)="pageChanged($event)"
-                    [maxSize]="10"
-                    (numPages)="smallnumPages = $event"
-                    previousText="&lsaquo;"
-                    nextText="&rsaquo;"
-                    firstText="&laquo;"
-                    lastText="&raquo;">
-                  </pagination>
-                </nav>
-              </form>
-            </div>
-          </div>
-
+        <div class="search-bar-footer">
+          <app-sheet-list-export [params]="params"></app-sheet-list-export>
+          <app-sheet-list-sort (changedSort)="onChangedSort($event)" [defaultFilter]="defaultFilter">
+          </app-sheet-list-sort>
         </div>
       </div>
-    </div>
 
+      <!-- Bannière Contrat Groupe -->
+      <div *ngIf="isContratGroupeMode()" class="contrat-groupe-banner">
+        <div class="contrat-groupe-banner-content">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="contrat-groupe-banner-icon">
+            <path d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+            <path d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+          </svg>
+          <div>
+            <strong>Mode Contrat Groupe</strong>
+            <span>Affichage filtré sur les fiches avec contrat groupe uniquement</span>
+          </div>
+        </div>
+        <button type="button" class="contrat-groupe-banner-close" (click)="accederVitrineOffre()">
+          Quitter ce mode
+        </button>
+      </div>
+
+      <!-- Résultats -->
+      <div class="sheets-list" *ngIf="sheets">
+        <app-sheet-list-item
+          *ngFor="let sheet of sheets"
+          [sheet]="sheet"
+          [comments]="sheet.comments"
+          [title]="sheet.title"
+          [date]="sheet.updatedAt"
+          [createdAt]="sheet.createdAt"
+          [statusCode]="sheet.status"
+          [id]="sheet.id"
+          [subscribed]="sheet.subscribed"
+          (submittedGetSheet)="onSubmittedGetSheet($event)"
+          (onSubscribe)="loadItems()"
+          [user]="user">
+        </app-sheet-list-item>
+
+        <div *ngIf="sheets.length === 0" class="empty-state">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+          </svg>
+          <p class="empty-state-title">Aucun résultat trouvé</p>
+          <p class="empty-state-sub">Essayez de modifier vos critères de recherche ou de réinitialiser les filtres.</p>
+        </div>
+
+        <div *ngIf="sheets.length > 0" class="pagination-wrapper">
+          <form [formGroup]="paginationForm">
+            <nav aria-label="pagination">
+              <pagination
+                [boundaryLinks]="true"
+                [totalItems]="totalItems"
+                [itemsPerPage]="itemsPerPage"
+                [formControl]="currentPage"
+                (pageChanged)="pageChanged($event)"
+                [maxSize]="10"
+                (numPages)="smallnumPages = $event"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;">
+              </pagination>
+            </nav>
+          </form>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

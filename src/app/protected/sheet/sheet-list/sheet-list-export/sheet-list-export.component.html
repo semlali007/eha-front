@@ -1,12 +1,7 @@
-
-    <div class="col-9 col-sm-9">
-    </div>
-    <div class="col-3 col-sm-3" >
-        <button (click)="export()" 
-                class="btn btn-sheet-search" 
-                [disabled]="isExporting">
-            <span *ngIf="isExporting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-            <i *ngIf="!isExporting" class="fas fa-download me-2"></i>
-            {{ isExporting ? 'Export en cours...' : 'Exporter le resultat' }}
-        </button>
-    </div>
+<button (click)="export()"
+  class="search-btn search-btn-outline"
+  [disabled]="isExporting">
+  <span *ngIf="isExporting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <i *ngIf="!isExporting" class="fas fa-download"></i>
+  {{ isExporting ? 'Export...' : 'Exporter' }}
+</button>

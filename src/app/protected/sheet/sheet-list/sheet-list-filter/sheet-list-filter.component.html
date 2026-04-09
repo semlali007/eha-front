@@ -9,7 +9,7 @@
       <span class="filter-count-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
     </span>
     <div class="filter-panel-actions">
-      <button *ngIf="activeFilterCount > 0" class="filter-clear-btn" (click)="resetForm()" type="button">
+      <button *ngIf="activeFilterCount > 0" class="filter-clear-btn" (click)="clearAll()" type="button">
         Effacer tout
       </button>
       <button class="filter-toggle-btn" (click)="toggleAll()" type="button"

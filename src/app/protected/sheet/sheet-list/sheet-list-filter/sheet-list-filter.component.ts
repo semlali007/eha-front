@@ -47,6 +47,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Input() reset$: Subject<void> | null = null;
 
   @Output() submittedFilterSheets = new EventEmitter<Object>();
+  @Output() clearedAllFilters = new EventEmitter<void>();
 
   public resetFilters$ = new Subject<void>();
   public allCollapsed = false;
@@ -142,6 +143,11 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
     });
     this.hasActiveDate = false;
     this.resetFilters$.next();
+  }
+
+  clearAll(): void {
+    this.resetForm();
+    this.clearedAllFilters.emit();
   }
 
   onChangedFilterSheets(itemFilter: any): void {

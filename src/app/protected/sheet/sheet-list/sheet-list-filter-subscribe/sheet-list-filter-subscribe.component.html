@@ -4,7 +4,7 @@
       (click)="changeFilter()"
       [class.list-group-item-success]="isActive()"
       [attr.aria-pressed]="isActive()">
-      Mes abonnements ({{ list['count'] }})
+      <span class="filter-header-label">Mes abonnements ({{ list['count'] }}) <span class="filter-active-badge" *ngIf="isActive()">1</span></span>
     </button>
   </div>
 </div>

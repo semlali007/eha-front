@@ -191,6 +191,12 @@ export class SheetListComponent implements OnInit, OnDestroy {
     this.loadItems();
   }
 
+  public onClearedAllFilters(): void {
+    this.resetFilterInput();
+    this.isSearch = false;
+    this.loadItems();
+  }
+
   public onSubmittedFilterSheets(filter: any): void {
     if (filter.key === 'dateRange') {
       this.filterInput.dateStart = filter.value.dateStart;

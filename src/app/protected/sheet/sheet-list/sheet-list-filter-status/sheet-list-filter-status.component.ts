@@ -19,7 +19,7 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.status.value != 'all') {
+    if (Array.isArray(this.status.value) && this.status.value.length > 0) {
       this.isTotalCollapsed = false;
     }
   }

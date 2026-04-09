@@ -242,15 +242,19 @@ app-sheet-list-filter .list-group-item-action:hover {
   color: #001a70 !important;
 }
 
-/* État actif — bleu EDF au lieu du vert Bootstrap */
-app-sheet-list-filter .list-group-item-success {
-  background: #001a70 !important;
-  color: #fff !important;
+/* État actif — orange EDF transparent */
+app-sheet-list-filter .list-group-flush .list-group-item.list-group-item-success,
+app-sheet-list-filter .list-group-item-action.list-group-item-success {
+  background: rgba(254, 88, 21, 0.08) !important;
+  color: #c4420e !important;
   font-weight: 600 !important;
+  border-left: 3px solid #fe5815 !important;
+  padding-left: 7px !important;
 }
-app-sheet-list-filter .list-group-item-success:hover {
-  background: #00237a !important;
-  color: #fff !important;
+app-sheet-list-filter .list-group-flush .list-group-item.list-group-item-success:hover,
+app-sheet-list-filter .list-group-item-action.list-group-item-success:hover {
+  background: rgba(254, 88, 21, 0.14) !important;
+  color: #c4420e !important;
 }
 
 /* ── Badge actif date ─────────────────────────────────────── */

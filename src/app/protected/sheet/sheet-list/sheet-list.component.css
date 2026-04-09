@@ -1,18 +1,18 @@
+/* ─── Pagination ──────────────────────────────────────────── */
+.page-item.active .page-link {
+  background-color: var(--my-color-blue);
+  border-color: var(--my-color-blue);
+}
+.page-link {
+  color: var(--my-color-blue);
+}
 
-     .page-item.active .page-link { 
-        background-color:var(--my-color-blue);
-        border-color: var(--my-color-blue);
-         }
-         .page-link {
-            color: var(--my-color-blue);
-        }
-        .sidenav {
-         min-height: 100vh;
-       }
-       .card {
-         margin-bottom: 10px;
-     }
+/* ─── Layout ──────────────────────────────────────────────── */
+.sidenav {
+  min-height: 100vh;
+}
 
+/* ─── Sheet list ──────────────────────────────────────────── */
 .sheets-list {
   display: flex;
   flex-direction: column;
@@ -25,6 +25,7 @@
   margin-top: 16px;
 }
 
+/* ─── Empty state ─────────────────────────────────────────── */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -33,30 +34,11 @@
   padding: 60px 24px;
   text-align: center;
 }
+.empty-state svg { margin-bottom: 16px; color: #9ca3af; }
+.empty-state-title { font-size: 16px; font-weight: 600; color: #4b5563; margin-bottom: 6px; }
+.empty-state-sub { font-size: 13px; color: #9ca3af; margin: 0; }
 
-.empty-state svg {
-  margin-bottom: 16px;
-  color: #9ca3af;
-}
-
-.empty-state-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #4b5563;
-  margin-bottom: 6px;
-}
-
-.empty-state-sub {
-  font-size: 13px;
-  color: #9ca3af;
-  margin: 0;
-}
-
-     .filter-header{
-      background-color: rgba(0, 0, 0, 0.03);
-     }
-
-/* Styles pour l'indicateur de mode Contrat Groupe */
+/* ─── Contrat groupe indicator ────────────────────────────── */
 .contrat-groupe-indicator {
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
   border: 1px solid #2196f3;
@@ -64,18 +46,345 @@
   box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
   transition: all 0.3s ease;
 }
+.contrat-groupe-indicator:hover { box-shadow: 0 4px 8px rgba(33, 150, 243, 0.15); }
+.contrat-groupe-indicator .btn-outline-secondary { border-color: #6c757d; color: #6c757d; transition: all 0.2s ease; }
+.contrat-groupe-indicator .btn-outline-secondary:hover { background-color: #6c757d; color: white; }
 
-.contrat-groupe-indicator:hover {
-  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.15);
+/* ═══════════════════════════════════════════════════════════
+   FILTER PANEL — styles globaux (ViewEncapsulation.None)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Panel wrapper */
+.filter-panel {
+  background: #fff;
+  border-right: 1px solid #e8eaed;
+  min-height: 100vh;
+  padding-bottom: 32px;
 }
 
-.contrat-groupe-indicator .btn-outline-secondary {
-  border-color: #6c757d;
-  color: #6c757d;
-  transition: all 0.2s ease;
+/* Header "Filtres" */
+.filter-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #e8eaed;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
 }
 
-.contrat-groupe-indicator .btn-outline-secondary:hover {
-  background-color: #6c757d;
-  color: white;
+.filter-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #001a70;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fe5815;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 99px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 8px;
+}
+
+.filter-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-clear-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 11px;
+  color: #6b7280;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.filter-clear-btn:hover { color: #001a70; }
+
+.filter-toggle-btn {
+  background: none;
+  border: 1px solid #e0e4ea;
+  border-radius: 4px;
+  padding: 3px 5px;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.filter-toggle-btn:hover {
+  color: #001a70;
+  border-color: #001a70;
+  background: #f0f4ff;
+}
+
+.filter-sections { display: flex; flex-direction: column; }
+
+/* ── Cartes des sous-filtres ──────────────────────────────── */
+
+/* Override largeur fixe 18rem codée inline */
+app-sheet-list-filter .list-group.card,
+app-sheet-list-filter .list-group-item.filter-header {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+app-sheet-list-filter .list-group.card {
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #f0f2f5 !important;
+  box-shadow: none !important;
+  margin-bottom: 0 !important;
+}
+
+/* ── En-têtes de section ──────────────────────────────────── */
+app-sheet-list-filter .filter-header,
+app-sheet-list-filter .list-group-item.filter-header {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  padding: 12px 16px !important;
+  text-align: left !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  transition: background 0.12s ease !important;
+}
+app-sheet-list-filter .filter-header:hover,
+app-sheet-list-filter .list-group-item.filter-header:hover {
+  background: #f8f9fb !important;
+}
+
+/* ── Chevron (remplacement de .fleche) ────────────────────── */
+app-sheet-list-filter .fleche {
+  border: none !important;
+  border-right: 2px solid #9ca3af !important;
+  border-bottom: 2px solid #9ca3af !important;
+  padding: 3px !important;
+  margin-top: 0 !important;
+  float: none !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+app-sheet-list-filter .fleche.fleche-droite {
+  transform: rotate(-45deg) !important;
+}
+app-sheet-list-filter .fleche.fleche-bas {
+  transform: rotate(45deg) !important;
+  margin-top: -3px !important;
+}
+
+/* ── Éléments de filtre ───────────────────────────────────── */
+app-sheet-list-filter .list-group-flush .list-group-item,
+app-sheet-list-filter .list-group-item-action {
+  border: none !important;
+  border-radius: 6px !important;
+  margin: 1px 8px !important;
+  width: calc(100% - 16px) !important;
+  max-width: calc(100% - 16px) !important;
+  padding: 7px 10px !important;
+  font-size: 13px !important;
+  color: #374151 !important;
+  background: transparent !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: background 0.12s ease, color 0.12s ease !important;
+}
+app-sheet-list-filter .list-group-item-action:hover {
+  background: #eef2fb !important;
+  color: #001a70 !important;
+}
+
+/* État actif — bleu EDF au lieu du vert Bootstrap */
+app-sheet-list-filter .list-group-item-success {
+  background: #001a70 !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+app-sheet-list-filter .list-group-item-success:hover {
+  background: #00237a !important;
+  color: #fff !important;
+}
+
+/* ── Badge actif date ─────────────────────────────────────── */
+app-sheet-list-filter .badge-primary {
+  background: #fe5815 !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  border-radius: 99px !important;
+}
+
+/* ── Bouton "Voir plus" ───────────────────────────────────── */
+app-sheet-list-filter .btn.btn-edf {
+  background: none !important;
+  color: #001a70 !important;
+  border: none !important;
+  font-size: 12px !important;
+  padding: 6px 16px 10px !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+  width: 100% !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+app-sheet-list-filter .btn.btn-edf:hover {
+  color: #fe5815 !important;
+}
+
+/* ── Typeahead / input bénéficiaires & fournisseurs ────────── */
+app-sheet-list-filter .list-group-flush input.form-control {
+  margin: 6px 8px !important;
+  width: calc(100% - 16px) !important;
+  border-radius: 6px !important;
+  border: 1px solid #e0e4ea !important;
+  font-size: 13px !important;
+  padding: 6px 10px !important;
+}
+app-sheet-list-filter .list-group-flush input.form-control:focus {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1) !important;
+  outline: none !important;
+}
+app-sheet-list-filter .list-group-flush ul.list-group {
+  padding: 0 8px 6px !important;
+}
+app-sheet-list-filter .list-group-flush ul .list-group-item {
+  border-radius: 6px !important;
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+  margin-bottom: 3px !important;
+  font-size: 12px !important;
+}
+
+/* ── Datepicker inputs ────────────────────────────────────── */
+app-sheet-list-filter .p-3 {
+  padding: 8px 12px !important;
+}
+app-sheet-list-filter .input-group-text {
+  background: #f8f9fb !important;
+  border-color: #e0e4ea !important;
+  color: #6b7280 !important;
+}
+app-sheet-list-filter .form-control-sm {
+  border-color: #e0e4ea !important;
+  font-size: 13px !important;
+}
+app-sheet-list-filter .form-control-sm:focus {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1) !important;
+}
+app-sheet-list-filter .btn-link.text-danger {
+  color: #6b7280 !important;
+  font-size: 12px !important;
+}
+app-sheet-list-filter .btn-link.text-danger:hover { color: #e53e3e !important; }
+app-sheet-list-filter .text-success {
+  color: #059669 !important;
+  font-size: 12px !important;
+}
+
+/* ── Typeahead form wrapper ───────────────────────────────── */
+app-sheet-list-filter .filter-typeahead-form {
+  padding: 6px 10px !important;
+}
+app-sheet-list-filter .filter-typeahead-form input.form-control {
+  margin: 0 !important;
+  width: 100% !important;
+  border-radius: 6px !important;
+  border: 1px solid #e0e4ea !important;
+  font-size: 12px !important;
+  padding: 5px 8px !important;
+  box-sizing: border-box !important;
+}
+app-sheet-list-filter .filter-typeahead-form input.form-control:focus {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1) !important;
+  outline: none !important;
+}
+
+/* ── Tags sélectionnés (bénéficiaires, fournisseurs, etc.) ── */
+app-sheet-list-filter .filter-tag-list {
+  padding: 0 8px 6px !important;
+}
+app-sheet-list-filter .filter-tag {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #eef2fb !important;
+  border-radius: 6px !important;
+  margin-bottom: 4px !important;
+  padding: 5px 8px !important;
+  font-size: 12px !important;
+  color: #1e293b !important;
+  border: none !important;
+  width: 100% !important;
+}
+app-sheet-list-filter .filter-tag-remove {
+  background: none !important;
+  border: none !important;
+  padding: 0 2px !important;
+  cursor: pointer !important;
+  color: #9ca3af !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+  transition: color 0.12s ease !important;
+}
+app-sheet-list-filter .filter-tag-remove:hover {
+  color: #e53e3e !important;
+}
+
+/* ── Typeahead dropdown ───────────────────────────────────── */
+app-sheet-list-filter .dropdown-menu {
+  border: 1px solid #e0e4ea !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px !important;
+  margin-top: 2px !important;
+  max-height: 240px !important;
+  overflow-y: auto !important;
+}
+app-sheet-list-filter .dropdown-item,
+app-sheet-list-filter .dropdown-menu button,
+app-sheet-list-filter .dropdown-menu a {
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  color: #374151 !important;
+  border-radius: 5px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  transition: background 0.1s ease !important;
+}
+app-sheet-list-filter .dropdown-item:hover,
+app-sheet-list-filter .dropdown-item.active,
+app-sheet-list-filter .dropdown-menu button:hover,
+app-sheet-list-filter .dropdown-menu a:hover,
+app-sheet-list-filter .dropdown-menu .active {
+  background: #eef2fb !important;
+  color: #001a70 !important;
 }

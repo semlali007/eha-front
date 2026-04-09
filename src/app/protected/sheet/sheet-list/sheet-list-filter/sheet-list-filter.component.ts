@@ -7,6 +7,8 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription, Subject } from 'rxjs';
@@ -47,6 +49,9 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Output() submittedFilterSheets = new EventEmitter<Object>();
 
   public resetFilters$ = new Subject<void>();
+  public allCollapsed = false;
+
+  @ViewChild('filterSections', { static: false }) filterSections!: ElementRef;
 
   private subscriptions = new Subscription();
 
@@ -143,6 +148,43 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
 
   onDateFiltersChange(dateFilters: { dateStart: string; dateEnd: string }): void {
     this.submittedFilterSheets.emit({ key: 'dateRange', value: dateFilters });
+  }
+
+  get activeFilterCount(): number {
+    const f = this.sheetFilterForm?.value;
+    if (!f) return 0;
+    let count = 0;
+    if (f.subscribe) count++;
+    if (f.edfOpen && f.edfOpen !== 'all') count++;
+    if (f.partnership && f.partnership !== 'all') count++;
+    if (f.sector && f.sector !== 'all') count++;
+    if (f.dauphin && f.dauphin !== 'all') count++;
+    if (f.showcase && f.showcase !== 'all') count++;
+    if (f.contratGroupe && f.contratGroupe !== 'all') count++;
+    if (f.miseAJourDonnee && f.miseAJourDonnee !== 'all') count++;
+    if (f.beneficiaries?.length) count++;
+    if (f.stipulationAutrui?.length) count++;
+    if (f.areas?.length) count++;
+    if (f.providers?.length) count++;
+    if (f.directions?.length) count++;
+    if (f.categories?.length) count++;
+    if (f.committees?.length) count++;
+    if (f.status?.length) count++;
+    return count;
+  }
+
+  toggleAll(): void {
+    this.allCollapsed = !this.allCollapsed;
+    if (!this.filterSections) return;
+    const headers = this.filterSections.nativeElement.querySelectorAll('.filter-header');
+    headers.forEach((header: HTMLElement) => {
+      const expanded = header.getAttribute('aria-expanded') === 'true';
+      if (this.allCollapsed && expanded) {
+        header.click();
+      } else if (!this.allCollapsed && !expanded) {
+        header.click();
+      }
+    });
   }
 
   shouldHideFilterInContratGroupeMode(filterName: string): boolean {

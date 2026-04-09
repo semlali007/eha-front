@@ -1,19 +1,27 @@
-<div class="list-group card" style="width: 18rem;" *ngIf="list.length > 0">
-    <button class="list-group-item filter-header smaller-text" (click)="isTotalCollapsed = !isTotalCollapsed"
-    [attr.aria-expanded]="!isTotalCollapsed" aria-controls="dauphinList">
-        Approvisionnement sous dauphin <i class="fleche fleche-droite" [class.fleche-bas]="isTotalCollapsed == false"></i>
-    </button>
-    <div id="dauphinList" [collapse]="isTotalCollapsed" [isAnimated]="true">
+<div class="list-group card" *ngIf="list.length > 0">
+  <button class="list-group-item filter-header smaller-text"
+    (click)="isTotalCollapsed = !isTotalCollapsed"
+    [attr.aria-expanded]="!isTotalCollapsed"
+    aria-controls="dauphinList">
+    Approvisionnement sous dauphin
+    <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
+  </button>
+  <div id="dauphinList" [collapse]="isTotalCollapsed" [isAnimated]="true">
     <div class="list-group list-group-flush">
-        <button class="list-group-item list-group-item-action" *ngIf="dauphin.value!='all'" (click)="changeFilter('all')"
-            [class.list-group-item-success]="isActive('all')" [attr.aria-pressed]="isActive('all')">
-            Tous
-        </button>
-
-        <button class="list-group-item list-group-item-action" *ngFor="let item of list" (click)="changeFilter(item.code)"
-            [class.list-group-item-success]="isActive(item.code)" [attr.aria-pressed]="isActive(item.code)">
-            {{item.code|showBooleanText}} ({{item.count}})
-        </button>
+      <button class="list-group-item list-group-item-action"
+        *ngIf="dauphin.value !== 'all'"
+        (click)="changeFilter('all')"
+        [class.list-group-item-success]="isActive('all')"
+        [attr.aria-pressed]="isActive('all')">
+        Tous
+      </button>
+      <button class="list-group-item list-group-item-action"
+        *ngFor="let item of list"
+        (click)="changeFilter(item.code)"
+        [class.list-group-item-success]="isActive(item.code)"
+        [attr.aria-pressed]="isActive(item.code)">
+        {{ item.code | showBooleanText }} ({{ item.count }})
+      </button>
     </div>
-    </div>
+  </div>
 </div>

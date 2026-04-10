@@ -80,12 +80,12 @@ app-breadcrumb nav {
 
 /* ─── Search bar ──────────────────────────────────────────── */
 .search-bar {
-  background: #fff;
-  border: 1px solid #e0e4ea;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 /* Search form layout */
@@ -168,15 +168,32 @@ app-breadcrumb nav {
   cursor: not-allowed;
 }
 
-/* Search bar footer (export + sort) */
-.search-bar-footer {
+/* Row contenant la search-form + export + sort */
+.search-bar-row {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #f0f2f5;
+  align-items: stretch;
+  gap: 10px;
+}
+.search-bar-form {
+  flex: 1;
+  min-width: 0;
+}
+.search-bar-extra {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+  padding-left: 10px;
+  border-left: 1px solid #e8eaed;
+}
+.search-bar-extra app-sheet-list-export,
+.search-bar-extra app-sheet-list-sort {
+  display: block;
+}
+.search-bar-extra .search-btn,
+.search-bar-extra .sort-select,
+.search-bar-extra .sort-form {
+  width: 100%;
 }
 
 /* Sort select */
@@ -202,7 +219,12 @@ app-breadcrumb nav {
 .sheets-list {
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  margin-top: 0;
 }
 
 .pagination-wrapper {

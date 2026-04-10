@@ -31,16 +31,19 @@
 
       <!-- Barre de recherche -->
       <div class="search-bar">
-        <app-sheet-list-search-form
-          (submittedSearchSheets)="onsSubmittedSearchSheets($event)"
-          (resetted)="onReset()"
-          [defaultFilter]="defaultFilter">
-        </app-sheet-list-search-form>
+        <div class="search-bar-row">
+          <app-sheet-list-search-form
+            class="search-bar-form"
+            (submittedSearchSheets)="onsSubmittedSearchSheets($event)"
+            (resetted)="onReset()"
+            [defaultFilter]="defaultFilter">
+          </app-sheet-list-search-form>
 
-        <div class="search-bar-footer">
-          <app-sheet-list-export [params]="params"></app-sheet-list-export>
-          <app-sheet-list-sort (changedSort)="onChangedSort($event)" [defaultFilter]="defaultFilter">
-          </app-sheet-list-sort>
+          <div class="search-bar-extra">
+            <app-sheet-list-export [params]="params"></app-sheet-list-export>
+            <app-sheet-list-sort (changedSort)="onChangedSort($event)" [defaultFilter]="defaultFilter">
+            </app-sheet-list-sort>
+          </div>
         </div>
       </div>
 

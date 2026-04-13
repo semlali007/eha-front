@@ -37,7 +37,7 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 21px;
-    display: flex;
+    /* display: flex; */
     align-items: center;
     cursor:pointer ;
     /* Bleu fonce (Charte) */

@@ -1,198 +1,341 @@
-.titre{
-    font-family: Segoe UI;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 43px;
-    letter-spacing: 0em;
-    text-align: left;
-    margin-left: 15px;
-    margin-bottom: 20px;
+/* ═══════════════════════════════════════════════════════════
+   PURCHASE SITUATION — Ma situation achat
+   ═══════════════════════════════════════════════════════════ */
+
+.ps-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  font-family: 'Work Sans', sans-serif;
 }
 
-.titre-result{ 
-    width: 1110px;
-    height: 36px;
-    left: 0px;
-    top: 1px;
-    
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 29px;
-    
-    /* Noir (Charte) */
-    color: #000000; 
+/* Breadcrumb uniforme */
+app-purchase-situation app-breadcrumb { display: block; }
+app-purchase-situation app-breadcrumb .breadcrumb {
+  margin-bottom: 2px !important;
+  padding: 8px 5px !important;
+  background: transparent !important;
+}
+app-purchase-situation app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
+
+/* ── Header ────────────────────────────────────────────────── */
+.ps-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.ps-header .ps-title {
+  margin-bottom: 16px;
 }
 
-.open-da{
-    width: 100%;
-    height: 21px;
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
-    /* Bleu fonce (Charte) */
-    color: #001A70;
+.ps-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #001a70;
+  margin: 0;
 }
 
-.text-simple{
-    position: static;
-left: 0px;
-right: 80px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-
-/* or 138% */
-display: flex;
-align-items: center;
-text-align: right;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 0px 10px;
+/* Override form interne */
+app-purchase-situation-form .row { margin: 0 !important; }
+app-purchase-situation-form .form-group { margin: 0 !important; }
+app-purchase-situation-form div[style*="position: absolute"] {
+  position: static !important;
+  right: auto !important;
+}
+app-purchase-situation-form .titre-listing {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #001a70 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+  position: static !important;
+  margin: 0 0 0 0 !important;
+  padding-bottom: 0 !important;
+  cursor: pointer !important;
+}
+app-purchase-situation-form .titre-listing:hover {
+  color: #fe5815 !important;
 }
 
-.hr{ 
-    width: 100%;
-    height: 0px;
-    /* Noir (Charte) */
-    border: 1px solid #000000;
+/* ── Toolbar ───────────────────────────────────────────────── */
+.ps-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #e8eaed;
 }
-.row{
-    margin-left:0 ;
+.ps-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
-
-
-
-.titre-result{ 
-    width: 1110px;
-    height: 36px;
-    left: 0px;
-    top: 1px;
-    
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 29px;
-    
-    /* Noir (Charte) */
-    color: #000000; 
+.ps-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
-
-.open-da{
-    width: 100%;
-    height: 21px;
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
-    /* Bleu fonce (Charte) */
-    color: #001A70;
+.ps-result-count {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
 }
-
-.text-simple{
-    position: static;
-left: 0px;
-right: 80px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-
-/* or 138% */
-display: flex;
-align-items: center;
-text-align: right;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 0px 10px;
+.ps-result-criteria {
+  font-size: 13px;
+  color: #6b7280;
 }
-
-.ddown-per-page{ 
-    height: 37px;
-    left: 0px;
-    right: 0px;
-    /* Blanc (Charte) */
-    background: #FFFFFF;
-    
-    /* Noir (Charte) */
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    border-radius: 5px;
-    text-align:left;
-
-    flex:none;
+.ps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #001a70;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ps-link:hover {
+  color: #fe5815;
+}
+.ps-per-page {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #6b7280;
+}
+.ps-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  min-width: 60px;
+  justify-content: space-between;
+}
+.ps-dropdown-btn:hover {
+  border-color: #001a70;
+}
+.ps-dropdown-btn-sm {
+  min-width: auto;
+  padding: 4px 8px;
 }
 
-
-
-.dropdown-toggle::after{
-    position: absolute;
-    right: 10px;
-    top:17px;
+/* Dropdown statut dans le header : mêmes dimensions que les inputs */
+.ps-col-status .btn-group {
+  width: 100% !important;
+}
+.ps-col-status .ps-dropdown-btn-sm {
+  width: 100% !important;
+  height: 28px !important;
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #374151 !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
 }
 
-.checkbox{
-    position: absolute;
-    left: 6px;
-    margin-top: 6px;
-    pointer-events:all;
+/* Dropdown menu */
+app-purchase-situation .dropdown-menu {
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px !important;
+}
+app-purchase-situation .dropdown-item {
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+  border-radius: 4px !important;
+}
+app-purchase-situation .dropdown-item:hover {
+  background: #eef2fb !important;
+  color: #001a70 !important;
 }
 
-.noClick{
-    pointer-events: none;
+/* ── Table header ──────────────────────────────────────────── */
+.ps-table-header {
+  display: flex;
+  gap: 0;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-top: none;
+  border-radius: 0;
+  padding: 0;
+}
+.ps-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-right: 1px solid #e8eaed;
+}
+.ps-col:last-child { border-right: none; }
+
+.ps-col-code { flex: 0 0 14%; }
+.ps-col-label { flex: 0 0 24%; }
+.ps-col-date { flex: 0 0 10%; }
+.ps-col-status { flex: 0 0 16%; }
+.ps-col-modified { flex: 0 0 16%; }
+.ps-col-owner { flex: 0 0 20%; }
+
+.ps-col-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #001a70;
+  white-space: nowrap;
+}
+.ps-sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  margin-left: 2px;
+}
+.ps-sort-arrows svg {
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.12s;
+}
+.ps-sort-arrows svg:hover {
+  color: #001a70;
 }
 
-.clickable{
-    cursor: pointer;
+.ps-filter-input {
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #374151 !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  width: 100% !important;
+}
+.ps-filter-input::placeholder {
+  color: #9ca3af !important;
+}
+.ps-filter-input:focus {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1) !important;
+  outline: none !important;
 }
 
-.status{
-    height:40px;
-    width: 50%;
+/* Checkbox dropdown statut */
+.ps-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  margin: 0;
+}
+.ps-checkbox-item input[type="checkbox"] {
+  accent-color: #001a70;
+  cursor: pointer;
+}
+.ps-checkbox-item:hover {
+  background: #eef2fb;
+  border-radius: 4px;
 }
 
-@media screen and (max-width: 1280px)
-{
-    .critere{
-        margin-left: 10%;
-    }
+.clickable { cursor: pointer; }
 
-    .status{
-        height:40px;
-        width: 100%;
-    }
+/* ── Accordion / liste résultats ──────────────────────────── */
+app-purchase-situation accordion {
+  display: block;
+}
+app-purchase-situation .card.customClass,
+app-purchase-situation .card.customClass .card-header,
+app-purchase-situation .panel.customClass {
+  background-color: #fff !important;
+  border-width: 0 !important;
+  border-bottom: 1px solid #e8eaed !important;
+}
+app-purchase-situation .card.customClass .card-header {
+  padding: 0 !important;
+  background-color: #fff !important;
 }
 
-img.Icone---Mes-DA {
-    width: 24px;
-    height: 24px;
-    flex-grow: 0;
-    object-fit: contain;
-  }
+/* ── Pagination ───────────────────────────────────────────── */
+app-purchase-situation-list .row {
+  margin: 0 !important;
+}
+app-purchase-situation-list .pageText {
+  font-size: 13px !important;
+  color: #6b7280 !important;
+}
+app-purchase-situation-list .paginationClass .page-item.active .page-link {
+  background-color: #001a70 !important;
+  color: #fff !important;
+  border-color: #001a70 !important;
+}
+app-purchase-situation-list .paginationClass .page-item .page-link {
+  background-color: #001a70 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  margin: 0 2px !important;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 3px 0 !important;
+  text-align: center !important;
+  font-size: 12px !important;
+}
+app-purchase-situation-list .paginationClass .page-item.disabled .page-link {
+  background-color: #e8eaed !important;
+  color: #6b7280 !important;
+}
+app-purchase-situation-list .paginationClass .pagination-prev .page-link,
+app-purchase-situation-list .paginationClass .pagination-next .page-link {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+app-purchase-situation-list .hr {
+  border-color: #e8eaed !important;
+}
+
+/* ── État vide ─────────────────────────────────────────────── */
+.ps-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  margin-top: 16px;
+}
+.ps-empty-state svg {
+  margin-bottom: 16px;
+  color: #9ca3af;
+}
+.ps-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+.ps-empty-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}

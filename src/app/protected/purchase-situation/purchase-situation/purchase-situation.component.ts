@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { PurchaseSituationService } from 'src/app/core/services/purchase-situation.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -8,9 +8,10 @@ import { PurchaseSituationStatus } from 'src/app/shared/models/purchaseSituation
 import { FiltermultiPipe } from 'src/app/shared/pipes/filtermulti.pipe';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-purchase-situation',
   templateUrl: './purchase-situation.component.html',
-  styleUrls: ['./purchase-situation.component.css']
+  styleUrls: ['./purchase-situation.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PurchaseSituationComponent implements OnInit, OnDestroy {
   purchases: any = [];

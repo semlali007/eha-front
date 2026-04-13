@@ -10,23 +10,20 @@ export class SheetListFilterMiseAJourDonneeComponent implements OnInit, OnChange
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
   isTotalCollapsed = false;
+  private initialized = false;
 
-  constructor() { }  ngOnInit(): void {
-    // Ensure list is always an array
-    if (!this.list) {
-      this.list = [];
-    }
+  constructor() { }
+
+  ngOnInit(): void {
+    if (!this.list) { this.list = []; }
   }
-  
+
   ngOnChanges(): void {
-    // Ensure list is always an array
-    if (!this.list) {
-      this.list = [];
-    }
-    
-    if (this.miseAJourDonnee && this.miseAJourDonnee.value != 'all') {
+    if (!this.list) { this.list = []; }
+    if (!this.initialized && this.miseAJourDonnee && this.miseAJourDonnee.value != 'all') {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
 
   changeFilter(code: string): void {

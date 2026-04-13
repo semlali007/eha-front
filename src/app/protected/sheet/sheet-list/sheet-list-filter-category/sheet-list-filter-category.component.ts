@@ -15,7 +15,7 @@ export class SheetListFilterCategoryComponent implements OnInit, OnChanges, OnDe
   isCollapsed = true;
   textButton = 'Voir plus';
   activeFilter = '';
-  
+  private initialized = false;
   private subscription: Subscription = new Subscription();
 
   constructor() {}
@@ -28,7 +28,6 @@ export class SheetListFilterCategoryComponent implements OnInit, OnChanges, OnDe
       const valueChanges$ = this.categories.valueChanges.subscribe((value) => {
         if (!value || value.length === 0) {
           this.activeFilter = '';
-          this.isTotalCollapsed = true;
         }
       });
       
@@ -51,19 +50,19 @@ export class SheetListFilterCategoryComponent implements OnInit, OnChanges, OnDe
   private checkFilterState() {
     if (this.categories && this.categories.value) {
       if (this.categories.value.length > 0) {
-        this.isTotalCollapsed = false;
-        // Si on a des valeurs mais pas d'activeFilter, on prend la première valeur
+        if (!this.initialized) {
+          this.isTotalCollapsed = false;
+        }
         if (!this.activeFilter && this.categories.value.length === 1) {
           this.activeFilter = this.categories.value[0];
         }
       } else {
-        // Réinitialisation : remettre à zéro la sélection active
         this.activeFilter = '';
       }
     } else {
-      // Cas où categories est null/undefined (réinitialisation)
       this.activeFilter = '';
     }
+    this.initialized = true;
   }
 
   changeFilter(code: string) {

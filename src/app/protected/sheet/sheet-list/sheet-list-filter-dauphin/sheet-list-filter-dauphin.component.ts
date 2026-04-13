@@ -13,16 +13,17 @@ export class SheetListFilterDauphinComponent implements OnInit, OnChanges {
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
   isTotalCollapsed = false;
+  private initialized = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-    //this.dauphin.setValue('all');
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (this.dauphin.value != 'all') {
+    if (!this.initialized && this.dauphin.value != 'all') {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
   
   changeFilter(code) {

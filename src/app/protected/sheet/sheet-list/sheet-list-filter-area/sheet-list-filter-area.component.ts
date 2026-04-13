@@ -15,15 +15,17 @@ export class SheetListFilterAreaComponent implements OnInit, OnChanges {
   isCollapsed = true;
   isTotalCollapsed = false;
   textButton = "Afficher plus";
+  private initialized = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (this.areas.value.length > 0) {
+    if (!this.initialized && this.areas.value.length > 0) {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
 
   changeFilter(code) {

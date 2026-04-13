@@ -15,15 +15,19 @@ export class SheetListFilterCommitteeComponent implements OnInit,OnChanges {
   isTotalCollapsed = false;
   isCollapsed = true;
   textButton = "Afficher plus";
+  private initialized = false;
+
   constructor() { }
 
   ngOnInit(): void {
     this.committees.setValue([]);
   }
+
   ngOnChanges(): void {
-    if (this.committees.value.length > 0) {
+    if (!this.initialized && this.committees.value.length > 0) {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
   changeFilter(code) {
     if (code == 'all') {

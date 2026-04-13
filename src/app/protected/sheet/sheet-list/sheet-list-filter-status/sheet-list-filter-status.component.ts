@@ -13,15 +13,17 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
   isTotalCollapsed = false;
+  private initialized = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (Array.isArray(this.status.value) && this.status.value.length > 0) {
+    if (!this.initialized && Array.isArray(this.status.value) && this.status.value.length > 0) {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
 
   changeFilter0(code) {

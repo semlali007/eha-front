@@ -229,8 +229,16 @@ app-breadcrumb nav {
 
 .pagination-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   margin-top: 16px;
+}
+
+.pagination-info {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
 }
 
 /* ─── Empty state ─────────────────────────────────────────── */
@@ -661,4 +669,88 @@ app-sheet-list-filter .dropdown-menu a:hover,
 app-sheet-list-filter .dropdown-menu .active {
   background: #eef2fb !important;
   color: #001a70 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DATEPICKER — theme EDF
+   ═══════════════════════════════════════════════════════════ */
+
+/* Container */
+.bs-datepicker-container {
+  z-index: 1060 !important;
+  padding: 0 !important;
+}
+.bs-datepicker {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e0e4ea !important;
+}
+
+/* Header (mois/année) */
+.bs-datepicker-head {
+  background: #001a70 !important;
+  border-radius: 8px 8px 0 0 !important;
+  padding: 8px !important;
+}
+.bs-datepicker-head button {
+  color: #fff !important;
+  font-size: 14px !important;
+}
+.bs-datepicker-head button:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 4px !important;
+}
+
+/* Jours de la semaine */
+.bs-datepicker-body table th {
+  color: #001a70 !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  padding: 6px !important;
+}
+
+/* Cellules des jours */
+.bs-datepicker-body table td {
+  color: #374151 !important;
+}
+.bs-datepicker-body table td span {
+  font-size: 13px !important;
+  border-radius: 6px !important;
+  transition: background 0.1s ease !important;
+}
+
+/* Hover */
+.bs-datepicker-body table td span:not(.disabled):not(.selected):hover {
+  background: #eef2fb !important;
+  color: #001a70 !important;
+}
+
+/* Jour sélectionné */
+.bs-datepicker-body table td span.selected,
+.bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after {
+  background-color: #001a70 !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+}
+
+/* Aujourd'hui */
+.bs-datepicker-body table td.current span {
+  color: #fe5815 !important;
+  font-weight: 700 !important;
+}
+
+/* Jours hors du mois */
+.bs-datepicker-body table td.is-other-month span {
+  color: #c8cdd5 !important;
+}
+
+/* Jours désactivés */
+.bs-datepicker-body table td span.disabled {
+  color: #dfe3e8 !important;
+}
+
+/* Flèches navigation */
+.bs-datepicker-navigation-button {
+  color: #fff !important;
 }

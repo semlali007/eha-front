@@ -79,6 +79,7 @@
 :host ::ng-deep {
   .bs-datepicker-container {
     z-index: 1060 !important;
+    padding: 0 !important;
   }
 
   .theme-edf {

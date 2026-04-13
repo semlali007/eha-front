@@ -90,6 +90,9 @@
         </div>
 
         <div *ngIf="sheets.length > 0" class="pagination-wrapper">
+          <p class="pagination-info">
+            Affichage {{ (currentPage.value - 1) * itemsPerPage + 1 }} - {{ currentPage.value * itemsPerPage > totalItems ? totalItems : currentPage.value * itemsPerPage }} de {{ totalItems }} fiches.
+          </p>
           <form [formGroup]="paginationForm">
             <nav aria-label="pagination">
               <pagination

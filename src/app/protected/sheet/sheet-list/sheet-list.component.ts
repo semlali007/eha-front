@@ -294,6 +294,9 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public accederVitrineOffre(): void {
     this.viewModeService.setNormalMode();
+    this.resetFilterInput();
+    this.reset$.next();
+    this.loadItems();
   }
 
   public navigate(page: string): void {

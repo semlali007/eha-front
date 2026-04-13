@@ -1,36 +1,26 @@
-<div class="container">
-    <app-breadcrumb></app-breadcrumb>
-    <div class="Coeur-de-page">
-        <div class="Frame-897">
-            <div class="Bouton-Lien---Retour-" >
-                <img src="../../../../assets/img/icone-retour.png" srcset="../../../../assets/img/icone-retour@2x.png 2x,
-                    ../../../../assets/img/icone-retour@3x.png 3x" class="Icone---Retour" (click)="list()">
-                <span class="Retour-la-liste-des-articles Body---16---Semi-Bold" >
-                    Retour à la liste des articles
-                </span>
-            </div>
-        </div>
+<div class="newscast-view-page">
+  <app-breadcrumb></app-breadcrumb>
 
+  <!-- Retour -->
+  <a class="newscast-back" (click)="list()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </svg>
+    Retour à la liste des articles
+  </a>
 
-        <div class="Frame-938">
-
-            <div class="Frame-937">
-                    <span class="badge {{news.categ_code|newsCastCategoryColor}}" style="float:left"> {{ news.categ }}</span>
-                <span class="Publi-le-02022023 Body---16---Semi-Bold">
-                    Publié le {{news.published_date| customDate: "dd.MM.yyyy"  }}
-                  </span>
-            </div>
-            <div class="Frame-315">
-                <img src="../../../../assets/img/mdi_announcement.png"
-                    srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
-                    class="mdiannouncement">
-                <span class="Actualit H2---26---Semi-Bold">
-                    {{news.title}}
-                </span>
-            </div>
-        </div>
-
-        <span  [innerHtml]="news.long_description|safe: 'html'">
-          </span>
+  <!-- Article -->
+  <article class="newscast-view-article">
+    <div class="newscast-view-meta">
+      <span class="badge {{ news.categ_code | newsCastCategoryColor }}">{{ news.categ }}</span>
+      <span class="newscast-view-date">Publié le {{ news.published_date | customDate: "dd.MM.yyyy" }}</span>
     </div>
+    <h1 class="newscast-view-title">
+      <img src="assets/img/mdi_announcement.png"
+        srcset="assets/img/mdi_announcement@2x.png 2x, assets/img/mdi_announcement@3x.png 3x"
+        class="newscast-view-title-icon">
+      {{ news.title }}
+    </h1>
+    <div class="newscast-view-content" [innerHtml]="news.long_description | safe: 'html'"></div>
+  </article>
 </div>

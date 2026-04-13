@@ -1,174 +1,103 @@
-.Coeur-de-page {
-  flex-grow: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 0;
+/* ═══════════════════════════════════════════════════════════
+   NEWSCAST VIEW — Détail d'un article
+   ═══════════════════════════════════════════════════════════ */
+
+.newscast-view-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+  font-family: 'Work Sans', sans-serif;
 }
 
-.Frame-897 {
-  align-self: stretch;
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+/* Breadcrumb uniforme */
+app-breadcrumb { display: block; }
+app-breadcrumb .breadcrumb {
+  margin-bottom: 2px !important;
+  padding: 8px 5px !important;
+  background: transparent !important;
+}
+app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
+
+/* ── Retour ────────────────────────────────────────────────── */
+.newscast-back {
+  display: inline-flex;
   align-items: center;
-  padding: 0;
-}
-
-.Bouton-Lien---Retour- {
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
-  padding: 0;
-}
-
-.Vector {
-  flex-grow: 0;
-  margin: 0 10px 0 0;
-  background-color: var(--bleu-fonce-charte);
-}
-
-img.Icone---Retour {
-  margin: 0 10px 0 0;
-  object-fit: contain;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #001a70;
+  background: #f0f4ff;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  padding: 6px 14px;
   cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 16px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.newscast-back:hover {
+  background: #001a70;
+  color: #fff;
+  border-color: #001a70;
+  text-decoration: none;
+}
+.newscast-back svg {
+  flex-shrink: 0;
 }
 
-.Retour-la-liste-des-articles {
-  flex-grow: 0;
-  font-family: 'Work Sans';
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: left;
-  color: var(--bleu-fonce-charte);
-}
-.Body---16---Semi-Bold {
-  font-family: 'Work Sans';
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
+/* ── Article ───────────────────────────────────────────────── */
+.newscast-view-article {
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
+  padding: 28px 32px;
+  margin-bottom: 32px;
 }
 
-.Frame-910 {
-  flex-grow: 0;
+.newscast-view-meta {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 0;
-}
-
-img.Bouton---Prcdent-Suivant {
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 2px;
-  object-fit: contain;
-  border-radius: 5px;
-}
-
-.Title {
-  flex-grow: 0;
-  font-family: 'Work Sans';
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: left;
-  color: var(--bleu-fonce-charte);
-}
-
-.Frame-938 {
-  align-self: stretch;
-  flex-grow: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  gap: 10px;
-  padding: 0;
-}
-
-.Frame-937 {
-  align-self: stretch;
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  padding: 0;
+  margin-bottom: 12px;
+}
+.newscast-view-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
 }
 
-
-.Frame-3 {
-  flex-grow: 0;
+.newscast-view-title {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  padding: 2px 5px;
-  border-radius: 3px;
-  background-color: var(--bleu-azure);
+  font-size: 22px;
+  font-weight: 700;
+  color: #001a70;
+  margin: 0 0 16px;
+  line-height: 1.35;
+}
+.newscast-view-title-icon {
+  height: 24px;
+  width: auto;
+  flex-shrink: 0;
 }
 
-.NOUVEAUT {
-  flex-grow: 0;
-  font-family: 'Work Sans';
-  font-size: 12px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.33;
-  letter-spacing: normal;
-  text-align: center;
-  color: var(--blanc-charte);
+.newscast-view-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #374151;
 }
-
-.Publi-le-02022023 {
-  flex-grow: 0;
-  font-family: 'Work Sans';
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: left;
-  color: var(--gris-fonce-aa-sonic-silver);
+.newscast-view-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
 }
-
-.Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a {
-  height: 1416px;
-  align-self: stretch;
-  flex-grow: 0;
-  font-family: 'Work Sans';
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: left;
-  color: var(--noir-charte);
+.newscast-view-content a {
+  color: #001a70;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.newscast-view-content a:hover {
+  color: #fe5815;
 }

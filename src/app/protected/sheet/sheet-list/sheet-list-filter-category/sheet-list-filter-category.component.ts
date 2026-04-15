@@ -22,8 +22,12 @@ export class SheetListFilterCategoryComponent implements OnInit, OnChanges, OnDe
 
   ngOnInit() {
     if (this.categories) {
-      this.categories.setValue([]);
-      
+      if (!this.categories.value || this.categories.value.length === 0) {
+        this.categories.setValue([]);
+      } else {
+        this.activeFilter = this.categories.value[0];
+      }
+
       // Écouter les changements du FormControl pour détecter les réinitialisations
       const valueChanges$ = this.categories.valueChanges.subscribe((value) => {
         if (!value || value.length === 0) {

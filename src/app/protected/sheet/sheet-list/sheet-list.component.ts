@@ -149,13 +149,17 @@ export class SheetListComponent implements OnInit, OnDestroy {
       }),
     );
 
-    if (this.previousService.getPreviousUrl().includes('details')) {
+    const fromDetails = this.previousService.getPreviousUrl().includes('details');
+    if (fromDetails) {
       this.loadFilterFromStorage();
     } else {
       this.defaultFilter = this.params;
     }
 
-    this.applyViewMode();
+    // N'appliquer le viewMode que si on ne vient pas d'une page détails (sinon ça écrase les filtres restaurés)
+    if (!fromDetails) {
+      this.applyViewMode();
+    }
     this.loadItems();
     this.loadText();
   }

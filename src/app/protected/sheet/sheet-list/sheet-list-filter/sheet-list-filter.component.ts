@@ -91,6 +91,8 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['defaultFilter'] && changes['defaultFilter'].currentValue) {
       this.initForm();
+      const d = changes['defaultFilter'].currentValue;
+      this.hasActiveDate = !!(d.dateStart || d.dateEnd);
     }
   }
 

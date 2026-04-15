@@ -17,6 +17,8 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 })
 export class SheetListFilterDateComponent implements OnInit, OnDestroy {
   @Input() resetFilters$: Subject<void>;
+  @Input() defaultDateStart: string = '';
+  @Input() defaultDateEnd: string = '';
   @Output() onFiltersChange = new EventEmitter<{ dateStart: string; dateEnd: string }>();
 
   dateForm: FormGroup;
@@ -34,7 +36,10 @@ export class SheetListFilterDateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dateForm = this.formBuilder.group(
-      { dateStart: [null], dateEnd: [null] },
+      {
+        dateStart: [this.defaultDateStart ? new Date(this.defaultDateStart) : null],
+        dateEnd: [this.defaultDateEnd ? new Date(this.defaultDateEnd) : null],
+      },
       { validators: this.dateRangeValidator },
     );
 

@@ -31,6 +31,8 @@
     </app-sheet-list-filter-subscribe>
 
     <app-sheet-list-filter-date [resetFilters$]="resetFilters$"
+      [defaultDateStart]="defaultFilter?.dateStart || ''"
+      [defaultDateEnd]="defaultFilter?.dateEnd || ''"
       (onFiltersChange)="onDateFiltersChange($event)">
     </app-sheet-list-filter-date>
 

@@ -4,7 +4,7 @@
   <div class="row sidenav">
     <!-- Panneau filtres -->
     <div class="col-md-3 sidebar-col">
-      <app-sheet-list-filter
+      <app-sheet-list-filter #filterComponent
         (submittedFilterSheets)="onSubmittedFilterSheets($event)"
         (clearedAllFilters)="onClearedAllFilters()"
         [filter]="filter"

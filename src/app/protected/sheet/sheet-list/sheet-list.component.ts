@@ -3,8 +3,10 @@ import {
   OnInit,
   ViewEncapsulation,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { SheetListFilterComponent } from './sheet-list-filter/sheet-list-filter.component';
 import { Sheet } from 'src/app/shared/models/sheet';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -29,8 +31,8 @@ export class SheetListComponent implements OnInit, OnDestroy {
   totalItems = 0;
   itemsPerPage = 20;
   smallnumPages = 0;
-  paginationForm: FormGroup;
-  welcomeText: SafeHtml;
+  paginationForm!: FormGroup;
+  welcomeText: SafeHtml = '';
   activeText = true;
 
   public user: User | null = null;
@@ -42,6 +44,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
   public sortBy = 'date';
   public sortDirection = 'desc';
   public reset$ = new Subject<void>();
+  @ViewChild('filterComponent') filterComponent!: SheetListFilterComponent;
 
   public filter = {
     subscribe: [],
@@ -173,7 +176,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     this.searchText = filter.searchText ?? '';
     this.searchProvider = filter.searchProvider ?? '';
 
-    if (this.currentPage.value !== 1) {
+    if (this.currentPage?.value !== 1) {
       this.currentPage?.setValue(1);
     } else {
       this.loadItems();
@@ -237,7 +240,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
         : this.filterInput.status;
 
     this.params = {
-      page: this.currentPage.value,
+      page: this.currentPage?.value ?? 1,
       perpage: this.itemsPerPage,
       isSearch: this.isSearch,
       search: {
@@ -268,7 +271,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
     };
 
     this.sheetService.getSheets(this.params).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         if (data && data.sheets) {
           this.totalItems = data.total;
           this.sheets = data.sheets;
@@ -294,9 +297,10 @@ export class SheetListComponent implements OnInit, OnDestroy {
 
   public accederVitrineOffre(): void {
     this.viewModeService.setNormalMode();
-    this.resetFilterInput();
-    this.reset$.next();
-    this.loadItems();
+    // Reset visuel du filtre contrat groupe
+    if (this.filterComponent?.contratGroupe) {
+      this.filterComponent.contratGroupe.setValue('all');
+    }
   }
 
   public navigate(page: string): void {
@@ -345,8 +349,6 @@ export class SheetListComponent implements OnInit, OnDestroy {
     if (this.defaultFilter?.search) {
       this.defaultFilter.search.contratGroupe = value;
     }
-
-    this.loadText();
   }
 
   private loadText(): void {
@@ -367,12 +369,12 @@ export class SheetListComponent implements OnInit, OnDestroy {
   }
 
   private loadFilterFromStorage(): void {
-    this.defaultFilter = JSON.parse(localStorage.getItem('params'));
+    this.defaultFilter = JSON.parse(localStorage.getItem('params') || 'null');
     if (!this.defaultFilter) {
       this.defaultFilter = this.params;
       return;
     }
-    this.currentPage.setValue(this.defaultFilter.page);
+    this.currentPage?.setValue(this.defaultFilter.page);
     this.itemsPerPage = this.defaultFilter.perpage;
     this.searchText = this.defaultFilter.search.searchText || '';
     this.searchProvider = this.defaultFilter.search.searchProvider || '';

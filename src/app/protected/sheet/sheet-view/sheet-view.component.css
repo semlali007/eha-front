@@ -222,6 +222,7 @@ app-sheet-view app-breadcrumb nav { margin: 0 !important; padding: 0 !important;
   font-size: 12px;
   font-weight: 600;
   color: #001a70;
+  cursor: default;
 }
 .sv-table-row {
   display: flex;
@@ -298,8 +299,8 @@ app-sheet-view .sv-field-value p {
 app-sheet-view .sv-field-value table {
   width: 100% !important;
   border-collapse: collapse !important;
-  border: 1px solid #dfe3e8 !important;
-  border-radius: 6px !important;
+  border: 1px solid #e8eaed !important;
+  border-radius: 8px !important;
   overflow: hidden !important;
   margin: 8px 0 !important;
   font-size: 13px !important;
@@ -307,15 +308,19 @@ app-sheet-view .sv-field-value table {
 app-sheet-view .sv-field-value table td,
 app-sheet-view .sv-field-value table th {
   border: 1px solid #e8eaed !important;
-  padding: 8px 10px !important;
+  padding: 8px 12px !important;
   text-align: left !important;
   vertical-align: top !important;
+  background: #fff !important;
 }
-app-sheet-view .sv-field-value table tr:nth-child(even) {
-  background: #f9fafb !important;
-}
-app-sheet-view .sv-field-value table tr:hover {
-  background: #eef2fb !important;
+app-sheet-view .sv-field-value table tr:first-child td,
+app-sheet-view .sv-field-value table tr:first-child th,
+app-sheet-view .sv-field-value table thead td,
+app-sheet-view .sv-field-value table thead th {
+  background: #e8eef8 !important;
+  color: #001a70 !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
 }
 app-sheet-view .sv-field-value img {
   max-width: 100% !important;
@@ -378,6 +383,10 @@ app-sheet-view .card.sv-accordion .card-header {
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
+}
+app-sheet-view accordion-group[ng-reflect-is-disabled="true"] .sv-table-header {
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
 /* ── Modal ─────────────────────────────────────────────────── */

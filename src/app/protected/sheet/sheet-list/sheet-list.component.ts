@@ -140,6 +140,24 @@ export class SheetListComponent implements OnInit, OnDestroy {
       }),
     );
 
+    const fromDetails = this.previousService.getPreviousUrl().includes('details');
+    const contratGroupeMode = this.viewModeService.isContratGroupeMode();
+
+    // Consommer le mode après lecture (one-shot)
+    this.viewModeService.setNormalMode();
+
+    if (fromDetails) {
+      this.loadFilterFromStorage();
+    } else if (contratGroupeMode) {
+      this.filterInput.contratGroupe = 'true';
+      this.params.search.contratGroupe = 'true';
+      this.defaultFilter = this.params;
+    } else {
+      localStorage.removeItem('params');
+      this.defaultFilter = this.params;
+    }
+
+    // S'abonner aux changements de mode APRÈS l'init (évite le double appel)
     this.subscriptions.push(
       this.viewModeService.mode$.pipe(skip(1)).subscribe(() => {
         this.applyViewMode();
@@ -149,17 +167,6 @@ export class SheetListComponent implements OnInit, OnDestroy {
       }),
     );
 
-    const fromDetails = this.previousService.getPreviousUrl().includes('details');
-    if (fromDetails) {
-      this.loadFilterFromStorage();
-    } else {
-      this.defaultFilter = this.params;
-    }
-
-    // N'appliquer le viewMode que si on ne vient pas d'une page détails (sinon ça écrase les filtres restaurés)
-    if (!fromDetails) {
-      this.applyViewMode();
-    }
     this.loadItems();
     this.loadText();
   }

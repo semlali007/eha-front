@@ -21,7 +21,7 @@ export class NewsCastService {
      };
   
   public get(id: number): Observable<any> {
-    const url = `${this.appConfigService.basePath}/admin/news-cast/get/${id}`;
+    const url = `${this.appConfigService.basePath}/news-cast/get/${id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((data: any) => {
@@ -84,7 +84,7 @@ export class NewsCastService {
    }
 
   public getCategories(): Observable<any> {
-    const url = `${this.appConfigService.basePath}/admin/news-cast/categories`;
+    const url = `${this.appConfigService.basePath}/news-cast/categories`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((listData: any) => {

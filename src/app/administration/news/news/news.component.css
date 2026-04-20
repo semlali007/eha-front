@@ -1,0 +1,8 @@
+/* Styles spécifiques à la page News (reste = admin-shared.css) */
+
+.adm-news-desc {
+  color: #4b5563;
+  max-width: 520px;
+}
+.adm-news-desc p { margin: 0 0 4px 0; }
+.adm-news-desc p:last-child { margin-bottom: 0; }

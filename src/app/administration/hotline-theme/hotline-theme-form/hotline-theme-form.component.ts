@@ -1,82 +1,63 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
-//import { FactsheetService } from 'src/app/core/services/factsheet.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HotlineThemeService } from 'src/app/core/services/hotline-theme.service';
 
 @Component({
   selector: 'app-hotline-theme-form',
   templateUrl: './hotline-theme-form.component.html',
-  styleUrls: ['./hotline-theme-form.component.css']
+  styleUrls: [
+    '../../admin-shared.css',
+    './hotline-theme-form.component.css',
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HotlineThemeFormComponent implements OnInit {
 
-  factsheetAddForm: FormGroup;
+  factsheetAddForm!: FormGroup;
   public afterAdd: EventEmitter<any> = new EventEmitter();
-  id: number;
-  get label() { return this.factsheetAddForm.get('label') }
-  get living() { return this.factsheetAddForm.get('living') }
+  id!: number;
+
+  get label() { return this.factsheetAddForm.get('label'); }
+  get living() { return this.factsheetAddForm.get('living'); }
+
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,
-    private hotlineThemeService: HotlineThemeService
-
-  ) { }
+    private hotlineThemeService: HotlineThemeService,
+  ) {}
 
   ngOnInit(): void {
     this.factsheetAddForm = this.fb.group({
-      'label': ['', [
-        Validators.required,
-      ]],
-      'living': false
+      label: ['', [Validators.required]],
+      living: [false],
     });
     if (!!this.id) {
       this.hotlineThemeService.getElement({ id: this.id }).subscribe(response => {
         this.factsheetAddForm = this.fb.group({
-          'label': [response.label, [
-            Validators.required,
-          ]],
-          'living': response.living
+          label: [response.label, [Validators.required]],
+          living: [!!response.living],
         });
-
-      })
+      });
     }
   }
 
   submit(): void {
-    
-    const params = {
+    const params: any = {
       id: this.id,
-      label: this.label.value,
-      living: this.living.value
-    }
-
-
-    console.log('params', params);
-    
-
+      label: this.label?.value,
+      living: this.living?.value,
+    };
     if (!!this.id) {
       params.id = this.id;
       this.hotlineThemeService.update(params).subscribe(response => {
         this.bsModalRef.hide();
         this.afterAdd.emit(response);
       });
-      } else {
-      
-        this.hotlineThemeService.add(params).subscribe(response => {
-          this.bsModalRef.hide();
-          this.afterAdd.emit(response);
-        });
-     }
-  
-  }
-
-
-  onFileChange(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.factsheetAddForm.patchValue({
-        fileSource: file
+    } else {
+      this.hotlineThemeService.add(params).subscribe(response => {
+        this.bsModalRef.hide();
+        this.afterAdd.emit(response);
       });
     }
   }

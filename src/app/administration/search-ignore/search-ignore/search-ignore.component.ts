@@ -1,86 +1,93 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SearchLogService } from 'src/app/core/services/search-log.service';
-import {IgnoreFormComponent} from 'src/app/administration/search-ignore/ignore-form/ignore-form.component';
-
-import { Observable} from 'rxjs';
+import { IgnoreFormComponent } from 'src/app/administration/search-ignore/ignore-form/ignore-form.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
- 
 
 @Component({
   selector: 'app-search-ignore',
   templateUrl: './search-ignore.component.html',
-  styleUrls: ['./search-ignore.component.css']
+  styleUrls: [
+    '../../admin-shared.css',
+    './search-ignore.component.css',
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SearchIgnoreComponent implements OnInit {
-  logs$: Observable<any>;
-  bsModalRef?: BsModalRef;
-  bsConfirmModalRef?: BsModalRef;
-  idToDelete?: number;
-  
-  count = 0;
-  paginationForm!: FormGroup;
-  itemsPerPage: number = 10;
-  smallnumPages: number = 0;
-  startItem: number = 0;
-  endItem: number = 10;
+  public words: any[] = [];
+  public filtered: any[] = [];
+  public searchText = '';
+  public itemsPerPage = 10;
+  public paginationForm!: FormGroup;
+
+  public bsModalRef?: BsModalRef;
+  public bsConfirmModalRef?: BsModalRef;
+  private idToDelete?: number;
 
   constructor(
     private modalService: BsModalService,
     private searchLogService: SearchLogService,
     private fb: FormBuilder,
-    ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.paginationForm = this.fb.group({
-      'currentPage': [1],
-    });
+    this.paginationForm = this.fb.group({ currentPage: 1 });
     this.loadData();
   }
 
-  get currentPage() { return this.paginationForm?.get('currentPage')}
-  
-  loadData(){
-    this.logs$ = this.searchLogService.getIgnoreList({type:'home_page'});
-  }
-  openAdd(id?: number) {
-    const initialState = {
-      id: id,
-      type: 'home_page'
-    };
-    this.bsModalRef = this.modalService.show(IgnoreFormComponent, {initialState});
-    this.bsModalRef.content.closeBtnName = 'Fermer';
-    this.bsModalRef.content.afterAdd.subscribe(response => {
-      this.loadData();
+  get currentPage() { return this.paginationForm.get('currentPage'); }
+  get currentPageValue(): number { return this.currentPage?.value ?? 1; }
+  get startIndex(): number { return (this.currentPageValue - 1) * this.itemsPerPage; }
+  get endIndex(): number { return Math.min(this.startIndex + this.itemsPerPage, this.filtered.length); }
+  get pagedWords(): any[] { return this.filtered.slice(this.startIndex, this.endIndex); }
+
+  loadData(): void {
+    this.searchLogService.getIgnoreList({ type: 'home_page' }).subscribe((data) => {
+      this.words = Array.isArray(data) ? data : [];
+      this.applyFilter();
     });
   }
 
-  remove($id) {
-  
-    this.searchLogService
-      .removeIgnored({
-        id: $id
-      })
-      .subscribe(response => this.loadData());
-    
-    }
-    confirm(): void {
-      this.remove(this.idToDelete);
-      this.bsConfirmModalRef?.hide();    
-    }
-   
-    decline(): void {
-      this.bsConfirmModalRef?.hide();  }
-      openModal(template: TemplateRef<any>, id: number) {
-        this.bsConfirmModalRef = this.modalService.show(template, {class: 'modal-sm'});
-        this.idToDelete = id;
-      }
-      public pageChanged(event: any): void {
-        console.log(event.itemsPerPage);
-        console.log(event.page);
+  onSearchChange(value: string): void {
+    this.searchText = value;
+    this.currentPage?.setValue(1);
+    this.applyFilter();
+  }
 
-        this.startItem = (event.page - 1) * event.itemsPerPage;
-        this.endItem = event.page * event.itemsPerPage;
-        this.currentPage.setValue(event.page);
-      }
+  private applyFilter(): void {
+    const q = (this.searchText || '').trim().toLowerCase();
+    this.filtered = !q
+      ? [...this.words]
+      : this.words.filter((w) => (w.word || '').toLowerCase().includes(q));
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage?.setValue(event.page);
+  }
+
+  openAdd(id?: number): void {
+    const initialState = { id, type: 'home_page' };
+    this.bsModalRef = this.modalService.show(IgnoreFormComponent, { initialState });
+    this.bsModalRef.content.closeBtnName = 'Fermer';
+    this.bsModalRef.content.afterAdd.subscribe(() => this.loadData());
+  }
+
+  openModal(template: TemplateRef<any>, id: number): void {
+    this.bsConfirmModalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.idToDelete = id;
+  }
+
+  confirm(): void {
+    this.remove(this.idToDelete);
+    this.bsConfirmModalRef?.hide();
+  }
+
+  decline(): void {
+    this.bsConfirmModalRef?.hide();
+  }
+
+  private remove(id?: number): void {
+    if (id == null) return;
+    this.searchLogService.removeIgnored({ id }).subscribe(() => this.loadData());
+  }
 }

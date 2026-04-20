@@ -32,6 +32,22 @@
   border-radius: 2px;
   background: #fe5815;
 }
+
+/* Header de page : titre à gauche + actions à droite */
+.adm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.adm-header .adm-title { margin-bottom: 0; }
+.adm-header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 .adm-section-title {
   font-size: 13px;
   font-weight: 700;
@@ -188,6 +204,75 @@
   font-weight: 600;
 }
 .adm-chip--orange { background: #fff4ef; color: #fe5815; }
+.adm-chip--green  { background: #ecfdf5; color: #059669; }
+.adm-chip--muted  { background: #f3f4f6; color: #9ca3af; }
+.adm-chip--red    { background: #fef2f2; color: #dc2626; }
+
+/* Groupe de boutons de tri (segmented control) */
+.adm-sort-group {
+  display: inline-flex;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 2px;
+}
+.adm-sort-btn {
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.adm-sort-btn:hover { color: #1f2937; }
+.adm-sort-btn.is-active {
+  background: #fff;
+  color: #001a70;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Tag (synonyme, etc.) avec bouton de retrait optionnel */
+.adm-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0f4ff;
+  color: #001a70;
+  border: 1px solid #dfe3e8;
+  border-radius: 99px;
+  padding: 3px 4px 3px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 2px 4px 2px 0;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.adm-tag-text { padding-right: 2px; }
+.adm-tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 99px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.adm-tag-remove:hover {
+  background: #dc2626;
+  color: #fff;
+}
+.adm-tag-empty {
+  font-size: 12px;
+  color: #9ca3af;
+  font-style: italic;
+}
 
 /* ─── Boutons ─────────────────────────────────────────────── */
 .adm-btn {
@@ -222,6 +307,17 @@
   background: #e34a0c;
   border-color: #e34a0c;
   box-shadow: 0 3px 8px rgba(254, 88, 21, 0.25);
+}
+
+.adm-btn-edf {
+  background: #001a70;
+  color: #fff;
+  border-color: #001a70;
+}
+.adm-btn-edf:hover:not(:disabled) {
+  background: #00237a;
+  border-color: #00237a;
+  box-shadow: 0 3px 8px rgba(0, 26, 112, 0.25);
 }
 
 .adm-btn-ghost {
@@ -421,6 +517,105 @@
   font-size: 13px;
   color: #6b7280;
   margin: 0;
+}
+
+/* ─── Modals (ngx-bootstrap wrappers) ─────────────────────── */
+.adm-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.adm-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+.adm-modal-close {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  color: #9ca3af;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+}
+.adm-modal-close:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.adm-modal-body {
+  padding: 20px 22px;
+}
+
+.adm-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 22px 18px;
+  border-top: 1px solid #f3f4f6;
+  background: #fafbfc;
+}
+
+/* Override global pour la modal ngx-bootstrap utilisée en admin */
+.modal-content {
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18) !important;
+  overflow: hidden;
+}
+
+/* ─── Formulaires ─────────────────────────────────────────── */
+.adm-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.adm-form-group + .adm-form-group { margin-top: 14px; }
+.adm-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+}
+.adm-required { color: #fe5815; margin-left: 2px; }
+.adm-input,
+.adm-textarea,
+.adm-select {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: #1f2937;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.adm-input:focus,
+.adm-textarea:focus,
+.adm-select:focus {
+  border-color: #001a70;
+  box-shadow: 0 0 0 3px rgba(0, 26, 112, 0.12);
+}
+.adm-input::placeholder { color: #9ca3af; }
+.adm-field-hint {
+  font-size: 12px;
+  color: #6b7280;
+}
+.adm-field-error {
+  font-size: 12px;
+  color: #dc2626;
 }
 
 /* ─── Utilitaires layout ──────────────────────────────────── */

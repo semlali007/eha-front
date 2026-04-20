@@ -1,142 +1,83 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { PreviousService } from 'src/app/core/services/previous.service';
 import { User } from 'src/app/shared/models/user';
 import { NewsCastService } from 'src/app/core/services/newscast.service';
-
 
 @Component({
   selector: 'app-newscast-list',
   templateUrl: './newscast-list.component.html',
-  styleUrls: ['./newscast-list.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: [
+    '../../admin-shared.css',
+    './newscast-list.component.css',
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NewsCastListComponent implements OnInit, OnDestroy {
-  totalItems: number = 0;
-  itemsPerPage: number = 10;
-  paginationForm: FormGroup;
-  smallnumPages: number = 0;
-  public subscription: Subscription;
-  public user: User = null;
-  newsList: any[] = [];
-  private draggedIndex: number;
-  public draggedOverIndex: number;
-
-
+  public totalItems: number = 0;
+  public itemsPerPage: number = 10;
+  public paginationForm!: FormGroup;
+  public searchText = '';
+  public subscription!: Subscription;
+  public user: User | null = null;
+  public newsList: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private previousService: PreviousService,
     private newsCastService: NewsCastService,
-
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
-    this.paginationForm = this.fb.group({
-      'currentPage': 1,
-    });
-
-    if (this.previousService.getPreviousUrl().includes('details')) {
-      this.loadFilterFromStorage();
-    } else {
-    }
+    this.paginationForm = this.fb.group({ currentPage: 1 });
     this.loadItems();
   }
 
-  get currentPage() { return this.paginationForm.get('currentPage') }
+  get currentPage() { return this.paginationForm.get('currentPage'); }
+  get currentPageValue(): number { return this.currentPage?.value ?? 1; }
+  get totalPages(): number { return Math.ceil(this.totalItems / this.itemsPerPage); }
 
-  public onsSubmittedSearchSheets(filter: any) {
-    
-
-  }
-
-  btnClick = function () {
-    this.router.navigate(['app/hotline/create'], { queryParams: { theme: 'sheet' } });
-  };
-
-
-  public onSubmittedFilterSheets(filter: any) {
-    this.loadItems();
-  }
-
-  public onSubmittedGetSheet(id: any) {
-    this.router.navigate([`app/fiches/details/${id}`]);
-  }
-
-  public onChangedSort(sort: any) {
-
-  }
-
-  public loadItems() {
-    this.newsCastService.getList({'page': this.currentPage.value}).subscribe(
-      data => {
-        this.totalItems = data.total; 
-        this.newsList = data.data.sort((a, b) => new Date(b.created_date).getTime() - new Date(a.created_date).getTime());
-      }
+  get filtered(): any[] {
+    const q = (this.searchText || '').trim().toLowerCase();
+    if (!q) return this.newsList;
+    return this.newsList.filter((n) =>
+      (n.title || '').toLowerCase().includes(q)
+      || (n.short_description || '').toLowerCase().includes(q)
+      || (n.categ || '').toLowerCase().includes(q),
     );
-
   }
 
-  initFilterInput() {
-  
+  onSearchChange(value: string): void {
+    this.searchText = value;
   }
 
-  initSortBy(sortBy, sortDirection) {
-   
+  public loadItems(): void {
+    this.newsCastService.getList({ page: this.currentPageValue }).subscribe((data: any) => {
+      this.totalItems = data?.total ?? 0;
+      this.newsList = (data?.data || []).sort(
+        (a: any, b: any) => new Date(b.created_date).getTime() - new Date(a.created_date).getTime(),
+      );
+    });
   }
 
-  public navigate(page: string): void {
-    if (page === 'fiche_marchee_list') {
-      this.router.navigate(['app/fiches/liste']);
-    }
-    else if (page === 'creation') {
-      this.router.navigate(['admin/actualites/creation']);
-    }
+  public navigateCreate(): void {
+    this.router.navigate(['admin/actualites/creation']);
   }
 
-    public pageChanged(event: any): void {
-      this.currentPage.setValue(event.page);
-       this.loadItems();
-    }
+  public openDetail(id: any): void {
+    this.router.navigate([`admin/actualites/detail/${id}`]);
+  }
+
+  public pageChanged(event: any): void {
+    this.currentPage?.setValue(event.page);
+    this.loadItems();
+  }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
-
-  public loadFilterFromStorage() {
- 
-  }
-
-  loadText() {
-    
-  }
-
-  allowDrop($event, index): void {
-    this.draggedOverIndex = index;
-    $event.preventDefault();
-  }
-
-  onDragStart(index): void {
-    this.draggedIndex = index;
-  }
-
-  onDrop($event, index): void {
-    $event.preventDefault();
-    const item = this.newsList[this.draggedIndex];
-    this.newsList.splice(this.draggedIndex, 1);
-    this.newsList.splice(index, 0, item);
-    this.draggedIndex = -1;
-    this.draggedOverIndex = -1;
-  }
- 
-  saveChange(){
-   
-  }
-
 }

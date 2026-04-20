@@ -1,77 +1,77 @@
-<div class="container-fluid">
-  <div class="row ">
-    <div class="col-md-9" style="margin-top:-8px;">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-9 margin-tb">
-                
-              </div>
-              <div class="col-3 col-sm-3">
-              </div>
-            </div>
+<div class="adm-page">
 
-            <form [formGroup]="pageForm" (ngSubmit)="saveChange()">
-            <div class="form-group row" style="padding-top:30px">
-             
-              <div class="col-sm-2">
-                  <strong>Activer</strong>
-              </div>
-              <div class="col-sm-4">
-                  <div class="form-check">
-                      <input type="checkbox" formControlName="active" id="active"  class="form-check-input"/>
-                  </div>
-              </div>
-              <div class="col-sm-6 pull-left" >
-                <button type="submit" class="btn btn-primary" value="1" >Enregistrer les
-                  modifications</button>
-              </div>
-          </div>
+  <h1 class="adm-title">Actualités — Page d'accueil</h1>
 
-</form>
-            <div>
-              <div>
-                <div class="tab-content">
-                  <table class="table" style="border: 0;">
-                    <tbody>
-                      <tr *ngFor="let news of newsList; let i = index" class="draggable"
-                        [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)"
-                        (dragstart)="onDragStart(i)" (drop)="onDrop($event, i)" style="border: 0;">
-                        <td style="border: 0;">
-                          <div class="list-group-item">
-                              <table style="border: 0;">
-                                <tr style="border: 0;">
-                                  <td style="border: 0;">
-                                    <span class="badge {{news.categ_code|newsCastCategoryColor}}">
-                                      {{ news.categ }}
-                                    </span>
-                                  </td>
-                                </tr>
-                                <tr style="border: 0;">
-                                  <td style="border: 0;">
-                                    <a (click)="onSubmittedGetSheet(news.id)" class="link blue_link">
-                                      <strong>{{ news.title }}</strong>
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr style="border: 0;">
-                                  <td style="border: 0;">
-                                    <a [innerHtml]="news.short_description">
-                                    </a>
-                                  </td>
-                                </tr>
-                              </table>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+  <form [formGroup]="pageForm" (ngSubmit)="saveChange()" class="adm-card adm-card--pad-lg" style="margin-bottom: 20px">
+    <div class="adm-row-between">
+      <div>
+        <h3 class="adm-io-title" style="margin:0 0 4px 0">Bloc actualités en page d'accueil</h3>
+        <p class="adm-muted" style="margin:0">
+          Activez ou non l'affichage et réordonnez les actualités mises en avant.
+        </p>
+      </div>
+
+      <div class="adm-row" style="gap: 12px">
+        <label class="adm-switch">
+          <input type="checkbox" formControlName="active">
+          <span class="adm-switch-track"></span>
+          <span class="adm-switch-label">Activer le bloc</span>
+        </label>
+
+        <span *ngIf="saved" class="adm-chip adm-chip--green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+          </svg>
+          Enregistré
+        </span>
+        <span *ngIf="hasOrderChanges" class="adm-chip adm-chip--orange">Ordre modifié</span>
+
+        <button type="submit" class="adm-btn adm-btn-edf">
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="adm-toolbar">
+    <span class="adm-toolbar-count">
+      <strong>{{ newsList.length }}</strong> actualité{{ newsList.length > 1 ? 's' : '' }} en page d'accueil
+    </span>
+    <span class="adm-muted" style="font-size: 12px">Glissez-déposez pour réordonner</span>
+  </div>
+
+  <div class="adm-nc-home-list" *ngIf="newsList.length > 0">
+    <div *ngFor="let news of newsList; let i = index"
+         class="adm-nc-home-row"
+         [class.is-dragover]="draggedOverIndex === i"
+         draggable="true"
+         (dragover)="allowDrop($event, i)"
+         (dragstart)="onDragStart(i)"
+         (drop)="onDrop($event, i)">
+      <span class="adm-nc-home-drag" title="Glisser pour réordonner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+      </span>
+      <div class="adm-nc-home-body" (click)="onSubmittedGetSheet(news.id)">
+        <div class="adm-nc-home-head">
+          <span [class]="'adm-cat-badge ' + (news.categ_code | newsCastCategoryColor)">
+            {{ news.categ }}
+          </span>
+          <strong class="adm-nc-home-position">#{{ i + 1 }}</strong>
         </div>
+        <h4 class="adm-nc-home-title">{{ news.title }}</h4>
+        <p class="adm-nc-home-desc" [innerHtml]="news.short_description"></p>
       </div>
     </div>
   </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="newsList.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/>
+    </svg>
+    <p class="adm-empty-title">Aucune actualité mise en avant</p>
+    <p class="adm-empty-desc">Cochez "Page d'accueil" dans une actualité pour qu'elle s'affiche ici.</p>
+  </div>
+
+</div>

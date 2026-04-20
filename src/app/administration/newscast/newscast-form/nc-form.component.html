@@ -1,62 +1,40 @@
-<form novalidate [formGroup]="ncForm" (ngSubmit)="submit()">
+<form class="adm-page" novalidate [formGroup]="ncForm" (ngSubmit)="submit()">
 
-    <div class="row">
-        <div class="col-lg-9">
-            <div>
-                <button (click)="list()" class="btn btn-edf">Actualités</button>
-            </div>
-        </div>
-        <div class="col-lg-3 margin-tb">
-            <div class="row">
-                
-                <div class="ml-auto">
-                    <button type="button" class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();' >
-                        Annuler
-                    </button>
-                </div>
-
-                <div class="ml-auto">
-                    <button type="submit" class="btn btn-edf float-left" [disabled]="ncForm.invalid">
-                        Enregistrer
-                    </button>
-                </div>
-            </div>
-        </div>
+  <div class="adm-header">
+    <h1 class="adm-title">{{ newsId ? 'Modifier l\'actualité' : 'Nouvelle actualité' }}</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="cancel(); $event.stopPropagation()">
+        Annuler
+      </button>
+      <button type="submit" class="adm-btn adm-btn-edf" [disabled]="ncForm.invalid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+        </svg>
+        {{ newsId ? 'Enregistrer' : 'Créer' }}
+      </button>
     </div>
+  </div>
 
-
-
+  <div class="adm-card adm-card--pad-lg">
     <app-nc-form-title [title]="title"></app-nc-form-title>
     <app-nc-form-short [short_description]="short_description"></app-nc-form-short>
     <app-nc-form-description [description]="long_description"></app-nc-form-description>
+  </div>
+
+  <div class="adm-card adm-card--pad-lg" style="margin-top: 16px">
+    <h3 class="adm-io-title" style="margin: 0 0 14px 0">Paramètres de publication</h3>
     <app-nc-form-category [categoryId]="categoryId"></app-nc-form-category>
     <app-nc-form-status [status]="status"></app-nc-form-status>
     <app-nc-form-home [is_home]="is_home"></app-nc-form-home>
-    <div class="row">
-        <div class="col-lg-10">
-        </div>
-        <div class="col-lg-2">
-            <div class="row">
-                <div class="ml-auto">
-                    <button class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();'>
-                        Annuler
-                    </button>
-                </div>
+  </div>
 
-                <div class="ml-auto">
-                    <button type="submit" class="btn btn-edf float-left" [disabled]="ncForm.invalid">
-                        Enregistrer
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px">
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="cancel(); $event.stopPropagation()">
+      Annuler
+    </button>
+    <button type="submit" class="adm-btn adm-btn-edf" [disabled]="ncForm.invalid">
+      {{ newsId ? 'Enregistrer' : 'Créer' }}
+    </button>
+  </div>
+
 </form>
-
-<ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
-    </div>
-  </ng-template>

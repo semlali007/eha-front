@@ -35,6 +35,6 @@ export class SheetListFilterEdfOpenComponent implements OnInit,OnChanges {
   }
 
   public isActive(code): boolean {
-    return this.edfOpen.value == code;
+    return this.edfOpen.value === code;
   }
 }

@@ -34,6 +34,6 @@ export class SheetListFilterPartnershipComponent implements OnInit,OnChanges {
   }
 
   public isActive(code): boolean {
-    return this.partnership.value == code;
+    return this.partnership.value === code;
   }
 }

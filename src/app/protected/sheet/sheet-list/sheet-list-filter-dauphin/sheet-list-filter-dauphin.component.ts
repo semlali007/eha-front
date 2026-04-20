@@ -35,6 +35,6 @@ export class SheetListFilterDauphinComponent implements OnInit, OnChanges {
   }
 
   public isActive(code): boolean {
-    return this.dauphin.value == code;
+    return this.dauphin.value === code;
   }
 }

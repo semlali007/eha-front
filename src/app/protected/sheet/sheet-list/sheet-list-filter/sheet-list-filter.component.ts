@@ -102,12 +102,13 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
 
   initForm(): void {
     const d = this.defaultFilter;
+    const orAll = (v: any) => (v === '' || v == null) ? 'all' : v;
     this.sheetFilterForm = this.fb.group({
-      edfOpen: [d?.edf_open || 'all'],
-      subscribe: [d?.subscribe || false],
-      partnership: [d?.partnership || 'all'],
-      sector: [d?.protected_sector || 'all'],
-      dauphin: [d?.dauphin || 'all'],
+      edfOpen: [orAll(d?.edf_open)],
+      subscribe: [d?.subscribe ?? false],
+      partnership: [orAll(d?.partnership)],
+      sector: [orAll(d?.protected_sector)],
+      dauphin: [orAll(d?.dauphin)],
       beneficiaries: [d?.beneficiaries || []],
       stipulationAutrui: [d?.stipulationAutrui || []],
       areas: [d?.areas || []],
@@ -116,9 +117,9 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
       categories: [d?.categories || []],
       committees: [d?.committees || []],
       status: [d?.status || []],
-      showcase: [d?.showcase || 'all'],
-      contratGroupe: [d?.contratGroupe || 'all'],
-      miseAJourDonnee: [d?.miseAJourDonnee || 'all'],
+      showcase: [orAll(d?.showcase)],
+      contratGroupe: [orAll(d?.contratGroupe)],
+      miseAJourDonnee: [orAll(d?.miseAJourDonnee)],
       supplierSize: [d?.supplierSize || []],
     });
   }

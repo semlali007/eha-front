@@ -20,7 +20,9 @@ export class SheetListFilterCommitteeComponent implements OnInit,OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.committees.setValue([]);
+    if (!this.committees.value || this.committees.value.length === 0) {
+      this.committees.setValue([]);
+    }
   }
 
   ngOnChanges(): void {

@@ -19,7 +19,9 @@ export class SheetListFilterDirectionComponent implements OnInit,OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.directions.setValue([]);
+    if (!this.directions.value || this.directions.value.length === 0) {
+      this.directions.setValue([]);
+    }
   }
 
   ngOnChanges(): void {

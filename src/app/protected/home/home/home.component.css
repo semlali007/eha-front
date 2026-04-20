@@ -4,7 +4,7 @@
 
 /* ─── Page layout ─────────────────────────────────────────── */
 .home-page {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -49,6 +49,7 @@ app-home .list-group.cadre {
   flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
+  align-items: stretch !important;
 }
 app-home .cadre [class*="col-"],
 app-home .list-group.cadre [class*="col-"] {
@@ -86,16 +87,23 @@ app-home .titre-cadre img {
   opacity: 0.8;
 }
 app-home .sous-titre-cadre {
+  display: block !important;
+  width: 100% !important;
   font-family: 'Work Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #001a70;
-  margin: -2px 0 0 30px;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #001a70 !important;
+  background: #e8eef8 !important;
+  border: 2px solid #fe5815;
+  padding: 8px 14px !important;
+  margin: 8px 0 4px 0 !important;
+  border-radius: 6px;
+  box-sizing: border-box !important;
 }
 
 /* ─── Paragraphes ─────────────────────────────────────────── */
 app-home .cadre .p,
-app-home .cadre p:not(.titre-cadre):not(.p-danger):not(.savoir-plus) {
+app-home .cadre p:not(.titre-cadre):not(.p-danger):not(.savoir-plus):not(.sous-titre-cadre) {
   font-size: 14px !important;
   line-height: 1.5 !important;
   color: #4b5563 !important;
@@ -271,6 +279,17 @@ app-home-contact .full-width {
 }
 app-home-contact .titre-cadre {
   margin-bottom: 8px !important;
+}
+
+/* ─── Bouton encart contrat groupe ────────────────────────── */
+app-home .btn-contrat-groupe {
+  background: #001a70 !important;
+  color: #fff !important;
+  border: 1px solid #001a70 !important;
+}
+app-home .btn-contrat-groupe:hover {
+  background: #00237a !important;
+  color: #fff !important;
 }
 
 /* ─── Search : remove ugly <br> spacing + full width forms ── */

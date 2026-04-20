@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -19,7 +19,8 @@ import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-sheet-view',
   templateUrl: './sheet-view.component.html',
-  styleUrls: ['./sheet-view.component.css']
+  styleUrls: ['./sheet-view.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SheetViewComponent implements OnInit, OnDestroy {
   public sheetId: string;

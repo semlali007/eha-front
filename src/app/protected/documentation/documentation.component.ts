@@ -90,13 +90,18 @@ export class DocumentationComponent implements OnInit {
    * sans copier de propriétés dangereuses (__proto__, constructor, prototype).
    */
   private sanitizeDocItem(item: any): any {
+    if (!item || typeof item !== 'object') {
+      return {};
+    }
     const allowedKeys = [
       'id', 'parent', 'label', 'description', 'warning',
       'breadcrumb', 'link', 'position', 'order', 'active'
     ];
-    const clean: any = {};
+    const clean: any = Object.create(null);
     for (const key of allowedKeys) {
-      if (item.hasOwnProperty(key) && !this.isDangerousKey(key)) {
+      // hasOwnProperty via Object.prototype pour se protéger d'une
+      // éventuelle pollution de item.hasOwnProperty lui-même.
+      if (Object.prototype.hasOwnProperty.call(item, key) && !this.isDangerousKey(key)) {
         clean[key] = item[key];
       }
     }

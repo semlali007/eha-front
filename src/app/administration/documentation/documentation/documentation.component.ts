@@ -117,12 +117,23 @@ export class DocumentationComponent implements OnInit {
     this.documentationService.updatePositions({ items: sortedList }).subscribe(() => this.getDocumentation());
   }
 
-  import(): void {
-    const params: any[] = [];
-    this.requestData.forEach((row: any, rowIdx: number) => {
-      if (rowIdx === 0) return;
-      const line: any = {};
-      this.requestData[0].forEach((value: any, key: number) => { line[value] = row[key]; });
+  import(){
+    // Clés interdites pour prévenir toute Prototype/Object Property Pollution
+    // via un fichier CSV importé qui contiendrait ces en-têtes.
+    const FORBIDDEN_KEYS = ['__proto__', 'constructor', 'prototype'];
+    let params = [];
+    this.requestData.forEach((DataValue,DataKey)=>{
+      if(DataKey == 0){
+        return;
+      }
+      // Objet sans prototype → aucune propriété ne peut être "héritée" ni polluée
+      let line = Object.create(null);
+      this.requestData[0].forEach((value,key)  => {
+        if (typeof value !== 'string' || FORBIDDEN_KEYS.includes(value)) {
+          return;
+        }
+        line[value] = DataValue[key];
+      });
       params.push(line);
     });
 

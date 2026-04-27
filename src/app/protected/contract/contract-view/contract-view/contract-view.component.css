@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════════
+   CONTRACT VIEW — Détail d'un contrat
+   ViewEncapsulation.None — toutes les classes .cv-* sont locales
+   ═══════════════════════════════════════════════════════════ */
+
+.cv-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  font-family: 'Work Sans', sans-serif;
+  color: #1f2937;
+}
+
+/* Breadcrumb cohérent (même style que sheet-view / sheet-form) */
+contract-view app-breadcrumb { display: block; }
+contract-view app-breadcrumb .breadcrumb {
+  margin-bottom: 2px !important;
+  padding: 8px 5px !important;
+  background: transparent !important;
+}
+contract-view app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
+
+/* ─── Action bar ──────────────────────────────────────────── */
+.cv-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+/* Bouton "Retour" — identique à sheet-view (.sv-back) */
+.cv-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #001a70;
+  background: #f0f4ff;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.cv-back:hover {
+  background: #001a70;
+  color: #fff;
+  border-color: #001a70;
+  text-decoration: none;
+}
+.cv-back:focus { outline: none; box-shadow: 0 0 0 3px rgba(0, 26, 112, 0.15); }
+
+/* ─── Header card avec icône + code + statut ─────────────── */
+.cv-header-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
+  padding: 22px 26px;
+  margin-bottom: 16px;
+}
+.cv-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.cv-header-icon {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #001a70;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cv-header-titles { min-width: 0; }
+.cv-header-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 0 0 2px 0;
+}
+.cv-header-code {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #001a70;
+  line-height: 1.2;
+  word-break: break-all;
+}
+.cv-header-label {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+/* Status badge */
+.cv-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 99px;
+  flex: none;
+}
+.cv-status-active {
+  background: #ecfdf5;
+  color: #059669;
+}
+.cv-status-active::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #059669;
+}
+.cv-status-expired {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* ─── Sections numérotées (cards avec shadow) ────────────── */
+.cv-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
+  padding: 22px 24px;
+  margin-bottom: 14px;
+}
+.cv-section-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.cv-section-number {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #e8eef8;
+  color: #001a70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.cv-section-titles { flex: 1; min-width: 0; }
+.cv-section-title {
+  margin: 0 0 2px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.3;
+}
+.cv-section-sub {
+  margin: 0;
+  font-size: 12.5px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* ─── Champs label/valeur (à plat, pas en table) ─────────── */
+.cv-fields { display: flex; flex-direction: column; }
+.cv-field {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+  align-items: start;
+}
+.cv-field:last-child { border-bottom: none; }
+.cv-field-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+.cv-field-value {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 500;
+  word-break: break-word;
+}
+.cv-field-value-muted { color: #9ca3af; font-style: italic; font-weight: 400; }
+
+@media (max-width: 720px) {
+  .cv-field { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ─── Tags cliquables (fournisseur, fiches) ──────────────── */
+.cv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cv-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #001a70;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.12s, transform 0.12s, box-shadow 0.12s;
+}
+.cv-tag:hover {
+  background: #fe5815;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(254, 88, 21, 0.25);
+}
+.cv-tag svg { color: rgba(255, 255, 255, 0.85); }
+
+/* ─── Jauge (progressbar custom) ─────────────────────────── */
+.cv-jauge { display: flex; flex-direction: column; gap: 8px; }
+.cv-jauge-track {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  background: #f3f4f6;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.cv-jauge-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  min-width: 26px;
+}
+.cv-jauge-fill--ok      { background: linear-gradient(90deg, #059669 0%, #10b981 100%); }
+.cv-jauge-fill--warning { background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%); }
+.cv-jauge-fill--danger  { background: linear-gradient(90deg, #b91c1c 0%, #dc2626 100%); }
+.cv-jauge-info { font-size: 12.5px; color: #6b7280; }
+.cv-jauge-info strong { color: #1f2937; }
+
+/* ─── Tableau des postes ──────────────────────────────────── */
+.cv-table-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.cv-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+.cv-table thead th {
+  background: #e8eef8;
+  color: #001a70;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 11px 14px;
+  text-align: left;
+  border-bottom: 1px solid #dfe3e8;
+  white-space: nowrap;
+}
+.cv-table tbody td {
+  padding: 10px 14px;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+.cv-table tbody tr:last-child td { border-bottom: none; }
+.cv-table tbody tr:hover td { background: #fafbfc; }
+.cv-table-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #001a70;
+}
+
+/* ─── États d'erreur (échu / non accessible) ─────────────── */
+.cv-error-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 48px 32px;
+  margin-top: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.cv-error-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cv-error-icon--expired { background: #fef2f2; color: #dc2626; }
+.cv-error-icon--load    { background: #fff7ed; color: #d97706; }
+.cv-error-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+.cv-error-desc {
+  margin: 0;
+  font-size: 13.5px;
+  color: #6b7280;
+  max-width: 520px;
+  line-height: 1.5;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ContractService } from 'src/app/core/services/contract.service';
 import { Location } from '@angular/common';
@@ -6,8 +6,8 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'contract-view',
   templateUrl: './contract-view.component.html',
-  styles: [
-  ]
+  styleUrls: ['./contract-view.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ContractViewComponent implements OnInit {
   public contractCode: string = '';
@@ -59,6 +59,15 @@ export class ContractViewComponent implements OnInit {
   
   public showSheet(id){
     this.router.navigate([`app/fiches/details/${id}`]);
+  }
+
+  public isContractActive(): boolean {
+    const endRaw = this.contract?.infos?.contract_date_end;
+    if (!endRaw) return true;
+    const end = new Date(endRaw);
+    if (isNaN(end.getTime())) return true;
+    end.setHours(23, 59, 59, 999);
+    return end.getTime() >= Date.now();
   }
 
 }

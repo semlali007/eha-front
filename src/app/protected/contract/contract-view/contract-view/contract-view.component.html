@@ -1,120 +1,215 @@
-<app-breadcrumb></app-breadcrumb>
+<div class="cv-page">
 
-<div class="row"  *ngIf="!!contract.error && contract.error == 'contract_expired'">
-	<div class="col-4 offset-4">
-	  <div class="card border-light mt-3">
-		<div class="card-body text-center">
-		  <h3 class="text-center">Le contrat est échu</h3>
-		  <hr>
-		  <button class="btn btn-success" type="button" (click)="back()">
-			Page précédente
-		  </button>
-		</div>
-	  </div>
-	</div>
+  <app-breadcrumb></app-breadcrumb>
+
+  <!-- ─── État : contrat échu (refusé côté API) ──────────── -->
+  <div *ngIf="!!contract.error && contract.error == 'contract_expired'" class="cv-error-card">
+    <div class="cv-error-icon cv-error-icon--expired">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <h1 class="cv-error-title">Contrat échu</h1>
+    <p class="cv-error-desc">Ce contrat est arrivé à échéance et n'est plus actif.</p>
+    <button class="cv-back" type="button" (click)="back()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Page précédente
+    </button>
   </div>
 
-
-<div class="row"  *ngIf="!!contract.error && contract.error == 'contract_load_error'">
-	<div class="col-10 offset-1">
-	  <div class="card border-light mt-3">
-		<div class="card-body text-center">
-		  <h3 class="text-center">Les contrats modélisés dans PGI-3 et 5 ne sont pas accessibles dans Achatpédia</h3>
-		  <hr>
-		  <button class="btn btn-success" type="button" (click)="back()">
-			Page précédente
-		  </button>
-		</div>
-	  </div>
-	</div>
+  <!-- ─── État : contrat non accessible (PGI-3 / 5) ──────── -->
+  <div *ngIf="!!contract.error && contract.error == 'contract_load_error'" class="cv-error-card">
+    <div class="cv-error-icon cv-error-icon--load">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+      </svg>
+    </div>
+    <h1 class="cv-error-title">Contrat non accessible</h1>
+    <p class="cv-error-desc">
+      Les contrats modélisés dans <strong>PGI-3</strong> et <strong>PGI-5</strong> ne sont pas accessibles dans Achatpédia.
+    </p>
+    <button class="cv-back" type="button" (click)="back()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Page précédente
+    </button>
   </div>
 
-<div class="row justify-content-center">
-	<div class="col-11 col-md-10" *ngIf="!!contract && !!contract.infos">
+  <!-- ─── Contrat normal ──────────────────────────────────── -->
+  <ng-container *ngIf="!!contract && !!contract.infos">
 
-		<h1 class="cover-heading">
-			Contrat <span class="text-primary">{{contract.infos.contract_code}}</span>
-		</h1>
-		<h1 class="cover-heading">
-			Informations générales sur le contrat :
-		</h1>
-		<table class="table table-hover">
-			<tr>
-				<th scope="row">Ligne PGI</th>
-				<td class="font-weight-bold text-primary">{{contract.infos.system}}</td>
-			</tr>
-			<tr>
-				<th scope="row">Contrat</th>
-				<td class="font-weight-bold text-primary"> {{contract.infos.contract_label}} </td>
-			</tr>
-			<tr>
-				<th scope="row">Date de début</th>
-				<td class="font-weight-bold text-primary">{{contract.infos.contract_date_start}} </td>
-			</tr>
-			<tr>
-				<th scope="row">Date de fin</th>
-				<td class="font-weight-bold text-primary">{{contract.infos.contract_date_end}}</td>
-			</tr>
-			<tr>
-				<th scope="row">Entité</th>
-				<td class="font-weight-bold text-primary">{{contract.infos.entity}}</td>
-			</tr>
-			<tr>
-				<th scope="row">Organisation d'achat</th>
-				<td class="font-weight-bold text-primary">{{contract.infos.organisation_achat}}</td>
-			</tr>
-			<tr>
-				<th scope="row">Fournisseur</th>
-				<td class="font-weight-bold text-primary">
-					<ul class="list-group my-items-for-searches">
-						<a class="list-group-item link" (click)="showProvider(contract.infos.provider_code)">
-							{{contract.infos.provider}}
-						</a>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">Agence</th>
-				<td class="font-weight-bold text-primary">{{contract.infos.agency}}</td>
-			</tr>
-			<tr *ngIf="contract.sheets.length > 0">
-				<th scope="row">Vitrine de l'offre</th>
-				<td class="font-weight-bold text-primary">
-					<ul class="list-group my-items-for-searches" *ngFor="let sheet  of contract.sheets">
-						<a class="list-group-item link" (click)="showSheet(sheet.id)">
-							{{sheet.label}}
-						</a>
-					</ul>
-				</td>
-			</tr>
-			<tr *ngIf="contract.infos.showJauge">
-				<th scope="row">Niveau d'utilisation mandant {{contract.infos.system}}<br>(consommé sur valeur cible)</th>
-				<td>
-					<progressbar *ngIf="contract.infos.jauge < 50"  [value]="contract.infos.jauge" type="success" [striped]="true">{{contract.infos.jauge}}%</progressbar>
-					<progressbar *ngIf="contract.infos.jauge >= 50  && contract.infos.jauge < 80"  	[value]="contract.infos.jauge" >{{contract.infos.jauge}}%</progressbar>
-					<progressbar *ngIf="contract.infos.jauge >= 80"  [value]="contract.infos.jauge" type="danger" [striped]="true">{{contract.infos.jauge}}%</progressbar>
-				</td>
-			</tr>
-			
-		</table>
-		<div *ngIf="contract.postes.length > 0">
-			<h1 class="cover-heading">
-				Liste des postes :
-			</h1>
-			<table class="table table-hover">
-				<tr>
-					<th scope="col">Poste</th>
-					<th scope="col">Poste libellé</th>
-					<th scope="col">Article</th>
-					<th scope="col">Article libellé</th>
-				</tr>
-				<tr *ngFor="let post  of contract.postes">
-					<td class="text-right">{{post.contract_post_code}}</td>
-					<td>{{post.contract_post_label}}</td>
-					<td>{{post.item_code}}</td>
-					<td>{{post.item_label}}</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+    <!-- Action bar : retour -->
+    <div class="cv-actions">
+      <button class="cv-back" type="button" (click)="back()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+        Retour
+      </button>
+    </div>
+
+    <!-- Header card avec icône + code contrat + statut -->
+    <div class="cv-header-card">
+      <div class="cv-header-left">
+        <div class="cv-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/>
+          </svg>
+        </div>
+        <div class="cv-header-titles">
+          <p class="cv-header-eyebrow">Contrat</p>
+          <h1 class="cv-header-code">{{ contract.infos.contract_code }}</h1>
+          <p class="cv-header-label" *ngIf="contract.infos.contract_label">{{ contract.infos.contract_label }}</p>
+        </div>
+      </div>
+      <span class="cv-status-badge cv-status-active" *ngIf="isContractActive()">Actif</span>
+      <span class="cv-status-badge cv-status-expired" *ngIf="!isContractActive()">Échu</span>
+    </div>
+
+    <!-- Section : Informations générales -->
+    <section class="cv-section">
+      <div class="cv-section-head">
+        <span class="cv-section-number">1</span>
+        <div class="cv-section-titles">
+          <h3 class="cv-section-title">Informations générales</h3>
+          <p class="cv-section-sub">Caractéristiques principales du contrat</p>
+        </div>
+      </div>
+
+      <div class="cv-fields">
+        <div class="cv-field">
+          <span class="cv-field-label">Ligne PGI</span>
+          <span class="cv-field-value">{{ contract.infos.system || '—' }}</span>
+        </div>
+        <div class="cv-field">
+          <span class="cv-field-label">Date de début</span>
+          <span class="cv-field-value">{{ (contract.infos.contract_date_start | customDate) || '—' }}</span>
+        </div>
+        <div class="cv-field">
+          <span class="cv-field-label">Date de fin</span>
+          <span class="cv-field-value">{{ (contract.infos.contract_date_end | customDate) || '—' }}</span>
+        </div>
+        <div class="cv-field">
+          <span class="cv-field-label">Entité</span>
+          <span class="cv-field-value">{{ contract.infos.entity || '—' }}</span>
+        </div>
+        <div class="cv-field">
+          <span class="cv-field-label">Organisation d'achat</span>
+          <span class="cv-field-value">{{ contract.infos.organisation_achat || '—' }}</span>
+        </div>
+        <div class="cv-field">
+          <span class="cv-field-label">Fournisseur</span>
+          <div class="cv-field-value">
+            <button type="button"
+                    class="cv-tag"
+                    *ngIf="contract.infos.provider"
+                    (click)="showProvider(contract.infos.provider_code)"
+                    title="Voir le détail du fournisseur">
+              {{ contract.infos.provider }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+              </svg>
+            </button>
+            <span class="cv-field-value-muted" *ngIf="!contract.infos.provider">—</span>
+          </div>
+        </div>
+        <div class="cv-field" *ngIf="contract.infos.agency">
+          <span class="cv-field-label">Agence</span>
+          <span class="cv-field-value">{{ contract.infos.agency }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section : Vitrine de l'offre -->
+    <section class="cv-section" *ngIf="contract.sheets?.length > 0">
+      <div class="cv-section-head">
+        <span class="cv-section-number">2</span>
+        <div class="cv-section-titles">
+          <h3 class="cv-section-title">Vitrine de l'offre</h3>
+          <p class="cv-section-sub">Fiches marché associées à ce contrat</p>
+        </div>
+      </div>
+      <div class="cv-tags">
+        <button type="button"
+                class="cv-tag"
+                *ngFor="let sheet of contract.sheets"
+                (click)="showSheet(sheet.id)"
+                title="Voir la fiche">
+          {{ sheet.label }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Section : Niveau d'utilisation -->
+    <section class="cv-section" *ngIf="contract.infos.showJauge">
+      <div class="cv-section-head">
+        <span class="cv-section-number">{{ contract.sheets?.length > 0 ? 3 : 2 }}</span>
+        <div class="cv-section-titles">
+          <h3 class="cv-section-title">Niveau d'utilisation</h3>
+          <p class="cv-section-sub">Mandant {{ contract.infos.system }} — consommé sur la valeur cible</p>
+        </div>
+      </div>
+      <div class="cv-jauge">
+        <div class="cv-jauge-track">
+          <div class="cv-jauge-fill"
+               [class.cv-jauge-fill--ok]="contract.infos.jauge < 50"
+               [class.cv-jauge-fill--warning]="contract.infos.jauge >= 50 && contract.infos.jauge < 80"
+               [class.cv-jauge-fill--danger]="contract.infos.jauge >= 80"
+               [style.width.%]="contract.infos.jauge">
+            {{ contract.infos.jauge }}%
+          </div>
+        </div>
+        <p class="cv-jauge-info">
+          <ng-container *ngIf="contract.infos.jauge < 50">
+            Niveau d'utilisation <strong>faible</strong> — consommation maîtrisée.
+          </ng-container>
+          <ng-container *ngIf="contract.infos.jauge >= 50 && contract.infos.jauge < 80">
+            Niveau d'utilisation <strong>modéré</strong> — surveiller la trajectoire.
+          </ng-container>
+          <ng-container *ngIf="contract.infos.jauge >= 80">
+            Niveau d'utilisation <strong>élevé</strong> — proche de la valeur cible.
+          </ng-container>
+        </p>
+      </div>
+    </section>
+
+    <!-- Section : Liste des postes -->
+    <section class="cv-section" *ngIf="contract.postes?.length > 0">
+      <div class="cv-section-head">
+        <span class="cv-section-number">{{ (contract.sheets?.length > 0 ? 1 : 0) + (contract.infos.showJauge ? 1 : 0) + 2 }}</span>
+        <div class="cv-section-titles">
+          <h3 class="cv-section-title">Liste des postes ({{ contract.postes.length }})</h3>
+          <p class="cv-section-sub">Postes et articles associés au contrat</p>
+        </div>
+      </div>
+
+      <div class="cv-table-card">
+        <table class="cv-table">
+          <thead>
+            <tr>
+              <th>Poste</th>
+              <th>Libellé du poste</th>
+              <th>Article</th>
+              <th>Libellé de l'article</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of contract.postes">
+              <td class="cv-table-num">{{ post.contract_post_code }}</td>
+              <td>{{ post.contract_post_label }}</td>
+              <td class="cv-table-num">{{ post.item_code }}</td>
+              <td>{{ post.item_label }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </ng-container>
 </div>

@@ -1,101 +1,196 @@
-<app-breadcrumb></app-breadcrumb>
-<div class="row justify-content-center" style="margin-bottom: 3%;">
-	<div class="col-11 col-md-10">
-		<div *ngIf="!!provider && !!provider.infos">
-			<h1 class="cover-heading">
-				Fournisseur <span class="text-primary">{{provider.infos.supplier_business_legal_registration_name}}</span>
-			</h1>
-			<h1 class="cover-heading">
-				Informations générales sur le fournisseur :
-			</h1>
-			<table class="table table-hover">
-				<tr>
-					<th scope="row">Code PGI</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_app_id}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Raison sociale ou dénomination</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_name_common}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Dénomination usuelle de l'établissement</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_legal_registration_name}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Société mère</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_holding_use_name}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Numéro de SIRET</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_registration_id}}</td>
-				</tr>
-				<tr>
-					<th scope="row">N° TVA Intracommunautaire</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_id}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Identifiant DUNS (si fournisseur étranger)</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_duns_id}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Date de création de l'entreprise</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_registration_date_created}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Activité principale exercée (APE)</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_main_activity_label}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Code APE</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_main_activity_code}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Terme de paiement du fournisseur selon l'activité</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_payment_term}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Type d'établissement du fournisseur</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_type}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Forme juridique</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_legal_legal_form}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Catégorie juridique</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_legal_business_category_fr}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Rue</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_address_street}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Code postal</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_address_postal_zone}}</td>
-				</tr>
-				<tr>
-					<th scope="row">Ville</th>
-					<td class="font-weight-bold text-primary">{{provider.infos.supplier_business_unit_address_town}}</td>
-				</tr>
-			</table>
-			<div *ngIf="provider.contracts.length > 0 && provider.contracts[0].contract_code != null">
-				<h1 class="cover-heading">
-					Liste des contrats actifs :
-				</h1>
-				<form [formGroup]="filterForm" *ngIf="provider.contracts.length > 9">
-					<div class="row" >
-						<div class="col-sm-6">
-							<input class="form-control" type="text" placeholder="rechercher" [formControl]="contractFilterText">
-						</div>
-					</div>
-				</form>
-				<ul class="list-group my-items-for-searches">
-					<a class="list-group-item link" *ngFor='let result  of provider.contracts | filterAllProperty:contractFilterText.value:["contract_code","contract_label","contract_date_end"]'
-						(click)="showContract(result.contract_code)">
-						<span *ngIf="result.contract_code">{{result.contract_system}}, {{result.contract_code}},</span> <span *ngIf="result.contract_label"><b> {{result.contract_label}}</b>,</span> <span *ngIf="result.contract_date_end"> fin le {{result.contract_date_end}}</span>
-					</a>
-				</ul>
-			</div>
-		</div>
-	</div>
+<div class="pv-page" *ngIf="!!provider && !!provider.infos">
+
+  <app-breadcrumb></app-breadcrumb>
+
+  <!-- Action bar : retour -->
+  <div class="pv-actions">
+    <button class="pv-back" type="button" (click)="back()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Retour
+    </button>
+  </div>
+
+  <!-- Header card -->
+  <div class="pv-header-card">
+    <div class="pv-header-left">
+      <div class="pv-header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>
+        </svg>
+      </div>
+      <div class="pv-header-titles">
+        <p class="pv-header-eyebrow">Fournisseur</p>
+        <h1 class="pv-header-name">{{ provider.infos.supplier_business_legal_registration_name || provider.infos.supplier_business_unit_name_common || '—' }}</h1>
+        <p class="pv-header-sub" *ngIf="provider.infos.supplier_business_unit_app_id">
+          Code PGI : <strong>{{ provider.infos.supplier_business_unit_app_id }}</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1 : Identification -->
+  <section class="pv-section">
+    <div class="pv-section-head">
+      <span class="pv-section-number">1</span>
+      <div class="pv-section-titles">
+        <h3 class="pv-section-title">Identification</h3>
+        <p class="pv-section-sub">Raison sociale et identifiants principaux</p>
+      </div>
+    </div>
+
+    <div class="pv-fields">
+      <div class="pv-field">
+        <span class="pv-field-label">Raison sociale ou dénomination</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_name_common || '—' }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_legal_registration_name">
+        <span class="pv-field-label">Dénomination usuelle de l'établissement</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_legal_registration_name }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_holding_use_name">
+        <span class="pv-field-label">Société mère</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_holding_use_name }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_registration_id">
+        <span class="pv-field-label">Numéro de SIRET</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_registration_id }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_id">
+        <span class="pv-field-label">N° TVA Intracommunautaire</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_id }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_duns_id">
+        <span class="pv-field-label">Identifiant DUNS</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_duns_id }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_registration_date_created">
+        <span class="pv-field-label">Date de création de l'entreprise</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_registration_date_created | customDate }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 : Activité & forme juridique -->
+  <section class="pv-section">
+    <div class="pv-section-head">
+      <span class="pv-section-number">2</span>
+      <div class="pv-section-titles">
+        <h3 class="pv-section-title">Activité &amp; forme juridique</h3>
+        <p class="pv-section-sub">Code APE, type d'établissement, forme juridique</p>
+      </div>
+    </div>
+
+    <div class="pv-fields">
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_main_activity_label">
+        <span class="pv-field-label">Activité principale exercée (APE)</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_main_activity_label }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_main_activity_code">
+        <span class="pv-field-label">Code APE</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_main_activity_code }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_payment_term">
+        <span class="pv-field-label">Terme de paiement selon l'activité</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_payment_term }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_type">
+        <span class="pv-field-label">Type d'établissement</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_type }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_legal_legal_form">
+        <span class="pv-field-label">Forme juridique</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_legal_legal_form }}</span>
+      </div>
+      <div class="pv-field" *ngIf="provider.infos.supplier_business_legal_business_category_fr">
+        <span class="pv-field-label">Catégorie juridique</span>
+        <span class="pv-field-value">{{ provider.infos.supplier_business_legal_business_category_fr }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 : Adresse -->
+  <section class="pv-section" *ngIf="hasAddress()">
+    <div class="pv-section-head">
+      <span class="pv-section-number">3</span>
+      <div class="pv-section-titles">
+        <h3 class="pv-section-title">Adresse</h3>
+        <p class="pv-section-sub">Localisation de l'établissement</p>
+      </div>
+    </div>
+
+    <div class="pv-fields">
+      <div class="pv-field">
+        <span class="pv-field-label">Adresse complète</span>
+        <div class="pv-address">
+          <span *ngIf="provider.infos.supplier_business_unit_address_street">
+            {{ provider.infos.supplier_business_unit_address_street }}
+          </span>
+          <span *ngIf="provider.infos.supplier_business_unit_address_postal_zone || provider.infos.supplier_business_unit_address_town">
+            {{ provider.infos.supplier_business_unit_address_postal_zone }} {{ provider.infos.supplier_business_unit_address_town }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4 : Contrats actifs -->
+  <section class="pv-section" *ngIf="getActiveContracts().length > 0">
+    <div class="pv-section-head">
+      <span class="pv-section-number">{{ hasAddress() ? 4 : 3 }}</span>
+      <div class="pv-section-titles">
+        <h3 class="pv-section-title">Contrats actifs ({{ getActiveContracts().length }})</h3>
+        <p class="pv-section-sub">Cliquez sur un contrat pour voir son détail</p>
+      </div>
+    </div>
+
+    <!-- Toolbar avec filtre si beaucoup de contrats -->
+    <div class="pv-toolbar" *ngIf="getActiveContracts().length > 9">
+      <span class="pv-toolbar-count">
+        <strong>{{ getActiveContracts().length }}</strong> contrat(s) actif(s)
+      </span>
+      <form [formGroup]="filterForm">
+        <label class="pv-search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+          </svg>
+          <input type="text" placeholder="Rechercher un contrat…" [formControl]="contractFilterText">
+        </label>
+      </form>
+    </div>
+
+    <div class="pv-contract-list">
+      <ng-container *ngFor="let result of getActiveContracts() | filterAllProperty:contractFilterText.value:['contract_code','contract_label','contract_date_end']">
+        <a class="pv-contract-item" (click)="showContract(result.contract_code)">
+          <div class="pv-contract-left">
+            <span class="pv-contract-system" *ngIf="result.contract_system">{{ result.contract_system }}</span>
+            <div class="pv-contract-meta">
+              <span class="pv-contract-code">{{ result.contract_code }}</span>
+              <span class="pv-contract-label" *ngIf="result.contract_label">{{ result.contract_label }}</span>
+            </div>
+          </div>
+          <span class="pv-contract-end" *ngIf="result.contract_date_end">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+            </svg>
+            Fin le {{ result.contract_date_end | customDate }}
+          </span>
+          <svg class="pv-contract-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </a>
+      </ng-container>
+    </div>
+
+    <!-- Empty state si aucun résultat de filtre -->
+    <div class="pv-empty"
+         *ngIf="contractFilterText.value && (getActiveContracts() | filterAllProperty:contractFilterText.value:['contract_code','contract_label','contract_date_end']).length === 0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <p>Aucun contrat ne correspond à <strong>"{{ contractFilterText.value }}"</strong></p>
+    </div>
+  </section>
+
 </div>

@@ -1,11 +1,12 @@
-import { Component, Input, EventEmitter, OnInit, ViewChild  } from '@angular/core';
+import { Component, Input, EventEmitter, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-sheet-form-modal',
   templateUrl: './sheet-form-modal.component.html',
-  styleUrls: ['./sheet-form-modal.component.css']
+  styleUrls: ['./sheet-form-modal.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SheetFormModalComponent implements OnInit {
   @ViewChild('autoShownModal', { static: false }) autoShownModal?: ModalDirective;

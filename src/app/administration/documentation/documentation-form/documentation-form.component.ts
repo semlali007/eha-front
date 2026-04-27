@@ -6,7 +6,7 @@ import { DocumentationService } from 'src/app/core/services/documentation.servic
 @Component({
   selector: 'app-documentation-form',
   templateUrl: './documentation-form.component.html',
-  styleUrls: ['../../admin-shared.css'],
+  styleUrls: [],
   encapsulation: ViewEncapsulation.None,
 })
 export class DocumentationFormComponent implements OnInit {

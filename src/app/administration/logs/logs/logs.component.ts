@@ -6,7 +6,6 @@ import { SearchLogService } from 'src/app/core/services/search-log.service';
   selector: 'app-logs',
   templateUrl: './logs.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './logs.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

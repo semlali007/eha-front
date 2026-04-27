@@ -10,7 +10,6 @@ import { NewsFormComponent } from 'src/app/administration/news/news-form/news-fo
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './news.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

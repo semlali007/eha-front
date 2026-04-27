@@ -9,7 +9,6 @@ import { HotlineEmailFormComponent } from '../hotline-email-form/hotline-email-f
   selector: 'app-hotline-email',
   templateUrl: './hotline-email.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './hotline-email.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

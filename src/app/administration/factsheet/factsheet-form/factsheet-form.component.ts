@@ -7,7 +7,6 @@ import { FactsheetService } from 'src/app/core/services/factsheet.service';
   selector: 'app-factsheet-form',
   templateUrl: './factsheet-form.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './factsheet-form.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

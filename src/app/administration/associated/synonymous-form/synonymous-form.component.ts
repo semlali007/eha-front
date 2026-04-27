@@ -7,7 +7,6 @@ import { SearchLogService } from 'src/app/core/services/search-log.service';
   selector: 'app-synonymous-form',
   templateUrl: './synonymous-form.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './synonymous-form.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

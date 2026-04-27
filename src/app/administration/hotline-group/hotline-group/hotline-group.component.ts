@@ -8,7 +8,6 @@ import { HotlineGroupFormComponent } from 'src/app/administration/hotline-group/
   selector: 'app-hotline-group',
   templateUrl: './hotline-group.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './hotline-group.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

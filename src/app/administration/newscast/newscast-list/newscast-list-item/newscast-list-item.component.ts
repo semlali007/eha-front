@@ -6,7 +6,6 @@ import { NewsCastService } from 'src/app/core/services/newscast.service';
   selector: 'app-newscast-list-item',
   templateUrl: './newscast-list-item.component.html',
   styleUrls: [
-    '../../../admin-shared.css',
     './newscast-list-item.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

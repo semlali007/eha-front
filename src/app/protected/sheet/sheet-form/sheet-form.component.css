@@ -46,44 +46,6 @@ app-sheet-form .adm-section .form-control {
   background: #fff !important;
 }
 
-/* Tous les composants Angular imbriqués dans la page doivent être block
-   pour que le flex:gap de .adm-section fonctionne correctement. */
-.sheet-form-page app-sheet-form-title,
-.sheet-form-page app-sheet-form-contrat-groupe,
-.sheet-form-page app-sheet-form-category,
-.sheet-form-page app-sheet-form-words,
-.sheet-form-page app-sheet-form-date,
-.sheet-form-page app-sheet-form-options,
-.sheet-form-page app-sheet-form-content,
-.sheet-form-page app-sheet-form-providers,
-.sheet-form-page app-sheet-form-supplier-vat-number,
-.sheet-form-page app-sheet-form-beneficiaries,
-.sheet-form-page app-sheet-form-stipulationautrui,
-.sheet-form-page app-sheet-form-entites-beneficiaires-edf-enedis,
-.sheet-form-page app-sheet-form-lots,
-.sheet-form-page app-sheet-form-contracts,
-.sheet-form-page app-sheet-form-kit,
-.sheet-form-page app-sheet-form-areas,
-.sheet-form-page app-sheet-form-geographic-detail,
-.sheet-form-page app-sheet-form-dauphin,
-.sheet-form-page app-sheet-form-edf-open,
-.sheet-form-page app-sheet-form-partnership,
-.sheet-form-page app-sheet-form-protected-sector,
-.sheet-form-page app-sheet-form-supplier-size,
-.sheet-form-page app-sheet-form-acheteur,
-.sheet-form-page app-sheet-form-contract-manager,
-.sheet-form-page app-sheet-form-committee,
-.sheet-form-page app-sheet-form-mise-a-jour-donnee,
-.sheet-form-page app-sheet-form-status,
-.sheet-form-page app-sheet-form-comments,
-.sheet-form-page app-sheet-form-contracts-item,
-.sheet-form-page app-sheet-form-lots-item,
-.sheet-form-page app-sheet-form-options-item,
-.sheet-form-page app-sheet-form-contracts-add,
-.sheet-form-page app-sheet-form-lots-add,
-.sheet-form-page app-sheet-form-options-add {
-  display: block;
-}
 
 /* ─── Overrides pour les sous-composants existants ────────── */
 /* Normalise les classes Bootstrap (.form-group, .form-control, .btn...) pour
@@ -471,52 +433,14 @@ app-sheet-form .adm-section .adm-datepicker-wrap > .adm-input,
 app-sheet-form .adm-section .adm-datepicker-wrap > input {
   padding-left: 36px !important;
 }
-app-sheet-form .adm-section input.adm-input::placeholder,
-app-sheet-form .adm-section textarea.adm-textarea::placeholder,
-app-sheet-form .adm-section .ng2-tag-input input::placeholder,
 app-sheet-form .adm-section input::placeholder,
 app-sheet-form .adm-section textarea::placeholder {
   color: #9ca3af !important;
   opacity: 1 !important;
-  font-size: 13.5px !important;
-  font-family: inherit !important;
-  font-weight: 400 !important;
+  font: 400 13.5px inherit !important;
   font-style: normal !important;
   letter-spacing: normal !important;
 }
-/* Variants navigateurs anciens (Edge legacy / Firefox) */
-app-sheet-form .adm-section input.adm-input::-webkit-input-placeholder,
-app-sheet-form .adm-section textarea.adm-textarea::-webkit-input-placeholder,
-app-sheet-form .adm-section input::-webkit-input-placeholder,
-app-sheet-form .adm-section textarea::-webkit-input-placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-  font-size: 13.5px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-}
-app-sheet-form .adm-section input.adm-input::-moz-placeholder,
-app-sheet-form .adm-section textarea.adm-textarea::-moz-placeholder,
-app-sheet-form .adm-section input::-moz-placeholder,
-app-sheet-form .adm-section textarea::-moz-placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-  font-size: 13.5px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-}
-app-sheet-form .adm-section input.adm-input:-ms-input-placeholder,
-app-sheet-form .adm-section textarea.adm-textarea:-ms-input-placeholder,
-app-sheet-form .adm-section input:-ms-input-placeholder,
-app-sheet-form .adm-section textarea:-ms-input-placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-  font-size: 13.5px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-}
-/* Force aussi le font-weight et font-style sur l'input lui-même
-   au cas où une règle parent met font-weight: bold sur input */
 app-sheet-form .adm-section input,
 app-sheet-form .adm-section textarea,
 app-sheet-form .adm-section select {
@@ -524,7 +448,6 @@ app-sheet-form .adm-section select {
   font-style: normal !important;
   font-family: inherit !important;
 }
-/* Focus uniforme sur tous les types d'input */
 app-sheet-form .adm-section input.adm-input:focus,
 app-sheet-form .adm-section textarea.adm-textarea:focus,
 app-sheet-form .adm-section select.adm-select:focus,
@@ -532,10 +455,6 @@ app-sheet-form .adm-section .ng2-tag-input.ng2-tag-input--focused {
   border-color: #001a70 !important;
   box-shadow: 0 0 0 3px rgba(0, 26, 112, 0.12) !important;
   outline: none !important;
-}
-app-sheet-form .adm-tag-input .ng2-tag-input.ng2-tag-input--focused {
-  border-color: #001a70 !important;
-  box-shadow: 0 0 0 3px rgba(0, 26, 112, 0.12) !important;
 }
 /* ═══════════════════════════════════════════════════════════
    Tag (badge) ngx-chips — design outline navy, propre & aligné

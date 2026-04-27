@@ -7,7 +7,6 @@ import { HotlineGroupService } from 'src/app/core/services/hotline-group.service
   selector: 'app-hotline-group-form',
   templateUrl: './hotline-group-form.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './hotline-group-form.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

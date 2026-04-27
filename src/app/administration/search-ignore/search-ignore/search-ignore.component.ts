@@ -8,7 +8,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   selector: 'app-search-ignore',
   templateUrl: './search-ignore.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './search-ignore.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

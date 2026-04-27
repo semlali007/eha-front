@@ -8,7 +8,6 @@ import { HotlineThemeFormComponent } from 'src/app/administration/hotline-theme/
   selector: 'app-hotline-theme',
   templateUrl: './hotline-theme.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './hotline-theme.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

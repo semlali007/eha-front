@@ -7,7 +7,6 @@ import { AdministratorService } from 'src/app/core/services/administrator.servic
   selector: 'app-administrator',
   templateUrl: './administrator.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './administrator.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

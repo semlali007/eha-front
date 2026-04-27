@@ -1,10 +1,10 @@
-<div class="pv-page" *ngIf="!!provider && !!provider.infos">
+<div class="adm-page-wrap" *ngIf="!!provider && !!provider.infos">
 
   <app-breadcrumb></app-breadcrumb>
 
   <!-- Action bar : retour -->
-  <div class="pv-actions">
-    <button class="pv-back" type="button" (click)="back()">
+  <div class="adm-detail-actions">
+    <button class="adm-back" type="button" (click)="back()">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
       </svg>
@@ -13,17 +13,17 @@
   </div>
 
   <!-- Header card -->
-  <div class="pv-header-card">
-    <div class="pv-header-left">
-      <div class="pv-header-icon">
+  <div class="adm-detail-header">
+    <div class="adm-detail-header-left">
+      <div class="adm-detail-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>
         </svg>
       </div>
-      <div class="pv-header-titles">
-        <p class="pv-header-eyebrow">Fournisseur</p>
-        <h1 class="pv-header-name">{{ provider.infos.supplier_business_legal_registration_name || provider.infos.supplier_business_unit_name_common || '—' }}</h1>
-        <p class="pv-header-sub" *ngIf="provider.infos.supplier_business_unit_app_id">
+      <div class="adm-detail-titles">
+        <p class="adm-detail-eyebrow">Fournisseur</p>
+        <h1 class="adm-detail-name">{{ provider.infos.supplier_business_legal_registration_name || provider.infos.supplier_business_unit_name_common || '—' }}</h1>
+        <p class="adm-detail-sub" *ngIf="provider.infos.supplier_business_unit_app_id">
           Code PGI : <strong>{{ provider.infos.supplier_business_unit_app_id }}</strong>
         </p>
       </div>
@@ -31,98 +31,98 @@
   </div>
 
   <!-- Section 1 : Identification -->
-  <section class="pv-section">
-    <div class="pv-section-head">
-      <span class="pv-section-number">1</span>
-      <div class="pv-section-titles">
-        <h3 class="pv-section-title">Identification</h3>
-        <p class="pv-section-sub">Raison sociale et identifiants principaux</p>
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">1</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Identification</h3>
+        <p class="adm-section-sub">Raison sociale et identifiants principaux</p>
       </div>
     </div>
 
-    <div class="pv-fields">
-      <div class="pv-field">
-        <span class="pv-field-label">Raison sociale ou dénomination</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_name_common || '—' }}</span>
+    <div class="adm-fields">
+      <div class="adm-field">
+        <span class="adm-field-label">Raison sociale ou dénomination</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_name_common || '—' }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_legal_registration_name">
-        <span class="pv-field-label">Dénomination usuelle de l'établissement</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_legal_registration_name }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_legal_registration_name">
+        <span class="adm-field-label">Dénomination usuelle de l'établissement</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_legal_registration_name }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_holding_use_name">
-        <span class="pv-field-label">Société mère</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_holding_use_name }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_holding_use_name">
+        <span class="adm-field-label">Société mère</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_holding_use_name }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_registration_id">
-        <span class="pv-field-label">Numéro de SIRET</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_registration_id }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_registration_id">
+        <span class="adm-field-label">Numéro de SIRET</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_registration_id }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_id">
-        <span class="pv-field-label">N° TVA Intracommunautaire</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_id }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_id">
+        <span class="adm-field-label">N° TVA Intracommunautaire</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_id }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_duns_id">
-        <span class="pv-field-label">Identifiant DUNS</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_duns_id }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_duns_id">
+        <span class="adm-field-label">Identifiant DUNS</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_duns_id }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_registration_date_created">
-        <span class="pv-field-label">Date de création de l'entreprise</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_registration_date_created | customDate }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_registration_date_created">
+        <span class="adm-field-label">Date de création de l'entreprise</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_registration_date_created | customDate }}</span>
       </div>
     </div>
   </section>
 
   <!-- Section 2 : Activité & forme juridique -->
-  <section class="pv-section">
-    <div class="pv-section-head">
-      <span class="pv-section-number">2</span>
-      <div class="pv-section-titles">
-        <h3 class="pv-section-title">Activité &amp; forme juridique</h3>
-        <p class="pv-section-sub">Code APE, type d'établissement, forme juridique</p>
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">2</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Activité &amp; forme juridique</h3>
+        <p class="adm-section-sub">Code APE, type d'établissement, forme juridique</p>
       </div>
     </div>
 
-    <div class="pv-fields">
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_main_activity_label">
-        <span class="pv-field-label">Activité principale exercée (APE)</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_main_activity_label }}</span>
+    <div class="adm-fields">
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_main_activity_label">
+        <span class="adm-field-label">Activité principale exercée (APE)</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_main_activity_label }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_main_activity_code">
-        <span class="pv-field-label">Code APE</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_main_activity_code }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_main_activity_code">
+        <span class="adm-field-label">Code APE</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_main_activity_code }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_payment_term">
-        <span class="pv-field-label">Terme de paiement selon l'activité</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_payment_term }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_payment_term">
+        <span class="adm-field-label">Terme de paiement selon l'activité</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_payment_term }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_unit_type">
-        <span class="pv-field-label">Type d'établissement</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_unit_type }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_unit_type">
+        <span class="adm-field-label">Type d'établissement</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_unit_type }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_legal_legal_form">
-        <span class="pv-field-label">Forme juridique</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_legal_legal_form }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_legal_legal_form">
+        <span class="adm-field-label">Forme juridique</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_legal_legal_form }}</span>
       </div>
-      <div class="pv-field" *ngIf="provider.infos.supplier_business_legal_business_category_fr">
-        <span class="pv-field-label">Catégorie juridique</span>
-        <span class="pv-field-value">{{ provider.infos.supplier_business_legal_business_category_fr }}</span>
+      <div class="adm-field" *ngIf="provider.infos.supplier_business_legal_business_category_fr">
+        <span class="adm-field-label">Catégorie juridique</span>
+        <span class="adm-field-value">{{ provider.infos.supplier_business_legal_business_category_fr }}</span>
       </div>
     </div>
   </section>
 
   <!-- Section 3 : Adresse -->
-  <section class="pv-section" *ngIf="hasAddress()">
-    <div class="pv-section-head">
-      <span class="pv-section-number">3</span>
-      <div class="pv-section-titles">
-        <h3 class="pv-section-title">Adresse</h3>
-        <p class="pv-section-sub">Localisation de l'établissement</p>
+  <section class="adm-section" *ngIf="hasAddress()">
+    <div class="adm-section-head">
+      <span class="adm-section-number">3</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Adresse</h3>
+        <p class="adm-section-sub">Localisation de l'établissement</p>
       </div>
     </div>
 
-    <div class="pv-fields">
-      <div class="pv-field">
-        <span class="pv-field-label">Adresse complète</span>
+    <div class="adm-fields">
+      <div class="adm-field">
+        <span class="adm-field-label">Adresse complète</span>
         <div class="pv-address">
           <span *ngIf="provider.infos.supplier_business_unit_address_street">
             {{ provider.infos.supplier_business_unit_address_street }}
@@ -136,22 +136,22 @@
   </section>
 
   <!-- Section 4 : Contrats actifs -->
-  <section class="pv-section" *ngIf="getActiveContracts().length > 0">
-    <div class="pv-section-head">
-      <span class="pv-section-number">{{ hasAddress() ? 4 : 3 }}</span>
-      <div class="pv-section-titles">
-        <h3 class="pv-section-title">Contrats actifs ({{ getActiveContracts().length }})</h3>
-        <p class="pv-section-sub">Cliquez sur un contrat pour voir son détail</p>
+  <section class="adm-section" *ngIf="getActiveContracts().length > 0">
+    <div class="adm-section-head">
+      <span class="adm-section-number">{{ hasAddress() ? 4 : 3 }}</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Contrats actifs ({{ getActiveContracts().length }})</h3>
+        <p class="adm-section-sub">Cliquez sur un contrat pour voir son détail</p>
       </div>
     </div>
 
     <!-- Toolbar avec filtre si beaucoup de contrats -->
-    <div class="pv-toolbar" *ngIf="getActiveContracts().length > 9">
-      <span class="pv-toolbar-count">
+    <div class="adm-toolbar" *ngIf="getActiveContracts().length > 9">
+      <span class="adm-toolbar-count">
         <strong>{{ getActiveContracts().length }}</strong> contrat(s) actif(s)
       </span>
       <form [formGroup]="filterForm">
-        <label class="pv-search">
+        <label class="adm-search">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
           </svg>
@@ -184,7 +184,7 @@
     </div>
 
     <!-- Empty state si aucun résultat de filtre -->
-    <div class="pv-empty"
+    <div class="adm-empty"
          *ngIf="contractFilterText.value && (getActiveContracts() | filterAllProperty:contractFilterText.value:['contract_code','contract_label','contract_date_end']).length === 0">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>

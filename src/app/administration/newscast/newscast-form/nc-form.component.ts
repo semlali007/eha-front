@@ -10,7 +10,6 @@ import { NewsCastService } from 'src/app/core/services/newscast.service';
   selector: 'app-nc-form',
   templateUrl: './nc-form.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './nc-form.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

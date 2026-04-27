@@ -10,7 +10,6 @@ import { ExcelService } from 'src/app/core/services/excel.service';
   selector: 'app-documentation',
   templateUrl: './documentation.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './documentation.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

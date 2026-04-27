@@ -7,7 +7,6 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'app-newscast-view',
   templateUrl: './newscast-view.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './newscast-view.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

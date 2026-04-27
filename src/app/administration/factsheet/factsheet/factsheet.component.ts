@@ -8,7 +8,6 @@ import { FactsheetFormComponent } from 'src/app/administration/factsheet/factshe
   selector: 'app-factsheet',
   templateUrl: './factsheet.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './factsheet.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

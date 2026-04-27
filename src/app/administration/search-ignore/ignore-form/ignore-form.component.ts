@@ -7,7 +7,6 @@ import { SearchLogService } from 'src/app/core/services/search-log.service';
   selector: 'app-ignore-form',
   templateUrl: './ignore-form.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './ignore-form.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

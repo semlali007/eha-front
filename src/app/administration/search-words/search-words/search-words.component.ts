@@ -8,7 +8,6 @@ type SortKey = 'count' | 'word';
   selector: 'app-search-words',
   templateUrl: './search-words.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './search-words.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

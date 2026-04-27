@@ -6,7 +6,7 @@ import { HotlineEmailService } from 'src/app/core/services/hotline-email.service
 @Component({
   selector: 'app-hotline-email-edit-forward',
   templateUrl: './hotline-email-edit.component.html',
-  styleUrls: ['../../admin-shared.css'],
+  styleUrls: [],
   encapsulation: ViewEncapsulation.None,
 })
 export class HotlineEmailEditComponent implements OnInit {

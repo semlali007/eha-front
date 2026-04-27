@@ -9,7 +9,6 @@ import { SynonymousFormComponent } from 'src/app/administration/associated/synon
   selector: 'app-associated',
   templateUrl: './associated.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './associated.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

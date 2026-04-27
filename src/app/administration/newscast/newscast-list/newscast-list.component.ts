@@ -10,7 +10,6 @@ import { NewsCastService } from 'src/app/core/services/newscast.service';
   selector: 'app-newscast-list',
   templateUrl: './newscast-list.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './newscast-list.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

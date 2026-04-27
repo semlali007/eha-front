@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: [
-    '../../../administration/admin-shared.css',
     './sidenav.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

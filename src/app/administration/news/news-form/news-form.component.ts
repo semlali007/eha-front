@@ -6,7 +6,7 @@ import { NewsService } from 'src/app/core/services/news.service';
 @Component({
   selector: 'app-news-form',
   templateUrl: './news-form.component.html',
-  styleUrls: ['../../admin-shared.css'],
+  styleUrls: ['./news-form.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class NewsFormComponent implements OnInit {

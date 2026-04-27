@@ -7,7 +7,6 @@ import { SearchLogService } from 'src/app/core/services/search-log.service';
   selector: 'app-associated-form',
   templateUrl: './associated-form.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './associated-form.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

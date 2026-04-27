@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-page',
   templateUrl: './page.component.html',
   styleUrls: [
-    '../../admin-shared.css',
     './page.component.css',
   ],
   encapsulation: ViewEncapsulation.None,

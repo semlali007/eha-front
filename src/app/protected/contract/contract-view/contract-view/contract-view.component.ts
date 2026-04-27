@@ -37,20 +37,17 @@ export class ContractViewComponent implements OnInit {
     console.log('loadContract');
     this.contractService.get({
       code: this.contractCode,
-    }).subscribe(contract => {  
+    }).subscribe(contract => {
       if (!contract) return;
       //C93P8T0090
       this.contract = contract;
-      if(!!contract && !!contract.error){
-      
-      this.contract.postes = [
-        ...new Map(this.contract.postes?.map((item) => [item["contract_post_code"]+'_1'+item["contract_post_label"]+'_2'+item["item_code"]+'_3'+item["item_label"], item])).values(),
-    ];
-     this.contract.postes.sort((a,b)=> Number(a.contract_post_code) > Number(b.contract_post_code));
-
+      if (!!contract && !!contract.error) {
+        this.contract.postes = [
+          ...new Map(this.contract.postes?.map((item) => [item["contract_post_code"]+'_1'+item["contract_post_label"]+'_2'+item["item_code"]+'_3'+item["item_label"], item])).values(),
+        ];
+        this.contract.postes.sort((a,b) => Number(a.contract_post_code) > Number(b.contract_post_code));
       }
-
-         });
+    });
   }
 
   public showProvider(providerCode): void {

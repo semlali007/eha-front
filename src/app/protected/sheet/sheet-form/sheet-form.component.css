@@ -20,23 +20,7 @@
 }
 .sheet-form-page > app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
 
-/* Cards (header sticky + sections) avec fond gris doux + shadow,
-   pattern identique à la page d'accueil (.cadre) */
-app-sheet-form .adm-form-header {
-  background: #f9fafb !important;
-  border: 1px solid #dfe3e8 !important;
-  border-radius: 10px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1) !important;
-}
-
-app-sheet-form .adm-section {
-  background: #f9fafb !important;
-  border: 1px solid #dfe3e8 !important;
-  border-radius: 10px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Les inputs doivent rester blancs pour ressortir sur le fond gris des cards */
+/* Les inputs restent blancs pour ressortir sur le fond gris des cards */
 app-sheet-form .adm-section .adm-input,
 app-sheet-form .adm-section .adm-textarea,
 app-sheet-form .adm-section .adm-select,

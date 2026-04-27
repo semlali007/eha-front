@@ -123,8 +123,8 @@
       </div>
     </section>
 
-    <!-- Section : Vitrine de l'offre -->
-    <section class="adm-section" *ngIf="contract.sheets?.length > 0">
+    <!-- Section : Vitrine de l'offre (toujours visible) -->
+    <section class="adm-section">
       <div class="adm-section-head">
         <span class="adm-section-number">2</span>
         <div class="adm-section-titles">
@@ -132,7 +132,7 @@
           <p class="adm-section-sub">Fiches marché associées à ce contrat</p>
         </div>
       </div>
-      <div class="cv-tags">
+      <div class="cv-tags" *ngIf="contract.sheets?.length > 0; else noSheet">
         <button type="button"
                 class="adm-tag-link"
                 *ngFor="let sheet of contract.sheets"
@@ -144,12 +144,15 @@
           </svg>
         </button>
       </div>
+      <ng-template #noSheet>
+        <span class="adm-field-value-muted">Aucune fiche associée.</span>
+      </ng-template>
     </section>
 
     <!-- Section : Niveau d'utilisation -->
     <section class="adm-section" *ngIf="contract.infos.showJauge">
       <div class="adm-section-head">
-        <span class="adm-section-number">{{ contract.sheets?.length > 0 ? 3 : 2 }}</span>
+        <span class="adm-section-number">3</span>
         <div class="adm-section-titles">
           <h3 class="adm-section-title">Niveau d'utilisation</h3>
           <p class="adm-section-sub">Mandant {{ contract.infos.system }} — consommé sur la valeur cible</p>
@@ -182,7 +185,7 @@
     <!-- Section : Liste des postes -->
     <section class="adm-section" *ngIf="contract.postes?.length > 0">
       <div class="adm-section-head">
-        <span class="adm-section-number">{{ (contract.sheets?.length > 0 ? 1 : 0) + (contract.infos.showJauge ? 1 : 0) + 2 }}</span>
+        <span class="adm-section-number">{{ contract.infos.showJauge ? 4 : 3 }}</span>
         <div class="adm-section-titles">
           <h3 class="adm-section-title">Liste des postes ({{ contract.postes.length }})</h3>
           <p class="adm-section-sub">Postes et articles associés au contrat</p>

@@ -1,18 +1,17 @@
-<div class="form-group">
-    <label for="title" class="label-with-icon">
-        <strong>Nom fiche :</strong><span class="required">*</span>
-        <span class="info-icon"
-            tooltip="L'objet de la fiche (se limiter à 3 lignes maximum en cas d'objet long)"
-            placement="top" role="img" aria-label="Information"></span>
-    </label>
-    <input id="title" [formControl]="title" type="title" class="form-control" placeholder="Le titre" autocorrect="off"
-        autocomplete="off" />
-    <small *ngIf="title.errors" class="form-text text-danger">
-        <span [hidden]="!title.errors.required">
-            Titre requis.
-        </span>
-        <span [hidden]="!title.errors.minlength">
-            Titre doit faire plus de 4 caractères.
-        </span>
-    </small>
+<div class="adm-form-group">
+  <label for="title" class="adm-label">
+    Nom de la fiche<span class="adm-required">*</span>
+  </label>
+  <input id="title"
+         [formControl]="title"
+         type="text"
+         class="adm-input"
+         placeholder="Ex : Accord-cadre fournitures de bureau"
+         autocorrect="off"
+         autocomplete="off">
+  <span class="adm-field-hint">L'objet de la fiche (3 lignes maximum en cas d'objet long).</span>
+  <span *ngIf="title.errors && title.touched" class="adm-field-error">
+    <ng-container *ngIf="title.errors.required">Titre requis.</ng-container>
+    <ng-container *ngIf="title.errors.minlength">Le titre doit faire au moins 4 caractères.</ng-container>
+  </span>
 </div>

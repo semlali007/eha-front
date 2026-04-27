@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -25,8 +25,8 @@ import { ViewModeService } from 'src/app/core/services/view-mode.service';
 @Component({
   selector: 'app-sheet-form',
   templateUrl: './sheet-form.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class SheetFormComponent implements OnInit, OnDestroy{
@@ -36,6 +36,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   @Input() initialData: any = null;
 
   sheetForm: FormGroup;
+  submitted = false;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
   privateEnedisUploader: FileUploader;
@@ -593,6 +594,15 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   submit(draft? : boolean): void {
+    this.submitted = true;
+    if (!draft && this.sheetForm && this.sheetForm.invalid) {
+      this.sheetForm.markAllAsTouched();
+      setTimeout(() => {
+        const banner = document.querySelector('.adm-form-error-banner');
+        banner?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+      return;
+    }
     let dateOptions = [];
     this.options.value.forEach(op => {
       dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));

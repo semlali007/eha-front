@@ -7,6 +7,9 @@
 @import "./assets/css/font-style.css";
 @import "./assets/css/font-news.css";
 
+/* Kit UI partagé (classes .adm-*) — disponible globalement */
+@import "./app/administration/admin-shared.css";
+
 /* Style pour le tooltip */
 bs-tooltip-container .tooltip-inner {
     max-width: 300px;

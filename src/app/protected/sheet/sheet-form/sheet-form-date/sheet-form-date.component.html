@@ -1,43 +1,55 @@
-<div class="row mb-5">
-    
-    <div class="col-md-6 mx-auto">
-        <div class="form-inline">
-            <div class="form-group">
-                <label for="startDate" class="mr-3"><strong>Date de début de validité :</strong><span class="required">*</span></label>
-                <input bsDatepicker [formControl]="startDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
-                    class="form-control form-control-sm align-middle" />
-                    <small *ngIf="startDate.errors" class="form-text text-danger">
-                        <span [hidden]="!startDate.errors.required">  Date requise.</span>
-                        <span [hidden]="!startDate.errors.bsDate">  Date invalide.</span>
-                    </small>
-                    
-            </div>
-        </div>
-        <small *ngIf="sheetForm?.errors" class="form-text text-danger">
-            <span [hidden]="!sheetForm.errors?.customValidator">
-            La date de début ne doit pas être postérieure à la date de fin.
-            </span>
-          </small>
+<div class="adm-form-row">
+  <div class="adm-form-group">
+    <label for="startDate" class="adm-label">
+      Date de début de validité<span class="adm-required">*</span>
+    </label>
+    <div class="adm-datepicker-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+      </svg>
+      <input id="startDate"
+             type="text"
+             class="adm-input"
+             bsDatepicker
+             [formControl]="startDate"
+             [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+             placeholder="JJ/MM/AAAA">
     </div>
-    <div class="col-md-6 mx-auto">
-        <div class="form-inline">
-            <div class="form-group">
-                <label for="endDate" class="mr-3">
-                    <strong>Date de fin de validité :</strong>
-                    <span class="required">*</span>
-                    <span class="info-icon"
-                        tooltip="Date de fin options incluses"
-                        placement="top" role="img" aria-label="Information">
-                    </span>
-                </label>
-                <input bsDatepicker (bsValueChange)="onValueChange($event)" [formControl]="endDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" type="text"
-                    class="form-control form-control-sm align-middle" />
-                    <small *ngIf="endDate.errors" class="form-text text-danger">
-                        <span [hidden]="!endDate.errors.required">  Date requise.</span>
-                        <span [hidden]="!endDate.errors.bsDate">  Date invalide.</span>
-                    </small>
-            </div>
-        </div>
+    <span class="adm-field-hint">Date d'entrée en vigueur du marché.</span>
+    <span *ngIf="startDate.errors && startDate.touched" class="adm-field-error">
+      <ng-container *ngIf="startDate.errors.required">Date requise.</ng-container>
+      <ng-container *ngIf="startDate.errors.bsDate">Date invalide.</ng-container>
+    </span>
+  </div>
+
+  <div class="adm-form-group">
+    <label for="endDate" class="adm-label">
+      Date de fin de validité<span class="adm-required">*</span>
+    </label>
+    <div class="adm-datepicker-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+      </svg>
+      <input id="endDate"
+             type="text"
+             class="adm-input"
+             bsDatepicker
+             (bsValueChange)="onValueChange($event)"
+             [formControl]="endDate"
+             [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+             placeholder="JJ/MM/AAAA">
     </div>
+    <span class="adm-field-hint">Date de fin, options incluses</span>
+    <span *ngIf="endDate.errors && endDate.touched" class="adm-field-error">
+      <ng-container *ngIf="endDate.errors.required">Date requise.</ng-container>
+      <ng-container *ngIf="endDate.errors.bsDate">Date invalide.</ng-container>
+    </span>
+  </div>
 </div>
 
+<div *ngIf="sheetForm?.errors?.customValidator && sheetForm?.touched" class="adm-form-error-banner" style="margin-top: 10px">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+  </svg>
+  <span>La date de début ne doit pas être postérieure à la date de fin.</span>
+</div>

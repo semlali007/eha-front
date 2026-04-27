@@ -1,18 +1,19 @@
-<div class="form-group">
-    <label for="supplierVatNumber" class="label-with-icon">
-        <strong>Numéros TVA intracommunautaire pour les fournisseurs UE / ou numéros DUNS pour les fournisseurs hors UE :</strong>
-        <span class="info-icon"
-            tooltip="Numéro d'identification fiscale du fournisseur dans l'UE (ex: FR12345678901)"
-            placement="top" role="img" aria-label="Information"></span>
-    </label>
-    <input id="supplierVatNumber" [formControl]="supplierVatNumber" type="text" class="form-control" 
-           placeholder="Ex: FR12345678901" autocorrect="off" autocomplete="off" />
-    <small *ngIf="supplierVatNumber.errors" class="form-text text-danger">
-        <span [hidden]="!supplierVatNumber.errors.required">
-            Numéro TVA intracommunautaire requis.
-        </span>
-        <span [hidden]="!supplierVatNumber.errors.pattern">
-            Format de numéro TVA invalide.
-        </span>
-    </small>
+<div class="adm-form-group">
+  <label for="supplierVatNumber" class="adm-label">
+    Numéro TVA intracommunautaire ou DUNS
+  </label>
+  <input id="supplierVatNumber"
+         [formControl]="supplierVatNumber"
+         type="text"
+         class="adm-input"
+         placeholder="Ex : FR12345678901"
+         autocorrect="off"
+         autocomplete="off">
+  <span class="adm-field-hint">
+    Numéro TVA pour les fournisseurs UE, ou DUNS pour les fournisseurs hors UE.
+  </span>
+  <span *ngIf="supplierVatNumber.errors && supplierVatNumber.touched" class="adm-field-error">
+    <ng-container *ngIf="supplierVatNumber.errors.required">Numéro TVA intracommunautaire requis.</ng-container>
+    <ng-container *ngIf="supplierVatNumber.errors.pattern">Format de numéro TVA invalide.</ng-container>
+  </span>
 </div>

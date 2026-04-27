@@ -1,29 +1,31 @@
-<div class="form-group">
-    <div class="label-with-icon">
-        <strong>Bénéficiaires :</strong><span class="required">*</span>
-        <span class="info-icon"
-            tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc ; si toutes les entités Groupe,  préciser tel que défini dans les CPA : ex 'toutes entités du Groupe')"
-            placement="top" role="img" aria-label="Information"></span>
-    </div>
-    <div class="row">
-        <div class="col-sm-10">
-            <tag-input [formControl]="beneficiaries"  [placeholder]="''" [onTextChangeDebounce]="500"
-                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
-                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
-                    [identifyBy]="'code'" [displayBy]="'label'">
-                </tag-input-dropdown>
-            </tag-input>
-        </div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-edf"
-            (click)="openModalWithComponent()"
-               >Bénéficiaires</button>
-        </div>
-    </div>
-    <small *ngIf="beneficiaries.errors" class="form-text text-danger">
-        <span [hidden]="!beneficiaries.errors.required">
-            Bénéficiaires requis.
-        </span>
-       
-    </small>
+<div class="adm-form-group">
+  <label class="adm-label">
+    Bénéficiaires<span class="adm-required">*</span>
+  </label>
+  <div class="adm-tag-input-row">
+    <tag-input class="adm-tag-input"
+               [formControl]="beneficiaries"
+               [placeholder]="''"
+               [onTextChangeDebounce]="500"
+               [secondaryPlaceholder]="'Rechercher un bénéficiaire…'"
+               [onlyFromAutocomplete]="true">
+      <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems"
+                          [minimumTextLength]="3"
+                          [identifyBy]="'code'"
+                          [displayBy]="'label'">
+      </tag-input-dropdown>
+    </tag-input>
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="openModalWithComponent()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+      Bénéficiaire
+    </button>
+  </div>
+  <span class="adm-field-hint">
+    Entités du groupe (filiales, CCAS, Fondation). Si toutes les entités, précisez tel que défini dans les CPA.
+  </span>
+  <span *ngIf="beneficiaries.errors && beneficiaries.touched" class="adm-field-error">
+    <ng-container *ngIf="beneficiaries.errors.required">Bénéficiaires requis.</ng-container>
+  </span>
 </div>

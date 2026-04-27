@@ -1,17 +1,19 @@
-<div class="form-group">
-    <label for="entitesBeneficiairesEdfEnedis" class="label-with-icon">
-        <strong>Entités bénéficiaires d'EDF SA / ENEDIS :</strong>
-        <span class="info-icon"
-            tooltip="Si entités spécifiques à EDF SA / ENEDIS, préciser ici (par ex: CNPE Golfech), si uniquement EDF SA ou ENEDIS, l'indiquer dans les bénéficiaires"
-            placement="top" role="img" aria-label="Information"></span>
-    </label>
-    <textarea id="entitesBeneficiairesEdfEnedis" [formControl]="entitesBeneficiairesEdfEnedis" 
-              class="form-control" rows="1"
-              placeholder="Indiquez les entités bénéficiaires d'EDF SA / ENEDIS..." 
-              autocorrect="off" autocomplete="off"></textarea>
-    <small *ngIf="entitesBeneficiairesEdfEnedis.errors" class="form-text text-danger">
-        <span [hidden]="!entitesBeneficiairesEdfEnedis.errors.required">
-            Entités bénéficiaires requises.
-        </span>
-    </small>
+<div class="adm-form-group">
+  <label for="entitesBeneficiairesEdfEnedis" class="adm-label">
+    Entités bénéficiaires EDF SA / ENEDIS
+  </label>
+  <textarea id="entitesBeneficiairesEdfEnedis"
+            [formControl]="entitesBeneficiairesEdfEnedis"
+            class="adm-textarea"
+            rows="2"
+            placeholder="Ex : CNPE Golfech"
+            autocorrect="off"
+            autocomplete="off"></textarea>
+  <span class="adm-field-hint">
+    Précisez les entités spécifiques à EDF SA / ENEDIS. Si c'est uniquement l'un ou l'autre,
+    indiquez-le dans le champ "Bénéficiaires".
+  </span>
+  <span *ngIf="entitesBeneficiairesEdfEnedis.errors && entitesBeneficiairesEdfEnedis.touched" class="adm-field-error">
+    <ng-container *ngIf="entitesBeneficiairesEdfEnedis.errors.required">Entités bénéficiaires requises.</ng-container>
+  </span>
 </div>

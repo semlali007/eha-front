@@ -1,18 +1,12 @@
-<div class="row">
-  <div class="col-12">
-    <div class="form-group">
-      <label for="acheteur" class="label-with-icon">
-        <strong>Acheteur :</strong>
-        <span class="info-icon" tooltip="Saisir le nom de l'acheteur"
-          placement="top" role="img" aria-label="Information"></span>
-      </label>
-      <input type="text" class="form-control" id="acheteur" [formControl]="acheteur" placeholder="Saisir l'acheteur"
-        maxlength="500" />
-      <div *ngIf="acheteur?.invalid && acheteur?.touched" class="text-danger small mt-1">
-        <div *ngIf="acheteur?.errors?.['maxlength']">
-          L'acheteur ne peut pas dépasser 500 caractères
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="adm-form-group">
+  <label for="acheteur" class="adm-label">Acheteur</label>
+  <input id="acheteur"
+         type="text"
+         class="adm-input"
+         [formControl]="acheteur"
+         placeholder="Nom de l'acheteur"
+         maxlength="500">
+  <span *ngIf="acheteur?.errors?.['maxlength'] && acheteur?.touched" class="adm-field-error">
+    L'acheteur ne peut pas dépasser 500 caractères.
+  </span>
 </div>

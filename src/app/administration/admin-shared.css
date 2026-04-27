@@ -733,17 +733,110 @@
   border-radius: 0 !important;
 }
 
-/* Toggle switch (pour "Actif", "Activé", etc.) */
-.adm-switch {
-  display: inline-flex;
+/* Drop zone (upload) */
+.adm-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 120px;
+  padding: 20px;
+  background: #fafbfc;
+  border: 2px dashed #d1d5db;
+  border-radius: 10px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  text-align: center;
+}
+.adm-dropzone:hover {
+  background: #fff7f2;
+  border-color: #fe5815;
+  color: #fe5815;
+}
+.adm-dropzone > svg { color: #9ca3af; }
+.adm-dropzone:hover > svg { color: #fe5815; }
+.adm-dropzone-text { font-size: 13.5px; color: #1f2937; }
+.adm-dropzone-text strong { color: #001a70; }
+.adm-dropzone:hover .adm-dropzone-text strong { color: #fe5815; }
+.adm-dropzone-sub { font-size: 12px; color: #9ca3af; }
+
+/* Liste de fichiers uploadés */
+.adm-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+.adm-file-item {
+  display: flex;
   align-items: center;
   gap: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+.adm-file-icon { color: #6b7280; flex: none; }
+.adm-file-meta { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adm-file-list .adm-file-name {
+  font-size: 13px;
+  color: #1f2937;
+  font-weight: 500;
+}
+.adm-file-link {
+  color: #001a70 !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.adm-file-link:hover { color: #fe5815 !important; }
+
+/* Datepicker avec icône calendrier */
+.adm-datepicker-wrap {
+  position: relative;
+  display: block;
+}
+.adm-datepicker-wrap > svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+.adm-datepicker-wrap > .adm-input,
+.adm-datepicker-wrap > input {
+  padding-left: 34px !important;
+  cursor: pointer;
+}
+
+/* Toggle switch (pour "Actif", "Activé", etc.) */
+.adm-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   cursor: pointer;
   user-select: none;
+  margin: 0;
+  line-height: 1.4;
 }
-.adm-switch input { position: absolute; opacity: 0; pointer-events: none; }
+.adm-switch input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
 .adm-switch-track {
   position: relative;
+  flex: none;
+  display: inline-block;
   width: 38px;
   height: 22px;
   background: #d1d5db;
@@ -768,7 +861,158 @@
 .adm-switch input:checked + .adm-switch-track::after {
   transform: translateX(16px);
 }
-.adm-switch-label { font-size: 13px; color: #1f2937; font-weight: 500; }
+.adm-switch-label {
+  font-size: 13px;
+  color: #1f2937;
+  font-weight: 500;
+  line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Radio group (pills cliquables) */
+.adm-radio-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.adm-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #4b5563;
+  background: #fff;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+  margin: 0;
+  line-height: 1.4;
+}
+.adm-radio:hover { border-color: #d1d5db; }
+.adm-radio input[type="radio"] {
+  accent-color: #001a70;
+  margin: 0 !important;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex: none;
+}
+.adm-radio > span {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.4;
+}
+
+/* ─── Sections de formulaire long (numérotées) ────────────── */
+.adm-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin-bottom: 14px;
+}
+.adm-section-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.adm-section-number {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #e8eef8;
+  color: #001a70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.adm-section-titles { flex: 1; min-width: 0; }
+.adm-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 2px 0;
+}
+.adm-section-sub {
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Header sticky (barre d'actions en haut d'une page formulaire) */
+.adm-form-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 18px;
+}
+.adm-form-header-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.adm-form-header-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+.adm-form-header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Bandeau d'erreur global */
+.adm-form-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  color: #991b1b;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* Grilles intra-section */
+.adm-form-row {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+.adm-form-row > .adm-form-group { min-width: 0; }
+.adm-form-row-3 {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+}
+.adm-form-row-3 > .adm-form-group { min-width: 0; }
+@media (max-width: 780px) {
+  .adm-form-row, .adm-form-row-3 { grid-template-columns: 1fr; }
+}
+
+.adm-toggle-group { display: flex; flex-direction: column; gap: 10px; }
 
 /* ─── Utilitaires layout ──────────────────────────────────── */
 .adm-stack { display: flex; flex-direction: column; }

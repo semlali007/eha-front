@@ -3,48 +3,49 @@
   <h1 class="adm-title">Administrateurs</h1>
 
   <!-- Carte d'ajout -->
-  <form [formGroup]="administratorForm" (ngSubmit)="submit()"
-        class="adm-card adm-card--pad-lg"
-        style="margin-bottom: 20px">
-    <div class="adm-row-between" style="margin-bottom: 14px">
-      <div>
-        <h3 class="adm-io-title" style="margin: 0 0 4px 0">Ajouter un administrateur</h3>
-        <p class="adm-muted" style="margin: 0">
-          L'utilisateur aura accès à l'intégralité des fonctions d'administration.
-        </p>
-      </div>
-      <span *ngIf="added" class="adm-chip adm-chip--green">
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-        </svg>
-        Ajouté
-      </span>
-    </div>
-
-    <div class="adm-admin-inline-form">
-      <div class="adm-form-group" style="flex: 1; min-width: 260px">
-        <label for="admin-email" class="adm-label">
-          Adresse e-mail<span class="adm-required">*</span>
-        </label>
-        <input id="admin-email"
-               class="adm-input"
-               type="email"
-               [formControl]="$any(email)"
-               placeholder="ex : nom.prenom@edf.fr"
-               autocorrect="off"
-               autocomplete="off">
-        <span *ngIf="email?.errors?.email && email?.dirty" class="adm-field-error">
-          Entrez une adresse e-mail valide.
+  <form [formGroup]="administratorForm" (ngSubmit)="submit()">
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">1</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Ajouter un administrateur</h3>
+          <p class="adm-section-sub">
+            L'utilisateur aura accès à l'intégralité des fonctions d'administration.
+          </p>
+        </div>
+        <span *ngIf="added" class="adm-chip adm-chip--green" style="margin-left:auto">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+          </svg>
+          Ajouté
         </span>
       </div>
 
-      <button type="submit" [disabled]="!administratorForm.valid" class="adm-btn adm-btn-edf adm-admin-submit">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-        </svg>
-        Ajouter
-      </button>
-    </div>
+      <div class="adm-admin-inline-form">
+        <div class="adm-form-group" style="flex: 1; min-width: 260px">
+          <label for="admin-email" class="adm-label">
+            Adresse e-mail<span class="adm-required">*</span>
+          </label>
+          <input id="admin-email"
+                 class="adm-input"
+                 type="email"
+                 [formControl]="$any(email)"
+                 placeholder="ex : nom.prenom@edf.fr"
+                 autocorrect="off"
+                 autocomplete="off">
+          <span *ngIf="email?.errors?.email && email?.dirty" class="adm-field-error">
+            Entrez une adresse e-mail valide.
+          </span>
+        </div>
+
+        <button type="submit" [disabled]="!administratorForm.valid" class="adm-btn adm-btn-edf adm-admin-submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+          </svg>
+          Ajouter
+        </button>
+      </div>
+    </section>
   </form>
 
   <!-- Toolbar : compteur + recherche -->

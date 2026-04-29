@@ -89,26 +89,22 @@
           <p class="empty-state-sub">Essayez de modifier vos critères de recherche ou de réinitialiser les filtres.</p>
         </div>
 
-        <div *ngIf="sheets.length > 0" class="pagination-wrapper">
-          <p class="pagination-info">
-            Affichage {{ (currentPage.value - 1) * itemsPerPage + 1 }} - {{ currentPage.value * itemsPerPage > totalItems ? totalItems : currentPage.value * itemsPerPage }} de {{ totalItems }} fiches.
+        <div *ngIf="sheets.length > 0" class="adm-pagination-bar">
+          <p class="adm-pagination-info">
+            Affichage {{ (currentPage.value - 1) * itemsPerPage + 1 }} – {{ currentPage.value * itemsPerPage > totalItems ? totalItems : currentPage.value * itemsPerPage }} sur {{ totalItems }} fiches
           </p>
-          <form [formGroup]="paginationForm">
-            <nav aria-label="pagination">
-              <pagination
-                [boundaryLinks]="true"
-                [totalItems]="totalItems"
-                [itemsPerPage]="itemsPerPage"
-                [formControl]="currentPage"
-                (pageChanged)="pageChanged($event)"
-                [maxSize]="10"
-                (numPages)="smallnumPages = $event"
-                previousText="&lsaquo;"
-                nextText="&rsaquo;"
-                firstText="&laquo;"
-                lastText="&raquo;">
-              </pagination>
-            </nav>
+          <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+            <pagination
+              [totalItems]="totalItems"
+              [itemsPerPage]="itemsPerPage"
+              [formControl]="currentPage"
+              (pageChanged)="pageChanged($event)"
+              [maxSize]="7"
+              previousText="&lsaquo;"
+              nextText="&rsaquo;"
+              firstText="&laquo;"
+              lastText="&raquo;">
+            </pagination>
           </form>
         </div>
       </div>

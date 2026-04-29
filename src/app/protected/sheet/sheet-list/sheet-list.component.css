@@ -1,12 +1,3 @@
-/* ─── Pagination ──────────────────────────────────────────── */
-.page-item.active .page-link {
-  background-color: var(--my-color-blue);
-  border-color: var(--my-color-blue);
-}
-.page-link {
-  color: var(--my-color-blue);
-}
-
 /* ─── Page layout ─────────────────────────────────────────── */
 app-sheet-list > .container-fluid {
   padding-left: 48px;
@@ -225,20 +216,6 @@ app-breadcrumb nav {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
   padding: 12px;
   margin-top: 0;
-}
-
-.pagination-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-}
-
-.pagination-info {
-  font-size: 12px;
-  color: #6b7280;
-  margin: 0;
 }
 
 /* ─── Empty state ─────────────────────────────────────────── */

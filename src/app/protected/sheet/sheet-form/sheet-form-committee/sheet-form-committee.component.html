@@ -1,11 +1,7 @@
-<div class="form-group">
-    <label for="committeeCode" class="label-with-icon">
-        <strong>Comité de Gestion de la Demande :</strong>
-    </label>
-    <select class="form-control" [formControl]="committeeCode" style="width:auto;">
-        <option value=0>Choisissez un Comité</option>
-        <option *ngFor="let item of committees" [ngValue]="item.code">
-            {{item.label}}
-        </option>
-    </select>
+<div class="adm-form-group">
+  <label for="committeeCode" class="adm-label">Comité de gestion de la demande</label>
+  <select id="committeeCode" class="adm-select" [formControl]="committeeCode">
+    <option [ngValue]="0">Choisissez un comité</option>
+    <option *ngFor="let item of committees" [ngValue]="item.code">{{ item.label }}</option>
+  </select>
 </div>

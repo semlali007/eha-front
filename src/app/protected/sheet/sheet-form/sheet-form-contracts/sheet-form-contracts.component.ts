@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { invalidContractCodeValidator } from 'src/app/shared/validators/contractCodeValidator';
 import { ContractService } from 'src/app/core/services/contract.service';
 import * as XLSX from 'xlsx';
@@ -15,23 +16,30 @@ interface ExcelDataRow {
   templateUrl: './sheet-form-contracts.component.html',
   styleUrls: ['./sheet-form-contracts.component.css']
 })
-export class SheetFormContractsComponent implements OnInit {
+export class SheetFormContractsComponent implements OnInit, OnDestroy {
   @Input() contracts: FormArray;
   @Input() sheetForm: FormGroup;
   @Input() lotsList: FormControl;
-  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
-  @Input() sheetId: string | null = null; // Pour distinguer nouveau vs édition existante
+  @Input() mode: 'create' | 'edit' = 'edit';
+  @Input() sheetId: string | null = null;
   currentIndex: number;
   invalidContractsCount: number = 0;
   invalidContractsMessage: string = '';
   lotsListForContract: string[] = [];
   tableLot: string[] = [];
   originalFileContent: any;
+  private lotsSub?: Subscription;
 
   constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
   ngOnInit(): void {
-    this.generateLotsList();
+    // Initialise la liste des lots disponibles à partir des lots réellement créés
+    this.refreshLotsList();
+    // Réagit aux ajouts/suppressions/renommages de lots dans la section "Lots"
+    const lotsArray = this.sheetForm?.get('lots') as FormArray | null;
+    if (lotsArray) {
+      this.lotsSub = lotsArray.valueChanges.subscribe(() => this.refreshLotsList());
+    }
 
     // Charger localStorage SEULEMENT si :
     // 1. Mode création (pas d'ID de fiche) OU  
@@ -152,10 +160,31 @@ export class SheetFormContractsComponent implements OnInit {
       reader.readAsBinaryString(file);
     }
   }
-  generateLotsList() {
-    this.tableLot = [" ","lot 1", "lot 2", "lot 3", "lot 4", "lot 5", "lot 6", "lot 7","lot 8", "lot 9","lot 10","lot 11",
-    "lot 12","lot 13","lot 14","lot 15","lot 16","lot 17","lot 18","lot 19","lot 20"];
-    this.lotsListForContract = this.tableLot;
+  /**
+   * Recalcule la liste des noms de lots disponibles pour la dropdown
+   * "Lot associé" des contrats. Source de vérité : le FormArray des lots
+   * créé dans la section "Lots" juste au-dessus.
+   */
+  refreshLotsList(): void {
+    const lotsArray = this.sheetForm?.get('lots') as FormArray | null;
+    if (!lotsArray) {
+      this.tableLot = [];
+      this.lotsListForContract = [];
+      return;
+    }
+    const lotNames = lotsArray.controls
+      .map(ctrl => ctrl.get('name')?.value)
+      .filter((name): name is string =>
+        typeof name === 'string' && name.trim().length > 0,
+      )
+      // évite les doublons exacts
+      .filter((name, idx, arr) => arr.indexOf(name) === idx);
+
+    this.tableLot = lotNames;
+    this.lotsListForContract = lotNames;
   }
-  
+
+  ngOnDestroy(): void {
+    this.lotsSub?.unsubscribe();
+  }
 }

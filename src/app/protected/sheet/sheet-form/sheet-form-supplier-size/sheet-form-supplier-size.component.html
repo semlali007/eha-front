@@ -1,34 +1,12 @@
-<div class="form-group" *ngIf="supplierSize">
-    <div class="label-with-icon">
-        <label for="supplier_size"><strong>Fournisseur Taille :</strong></label>
-        <span class="info-icon"
-            [tooltip]="supplierSizeTooltipTemplate"
-            placement="top"
-            container="body"
-            role="img" 
-            aria-label="Information"></span>
-    </div>
-    <select id="supplier_size" [formControl]="supplierSize" class="form-control" style="width: 200px;">
-        <option value="">-- Sélectionner --</option>
-        <option *ngFor="let supplierSize of supplierSizes" [value]="supplierSize.id">{{ supplierSize.name }}</option>
-    </select>
+<div class="adm-form-group" *ngIf="supplierSize">
+  <label for="supplier_size" class="adm-label">Taille du fournisseur</label>
+  <select id="supplier_size" [formControl]="supplierSize" class="adm-select">
+    <option value="">— Sélectionner —</option>
+    <option *ngFor="let s of supplierSizes" [value]="s.id">{{ s.name }}</option>
+  </select>
+  <span class="adm-field-hint">
+    <strong>PME</strong> : Petites et moyennes entreprises ·
+    <strong>ETI</strong> : Entreprise de taille intermédiaire (250–4999 salariés, CA ≤ 1,5 Md€ ou bilan ≤ 2 Md€) ·
+    <strong>GE</strong> : Grandes entreprises.
+  </span>
 </div>
-
-<!-- Template pour le tooltip de taille fournisseur -->
-<ng-template #supplierSizeTooltipTemplate>
-    <div class="tooltip-content supplier-size-tooltip">
-        <div class="size-definition">
-            <span class="badge badge-success">PME</span> : Petites et moyennes entreprises
-        </div>
-        <div class="size-definition">
-            <span class="badge badge-warning">ETI</span> : Entreprise de taille intermédiaire
-        </div>
-        <div class="size-definition">
-            <span class="badge badge-danger">GE</span> : Grandes entreprises
-        </div>
-        <div class="size-detail">
-            <strong>Définition ETI :</strong><br>
-            Une entreprise de taille intermédiaire (ETI) est une entreprise qui a entre 250 et 4 999 salariés, et soit un chiffre d'affaires n'excédant pas 1,5 milliard d'euros soit un total de bilan n'excédant pas 2 milliards d'euros.
-        </div>
-    </div>
-</ng-template>

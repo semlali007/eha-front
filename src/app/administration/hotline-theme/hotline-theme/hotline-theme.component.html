@@ -1,51 +1,102 @@
-<h1>Gérer les thèmes :</h1>
-<div class="row">
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
-        </div>
-    </div>
-</div>
-<p>{{themes.length}} entrées :</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                id
-            </th>
-            <th>
-                Nom
-            </th>
-            <th>
-                Actif
-            </th>
-            <th>
-               
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let theme of themes">
-            <td>
-                {{theme.id}}
-            </td>
-            <td>
-                {{theme.label}}
-            </td>
-            <td>
-                {{theme.living | showBooleanText}}
-            </td>
-            <td>
-                <button class="btn btn-primary" (click)="openAdd(theme.id)">Modifier</button>
-            </td>
+<div class="adm-page">
 
-        </tr>
-    </tbody>
-</table>
-<ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-header">
+    <h1 class="adm-title">Thèmes de hotline</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter un thème
+      </button>
     </div>
-  </ng-template>
+  </div>
+
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> thème{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ themes.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher un thème…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th style="width: 80px">ID</th>
+          <th>Nom</th>
+          <th style="width: 140px">Statut</th>
+          <th style="width: 140px; text-align: right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let theme of paged">
+          <td class="adm-table-col-muted">#{{ theme.id }}</td>
+          <td><span class="adm-word">{{ theme.label }}</span></td>
+          <td>
+            <span *ngIf="theme.living" class="adm-chip adm-chip--green">Actif</span>
+            <span *ngIf="!theme.living" class="adm-chip adm-chip--muted">Inactif</span>
+          </td>
+          <td style="text-align: right">
+            <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="openAdd(theme.id)">
+              Modifier
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p class="adm-empty-title">Aucun thème trouvé</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucun thème défini — ajoutez-en un avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>
+
+<ng-template #template>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer ce thème ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    </div>
+  </div>
+</ng-template>

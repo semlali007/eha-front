@@ -1,30 +1,41 @@
-<div class="modal-header">
-    <h4 class="modal-title">Ajout d'un élément</h4>
-    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
+<div class="adm-modal-header">
+  <h4 class="adm-modal-title">{{ id ? 'Modifier le thème' : 'Ajouter un thème' }}</h4>
+  <button type="button" class="adm-modal-close" aria-label="Fermer" (click)="bsModalRef.hide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
+</div>
+
+<form novalidate (ngSubmit)="submit()" [formGroup]="factsheetAddForm">
+  <div class="adm-modal-body">
+    <div class="adm-form-group">
+      <label for="theme-label" class="adm-label">
+        Nom du thème<span class="adm-required">*</span>
+      </label>
+      <input id="theme-label"
+             class="adm-input"
+             type="text"
+             [formControl]="$any(label)"
+             placeholder="Ex : Tarification, Commande, Livraison…"
+             autocorrect="off"
+             autocomplete="off">
+    </div>
+
+    <div class="adm-form-group">
+      <label class="adm-switch">
+        <input type="checkbox" formControlName="living">
+        <span class="adm-switch-track"></span>
+        <span class="adm-switch-label">Thème actif</span>
+      </label>
+      <span class="adm-field-hint">Un thème inactif ne sera plus proposé dans les formulaires hotline.</span>
+    </div>
+  </div>
+
+  <div class="adm-modal-footer">
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="bsModalRef.hide()">Annuler</button>
+    <button type="submit" class="adm-btn adm-btn-edf" [disabled]="!factsheetAddForm.valid">
+      {{ id ? 'Enregistrer' : 'Ajouter' }}
     </button>
-</div>
-<div class="modal-body">
-    <form novalidate (ngSubmit)="submit()" [formGroup]="factsheetAddForm">
-        <div class="form-group">
-            <label for="label" ><strong>Nom :</strong><span class="required">*</span></label>
-            <input id="label" [formControl]="label" type="label" class="form-control"  autocorrect="off"
-                autocomplete="off" />
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <strong>Actif</strong>
-            </div>
-            <div class="col-sm-9">
-                <div class="form-check">
-                    <input type="checkbox" formControlName="living" id="living"  class="form-check-input"/>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="submit()"
-        [disabled]="!factsheetAddForm.valid">Valider</button>
-    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
-</div>
+  </div>
+</form>

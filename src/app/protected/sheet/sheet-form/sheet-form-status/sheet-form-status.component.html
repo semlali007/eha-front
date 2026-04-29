@@ -1,17 +1,10 @@
-<div class="form-group">
-    <label for="status" class="label-with-icon">
-        <strong>Statut :</strong>
-        <span class="info-icon" 
-              tooltip="l'acheteur archive la fiche dès la fin du marché"
-              placement="top"
-              container="body"
-              role="img"
-              aria-label="Information"></span>
+<div class="adm-form-group">
+  <label class="adm-label">Statut</label>
+  <div class="adm-radio-group">
+    <label class="adm-radio" *ngFor="let s of statusList">
+      <input type="radio" name="status" [formControl]="status" [value]="s.code">
+      <span>{{ s.label }}</span>
     </label>
-    <div class="radio" *ngFor="let s of statusList">
-        <label for="status">
-            <input type="radio" name="status" [formControl]="status" [value]="s.code">
-            {{s.label}}
-        </label>
-    </div>
+  </div>
+  <span class="adm-field-hint">L'acheteur archive la fiche dès la fin du marché.</span>
 </div>

@@ -1,23 +1,18 @@
-<div [formGroup]="sheetForm" class="form-group">
-    <label for="geographicDetail" class="label-with-icon">
-        <strong>Zone géographique détail si région :</strong>
-        <span class="info-icon"
-            tooltip="Préciser les détails géographiques si une région spécifique est sélectionnée"
-            placement="top" role="img" aria-label="Information"></span>
-    </label>
-    <textarea id="geographicDetail" 
-              formControlName="geographicDetail"
-              class="form-control" 
-              rows="1"
-              placeholder="Précisez les détails géographiques de la région..." 
-              autocorrect="off" 
-              autocomplete="off"></textarea>
-    <small *ngIf="sheetForm.get('geographicDetail')?.errors" class="form-text text-danger">
-        <span [hidden]="!sheetForm.get('geographicDetail')?.errors?.['required']">
-            Détail géographique requis.
-        </span>
-        <span [hidden]="!sheetForm.get('geographicDetail')?.errors?.['maxlength']">
-            Le détail ne peut dépasser {{sheetForm.get('geographicDetail')?.errors?.['maxlength']?.requiredLength}} caractères.
-        </span>
-    </small>
+<div [formGroup]="sheetForm" class="adm-form-group">
+  <label for="geographicDetail" class="adm-label">Détail géographique (si région)</label>
+  <textarea id="geographicDetail"
+            formControlName="geographicDetail"
+            class="adm-textarea"
+            rows="2"
+            placeholder="Précisez les détails géographiques de la région"
+            autocorrect="off"
+            autocomplete="off"></textarea>
+  <span *ngIf="sheetForm.get('geographicDetail')?.errors && sheetForm.get('geographicDetail')?.touched" class="adm-field-error">
+    <ng-container *ngIf="sheetForm.get('geographicDetail')?.errors?.['required']">
+      Détail géographique requis.
+    </ng-container>
+    <ng-container *ngIf="sheetForm.get('geographicDetail')?.errors?.['maxlength']">
+      Le détail ne peut dépasser {{ sheetForm.get('geographicDetail')?.errors?.['maxlength']?.requiredLength }} caractères.
+    </ng-container>
+  </span>
 </div>

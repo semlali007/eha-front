@@ -1,51 +1,91 @@
-<h1>Mots à ignorer</h1>
-<div class="row">
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
-        </div>
+<div class="adm-page">
+
+  <div class="adm-header">
+    <h1 class="adm-title">Mots à ignorer</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter un mot
+      </button>
     </div>
-</div>
-<div class="row" *ngIf="(logs$|async) as logs;">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Texte
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        <tbody >
-    
-            <tr *ngFor="let factsheet of logs | slice:startItem:endItem; index as i">
-                <td>
-                    {{factsheet.word}}
-                </td>
-                <td>
-                    <button class="btn btn-danger" (click)="openModal(template, factsheet.id)">Supprimer</button>
-                </td>
-            </tr>
-        </tbody>
-        
+  </div>
+
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> mot{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ words.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher un mot…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th>Mot</th>
+          <th style="width: 140px; text-align: right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let w of pagedWords">
+          <td>{{ w.word }}</td>
+          <td style="text-align: right">
+            <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="openModal(template, w.id)">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-    <form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="logs.length > 0;">
-            <nav aria-label="pagination" >
-            <pagination [boundaryLinks]="true" [totalItems]="logs.length" [itemsPerPage]="itemsPerPage"
-              [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-              (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
-              firstText="&laquo;" lastText="&raquo;">
-            </pagination>
-            </nav>
-          </form>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p class="adm-empty-title">Aucun mot trouvé</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">La liste est vide — ajoutez un mot avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
 
 </div>
 
 <ng-template #template>
-    <div class="modal-body text-center">
-        <p>Voulez-vous supprimer l'élément?</p>
-        <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
-    </div>
+  <div class="modal-body text-center">
+    <p>Voulez-vous supprimer l'élément ?</p>
+    <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+  </div>
 </ng-template>

@@ -1,49 +1,19 @@
-<div class="form-group">
-    <label class="label-with-icon">
-        <strong>Zones :</strong><span class="required">*</span>
-        <span class="info-icon"
-            [tooltip]="geographicZoneTooltipTemplate"
-            placement="top"
-            container="body"
-            role="img" 
-            aria-label="Information"></span>
-    </label>
-    <div class="row">
-        <div class="col-sm-12">
-            <!-- Nouvelle liste déroulante avec sélection unique -->
-            <select class="form-control" style="width:max-content;" [formControl]="areas" [compareWith]="compareAreas" required>
-                <option value="">Sélectionnez une zone géographique...</option>
-                <option *ngFor="let area of availableAreas" [ngValue]="area">
-                    {{ area.label }}
-                </option>
-            </select>
-            
-            <!-- Indicateur de chargement -->
-            <div *ngIf="isLoading" class="text-muted mt-1">
-                <small><i class="fa fa-spinner fa-spin"></i> Chargement des zones...</small>
-            </div>
-            
-            <!-- Message si aucune zone disponible -->
-            <div *ngIf="!isLoading && availableAreas.length === 0" class="text-warning mt-1">
-                <small><i class="fa fa-exclamation-triangle"></i> Aucune zone disponible</small>
-            </div>
-        </div>
-    </div>
-    <small *ngIf="areas.errors" class="form-text text-danger">
-        <span [hidden]="!areas.errors.required">
-            Zone géographique requise.
-        </span>
-    </small>
+<div class="adm-form-group">
+  <label class="adm-label">
+    Zone géographique<span class="adm-required">*</span>
+  </label>
+  <select class="adm-select" [formControl]="areas" [compareWith]="compareAreas" required>
+    <option value="">Sélectionnez une zone géographique…</option>
+    <option *ngFor="let area of availableAreas" [ngValue]="area">{{ area.label }}</option>
+  </select>
+  <span *ngIf="isLoading" class="adm-field-hint">Chargement des zones…</span>
+  <span *ngIf="!isLoading && availableAreas.length === 0" class="adm-field-error">
+    Aucune zone disponible.
+  </span>
+  <span class="adm-field-hint" *ngIf="!isLoading && availableAreas.length > 0">
+    Options : France métropolitaine (hors Corse) · France métropolitaine + Corse · France métropolitaine + Corse + DROM · France et international.
+  </span>
+  <span *ngIf="areas.errors && areas.touched" class="adm-field-error">
+    <ng-container *ngIf="areas.errors.required">Zone géographique requise.</ng-container>
+  </span>
 </div>
-
-<!-- Template pour le tooltip de zone géographique -->
-<ng-template #geographicZoneTooltipTemplate>
-    <div class="tooltip-content geographic-zone-tooltip">
-        <div class="zone-options">
-            <div class="zone-item">• France métropolitaine (hors Corse)</div>
-            <div class="zone-item">• France métropolitaine + Corse</div>
-            <div class="zone-item">• France métropolitaine + Corse + DROM</div>
-            <div class="zone-item">• France et international</div>
-        </div>
-    </div>
-</ng-template>

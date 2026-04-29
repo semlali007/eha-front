@@ -1,36 +1,143 @@
-<h1>Ajouter un administrateur :</h1>
-<form [formGroup]="administratorForm" (ngSubmit)="submit()">
-    <div class="form-group">
-        <label>E-mail du nouvel administrateur: </label>
-        <input type="email" class="form-control" placeholder="email" [formControl]="email">
-        <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
-            <span [hidden]="!email.errors.email">Entrez une adresse email valide.</span>
-        </small>
+<div class="adm-page">
+
+  <h1 class="adm-title">Administrateurs</h1>
+
+  <!-- Carte d'ajout -->
+  <form [formGroup]="administratorForm" (ngSubmit)="submit()">
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">1</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Ajouter un administrateur</h3>
+          <p class="adm-section-sub">
+            L'utilisateur aura accès à l'intégralité des fonctions d'administration.
+          </p>
+        </div>
+        <span *ngIf="added" class="adm-chip adm-chip--green" style="margin-left:auto">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+          </svg>
+          Ajouté
+        </span>
+      </div>
+
+      <div class="adm-admin-inline-form">
+        <div class="adm-form-group" style="flex: 1; min-width: 260px">
+          <label for="admin-email" class="adm-label">
+            Adresse e-mail<span class="adm-required">*</span>
+          </label>
+          <input id="admin-email"
+                 class="adm-input"
+                 type="email"
+                 [formControl]="$any(email)"
+                 placeholder="ex : nom.prenom@edf.fr"
+                 autocorrect="off"
+                 autocomplete="off">
+          <span *ngIf="email?.errors?.email && email?.dirty" class="adm-field-error">
+            Entrez une adresse e-mail valide.
+          </span>
+        </div>
+
+        <button type="submit" [disabled]="!administratorForm.valid" class="adm-btn adm-btn-edf adm-admin-submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+          </svg>
+          Ajouter
+        </button>
+      </div>
+    </section>
+  </form>
+
+  <!-- Toolbar : compteur + recherche -->
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> administrateur{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ administrators.length }})</ng-container>
+      </span>
     </div>
-    <div class="text-right mt-3">
-        <button type="submit" [disabled]="!administratorForm.valid" class="btn btn-primary">Sauvegarder</button>
-    </div>
-</form>
-<p>{{administrators.length}} entrées :</p>
-<table class="table">
-    <thead>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher un e-mail…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <!-- Table -->
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
         <tr>
-            <th>
-                Email
-            </th>
-            <th>
-                Supprimer
-            </th>
+          <th>E-mail</th>
+          <th style="width: 140px; text-align: right">Action</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let administrator of administrators">
-            <td>
-                {{administrator.email}}
-            </td>
-            <td>
-                <button (click)="delete(administrator)">Supprimer</button>
-            </td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let admin of paged">
+          <td>
+            <span class="adm-admin-avatar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+              </svg>
+            </span>
+            <span class="adm-word">{{ admin.email }}</span>
+          </td>
+          <td style="text-align: right">
+            <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="openModal(template, admin)">
+              Retirer
+            </button>
+          </td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+    </svg>
+    <p class="adm-empty-title">Aucun administrateur trouvé</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Ajoutez un administrateur avec le formulaire en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>
+
+<ng-template #template>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 8px 0; font-weight: 600; color: #1f2937">
+      Retirer cet administrateur ?
+    </p>
+    <p class="adm-muted" style="margin: 0 0 14px 0; font-size: 13px">
+      {{ toDelete?.email }}
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, retirer</button>
+    </div>
+  </div>
+</ng-template>

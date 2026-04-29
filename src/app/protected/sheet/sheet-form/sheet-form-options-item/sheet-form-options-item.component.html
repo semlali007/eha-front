@@ -1,63 +1,62 @@
-<form class="row" [formGroup]="option">
-  <div class="col-sm-3">
-    <div class="pt-2">
-      <label>Option {{index + 1}} :</label>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="align-items-center d-flex">
-    <span class="pr-4">Du</span>
-    <input
-        formControlName="startDate" 
-        placeholder="Date de début"
-        class="form-control"
-        [bsConfig]="{ containerClass: 'theme-dark-blue' }"
-        bsDatepicker>
-    </div>
-    <small *ngIf="startDate.errors" class="form-text text-danger">
-      <span [hidden]="!startDate.errors.required">
-        Date de début requis.
-      </span>
-      <span [hidden]="!startDate.errors?.minDateNotValid || startDate.errors.required ">
-        La date de début de l'option ne doit pas être antérieure à la date de fin du marché.
-      </span>
-  </small>
-  <small *ngIf="option?.errors" class="form-text text-danger">
-    <span [hidden]="!option.errors?.customValidator ||startDate.errors?.required || endDate.errors?.required">
-      La date de début ne doit pas être postérieure à la date de fin.
-    </span>
-  </small>
+<form class="adm-array-item adm-option-item" [formGroup]="option">
+  <div class="adm-option-label">Option {{ index + 1 }}</div>
 
+  <div class="adm-option-date-group">
+    <span class="adm-option-date-sep">Du</span>
+    <div class="adm-datepicker-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+      </svg>
+      <input formControlName="startDate"
+             placeholder="JJ/MM/AAAA"
+             class="adm-input"
+             [bsConfig]="{ containerClass: 'theme-dark-blue' }"
+             bsDatepicker>
+    </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="align-items-center d-flex">
-    <span class="pr-4">au</span>
-    <input  
-        formControlName="endDate"
-        placeholder="Date de fin"
-        class="form-control"
-        [bsConfig]="{ containerClass: 'theme-dark-blue' }"
-        bsDatepicker>
+  <div class="adm-option-date-group">
+    <span class="adm-option-date-sep">au</span>
+    <div class="adm-datepicker-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+      </svg>
+      <input formControlName="endDate"
+             placeholder="JJ/MM/AAAA"
+             class="adm-input"
+             [bsConfig]="{ containerClass: 'theme-dark-blue' }"
+             bsDatepicker>
     </div>
-    <small *ngIf="endDate.errors" class="form-text text-danger">
-      <span [hidden]="!endDate.errors.required">
-        Date de fin requis.
-      </span>
-  </small>
   </div>
-  <div class="col-sm-1">
-    <button class="remove" (click)="confirmation(template)">-</button>
-  </div>
-  
+
+  <button type="button" class="adm-btn adm-btn-danger adm-btn-sm adm-btn-icon" (click)="confirmation(template)" title="Supprimer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
 </form>
 
+<div class="adm-option-errors">
+  <span *ngIf="startDate.errors && startDate.touched" class="adm-field-error">
+    <ng-container *ngIf="startDate.errors.required">Date de début requise.</ng-container>
+    <ng-container *ngIf="startDate.errors?.minDateNotValid && !startDate.errors?.required">
+      La date de début ne doit pas être antérieure à la date de fin du marché.
+    </ng-container>
+  </span>
+  <span *ngIf="endDate.errors && endDate.touched" class="adm-field-error">
+    <ng-container *ngIf="endDate.errors.required">Date de fin requise.</ng-container>
+  </span>
+  <span *ngIf="option?.errors?.customValidator && option?.touched && !startDate.errors?.required && !endDate.errors?.required" class="adm-field-error">
+    La date de début ne doit pas être postérieure à la date de fin.
+  </span>
+</div>
+
 <ng-template #template>
-  <div class="modal-body text-center">
-    <p>Voulez-vous confirmer la suppression ?</p>
-    <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">Confirmer la suppression ?</p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    </div>
   </div>
 </ng-template>
-
-

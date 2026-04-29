@@ -1,30 +1,101 @@
-<h1>Mots recherchés</h1>
+<div class="adm-page">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Texte
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let factsheet of logs$ | async" [ngClass]="{'table-success': factsheet.associated}">
-            <td>
-                {{factsheet.word}} ({{factsheet.number}})
-            </td>
-          <td>
-          </td>
-        </tr> 
-    </tbody>
-</table>
+  <h1 class="adm-title">Récurrence des recherches</h1>
 
-<ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> mot{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ words.length }})</ng-container>
+        <ng-container *ngIf="!searchText && associatedCount > 0">
+          · <strong>{{ associatedCount }}</strong> associé{{ associatedCount > 1 ? 's' : '' }}
+        </ng-container>
+      </span>
+
+      <div class="adm-sort-group">
+        <button type="button"
+                class="adm-sort-btn"
+                [class.is-active]="sortBy === 'count'"
+                (click)="setSort('count')">
+          Occurrences
+        </button>
+        <button type="button"
+                class="adm-sort-btn"
+                [class.is-active]="sortBy === 'word'"
+                (click)="setSort('word')">
+          A → Z
+        </button>
+      </div>
     </div>
-  </ng-template>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher un mot…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th>Mot recherché</th>
+          <th style="width: 160px">Statut</th>
+          <th style="width: 140px; text-align: right">Occurrences</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let w of pagedWords">
+          <td>
+            <span class="adm-word">{{ w.word }}</span>
+          </td>
+          <td>
+            <span *ngIf="w.associated" class="adm-chip adm-chip--green">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+              </svg>
+              Associé
+            </span>
+            <span *ngIf="!w.associated" class="adm-chip adm-chip--muted">Non associé</span>
+          </td>
+          <td style="text-align: right">
+            <span class="adm-count">{{ w.number }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p class="adm-empty-title">Aucun mot trouvé</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucune recherche n'a encore été enregistrée.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>

@@ -30,15 +30,31 @@ export class SheetFormContractsItemComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    // Initialiser filteredLots avec tous les lots disponibles
     this.filteredLots = this.lotsListForContract || [];
-   }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Surveiller les changements de isActive pour la gestion de l'interface
-    if (changes['isActive']) {
-      // L'état d'édition est géré via les propriétés CSS et la logique du template
+    // Mise à jour de la dropdown quand la liste des lots change
+    // (ajout / suppression / renommage d'un lot dans la section "Lots")
+    if (changes['lotsListForContract']) {
+      this.filteredLots = this.lotsListForContract || [];
     }
+  }
+
+  /**
+   * Renvoie la valeur courante du champ "lots" du contrat si elle n'existe
+   * plus dans la liste actuelle (lot renommé ou supprimé). Permet d'afficher
+   * l'option en mode "lot non trouvé" plutôt que de masquer silencieusement.
+   */
+  get currentLotIfMissing(): string | null {
+    const value = this.contract.get('lots')?.value;
+    if (!value || typeof value !== 'string') return null;
+    if ((this.filteredLots || []).includes(value)) return null;
+    return value;
+  }
+
+  get hasNoLots(): boolean {
+    return !this.filteredLots || this.filteredLots.length === 0;
   }
 
   private updateFormControlState(): void {

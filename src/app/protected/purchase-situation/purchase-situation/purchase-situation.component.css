@@ -3,9 +3,9 @@
    ═══════════════════════════════════════════════════════════ */
 
 .ps-page {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 24px 24px;
   font-family: 'Work Sans', sans-serif;
 }
 
@@ -21,40 +21,17 @@ app-purchase-situation app-breadcrumb nav { margin: 0 !important; padding: 0 !im
 /* ── Header ────────────────────────────────────────────────── */
 .ps-header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
 }
-.ps-header .ps-title {
-  margin-bottom: 16px;
-}
-
 .ps-title {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: #001a70;
   margin: 0;
-}
-
-/* Override form interne */
-app-purchase-situation-form .row { margin: 0 !important; }
-app-purchase-situation-form .form-group { margin: 0 !important; }
-app-purchase-situation-form div[style*="position: absolute"] {
-  position: static !important;
-  right: auto !important;
-}
-app-purchase-situation-form .titre-listing {
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  color: #001a70 !important;
-  text-decoration: underline !important;
-  text-underline-offset: 2px !important;
-  position: static !important;
-  margin: 0 0 0 0 !important;
-  padding-bottom: 0 !important;
-  cursor: pointer !important;
-}
-app-purchase-situation-form .titre-listing:hover {
-  color: #fe5815 !important;
 }
 
 /* ── Toolbar ───────────────────────────────────────────────── */
@@ -73,7 +50,7 @@ app-purchase-situation-form .titre-listing:hover {
 .ps-toolbar-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 .ps-toolbar-right {
@@ -82,7 +59,7 @@ app-purchase-situation-form .titre-listing:hover {
   gap: 16px;
 }
 .ps-result-count {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #1e293b;
 }
@@ -100,6 +77,7 @@ app-purchase-situation-form .titre-listing:hover {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
+  transition: color 0.12s;
 }
 .ps-link:hover {
   color: #fe5815;
@@ -124,6 +102,7 @@ app-purchase-situation-form .titre-listing:hover {
   cursor: pointer;
   min-width: 60px;
   justify-content: space-between;
+  transition: border-color 0.12s;
 }
 .ps-dropdown-btn:hover {
   border-color: #001a70;
@@ -156,11 +135,13 @@ app-purchase-situation .dropdown-menu {
   border-radius: 8px !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
   padding: 4px !important;
+  min-width: 160px !important;
 }
 app-purchase-situation .dropdown-item {
   font-size: 13px !important;
   padding: 6px 12px !important;
   border-radius: 4px !important;
+  cursor: pointer !important;
 }
 app-purchase-situation .dropdown-item:hover {
   background: #eef2fb !important;
@@ -170,12 +151,10 @@ app-purchase-situation .dropdown-item:hover {
 /* ── Table header ──────────────────────────────────────────── */
 .ps-table-header {
   display: flex;
-  gap: 0;
   background: #f9fafb;
-  border: 1px solid #dfe3e8;
-  border-top: none;
-  border-radius: 0;
-  padding: 0;
+  border-left: 1px solid #dfe3e8;
+  border-right: 1px solid #dfe3e8;
+  border-bottom: 1px solid #dfe3e8;
 }
 .ps-col {
   display: flex;
@@ -183,15 +162,16 @@ app-purchase-situation .dropdown-item:hover {
   gap: 6px;
   padding: 10px 12px;
   border-right: 1px solid #e8eaed;
+  min-width: 0;
 }
 .ps-col:last-child { border-right: none; }
 
-.ps-col-code { flex: 0 0 14%; }
-.ps-col-label { flex: 0 0 24%; }
-.ps-col-date { flex: 0 0 10%; }
-.ps-col-status { flex: 0 0 16%; }
+.ps-col-code     { flex: 0 0 14%; }
+.ps-col-label    { flex: 0 0 24%; }
+.ps-col-date     { flex: 0 0 10%; }
+.ps-col-status   { flex: 0 0 16%; }
 .ps-col-modified { flex: 0 0 16%; }
-.ps-col-owner { flex: 0 0 20%; }
+.ps-col-owner    { flex: 0 0 20%; }
 
 .ps-col-title {
   display: flex;
@@ -225,6 +205,8 @@ app-purchase-situation .dropdown-item:hover {
   font-size: 11px !important;
   padding: 4px 8px !important;
   width: 100% !important;
+  font-family: inherit !important;
+  transition: border-color 0.12s, box-shadow 0.12s !important;
 }
 .ps-filter-input::placeholder {
   color: #9ca3af !important;
@@ -245,6 +227,8 @@ app-purchase-situation .dropdown-item:hover {
   color: #374151;
   cursor: pointer;
   margin: 0;
+  border-radius: 4px;
+  transition: background 0.12s;
 }
 .ps-checkbox-item input[type="checkbox"] {
   accent-color: #001a70;
@@ -252,63 +236,45 @@ app-purchase-situation .dropdown-item:hover {
 }
 .ps-checkbox-item:hover {
   background: #eef2fb;
-  border-radius: 4px;
 }
 
 .clickable { cursor: pointer; }
 
-/* ── Accordion / liste résultats ──────────────────────────── */
-app-purchase-situation accordion {
-  display: block;
-}
-app-purchase-situation .card.customClass,
-app-purchase-situation .card.customClass .card-header,
-app-purchase-situation .panel.customClass {
-  background-color: #fff !important;
-  border-width: 0 !important;
-  border-bottom: 1px solid #e8eaed !important;
-}
-app-purchase-situation .card.customClass .card-header {
-  padding: 0 !important;
-  background-color: #fff !important;
-}
-
-/* ── Pagination ───────────────────────────────────────────── */
-app-purchase-situation-list .row {
+/* ── Reset des accordion-group ngx-bootstrap ──────────────── */
+app-purchase-situation .ps-accordion accordion-group .panel,
+app-purchase-situation .ps-accordion accordion-group .card {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   margin: 0 !important;
 }
-app-purchase-situation-list .pageText {
-  font-size: 13px !important;
-  color: #6b7280 !important;
+app-purchase-situation .ps-accordion accordion-group:not(:last-child) .card {
+  border-bottom: 1px solid #e8eaed !important;
 }
-app-purchase-situation-list .paginationClass .page-item.active .page-link {
-  background-color: #001a70 !important;
-  color: #fff !important;
-  border-color: #001a70 !important;
-}
-app-purchase-situation-list .paginationClass .page-item .page-link {
-  background-color: #001a70 !important;
-  color: #fff !important;
-  border-radius: 4px !important;
-  margin: 0 2px !important;
-  width: 30px !important;
-  height: 30px !important;
-  padding: 3px 0 !important;
-  text-align: center !important;
-  font-size: 12px !important;
-}
-app-purchase-situation-list .paginationClass .page-item.disabled .page-link {
-  background-color: #e8eaed !important;
-  color: #6b7280 !important;
-}
-app-purchase-situation-list .paginationClass .pagination-prev .page-link,
-app-purchase-situation-list .paginationClass .pagination-next .page-link {
-  background-color: transparent !important;
-  border: none !important;
+app-purchase-situation .ps-accordion accordion-group .panel-heading,
+app-purchase-situation .ps-accordion accordion-group .card-header {
+  background: transparent !important;
   padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
 }
-app-purchase-situation-list .hr {
-  border-color: #e8eaed !important;
+app-purchase-situation .ps-accordion accordion-group .btn-link,
+app-purchase-situation .ps-accordion accordion-group button[accordion-heading] {
+  display: block !important;
+  width: 100% !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  text-align: left !important;
+}
+app-purchase-situation .ps-accordion accordion-group .panel-body,
+app-purchase-situation .ps-accordion accordion-group .card-body {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
 }
 
 /* ── État vide ─────────────────────────────────────────────── */
@@ -329,10 +295,11 @@ app-purchase-situation-list .hr {
   color: #9ca3af;
 }
 .ps-empty-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #4b5563;
   margin-bottom: 6px;
+  max-width: 540px;
 }
 .ps-empty-sub {
   font-size: 13px;

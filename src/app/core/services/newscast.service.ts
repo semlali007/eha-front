@@ -20,8 +20,22 @@ export class NewsCastService {
     ) {
      };
   
+  /** Endpoint public — utilisé par la vue actualités côté front (protected) */
   public get(id: number): Observable<any> {
     const url = `${this.appConfigService.basePath}/news-cast/get/${id}`;
+    this.loaderService.setLoading(true);
+    return this.http.get(url).pipe(
+      switchMap((data: any) => {
+        return of(data);
+      }),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
+    );
+  }
+
+  /** Endpoint admin — utilisé par la vue & le formulaire d'actualités côté administration */
+  public getAdmin(id: number): Observable<any> {
+    const url = `${this.appConfigService.basePath}/admin/news-cast/get/${id}`;
     this.loaderService.setLoading(true);
     return this.http.get(url).pipe(
       switchMap((data: any) => {

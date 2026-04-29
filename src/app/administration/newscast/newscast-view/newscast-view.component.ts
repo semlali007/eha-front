@@ -27,7 +27,7 @@ export class NewsCastViewComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.id = params['id'];
-        this.newsCastService.get(params['id']).subscribe(data => {
+        this.newsCastService.getAdmin(params['id']).subscribe(data => {
           if (!data) return;
           this.news = data;
         });

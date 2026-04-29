@@ -15,18 +15,31 @@
     </div>
   </div>
 
-  <div class="adm-card adm-card--pad-lg">
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">1</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Contenu de l'actualité</h3>
+        <p class="adm-section-sub">Titre, descriptions courte et longue</p>
+      </div>
+    </div>
     <app-nc-form-title [title]="title"></app-nc-form-title>
     <app-nc-form-short [short_description]="short_description"></app-nc-form-short>
     <app-nc-form-description [description]="long_description"></app-nc-form-description>
-  </div>
+  </section>
 
-  <div class="adm-card adm-card--pad-lg" style="margin-top: 16px">
-    <h3 class="adm-io-title" style="margin: 0 0 14px 0">Paramètres de publication</h3>
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">2</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Paramètres de publication</h3>
+        <p class="adm-section-sub">Catégorie, statut et visibilité sur la page d'accueil</p>
+      </div>
+    </div>
     <app-nc-form-category [categoryId]="categoryId"></app-nc-form-category>
     <app-nc-form-status [status]="status"></app-nc-form-status>
     <app-nc-form-home [is_home]="is_home"></app-nc-form-home>
-  </div>
+  </section>
 
   <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px">
     <button type="button" class="adm-btn adm-btn-ghost" (click)="cancel(); $event.stopPropagation()">

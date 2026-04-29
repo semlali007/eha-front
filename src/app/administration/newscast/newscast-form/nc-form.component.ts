@@ -50,7 +50,7 @@ export class NcFormComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.newsId = params['id'];
-        this.newsCastService.get(params['id']).subscribe(data => {
+        this.newsCastService.getAdmin(params['id']).subscribe(data => {
           this.resetSheetForm();
           if (!data) return;
           this.initEditForm(data);

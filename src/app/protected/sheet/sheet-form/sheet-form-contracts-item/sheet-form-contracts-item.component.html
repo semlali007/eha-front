@@ -35,9 +35,20 @@
               class="adm-select"
               [style.pointer-events]="isActive ? 'auto' : 'none'"
               [style.opacity]="isActive ? '1' : '0.6'">
-        <option value="">{{ isActive ? 'Sélectionner un lot' : 'Mode lecture' }}</option>
+        <option value="" *ngIf="!hasNoLots">{{ isActive ? 'Aucun lot' : 'Mode lecture' }}</option>
+        <option value="" *ngIf="hasNoLots" disabled>Créez d'abord un lot ci-dessus</option>
         <option *ngFor="let lot of filteredLots" [value]="lot">{{ lot }}</option>
+        <!-- Si la valeur courante n'est plus dans la liste (lot renommé/supprimé) -->
+        <option *ngIf="currentLotIfMissing" [value]="currentLotIfMissing">
+          ⚠ {{ currentLotIfMissing }} (lot supprimé)
+        </option>
       </select>
+      <span class="adm-field-hint" *ngIf="hasNoLots && isActive">
+        Pour associer un lot à ce contrat, créez d'abord un lot dans la section "Lots".
+      </span>
+      <span class="adm-field-hint" style="color:#dc2626" *ngIf="currentLotIfMissing && isActive">
+        Le lot « {{ currentLotIfMissing }} » n'existe plus. Sélectionnez un lot disponible ou laissez vide.
+      </span>
     </div>
 
     <div class="adm-form-group adm-contract-contacts">

@@ -1,79 +1,101 @@
-<div>
-    <div>
-        <nav>
-            <div class="nav nav-tabs my-items-for-searches" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link link" *ngFor="let item  of results.elements" (click)="navigate(item)"
-                    [class.active]="isActive(item)">
-                    {{item.label}} <span class="badge">{{item.count}}</span>
-                </a>
-            </div>
-        </nav>
+<div *ngIf="!!results?.elements?.length || (reset === false && results?.countMax === 0)">
 
-        <div class="perPage" *ngIf="count > 0">
-            <span>Demandes par page :</span>
-            <div class="btn-group" dropdown style="width:100px; margin-left: 20px;">
-                <button id="button-basic" dropdownToggle type="button"
-                    class="btn btn-default ddown-per-page dropdown-toggle"
-                    aria-controls="dropdown-basic">{{itemsPerPage}}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
-                </button>
-                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                    <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
-                    <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
-                    <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="tab-content">
-            <div class="tab-pane fade" *ngFor="let item  of results.elements" [class.active]="isActive(item)"
-                [class.show]="isActive(item)">
-                <app-search-result-tenders [item]='item'  *ngIf="item.code == 'tenders'" [startItem]='startItem' [endItem]='endItem'></app-search-result-tenders>
-                <app-search-result-dauphin [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'dauphin'"></app-search-result-dauphin>
-                <app-search-result-contract [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'contract'"></app-search-result-contract>
-                <app-search-result-provider [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'provider'"></app-search-result-provider>
-                <app-search-result-item-generic [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'item_generic'">
-                </app-search-result-item-generic>
-                <app-search-result-agencies [item]='item' [updatedDate]='updatedDate' [startItem]='startItem' [endItem]='endItem' *ngIf="item.code == 'agencies'"></app-search-result-agencies>
-            </div>
-        </div>
+  <!-- Tabs -->
+  <nav *ngIf="!!results?.elements?.length" class="search-tabs">
+    <a
+      *ngFor="let item of results.elements"
+      class="search-tab"
+      (click)="navigate(item)"
+      [class.is-active]="isActive(item)">
+      {{ item.label }}
+      <span class="search-tab-badge">{{ item.count }}</span>
+    </a>
+  </nav>
 
-
-
-
-        <div class="alert alert-warning" *ngIf=" !(isLoading$| async) && !!results && (results.countMax == 0) && (reset == false)">
-            Nous n'avons pas de résultat correspondant à votre recherche. Merci d'affiner vos critères de sélection.
-        </div>
-
-        <form class="col-xs-12 col-12" [formGroup]="paginationForm" *ngIf="count > 0;">
-            <nav aria-label="pagination" >
-            <pagination [boundaryLinks]="true" [totalItems]="count" [itemsPerPage]="itemsPerPage"
-              [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-              (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
-              firstText="&laquo;" lastText="&raquo;">
-            </pagination>
-            </nav>
-          </form>
-
-        <div *ngIf="reset == false">
-            <p style="font-size:0.1rem">&nbsp;</p>
-            <div class="list-group my-items-for-searches">
-                <div class="list-group-item">
-                    <div class="row">
-                        <div class="col-1">
-                            <img src="../../../../assets/img/help.png" alt="aide" class="img-fluid">
-                        </div>
-                        <div class="col-11">
-                            <p>Vous ne trouvez pas ? Pas de panique : 
-                            <p>
-                            <p>Vous pouvez <a target="_blank"
-                                    href="https://edfonline.sharepoint.com/sites/DAG-RC-INFOS/SitePages/Organisation---Informations-Pratiques.aspx">contacter
-                                    votre interlocuteur achat dédié</a></p>
-                            <p ng-show="$ctrl.tab == 'provider'">Vous pouvez aussi <a target="_blank"
-                                    href="https://edfonline.sharepoint.com/sites/DAG-REFERENTIEL/SitePages/Gestion%20des%20Fournisseurs.aspx?xsdata=MDV8MDJ8fDVmNTc4NDBkNGU3YzQ5ZWFiZTU4MDhkYzJiZGRlYTRmfGUyNDI0MjViNzBmYzQ0ZGM5ZGRmYzIxZTMwNGU2YzgwfDB8MHw2Mzg0MzM0NzkyOTg2MjkyMDh8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxMMk5vWVhSekx6RTVPbUkzWWpreVpXUmhMVGswTmpRdE5EQXlOaTFpTURJNUxUQTVObVl4WkdVMVlUWTNORjlrWXpRNFl6RXpPUzFpTmpGakxUUmxZVEV0T1dNM09DMW1NMk0zWm1RMU1ESmtaVGxBZFc1eExtZGliQzV6Y0dGalpYTXZiV1Z6YzJGblpYTXZNVGN3TnpjMU1URXlPVE0yTnc9PXw0NjdkMTdhZmU2ZDg0YmEyNWMwNTA4ZGMyYmRkZWE0ZHw5ODkxN2UwZmM5YTU0OWY2YTI1OThlMThkYjk4MjAzOA%3D%3D&sdata=OHlqeDlZOGIxeXJ3N3ZkR29mQWxJVTN2S2gwS2ViT3pML3VLZ1BvVXdLTT0%3D&ovuser=e242425b-70fc-44dc-9ddf-c21e304e6c80%2Cveronick.boudre%40edf.fr">consulter
-                                    le guide pour créer un nouveau fournisseur</a>.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Toolbar (per-page) -->
+  <div class="search-toolbar" *ngIf="count > 0">
+    <p class="search-toolbar-meta">
+      Affichage {{ startItem + 1 }} – {{ endItem > count ? count : endItem }} sur {{ count }} résultats
+    </p>
+    <div class="search-per-page">
+      <span>Résultats par page</span>
+      <div class="btn-group" dropdown>
+        <button id="search-per-page" dropdownToggle type="button" class="search-per-page-btn" aria-controls="search-per-page-menu">
+          {{ itemsPerPage }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+          </svg>
+        </button>
+        <ul id="search-per-page-menu" *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
+          <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
+          <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
+
+  <!-- Tab content -->
+  <div class="search-tab-content">
+    <ng-container *ngFor="let item of results.elements">
+      <ng-container *ngIf="isActive(item)">
+        <app-search-result-tenders         *ngIf="item.code === 'tenders'"      [item]="item" [startItem]="startItem" [endItem]="endItem"></app-search-result-tenders>
+        <app-search-result-dauphin         *ngIf="item.code === 'dauphin'"      [item]="item" [updatedDate]="updatedDate" [startItem]="startItem" [endItem]="endItem"></app-search-result-dauphin>
+        <app-search-result-contract        *ngIf="item.code === 'contract'"     [item]="item" [updatedDate]="updatedDate" [startItem]="startItem" [endItem]="endItem"></app-search-result-contract>
+        <app-search-result-provider        *ngIf="item.code === 'provider'"     [item]="item" [updatedDate]="updatedDate" [startItem]="startItem" [endItem]="endItem"></app-search-result-provider>
+        <app-search-result-item-generic    *ngIf="item.code === 'item_generic'" [item]="item" [updatedDate]="updatedDate" [startItem]="startItem" [endItem]="endItem"></app-search-result-item-generic>
+        <app-search-result-agencies        *ngIf="item.code === 'agencies'"     [item]="item" [updatedDate]="updatedDate" [startItem]="startItem" [endItem]="endItem"></app-search-result-agencies>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <!-- Empty state -->
+  <div class="search-empty" *ngIf="!(isLoading$ | async) && !!results && (results.countMax === 0) && (reset === false)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+    </svg>
+    <p class="search-empty-title">Aucun résultat trouvé</p>
+    <p class="search-empty-sub">Nous n'avons pas trouvé de résultat correspondant à votre recherche. Merci d'affiner vos critères.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="adm-pagination-bar" *ngIf="count > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startItem + 1 }} – {{ endItem > count ? count : endItem }} sur {{ count }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="count"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+  <!-- Help / contact panel -->
+  <aside *ngIf="reset === false" class="search-help-panel">
+    <span class="search-help-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+      </svg>
+    </span>
+    <div class="search-help-content">
+      <p class="search-help-title">Vous ne trouvez pas ce que vous cherchez ?</p>
+      <p class="search-help-text">
+        Vous pouvez
+        <a target="_blank" href="https://edfonline.sharepoint.com/sites/DAG-RC-INFOS/SitePages/Organisation---Informations-Pratiques.aspx">contacter votre interlocuteur achat dédié</a>.
+      </p>
+      <p class="search-help-text">
+        Vous pouvez aussi
+        <a target="_blank" href="https://edfonline.sharepoint.com/sites/DAG-REFERENTIEL/SitePages/Gestion%20des%20Fournisseurs.aspx">consulter le guide pour créer un nouveau fournisseur</a>.
+      </p>
+    </div>
+  </aside>
+</div>

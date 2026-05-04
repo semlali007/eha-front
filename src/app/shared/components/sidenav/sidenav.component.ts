@@ -38,6 +38,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public newsCastPath = `${this.prefix}/actualites`;
   public newsCastHomePath = `${this.prefix}/actualites/accueil`;
   public contactPath = `${this.prefix}/page/contact`;
+  public satisfactionPath = `${this.prefix}/satisfactions`;
 
   public subscription!: Subscription;
   public user: User | null = null;

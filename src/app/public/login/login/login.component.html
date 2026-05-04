@@ -1,36 +1,72 @@
-<div class="container mt-4">
-  <div class="alert mx-auto" style="max-width: 800px; text-align: left; background-color: #dc3545; color: white;">
-    <h5 class="alert-heading" style="color: white;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16" style="vertical-align: text-bottom;">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-      </svg>
-      Information importante
-    </h5>
-    <p>
-      L'accès à Achatpédia requiert désormais l'authentification via <strong>SoftID</strong> pour les filiales.
-    </p>
-    <p>
-      Pour l'activation de votre SoftID, veuillez contacter votre correspondant informatique local afin d'obtenir le rôle nécessaire dans GARDIAN. 
-      Nous vous invitons ensuite à installer l'application <strong>Access ID Pro</strong> et à consulter le mode opératoire ci‑joint :
-    </p>
-    <p>
-      <a href="https://www.myelectricnetwork.fr/web/gardian/lire-detail/-/asset_publisher/AO6j/content/softid-la-nouvelle-application-d-authentification-forte-sur-smartphone?_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_AO6j_instanceId=AO6j&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_AO6j_languageId=fr_FR" 
-         target="_blank" 
-         rel="noopener noreferrer"
-         style="color: white; text-decoration: underline;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book me-1" viewBox="0 0 16 16" style="vertical-align: text-bottom;">
-          <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-        </svg>
-        Guide d'activation SoftID
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-box-arrow-up-right ms-1" viewBox="0 0 16 16" style="vertical-align: text-top;">
-          <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-          <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-        </svg>
-      </a>
-    </p>
-  </div>
-</div>
+<div class="lg-page">
+  <main class="lg-card" role="main">
 
-<div class="d-flex justify-content-center mt-4">
-  <button type="button" class="btn my-btn-login" (click)='login()'>CONNEXION</button>
+    <!-- Corps de la carte -->
+    <div class="lg-card-body">
+
+      <div>
+        <h2 class="lg-welcome-title">Bienvenue</h2>
+        <p class="lg-welcome-text">
+          Connectez-vous avec votre compte EDF pour accéder à l'ensemble des contenus.
+        </p>
+      </div>
+
+      <!-- Bandeau d'information importante -->
+      <aside class="lg-alert" role="note">
+        <span class="lg-alert-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </svg>
+        </span>
+        <div class="lg-alert-content">
+          <p class="lg-alert-title">Information importante</p>
+          <p>
+            L'accès à Achatpédia requiert désormais l'authentification via <strong>SoftID</strong> pour les filiales.
+          </p>
+          <p>
+            Pour l'activation de votre SoftID, veuillez contacter votre correspondant informatique local afin d'obtenir
+            le rôle nécessaire dans <strong>GARDIAN</strong>. Nous vous invitons ensuite à installer l'application
+            <strong>Access ID Pro</strong> et à consulter le mode opératoire&nbsp;:
+          </p>
+          <a class="lg-alert-link"
+             href="https://www.myelectricnetwork.fr/web/gardian/lire-detail/-/asset_publisher/AO6j/content/softid-la-nouvelle-application-d-authentification-forte-sur-smartphone?_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_AO6j_instanceId=AO6j&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_AO6j_languageId=fr_FR"
+             target="_blank"
+             rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+            </svg>
+            Guide d'activation SoftID
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="currentColor" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+              <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+            </svg>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Astuce navigateur -->
+      <aside class="lg-tip" role="note">
+        <span class="lg-tip-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+          </svg>
+        </span>
+        <div>
+          <strong>Astuce</strong> — Pour une expérience optimale, nous vous recommandons l'usage de
+          <strong>Google Chrome</strong>. Si vous rencontrez une difficulté à la connexion, n'hésitez pas à réessayer
+          depuis ce navigateur.
+        </div>
+      </aside>
+
+      <!-- Bouton de connexion -->
+      <button type="button" class="lg-cta" (click)="login()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
+        </svg>
+        Se connecter
+      </button>
+
+    </div>
+
+  </main>
 </div>

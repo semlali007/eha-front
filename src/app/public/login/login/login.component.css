@@ -2,8 +2,22 @@
    LOGIN — Page de connexion Achatpédia
    ═══════════════════════════════════════════════════════════ */
 
+/* Propager la chaîne flex pour que .lg-page remplisse <main>
+   (uniquement quand la page de login est rendue, via :has) */
+.my-content:has(app-login),
+.my-content:has(app-login) > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+app-login {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
 .lg-page {
-  min-height: calc(100vh - 130px);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;

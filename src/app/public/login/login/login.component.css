@@ -1,0 +1,211 @@
+/* ═══════════════════════════════════════════════════════════
+   LOGIN — Page de connexion Achatpédia
+   ═══════════════════════════════════════════════════════════ */
+
+.lg-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  font-family: 'Work Sans', sans-serif;
+  background:
+    radial-gradient(1200px 600px at 90% -10%, rgba(254, 88, 21, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(0, 26, 112, 0.07), transparent 60%),
+    #f8fafc;
+}
+
+/* ── Carte ─────────────────────────────────────────────────── */
+.lg-card {
+  width: 100%;
+  max-width: 580px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08), 0 0 1px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+/* ── Header de la carte ────────────────────────────────────── */
+.lg-card-header {
+  position: relative;
+  padding: 28px 32px 22px;
+  background: linear-gradient(135deg, #001a70 0%, #002a99 100%);
+  color: #fff;
+}
+.lg-card-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #fe5815 0%, #ff7a3a 100%);
+}
+.lg-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.lg-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+.lg-brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+.lg-tagline {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Corps de la carte ─────────────────────────────────────── */
+.lg-card-body {
+  padding: 24px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.lg-welcome-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #001a70;
+  margin: 0 0 4px 0;
+}
+.lg-welcome-text {
+  font-size: 13.5px;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── Bandeau "Information importante" ──────────────────────── */
+.lg-alert {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  color: #1f2937;
+}
+.lg-alert-icon {
+  flex-shrink: 0;
+  color: #dc2626;
+  margin-top: 1px;
+}
+.lg-alert-content { flex: 1; min-width: 0; }
+.lg-alert-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #991b1b;
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.lg-alert p {
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 0 0 8px 0;
+  color: #1f2937;
+}
+.lg-alert p:last-of-type { margin-bottom: 10px; }
+.lg-alert strong { color: #991b1b; }
+
+.lg-alert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #fff;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.lg-alert-link:hover {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+  text-decoration: none;
+}
+
+/* ── Astuce navigateur (Option A) ──────────────────────────── */
+.lg-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #075985;
+}
+.lg-tip-icon {
+  flex-shrink: 0;
+  color: #0284c7;
+  margin-top: 1px;
+}
+.lg-tip strong { color: #0c4a6e; }
+
+/* ── Bouton de connexion ───────────────────────────────────── */
+.lg-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  background: #fe5815;
+  color: #fff;
+  border: 1px solid #fe5815;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: background 0.12s, box-shadow 0.12s, transform 0.12s;
+}
+.lg-cta:hover {
+  background: #e54e12;
+  border-color: #e54e12;
+  box-shadow: 0 6px 18px rgba(254, 88, 21, 0.28);
+  transform: translateY(-1px);
+}
+.lg-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(254, 88, 21, 0.2);
+}
+
+/* ── Footer carte ──────────────────────────────────────────── */
+.lg-foot {
+  font-size: 11.5px;
+  color: #9ca3af;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .lg-page { padding: 16px 12px; }
+  .lg-card-header { padding: 22px 22px 18px; }
+  .lg-card-body { padding: 18px 22px 22px; }
+  .lg-brand-name { font-size: 19px; }
+}

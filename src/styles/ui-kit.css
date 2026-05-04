@@ -222,6 +222,7 @@
 .adm-icon-wrap--amber  { background: #fffbeb; color: #d97706; }
 .adm-icon-wrap--sky    { background: #f0f9ff; color: #0284c7; }
 .adm-icon-wrap--slate  { background: #f1f5f9; color: #475569; }
+.adm-icon-wrap--rose   { background: #fff1f2; color: #e11d48; }
 
 /* ─── Chips / badges ──────────────────────────────────────── */
 .adm-chip {

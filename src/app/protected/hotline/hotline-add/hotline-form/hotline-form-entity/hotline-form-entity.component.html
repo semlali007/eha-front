@@ -1,4 +1,8 @@
-<div class="form-group">
-    <label>4/ Votre <b>entité</b> de rattachement</label>
-    <input class="form-control" [formControl]="entity">
+<div class="adm-form-group">
+  <label class="adm-label" for="hl-entity">Entité de rattachement</label>
+  <input id="hl-entity"
+         type="text"
+         class="adm-input"
+         [formControl]="entity">
+  <span class="adm-field-hint">Cette information est issue de votre profil et n'est pas modifiable ici.</span>
 </div>

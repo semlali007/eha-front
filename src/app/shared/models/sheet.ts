@@ -8,7 +8,7 @@ import { Area } from './area';
 import { Direction } from './direction';
 import { Committee } from './committee';
 import { Option } from './option';
-import { Domain } from './domain';
+import { EhaDomain } from './eha-domain';
 import { Category } from './category';
 export class Sheet {
     readonly id: string;
@@ -43,8 +43,8 @@ export class Sheet {
     netachatId: number;
     content: string;
     netachatType: string;
-    domains: Domain[];
-    subDomains: Domain[];
+    domains: EhaDomain[];
+    subDomains: EhaDomain[];
     history: any[];
     category: Category;
     contratGroupe: string;
@@ -91,8 +91,8 @@ export class Sheet {
         netachatId?: number,
         content?: string,
         netachatType?: string;
-        domains?: Domain[];
-        subDomains?: Domain[];
+        domains?: EhaDomain[];
+        subDomains?: EhaDomain[];
         history?: any[];
         contratGroupe?: string;
         miseAJourDonnee?: string;
@@ -132,8 +132,8 @@ export class Sheet {
         this.netachatId = options.netachatId || 0;
         this.netachatType = options.netachatType || '';
         this.content = options.content || '';
-        this.domains = options.domains || [new Domain()];
-        this.subDomains = options.subDomains || [new Domain()];
+        this.domains = options.domains || [new EhaDomain()];
+        this.subDomains = options.subDomains || [new EhaDomain()];
         this.history = options.history || [];
         this.contratGroupe = options.contratGroupe || '';
         this.miseAJourDonnee = options.miseAJourDonnee || '';

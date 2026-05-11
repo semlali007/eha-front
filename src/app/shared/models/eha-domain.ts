@@ -1,4 +1,4 @@
-export class Domain {
+export class EhaDomain {
     code: number;
     label: string;
     type: string

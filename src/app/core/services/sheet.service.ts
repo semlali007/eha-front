@@ -19,7 +19,7 @@ import { DateService } from 'src/app/core/services/date.service';
 import { Status } from 'src/app/shared/models/status';
 import { Committee } from 'src/app/shared/models/committee';
 import { Option } from 'src/app/shared/models/option';
-import { Domain } from 'src/app/shared/models/domain';
+import { EhaDomain } from 'src/app/shared/models/eha-domain';
 import { Category } from 'src/app/shared/models/category';
 @Injectable({
   providedIn: 'root'
@@ -515,9 +515,9 @@ export class SheetService {
       category = new Category();
     }
 
-    const domains: Domain[] = [];
+    const domains: EhaDomain[] = [];
     fields.domain.forEach(data => {
-      const dom: Domain = new Domain({
+      const dom: EhaDomain = new EhaDomain({
         code: data.id,
         label: data.name,
         type: data.type
@@ -525,9 +525,9 @@ export class SheetService {
       domains.push(dom);
     });
 
-    const subDomains: Domain[] = [];
+    const subDomains: EhaDomain[] = [];
     fields.subdomain.forEach(data => {
-      const subdom: Domain = new Domain({
+      const subdom: EhaDomain = new EhaDomain({
         code: data.id,
         label: data.name,
         type: data.type

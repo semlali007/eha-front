@@ -4,7 +4,7 @@ import { AppConfigService } from 'src/app/core/services/app-config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, switchMap, tap, finalize } from 'rxjs/operators';
 import { ErrorService } from './error.service';
-import { Domain } from 'src/app/shared/models/domain';
+import { EhaDomain } from 'src/app/shared/models/eha-domain';
 import { LoaderService } from './loader.service';
 @Injectable({
   providedIn: 'root'
@@ -49,9 +49,9 @@ export class SubdomainService {
         search: params.search || '',
     }).pipe(
       switchMap((listData: any) => {
-        const directions: Domain[] = [];
+        const directions: EhaDomain[] = [];
         listData.data.forEach(data => {
-          const p: Domain = new Domain({
+          const p: EhaDomain = new EhaDomain({
             code: data.id,
             label: data.name,
           });
@@ -67,7 +67,7 @@ export class SubdomainService {
     );
   }
 
-  public add(direction: Domain): Observable<any> {
+  public add(direction: EhaDomain): Observable<any> {
     const url = `${this.appConfigService.basePath}/subdomains/add`;
     const data =  {"name":direction.label,"action":"add"};
 

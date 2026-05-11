@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class HotlineFormThemeComponent implements OnInit {
   @Input() theme: any;
   @Input() themesList: any;
+  @Input() submitted: boolean = false;
   constructor() { }
   @Input() hotlineForm: FormGroup;
   ngOnInit(): void {

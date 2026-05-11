@@ -1,15 +1,19 @@
-<form [formGroup]="hotlineFilterForm" >
-    <p>Filtrer sur une catégorie :
-        <span class="row" style="margin-left: 0;">
-        <select class="form-control" required [formControl]="category" (change)="changeCategory($event)" style="width:50%;">
-            <option value="" disabled>Choisissez une catégorie</option>
-            <option *ngFor="let category of categories" [value]="category.code">
-                {{category.family}} - {{category.label}}
-            </option>
-        </select>
-        <button class="btn btn-sheet-search" style="margin-top:0;color: #007bff;border-color: #007bff; margin-left: 1%;" type="button" (click)="resetForm()">
-            Réinitialiser
-        </button>
-    </span>
-    </p>
+<form [formGroup]="hotlineFilterForm" class="hl-filter-form">
+  <select class="adm-select hl-filter-select"
+          [formControl]="category"
+          (change)="changeCategory($event)">
+    <option value="" disabled>Filtrer par catégorie…</option>
+    <option *ngFor="let category of categories" [value]="category.code">
+      {{ category.family }} — {{ category.label }}
+    </option>
+  </select>
+  <button type="button"
+          class="adm-btn adm-btn-ghost adm-btn-sm"
+          (click)="resetForm()"
+          [disabled]="!category.value">
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+    </svg>
+    Réinitialiser
+  </button>
 </form>

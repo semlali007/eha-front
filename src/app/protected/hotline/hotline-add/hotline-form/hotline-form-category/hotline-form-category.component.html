@@ -1,16 +1,24 @@
-<div class="form-group">
-    <label>2/ La <b>catégorie</b> d'achat relative à votre question</label>
-    <select class="form-control" required [formControl]="family" (change)="changeFamily($event)">
-        <option value="" disabled>Choisissez une famille</option>
-        <option *ngFor="let item of familiesList" [value]="item.code">
-            {{item.label}}
-        </option>
+<div class="adm-form-row">
+  <div class="adm-form-group">
+    <label class="adm-label" for="hl-family">Famille<span class="adm-required">*</span></label>
+    <select id="hl-family"
+            class="adm-select"
+            [formControl]="family"
+            (change)="changeFamily($event)">
+      <option value="" disabled>Choisissez une famille…</option>
+      <option *ngFor="let item of familiesList" [value]="item.code">{{ item.label }}</option>
     </select>
+    <span class="adm-field-error" *ngIf="submitted && family?.errors?.required">La famille est obligatoire.</span>
+  </div>
 
-    <select class="form-control" required [formControl]="category">
-        <option value="" disabled>Choisissez une catégorie</option>
-        <option *ngFor="let item of selectedCategories" [ngValue]="item.code">
-            {{item.label}}
-        </option>
+  <div class="adm-form-group">
+    <label class="adm-label" for="hl-category">Catégorie<span class="adm-required">*</span></label>
+    <select id="hl-category"
+            class="adm-select"
+            [formControl]="category">
+      <option value="" disabled>{{ selectedCategories?.length ? 'Choisissez une catégorie…' : 'Sélectionnez d\'abord une famille' }}</option>
+      <option *ngFor="let item of selectedCategories" [ngValue]="item.code">{{ item.label }}</option>
     </select>
+    <span class="adm-field-error" *ngIf="submitted && category?.errors?.required">La catégorie est obligatoire.</span>
+  </div>
 </div>

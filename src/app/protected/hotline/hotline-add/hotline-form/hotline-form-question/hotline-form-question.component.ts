@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class HotlineFormQuestionComponent implements OnInit {
   @Input() question: any;
+  @Input() submitted: boolean = false;
   constructor() { }
   @Input() hotlineForm: FormGroup;
   ngOnInit(): void {

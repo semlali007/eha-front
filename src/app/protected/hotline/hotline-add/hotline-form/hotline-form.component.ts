@@ -25,6 +25,7 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
   sub: Subscription;
   message: string = '';
   defaultTheme = '';
+  submitted = false;
   @Output() loadedResponse = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
@@ -56,13 +57,13 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
     this.sub = this.route.queryParams.subscribe(params => {
       if(!!params && !!params.theme && params.theme == 'sheet'){
         this.theme.setValue(22);
-         console.log('okokok');
       }
   });
 
     this.subscription = this.messageService.getMessage().subscribe((data) => {
       if (!!data && !!data.hotlineForm && data.hotlineForm == 'reload') {
         this.hotlineForm.reset();
+        this.submitted = false;
         this.loadedResponse.emit('');
       }
     });
@@ -79,7 +80,12 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    
+    this.submitted = true;
+    if (this.hotlineForm.invalid) {
+      this.hotlineForm.markAllAsTouched();
+      return;
+    }
+
     let params = {
       theme: this.theme.value,
       category: this.category.value,
@@ -98,9 +104,8 @@ export class HotlineFormComponent implements OnInit, OnDestroy {
     })
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.sub.unsubscribe();
-    this.userSubscription.unsubscribe();
-    
-   }
+    if (this.subscription) this.subscription.unsubscribe();
+    if (this.sub) this.sub.unsubscribe();
+    if (this.userSubscription) this.userSubscription.unsubscribe();
+  }
 }

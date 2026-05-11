@@ -123,25 +123,15 @@ app-login {
   text-decoration: none;
 }
 
-/* ── Attention navigateur ──────────────────────────────────── */
-.lg-tip {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #7f1d1d;
+/* ── Séparateur dans le bandeau d'alerte ───────────────────── */
+.lg-alert-divider {
+  margin: 12px 0 0 0 !important;
+  padding-top: 10px;
+  border-top: 1px dashed #fecaca;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #991b1b;
 }
-.lg-tip-icon {
-  flex-shrink: 0;
-  color: #dc2626;
-  margin-top: 1px;
-}
-.lg-tip strong { color: #991b1b; }
 
 /* ── Bouton de connexion ───────────────────────────────────── */
 .lg-cta {

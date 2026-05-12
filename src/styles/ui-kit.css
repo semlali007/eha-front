@@ -1043,14 +1043,6 @@
   font-family: 'Work Sans', sans-serif;
   color: #1f2937;
 }
-.adm-page-wrap > app-breadcrumb { display: block; }
-.adm-page-wrap > app-breadcrumb .breadcrumb {
-  margin-bottom: 2px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-.adm-page-wrap > app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
-
 /* Action bar (juste le bouton retour à gauche par exemple) */
 .adm-detail-actions {
   display: flex;

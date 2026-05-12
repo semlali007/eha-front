@@ -3,18 +3,6 @@ app-sheet-list > .container-fluid {
   padding-left: 48px;
   padding-right: 48px;
 }
-app-breadcrumb {
-  display: block;
-}
-app-breadcrumb .breadcrumb {
-  margin-bottom: 2px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-app-breadcrumb nav {
-  margin: 0 !important;
-  padding: 0 !important;
-}
 .sidenav {
   min-height: 100vh;
 }

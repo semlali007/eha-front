@@ -9,15 +9,6 @@
   font-family: 'Work Sans', sans-serif;
 }
 
-/* Breadcrumb uniforme */
-app-purchase-situation app-breadcrumb { display: block; }
-app-purchase-situation app-breadcrumb .breadcrumb {
-  margin-bottom: 2px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-app-purchase-situation app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
-
 /* ── Header ────────────────────────────────────────────────── */
 .ps-header {
   display: flex;

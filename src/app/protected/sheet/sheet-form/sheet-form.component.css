@@ -11,15 +11,6 @@
   font-family: 'Work Sans', sans-serif;
 }
 
-/* Breadcrumb interne : style identique à sheet-view */
-.sheet-form-page > app-breadcrumb { display: block; }
-.sheet-form-page > app-breadcrumb .breadcrumb {
-  margin-bottom: 2px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-.sheet-form-page > app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
-
 /* Les inputs restent blancs pour ressortir sur le fond gris des cards */
 app-sheet-form .adm-section .adm-input,
 app-sheet-form .adm-section .adm-textarea,

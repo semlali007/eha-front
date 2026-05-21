@@ -48,8 +48,9 @@ export class ExcelService {
     headerRow.height = 30;
     
     // Ajouter les données
+    const meta = Array.isArray(data.meta) ? data.meta : [];
     let rowIndex = 2; // Commencer à la ligne 2 (après l'en-tête)
-    data.data.forEach(d => {
+    data.data.forEach((d: any, dataIndex: number) => {
       const line = [];
       if (Array.isArray(d)) {
         // Si d est déjà un tableau
@@ -60,9 +61,10 @@ export class ExcelService {
           line.push(d[key]);
         }
       }
-      
+
       const dataRow = worksheet.addRow(line);
-      
+      const strike = !!(meta[dataIndex] && meta[dataIndex].strikethrough);
+
       // Styliser les lignes de données avec alternance de couleurs
       dataRow.eachCell((cell, colNumber) => {
         // Couleur de fond alternée
@@ -71,17 +73,18 @@ export class ExcelService {
           pattern: 'solid',
           fgColor: { argb: rowIndex % 2 === 0 ? 'FFF2F2F2' : 'FFFFFFFF' } // Gris clair / Blanc
         };
-        
+
         cell.font = {
-          size: 11
+          size: 11,
+          strike: strike
         };
-        
+
         cell.alignment = {
           vertical: 'middle',
           horizontal: 'left',
           wrapText: true
         };
-        
+
         cell.border = {
           top: { style: 'thin', color: { argb: 'FFD3D3D3' } },
           left: { style: 'thin', color: { argb: 'FFD3D3D3' } },
@@ -89,7 +92,7 @@ export class ExcelService {
           right: { style: 'thin', color: { argb: 'FFD3D3D3' } }
         };
       });
-      
+
       // Définir la hauteur des lignes de données
       dataRow.height = 25;
       rowIndex++;

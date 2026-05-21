@@ -31,6 +31,7 @@
     "buffer": "^6.0.3",
     "core-js": "^3.35.0",
     "crypto-browserify": "^3.12.1",
+    "dompurify": "^2.5.8",
     "dotenv": "^16.6.1",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",

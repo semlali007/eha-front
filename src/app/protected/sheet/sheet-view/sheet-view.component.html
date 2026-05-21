@@ -102,7 +102,7 @@
 
       <div class="sv-field sv-field-full" *ngIf="!!netachatId && netachatId > 0">
         <div class="sv-field-label"><strong>Contenu</strong></div>
-        <div class="sv-field-value sv-content" [innerHTML]="fullContent"></div>
+        <div class="sv-field-value sv-content" [innerHTML]="fullContent | safe: 'rich-html'"></div>
       </div>
 
       <div class="sv-field">

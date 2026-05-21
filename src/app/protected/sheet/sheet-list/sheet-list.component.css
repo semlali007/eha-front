@@ -68,16 +68,16 @@ app-sheet-list > .container-fluid {
 }
 
 /* Search form layout */
-.search-form {
+.sheet-list-search-form {
   display: flex;
   gap: 12px;
   align-items: flex-start;
 }
-.search-form-inputs {
+.sheet-list-search-form-inputs {
   flex: 1;
   min-width: 0;
 }
-.search-form-actions {
+.sheet-list-search-form-actions {
   display: flex;
   flex-direction: column;
   gap: 6px;

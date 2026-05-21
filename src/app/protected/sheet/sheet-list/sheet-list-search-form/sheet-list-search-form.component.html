@@ -1,9 +1,9 @@
-<form novalidate [formGroup]="sheetSearchForm" (ngSubmit)="submit()" class="search-form">
-  <div class="search-form-inputs">
+<form novalidate [formGroup]="sheetSearchForm" (ngSubmit)="submit()" class="sheet-list-search-form">
+  <div class="sheet-list-search-form-inputs">
     <app-sheet-list-search-form-text [searchText]="searchText" [searchProvider]="searchProvider">
     </app-sheet-list-search-form-text>
   </div>
-  <div class="search-form-actions">
+  <div class="sheet-list-search-form-actions">
     <button class="search-btn search-btn-primary" type="submit">
       <i class="fas fa-search"></i> Rechercher
     </button>

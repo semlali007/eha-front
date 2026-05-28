@@ -119,7 +119,13 @@ export class SheetService {
     fd.append('model', JSON.stringify(data));
 
     return this.http.post(url, fd).pipe(
-      catchError(error => this.errorService.handleError(error))
+      tap(_ =>
+        this.toastrService.showToastr({
+          category: 'success',
+          message: message
+        })),
+      catchError(error => this.errorService.handleError(error)),
+      finalize(() => this.loaderService.setLoading(false))
     );
   }
 

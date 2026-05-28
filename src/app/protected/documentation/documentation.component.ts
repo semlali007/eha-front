@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentationService } from 'src/app/core/services/documentation.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-documentation',
   templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.css']
+  styleUrls: ['./documentation.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DocumentationComponent implements OnInit {
   id: number = 0;
@@ -14,6 +15,8 @@ export class DocumentationComponent implements OnInit {
   warning: string = '';
   description: string = '';
   myDocumentation: any = null;
+  /** Items du fil d'Ariane passés au composant partagé <app-breadcrumb>. */
+  bcItems: { label: string, route: string | null }[] = [];
   constructor(
     private route: ActivatedRoute,
     private documentationService: DocumentationService,
@@ -50,6 +53,7 @@ export class DocumentationComponent implements OnInit {
   loadDocumentation() {
     this.section = [];
     this.parents = [];
+    this.bcItems = [];
     this.documentationService.getDocumentation({ cache: 'cache' }).subscribe(data => {
       if (!Array.isArray(data)) {
         return;
@@ -81,7 +85,31 @@ export class DocumentationComponent implements OnInit {
           ItemParentId = typeof element.parent === 'number' ? element.parent : 0;
         });
       }
+
+      this.buildBreadcrumbs();
     })
+  }
+
+  /**
+   * Construit la liste d'items pour <app-breadcrumb>.
+   * Préfixe par "Accueil", puis chaîne des parents.
+   * L'item courant (id == this.id) a route: null pour s'afficher non cliquable.
+   */
+  private buildBreadcrumbs() {
+    const items: { label: string, route: string | null }[] = [
+      { label: 'Accueil', route: 'app/accueil' },
+    ];
+    for (const p of this.parents) {
+      if (p.id == this.id) {
+        items.push({ label: p.breadcrumb, route: null });
+        continue;
+      }
+      const link = (!p.link || p.link === '#' || p.link.length === 0)
+        ? `app/documentation/${p.id}`
+        : p.link;
+      items.push({ label: p.breadcrumb, route: link });
+    }
+    this.bcItems = items;
   }
 
   /**

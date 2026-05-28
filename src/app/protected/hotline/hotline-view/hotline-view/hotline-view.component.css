@@ -10,14 +10,6 @@
   color: #1f2937;
 }
 
-/* Breadcrumb */
-app-hotline-view app-breadcrumb { display: block; }
-app-hotline-view app-breadcrumb .breadcrumb {
-  margin-bottom: 4px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-app-hotline-view app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
 
 /* ─── Header sticky ─────────────────────────────────────────── */
 .hl-conv-header {

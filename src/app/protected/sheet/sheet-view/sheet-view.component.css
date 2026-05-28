@@ -9,15 +9,6 @@
   font-family: 'Work Sans', sans-serif;
 }
 
-/* Breadcrumb */
-app-sheet-view app-breadcrumb { display: block; }
-app-sheet-view app-breadcrumb .breadcrumb {
-  margin-bottom: 2px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-app-sheet-view app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
-
 /* ── Actions bar ──────────────────────────────────────────── */
 .sv-actions {
   display: flex;

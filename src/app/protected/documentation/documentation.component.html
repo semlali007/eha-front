@@ -1,29 +1,52 @@
-<div *ngIf="section == null">
-    <p>sorry...</p>
-</div>
-<div *ngIf="section != null">
-    <nav aria-label="Vous êtes ici :" role="navigation">
-        <ol class="breadcrumb my-items-for-trainings">
-            <li class="breadcrumb-item">
-                <a (click)="navigate({link:'app/accueil'})" class="blue_link"><span>Accueil</span></a>
-            </li>
-            <li *ngFor="let row of parents" class="breadcrumb-item{{(row.id == id) ? ' active' : ''}} link"  [attr.aria-current]="row.id == id">
-                <a (click)="navigate(row)" *ngIf="row.id != id">{{row.breadcrumb}}</a>
-                <span *ngIf="row.id == id" >{{row.breadcrumb}}</span>
-            </li>
-        </ol>
-    </nav>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8" [innerHtml]="description">
-        </div>
-        <div class="col-12 col-md-8" [innerHtml]="warning">
-        </div>
-        <div class="col-12 col-md-8">
-            <div class="list-group my-items-for-trainings">
-                <a class="list-group-item link" *ngFor="let document of section" (click)="navigate(document)">
-                    <span [innerHtml]="document.label"></span>
-                </a>
-            </div>
-        </div>
+<div class="doc-page">
+
+  <!-- Breadcrumb dynamique (chaîne des parents) -->
+  <app-breadcrumb *ngIf="section != null" [breadcrumbs]="bcItems"></app-breadcrumb>
+
+  <!-- État : section introuvable -->
+  <div class="doc-empty" *ngIf="section == null">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <p class="doc-empty-title">Section introuvable</p>
+    <p class="doc-empty-desc">Cette section de la documentation n'existe pas ou n'est plus disponible.</p>
+    <button type="button" class="doc-empty-btn" (click)="navigate({link:'app/accueil'})">
+      Retour à l'accueil
+    </button>
+  </div>
+
+  <!-- Contenu de la section -->
+  <ng-container *ngIf="section != null">
+
+    <!-- Description (HTML) -->
+    <div class="doc-content" *ngIf="description" [innerHtml]="description"></div>
+
+    <!-- Avertissement (HTML) -->
+    <aside class="doc-warning" *ngIf="warning">
+      <span class="doc-warning-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+        </svg>
+      </span>
+      <div class="doc-warning-content" [innerHtml]="warning"></div>
+    </aside>
+
+    <!-- Liste des sous-sections -->
+    <ul class="doc-list" *ngIf="section.length > 0">
+      <li *ngFor="let document of section" class="doc-item" (click)="navigate(document)">
+        <span class="doc-item-label" [innerHtml]="document.label"></span>
+        <svg class="doc-item-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+        </svg>
+      </li>
+    </ul>
+
+    <!-- Section feuille (pas de sous-section) -->
+    <div class="doc-leaf" *ngIf="section.length === 0 && !description && !warning">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+      </svg>
+      <p>Cette section ne contient pas encore de contenu.</p>
     </div>
+  </ng-container>
 </div>

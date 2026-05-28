@@ -106,7 +106,7 @@ export class HotlineViewComponent implements OnInit, OnDestroy {
     if (this.isDiscussionClosed) return false;
     if (this.informations?.step === 'end') return false;
     return this.isRequester
-        || (!!this.user && this.user.hasRole('EHA_GESTIONNAIRE'))
+        || (!!this.user && (this.user.hasRole('EHA_GESTIONNAIRE') || this.user.hasRole('EHA_ADMIN')))
         || this.isCurrentFowarded === this.user?.email;
   }
 

@@ -9,15 +9,6 @@
   font-family: 'Work Sans', sans-serif;
 }
 
-/* Breadcrumb uniforme */
-app-search app-breadcrumb { display: block; }
-app-search app-breadcrumb .breadcrumb {
-  margin-bottom: 2px !important;
-  padding: 8px 5px !important;
-  background: transparent !important;
-}
-app-search app-breadcrumb nav { margin: 0 !important; padding: 0 !important; }
-
 /* ── Header ────────────────────────────────────────────────── */
 .search-page-header {
   margin-bottom: 18px;

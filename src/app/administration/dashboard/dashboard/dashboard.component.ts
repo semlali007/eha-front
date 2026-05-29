@@ -49,14 +49,14 @@ export class DashboardComponent implements OnInit {
       count: '2 outils',
       path: '/admin/actualites',
     },
-    {
+    /*{
       icon: 'users',
       color: 'slate',
       title: 'Administrateurs',
       description: 'Gestion des administrateurs de l\'application.',
       count: 'Liste admin',
       path: '/admin/administrator',
-    },
+    },*/
   ];
 
   constructor(private router: Router) {}

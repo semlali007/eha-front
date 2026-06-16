@@ -24,6 +24,7 @@ import { SheetFormWordsComponent } from './sheet-form-words/sheet-form-words.com
 
 import { SheetFormKitComponent } from './sheet-form-kit/sheet-form-kit.component';
 import { SheetFormProvidersComponent } from './sheet-form-providers/sheet-form-providers.component';
+import { ProviderFormComponent } from './provider-form/provider-form.component';
 import { SheetFormDauphinComponent } from './sheet-form-dauphin/sheet-form-dauphin.component';
 import { SheetFormEdfOpenComponent } from './sheet-form-edf-open/sheet-form-edf-open.component';
 import { SheetFormStipulationComponent } from './sheet-form-stipulation/sheet-form-stipulation.component';
@@ -72,6 +73,7 @@ defineLocale('fr', frLocale);
     SheetFormWordsComponent,
     SheetFormKitComponent,
     SheetFormProvidersComponent,
+    ProviderFormComponent,
     SheetFormDauphinComponent,
     SheetFormEdfOpenComponent,
     SheetFormStipulationComponent,

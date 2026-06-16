@@ -9,8 +9,8 @@
 
 <div class="adm-modal-body sheet-modal-body">
 
-  <!-- Ajouter un nouvel élément -->
-  <form novalidate [formGroup]="sheetModalForm" (ngSubmit)="submit()" class="sheet-modal-add">
+  <!-- Ajouter un nouvel élément (types non-fournisseur) -->
+  <form *ngIf="type !== 'provider'" novalidate [formGroup]="sheetModalForm" (ngSubmit)="submit()" class="sheet-modal-add">
     <div class="adm-form-group">
       <label for="sheet-modal-title" class="adm-label">Ajouter un élément</label>
       <div class="sheet-modal-search-row">
@@ -34,6 +34,16 @@
       </div>
     </div>
   </form>
+
+  <!-- Création d'un fournisseur (formulaire dédié) -->
+  <div *ngIf="type === 'provider'" class="sheet-modal-add">
+    <button type="button" class="adm-btn adm-btn-edf" (click)="openCreateProvider()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+      Ajouter un fournisseur
+    </button>
+  </div>
 
   <!-- Sélection actuelle (tag-input) -->
   <div class="adm-form-group" *ngIf="selectedItems">
@@ -72,6 +82,12 @@
                   class="adm-btn adm-btn-ghost adm-btn-sm"
                   (click)="removeItemFromList(item.code)">
             Retirer
+          </button>
+          <button *ngIf="type == 'provider'"
+                  type="button"
+                  class="adm-btn adm-btn-ghost adm-btn-sm"
+                  (click)="openEditProvider(item)">
+            Éditer
           </button>
           <button *ngIf="type == 'provider' || type == 'beneficiary'"
                   type="button"
@@ -123,6 +139,27 @@
     </svg>
     Enregistrer
   </button>
+</div>
+
+<!-- Formulaire fournisseur imbriqué (création / édition) -->
+<div *ngIf="isProviderFormShown"
+     [config]="{ show: true }"
+     (onHidden)="onProviderFormCancel()"
+     bsModal
+     #providerFormModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="provider-form-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <app-provider-form [provider]="providerFormModel"
+                         [mode]="providerFormMode"
+                         (save)="onProviderFormSave($event)"
+                         (cancel)="onProviderFormCancel()">
+      </app-provider-form>
+    </div>
+  </div>
 </div>
 
 <!-- Modal de confirmation imbriqué (suppression provider/beneficiary) -->

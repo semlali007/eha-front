@@ -86,7 +86,13 @@ export class SheetFormProvidersComponent implements OnInit {
       });
 
       this.bsModalRef.content.addElementEvent.subscribe(res => {
-        this.providerService.add(new Provider({ label: res.data.value })).subscribe(t =>
+        const payload = res.data;
+        this.providerService.add(new Provider({
+          label: payload.label,
+          siren: payload.siren,
+          numeroTva: payload.numeroTva,
+          codeNaf: payload.codeNaf,
+        })).subscribe(t =>
           this.providerService.getProviders({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
             this.bsModalRef.content.items = data.providers;
             this.bsModalRef.content.total = data.total;
@@ -98,6 +104,24 @@ export class SheetFormProvidersComponent implements OnInit {
             })
           })
         );
+      });
+
+      this.bsModalRef.content.editElementEvent.subscribe((res: any) => {
+        const payload = res.data;
+        this.providerService.update(new Provider({
+          code: payload.code,
+          label: payload.label,
+          siren: payload.siren,
+          numeroTva: payload.numeroTva,
+          codeNaf: payload.codeNaf,
+        })).subscribe(_ => {
+          this.providerService.getProviders({ page: this.page, perPage: this.itemsPerPage }).subscribe((data: any) => {
+            this.bsModalRef.content.items = data.providers;
+            this.bsModalRef.content.total = data.total;
+          });
+          // Reflète le nouveau libellé sur le fournisseur s'il est déjà sélectionné dans la fiche.
+          this.bsModalRef.content.updateItemInList(payload.code, payload.label);
+        });
       });
 
 

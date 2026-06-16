@@ -33,7 +33,10 @@ export class ProviderService {
             if (data) {
               providers.push({
                 code: data.id,
-                label: data.name
+                label: data.name,
+                siren: data.siren ?? null,
+                numeroTva: data.numero_tva ?? null,
+                codeNaf: data.code_naf ?? null,
               });
             }
           })
@@ -56,6 +59,9 @@ export class ProviderService {
           const p: Provider = new Provider({
             code: data.id,
             label: data.name,
+            siren: data.siren ?? null,
+            numeroTva: data.numero_tva ?? null,
+            codeNaf: data.code_naf ?? null,
           });
           providers.push(p);
         });
@@ -100,13 +106,41 @@ export class ProviderService {
 
 public add(provider: Provider): Observable<any> {
   const url = `${this.appConfigService.basePath}/providers/add`;
-  const data =  {"provider_label":provider.label,"action":"add"};
+  const data: any = {"provider_label":provider.label,"action":"add"};
+  // Champs entreprise optionnels : on ne les envoie que s'ils sont renseignés
+  // (absents du body => NULL en BDD, comportement identique à avant).
+  if (provider.siren) { data.provider_siren = provider.siren; }
+  if (provider.numeroTva) { data.provider_numero_tva = provider.numeroTva; }
+  if (provider.codeNaf) { data.provider_code_naf = provider.codeNaf; }
   this.loaderService.setLoading(true);
 
   return this.http.post(url, data).pipe(
     tap(_ => this.toastrService.showToastr({
       category: 'success',
       message: 'Votre fournisseur a été enregistré avec succès.'
+    })),
+    catchError(error => this.errorService.handleError(error)),
+    finalize(() => this.loaderService.setLoading(false))
+  );
+}
+
+public update(provider: Provider): Observable<any> {
+  const url = `${this.appConfigService.basePath}/providers/update`;
+  // `code` est requis. Les autres champs sont éditables : on les envoie toujours
+  // (valeur ou null) pour que l'édition reflète exactement le formulaire (un champ vidé => null).
+  const data: any = {
+    code: provider.code,
+    provider_label: provider.label || null,
+    provider_siren: provider.siren || null,
+    provider_numero_tva: provider.numeroTva || null,
+    provider_code_naf: provider.codeNaf || null,
+  };
+  this.loaderService.setLoading(true);
+
+  return this.http.post(url, data).pipe(
+    tap(_ => this.toastrService.showToastr({
+      category: 'success',
+      message: 'Le fournisseur a été mis à jour avec succès.'
     })),
     catchError(error => this.errorService.handleError(error)),
     finalize(() => this.loaderService.setLoading(false))

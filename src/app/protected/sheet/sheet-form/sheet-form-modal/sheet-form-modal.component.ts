@@ -1,14 +1,17 @@
-import { Component, Input, EventEmitter, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, EventEmitter, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'app-sheet-form-modal',
   templateUrl: './sheet-form-modal.component.html',
   styleUrls: ['./sheet-form-modal.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SheetFormModalComponent implements OnInit {
+export class SheetFormModalComponent implements OnInit, OnDestroy {
+  private searchSub?: Subscription;
   @ViewChild('autoShownModal', { static: false }) autoShownModal?: ModalDirective;
   isModalShown :boolean;
   modalMessage = '';
@@ -25,14 +28,8 @@ export class SheetFormModalComponent implements OnInit {
   public event: EventEmitter<any> = new EventEmitter();
   public eventPaginate: EventEmitter<any> = new EventEmitter();
   public addElementEvent: EventEmitter<any> = new EventEmitter();
-  public editElementEvent: EventEmitter<any> = new EventEmitter();
   public removeElementEvent: EventEmitter<any> = new EventEmitter();
   public runRemoveElementEvent: EventEmitter<any> = new EventEmitter();
-
-  // Formulaire fournisseur (création / édition à la volée) — uniquement type === 'provider'
-  isProviderFormShown = false;
-  providerFormMode: 'create' | 'edit' = 'create';
-  providerFormModel: any = null;
   
   total: number;
   page: number;
@@ -48,13 +45,28 @@ export class SheetFormModalComponent implements OnInit {
   ) { }
   public requestAutocompleteItems: any;
   get currentPage() { return this.sheetModalForm.get('currentPage') }
-  get search() { return this.searchModalForm.get('search') }
+  get search() { return this.searchModalForm.get('search') as FormControl }
+  get selectedCount(): number { return (this.selectedItems?.value || []).length; }
   ngOnInit() {
     this.selectedItems = new FormControl();
     this.selectedItems.setValue(this.selectedValues);
     this.sheetModalForm = this.createsheetModalForm();
     this.searchModalForm = this.createSearchModalForm();
     this.names = this.allitems.map(t=>t.name);
+
+    // Recherche serveur "live" : relance la recherche après une courte pause de frappe.
+    this.searchSub = this.search.valueChanges
+      .pipe(debounceTime(350), distinctUntilChanged())
+      .subscribe(() => this.submitSearch());
+  }
+
+  ngOnDestroy(): void {
+    this.searchSub?.unsubscribe();
+  }
+
+  clearSearch(): void {
+    // setValue déclenche valueChanges -> submitSearch (liste complète).
+    this.search.setValue('');
   }
   get newItem() { return this.sheetModalForm.get('newItem') }
   createsheetModalForm(): FormGroup {
@@ -83,45 +95,6 @@ export class SheetFormModalComponent implements OnInit {
   submit(): void {
     this.addElementEvent.emit({ data: this.newItem });
     this.newItem.setValue('');
-  }
-
-  // --- Formulaire fournisseur (création / édition) ---
-  openCreateProvider(): void {
-    this.providerFormMode = 'create';
-    this.providerFormModel = null;
-    this.isProviderFormShown = true;
-  }
-
-  openEditProvider(item: any): void {
-    this.providerFormMode = 'edit';
-    this.providerFormModel = { ...item };
-    this.isProviderFormShown = true;
-  }
-
-  onProviderFormSave(payload: any): void {
-    if (this.providerFormMode === 'edit') {
-      this.editElementEvent.emit({ data: payload });
-    } else {
-      this.addElementEvent.emit({ data: payload });
-    }
-    this.isProviderFormShown = false;
-  }
-
-  onProviderFormCancel(): void {
-    this.isProviderFormShown = false;
-  }
-
-  // Met à jour le libellé d'un fournisseur déjà sélectionné après édition.
-  updateItemInList(code: any, label: string): void {
-    const selected = this.selectedItems.value || [];
-    selected.forEach((element: any) => {
-      if (element.code == code) {
-        element.label = label;
-        element.display = label;
-        element.value = label;
-      }
-    });
-    this.selectedItems.setValue([...selected]);
   }
 
   submitSearch(): void {

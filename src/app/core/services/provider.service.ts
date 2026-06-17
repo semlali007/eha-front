@@ -51,7 +51,8 @@ export class ProviderService {
     this.loaderService.setLoading(true);
     return this.http.post(url, {
         page: params.page || 1,
-        perpage: params.perPage || 5
+        perpage: params.perPage || 5,
+        search: params.search || ''
     }).pipe(
       switchMap((providersData: any) => {
         const providers: Provider[] = [];

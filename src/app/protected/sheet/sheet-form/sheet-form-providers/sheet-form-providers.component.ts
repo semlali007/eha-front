@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ProviderService } from 'src/app/core/services/provider.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { SheetFormModalComponent } from '../sheet-form-modal/sheet-form-modal.component';
+import { ProviderModalComponent } from '../provider-modal/provider-modal.component';
 import { Provider } from 'src/app/shared/models/provider';
 @Component({
   selector: 'app-sheet-form-providers',
@@ -68,19 +68,16 @@ export class SheetFormProvidersComponent implements OnInit {
       }
 
       const initialState = {
-        type:'provider',
         items: this.items,
         total: this.total,
         title: 'Fournisseurs',
         selectedValues: selected,
         itemsPerPage: this.itemsPerPage,
-        placeholder: 'Entrer un fournisseur',
         maxSize: 6,
-        allitems: this.allproviders,
         requestAutocompleteItems: this.requestAutocompleteItems
       };
 
-      this.bsModalRef = this.modalService.show(SheetFormModalComponent, { initialState });
+      this.bsModalRef = this.modalService.show(ProviderModalComponent, { initialState });
       this.bsModalRef.content.event.subscribe(res => {
         this.providers.setValue(res.data.value);
       });
@@ -126,10 +123,11 @@ export class SheetFormProvidersComponent implements OnInit {
 
 
       this.bsModalRef.content.eventPaginate.subscribe(res => {
-        this.page = res.data.pag;
+        this.page = res.data.page;
         this.providerService.getProviders({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.providers;
           this.bsModalRef.content.total = data.total;

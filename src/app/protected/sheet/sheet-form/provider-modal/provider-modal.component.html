@@ -1,0 +1,210 @@
+<div class="adm-modal-header">
+  <h4 class="adm-modal-title">{{ title }}</h4>
+  <button type="button" class="adm-modal-close" aria-label="Fermer" (click)="bsModalRef.hide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
+</div>
+
+<div class="adm-modal-body sheet-modal-body">
+
+  <!-- 1. Sélection actuelle -->
+  <section class="pm-section" *ngIf="selectedItems">
+    <div class="pm-section-head">
+      <span class="pm-section-title">Sélection actuelle</span>
+      <span class="adm-chip" [class.adm-chip--orange]="selectedCount > 0" [class.adm-chip--muted]="selectedCount === 0">
+        {{ selectedCount }} sélectionné{{ selectedCount > 1 ? 's' : '' }}
+      </span>
+    </div>
+
+    <div class="pm-chips" *ngIf="selectedCount > 0; else noSelection">
+      <span class="pm-chip" *ngFor="let sel of selectedItems.value">
+        <span class="pm-chip-label" [title]="sel.label">{{ sel.label }}</span>
+        <button type="button" class="pm-chip-remove" aria-label="Retirer" (click)="removeItemFromList(sel.code)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+          </svg>
+        </button>
+      </span>
+    </div>
+    <ng-template #noSelection>
+      <p class="pm-empty-sel">Aucun fournisseur sélectionné — choisissez-en dans les résultats ci-dessous.</p>
+    </ng-template>
+  </section>
+
+  <!-- 2. Toolbar : recherche (live) + ajout -->
+  <div class="pm-toolbar">
+    <label class="adm-search pm-search mb-0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             [formControl]="$any(search)"
+             placeholder="Rechercher un fournisseur…"
+             autocorrect="off"
+             autocomplete="off"
+             (keydown.enter)="$event.preventDefault()">
+      <button *ngIf="search.value" type="button" class="pm-search-clear" aria-label="Effacer" (click)="clearSearch()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+        </svg>
+      </button>
+    </label>
+
+    <button type="button" class="adm-btn adm-btn-edf" (click)="openCreateProvider()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+      Ajouter un fournisseur
+    </button>
+  </div>
+
+  <!-- 3. Liste des résultats -->
+  <section class="pm-section" *ngIf="items?.length > 0">
+    <div class="pm-section-head">
+      <span class="pm-section-title">Résultats</span>
+      <span class="adm-toolbar-count"><strong>{{ total }}</strong> fournisseur(s)</span>
+    </div>
+
+    <div class="sheet-modal-list">
+      <div class="pm-item" [class.is-selected]="isSelected(item)" *ngFor="let item of items">
+        <div class="pm-item-main">
+          <span class="pm-item-name" [title]="item.label">{{ item.label }}</span>
+          <div class="pm-item-identity">
+            <ng-container *ngIf="hasIdentity(item); else noIdentity">
+              <span *ngIf="item.siren" class="pm-id"><span class="pm-id-key">SIREN</span>{{ item.siren }}</span>
+              <span *ngIf="item.numeroTva" class="pm-id"><span class="pm-id-key">TVA</span>{{ item.numeroTva }}</span>
+              <span *ngIf="item.codeNaf" class="pm-id"><span class="pm-id-key">NAF</span>{{ item.codeNaf }}</span>
+            </ng-container>
+            <ng-template #noIdentity>
+              <span class="adm-chip adm-chip--muted">Non identifié (INSEE)</span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="pm-item-actions">
+          <button *ngIf="!isSelected(item)"
+                  type="button"
+                  class="adm-btn adm-btn-edf adm-btn-sm"
+                  (click)="addItemToList(item)">
+            Sélectionner
+          </button>
+          <button *ngIf="isSelected(item)"
+                  type="button"
+                  class="adm-btn adm-btn-ghost adm-btn-sm pm-btn-selected"
+                  (click)="removeItemFromList(item.code)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+            </svg>
+            Sélectionné
+          </button>
+          <button type="button"
+                  class="adm-btn adm-btn-ghost adm-btn-sm"
+                  title="Éditer le fournisseur"
+                  (click)="openEditProvider(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/>
+            </svg>
+          </button>
+          <button type="button"
+                  class="adm-btn adm-btn-danger adm-btn-sm"
+                  title="Supprimer le fournisseur"
+                  (click)="remove(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empty state -->
+  <div class="sheet-modal-empty" *ngIf="!items || items.length === 0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p *ngIf="search.value">Aucun fournisseur ne correspond à <strong>« {{ search.value }} »</strong>.</p>
+    <p *ngIf="!search.value">Aucun fournisseur à afficher.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="adm-pagination-bar" *ngIf="total > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage de <strong>{{ items?.length || 0 }}</strong> sur <strong>{{ total }}</strong>
+    </p>
+    <form class="adm-pagination-wrap" [formGroup]="modalForm">
+      <pagination [boundaryLinks]="true"
+                  [totalItems]="total"
+                  [itemsPerPage]="itemsPerPage"
+                  [formControl]="$any(currentPage)"
+                  (pageChanged)="pageChanged($event)"
+                  [maxSize]="maxSize"
+                  (numPages)="smallnumPages = $event"
+                  previousText="&lsaquo;"
+                  nextText="&rsaquo;"
+                  firstText="&laquo;"
+                  lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>
+
+<div class="adm-modal-footer pm-footer">
+  <span class="pm-footer-info">{{ selectedCount }} fournisseur(s) sélectionné(s)</span>
+  <div class="pm-footer-actions">
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="bsModalRef.hide()">Annuler</button>
+    <button type="button" class="adm-btn adm-btn-edf" (click)="validateModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+      </svg>
+      Enregistrer
+    </button>
+  </div>
+</div>
+
+<!-- Formulaire fournisseur imbriqué (création / édition) -->
+<div *ngIf="isProviderFormShown"
+     [config]="{ show: true }"
+     (onHidden)="onProviderFormCancel()"
+     bsModal
+     #providerFormModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="provider-form-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <app-provider-form [provider]="providerFormModel"
+                         [mode]="providerFormMode"
+                         (save)="onProviderFormSave($event)"
+                         (cancel)="onProviderFormCancel()">
+      </app-provider-form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmation imbriqué (suppression) -->
+<div *ngIf="isModalShown"
+     [config]="{ show: true }"
+     (onHidden)="onHidden()"
+     bsModal
+     #autoShownModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="adm-modal-body" style="text-align: center">
+        <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">{{ modalMessage }}</p>
+        <div style="display: flex; justify-content: center; gap: 8px">
+          <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+          <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

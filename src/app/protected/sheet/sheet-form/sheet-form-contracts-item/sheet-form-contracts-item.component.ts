@@ -20,6 +20,8 @@ export class SheetFormContractsItemComponent implements OnInit, OnChanges {
   // @Input() lotsListForContract: FormControl;
   @Input() lotsListForContract: string[];
   filteredLots: string[] = [];
+  // Fournisseurs sélectionnés en partie 3 (options de la dropdown "Fournisseur")
+  @Input() providersForContract: string[] = [];
 
   @Output() removedContract = new EventEmitter<number>();
   @Output() openClose = new EventEmitter<{index:number}>();
@@ -55,6 +57,22 @@ export class SheetFormContractsItemComponent implements OnInit, OnChanges {
 
   get hasNoLots(): boolean {
     return !this.filteredLots || this.filteredLots.length === 0;
+  }
+
+  get hasNoProviders(): boolean {
+    return !this.providersForContract || this.providersForContract.length === 0;
+  }
+
+  /**
+   * Renvoie la valeur courante du champ "provider" si elle n'est plus dans la
+   * sélection de la partie 3 (fournisseur retiré, valeur importée via Excel,
+   * fiche existante). Permet de l'afficher en "hors sélection" sans la perdre.
+   */
+  get currentProviderIfMissing(): string | null {
+    const value = this.contract.get('provider')?.value;
+    if (!value || typeof value !== 'string') return null;
+    if ((this.providersForContract || []).includes(value)) return null;
+    return value;
   }
 
   private updateFormControlState(): void {

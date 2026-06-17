@@ -27,8 +27,11 @@ export class SheetFormContractsComponent implements OnInit, OnDestroy {
   invalidContractsMessage: string = '';
   lotsListForContract: string[] = [];
   tableLot: string[] = [];
+  // Liste des fournisseurs sélectionnés en partie 3, pour la dropdown "Fournisseur" des contrats
+  providersForContract: string[] = [];
   originalFileContent: any;
   private lotsSub?: Subscription;
+  private providersSub?: Subscription;
 
   constructor(private fb: FormBuilder, private contractService: ContractService) { }
 
@@ -39,6 +42,13 @@ export class SheetFormContractsComponent implements OnInit, OnDestroy {
     const lotsArray = this.sheetForm?.get('lots') as FormArray | null;
     if (lotsArray) {
       this.lotsSub = lotsArray.valueChanges.subscribe(() => this.refreshLotsList());
+    }
+
+    // Initialise + suit la liste des fournisseurs sélectionnés en partie 3
+    this.refreshProvidersList();
+    const providersCtrl = this.sheetForm?.get('providers');
+    if (providersCtrl) {
+      this.providersSub = providersCtrl.valueChanges.subscribe(() => this.refreshProvidersList());
     }
 
     // Charger localStorage SEULEMENT si :
@@ -184,7 +194,24 @@ export class SheetFormContractsComponent implements OnInit, OnDestroy {
     this.lotsListForContract = lotNames;
   }
 
+  /**
+   * Recalcule la liste des noms de fournisseurs disponibles pour la dropdown
+   * "Fournisseur" des contrats. Source de vérité : le champ "providers"
+   * (section 3 "Fournisseurs & bénéficiaires").
+   */
+  refreshProvidersList(): void {
+    const value = this.sheetForm?.get('providers')?.value;
+    const names = (Array.isArray(value) ? value : [])
+      .map((p: any) => (p && typeof p === 'object') ? p.label : p)
+      .filter((name: any): name is string => typeof name === 'string' && name.trim().length > 0)
+      // évite les doublons exacts
+      .filter((name: string, idx: number, arr: string[]) => arr.indexOf(name) === idx);
+
+    this.providersForContract = names;
+  }
+
   ngOnDestroy(): void {
     this.lotsSub?.unsubscribe();
+    this.providersSub?.unsubscribe();
   }
 }

@@ -98,6 +98,9 @@ export class SheetFormProvidersComponent implements OnInit {
               label:  t.element.provider_label,
               display:t.element.provider_label,
               value: t.element.provider_label,
+              numeroTva: payload.numeroTva ?? null,
+              siren: payload.siren ?? null,
+              codeNaf: payload.codeNaf ?? null,
             })
           })
         );

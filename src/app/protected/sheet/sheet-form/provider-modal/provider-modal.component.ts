@@ -112,6 +112,10 @@ export class ProviderModalComponent implements OnInit, OnDestroy {
         label: $event.label,
         display: $event.label,
         value: $event.label,
+        // Identifiants conservés dans la sélection (utilisés pour préremplir la TVA, etc.)
+        numeroTva: $event.numeroTva ?? null,
+        siren: $event.siren ?? null,
+        codeNaf: $event.codeNaf ?? null,
       });
       this.selectedItems.setValue([...selected]);
     }

@@ -19,6 +19,8 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   disabled: boolean = false;
   warning: boolean = false;
   success: boolean = false;
+  submitting: boolean = false;
+  error: boolean = false;
   postedNni: string = '';
   loginForm: FormGroup;
   public user: User = null;
@@ -77,6 +79,10 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
   get improvement() { return this.loginForm.get('improvement'); }
 
   submit(): void {
+    if (this.loginForm.invalid || this.submitting || this.disabled) {
+      return;
+    }
+
     const params = {
       cockpit_id: this.cockpitId,
       da_pgi: this.daPGI,
@@ -88,14 +94,28 @@ export class SatisfactionComponent implements OnInit, OnDestroy {
       improvement: this.improvement.value,
     };
 
-    this.satisfactionService.create(params).subscribe(response => {
-      if (!!response) {
-        this.success = true;
-        this.disabled = true;
-        this.loginForm.disable();
-      }
+    this.submitting = true;
+    this.error = false;
+
+    this.satisfactionService.create(params).subscribe({
+      next: response => {
+        this.submitting = false;
+        if (!!response) {
+          this.success = true;
+          this.disabled = true;
+          this.loginForm.disable();
+          // Remonte en haut pour rendre la confirmation bien visible
+          setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
+        } else {
+          // La requête a échoué (erreur réseau/serveur interceptée) : on réactive le bouton
+          this.error = true;
+        }
+      },
+      error: () => {
+        this.submitting = false;
+        this.error = true;
+      },
     });
-    this.disabled = true;
   }
 
   replaceValue(value: number): string {

@@ -115,6 +115,53 @@
   border: 1px solid #a7f3d0;
   color: #065f46;
 }
+.sat-alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+/* ── Panneau de succès (confirmation bien visible) ─────────── */
+.sat-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 28px 24px;
+  margin-bottom: 18px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  animation: sat-success-in 0.25s ease-out;
+}
+.sat-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #059669;
+  color: #fff;
+}
+.sat-success-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #065f46;
+  margin: 0;
+}
+.sat-success-text {
+  font-size: 14px;
+  color: #047857;
+  margin: 0;
+  max-width: 460px;
+  line-height: 1.5;
+}
+@keyframes sat-success-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* ── Note champs obligatoires ──────────────────────────────── */
 .sat-required-note {

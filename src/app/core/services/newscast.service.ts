@@ -168,7 +168,7 @@ public updatePositions(params: any): Observable<any> {
       category: 'success',
       message: 'Vos informations ont été mises à jour !'
     })),
-    catchError(error => this.errorService.handleError('Erreur de modification')),
+    catchError(error => this.errorService.handleError(error, true)),
     finalize(() => this.loaderService.setLoading(false))
   );
 }
@@ -180,7 +180,7 @@ public remove(id){
       category: 'success',
       message: 'Vos informations ont été mises à jour !'
     })),
-    catchError(error => this.errorService.handleError('Erreur de modification')),
+    catchError(error => this.errorService.handleError(error, true)),
     finalize(() => this.loaderService.setLoading(false))
   );
 }

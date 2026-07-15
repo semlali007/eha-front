@@ -2,34 +2,15 @@
 
   <app-breadcrumb></app-breadcrumb>
 
-  <!-- ─── État : contrat échu (refusé côté API) ──────────── -->
-  <div *ngIf="!!contract.error && contract.error == 'contract_expired'" class="adm-error-card">
+  <!-- ─── État : erreur (tous cas) ────────────────────────── -->
+  <div *ngIf="!!contract.error" class="adm-error-card">
     <div class="adm-error-icon adm-error-icon--expired">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
     </div>
-    <h1 class="adm-error-title">Contrat échu</h1>
-    <p class="adm-error-desc">Ce contrat est arrivé à échéance et n'est plus actif.</p>
-    <button class="adm-back" type="button" (click)="back()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-      </svg>
-      Page précédente
-    </button>
-  </div>
-
-  <!-- ─── État : contrat non accessible (PGI-3 / 5) ──────── -->
-  <div *ngIf="!!contract.error && contract.error == 'contract_load_error'" class="adm-error-card">
-    <div class="adm-error-icon adm-error-icon--warning">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
-      </svg>
-    </div>
-    <h1 class="adm-error-title">Contrat non accessible</h1>
-    <p class="adm-error-desc">
-      Les contrats modélisés dans <strong>PGI-3</strong> et <strong>PGI-5</strong> ne sont pas accessibles dans Achatpédia.
-    </p>
+    <h1 class="adm-error-title">Contrat introuvable</h1>
+    <p class="adm-error-desc">Ce contrat n'a pas été trouvé ou n'est plus disponible.</p>
     <button class="adm-back" type="button" (click)="back()">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
@@ -123,7 +104,7 @@
         <div class="adm-field">
           <span class="adm-field-label">Accès au contrat</span>
           <div class="adm-field-value">
-            <a class="adm-tag-link"
+            <a class="adm-tag-link" *ngIf="contract.infos.web_url"
                [href]="contract.infos.web_url"
                target="_blank"
                rel="noopener noreferrer"

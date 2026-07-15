@@ -267,9 +267,9 @@
 }
 .sv-chevron-open { transform: rotate(180deg); }
 
-.sv-history-table {
+/*.sv-history-table {
   padding: 0 24px 16px;
-}
+}*/
 .sv-history-date {
   font-size: 12px;
   color: #6b7280;

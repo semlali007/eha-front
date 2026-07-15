@@ -1,0 +1,105 @@
+.hlk-sync {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hlk-card {
+  border: 1px solid #e3e6ec;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.06);
+  margin-bottom: 1.5rem;
+}
+
+.hlk-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.hlk-subtitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hlk-desc {
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.hlk-warning {
+  font-size: 0.9rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.hlk-launch-btn {
+  min-width: 260px;
+}
+
+.hlk-spinner {
+  margin-right: 0.5rem;
+}
+
+.hlk-error-msg {
+  margin-top: 0.35rem;
+  white-space: pre-wrap;
+}
+
+.hlk-report-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.hlk-copy-btn {
+  white-space: nowrap;
+}
+
+.hlk-dates {
+  color: #374151;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.hlk-date-label {
+  font-weight: 600;
+}
+
+.hlk-duration {
+  color: #6b7280;
+}
+
+.hlk-table {
+  margin-bottom: 0;
+}
+
+.hlk-table td {
+  vertical-align: middle;
+}
+
+.hlk-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  width: 120px;
+}
+
+.hlk-hint {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 0.82rem;
+}
+
+.hlk-errors-block {
+  margin-top: 1rem;
+}
+
+.hlk-errors-toggle {
+  padding-left: 0;
+}
+
+.hlk-errors-list {
+  margin-top: 0.5rem;
+  font-size: 0.88rem;
+}

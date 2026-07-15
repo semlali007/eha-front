@@ -314,7 +314,7 @@
   </div>
 
   <!-- Historique -->
-  <div class="sv-history" *ngIf="statusCode === 1 && !!history && history?.length > 0" id="history">
+  <div class="sv-history" *ngIf="!!history && history?.length > 0" id="history">
     <button class="sv-history-toggle" (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed">
       <strong>Historique des modifications</strong>

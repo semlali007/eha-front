@@ -1,0 +1,315 @@
+<div class="hlk-sync">
+
+  <!-- Présentation -->
+  <div class="card hlk-card">
+    <div class="card-body">
+      <h1 class="cover-heading hlk-title">
+        Synchronisation des bénéficiaires depuis HLK
+      </h1>
+
+      <p class="hlk-desc">
+        Cette action récupère les données HLK et enrichit les bénéficiaires des fiches
+        marché existantes. Elle ne supprime aucun bénéficiaire déjà présent.
+      </p>
+
+      <p class="hlk-desc">
+        Durée typique : <strong>1 à 2 minutes</strong>. Vous pouvez d'abord
+        <strong>simuler</strong> pour vérifier ce qui serait fait, puis
+        <strong>valider</strong> pour appliquer réellement les changements.
+      </p>
+
+      <div class="alert alert-warning hlk-warning" role="alert">
+        L'opération dure 1 à 2 minutes. Ne fermez pas l'onglet et ne rechargez pas la page
+        tant qu'une synchronisation (simulation ou réelle) est en cours.
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 1 — SIMULER -->
+  <div class="card hlk-card">
+    <div class="card-body">
+      <div class="hlk-step-head">
+        <span class="hlk-step-badge">Étape 1</span>
+        <h2 class="hlk-subtitle">Simuler</h2>
+      </div>
+      <p class="hlk-desc">
+        Exécute le même traitement <strong>sans aucune écriture en base</strong> et affiche
+        un aperçu des créations et enrichissements qui seraient réalisés.
+      </p>
+
+      <button type="button"
+              class="btn btn-outline-primary hlk-launch-btn"
+              [disabled]="simLoading"
+              (click)="simulate()">
+        <span *ngIf="simLoading" class="spinner-border spinner-border-sm hlk-spinner" role="status" aria-hidden="true"></span>
+        <span *ngIf="!simLoading">Simuler la synchronisation</span>
+        <span *ngIf="simLoading">Simulation en cours…</span>
+      </button>
+
+      <div *ngIf="simError" class="alert alert-danger hlk-error" role="alert">
+        <strong>La simulation a échoué.</strong>
+        <div class="hlk-error-msg">{{ simError }}</div>
+      </div>
+
+      <div *ngIf="simReport" class="hlk-report">
+        <div class="hlk-mode-tag hlk-mode-tag--sim">Simulation (aucune écriture)</div>
+
+        <!-- Compteurs partagés -->
+        <ng-container *ngTemplateOutlet="countersTpl; context: { report: simReport, mode: 'sim' }"></ng-container>
+
+        <!-- Preview 1 : nouvelles filiales -->
+        <div class="hlk-accordion" *ngIf="simReport.preview">
+          <button type="button" class="btn btn-link hlk-acc-toggle" (click)="toggle('sim-newben')">
+            {{ isOpen('sim-newben') ? '▾' : '▸' }}
+            Nouvelles filiales qui seront créées
+            ({{ (simReport.preview.new_beneficiaries?.length || 0) | number:'':'fr' }})
+          </button>
+          <div *ngIf="isOpen('sim-newben')" class="hlk-acc-body">
+            <ul *ngIf="simReport.preview.new_beneficiaries?.length" class="hlk-flat-list">
+              <li *ngFor="let name of simReport.preview.new_beneficiaries">{{ name }}</li>
+            </ul>
+            <p *ngIf="!simReport.preview.new_beneficiaries?.length" class="hlk-empty">
+              Aucune nouvelle filiale ne serait créée.
+            </p>
+          </div>
+        </div>
+
+        <!-- Preview 2 : aperçu des fiches enrichies -->
+        <div class="hlk-accordion" *ngIf="simReport.preview">
+          <button type="button" class="btn btn-link hlk-acc-toggle" (click)="toggle('sim-fiches')">
+            {{ isOpen('sim-fiches') ? '▾' : '▸' }}
+            Aperçu des fiches enrichies
+            ({{ (simReport.preview.fiches_total || 0) | number:'':'fr' }})
+          </button>
+          <div *ngIf="isOpen('sim-fiches')" class="hlk-acc-body">
+            <p *ngIf="simReport.preview.fiches_total > (simReport.preview.fiches_sample?.length || 0)"
+               class="hlk-hint hlk-sample-note">
+              Affichage de {{ (simReport.preview.fiches_sample?.length || 0) | number:'':'fr' }}
+              sur {{ simReport.preview.fiches_total | number:'':'fr' }} fiches.
+            </p>
+            <table *ngIf="simReport.preview.fiches_sample?.length" class="table table-sm table-bordered hlk-fiches-table">
+              <thead>
+                <tr>
+                  <th>ID fiche</th>
+                  <th>Libellé</th>
+                  <th class="hlk-num">Nb bénéf. à ajouter</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let fiche of simReport.preview.fiches_sample">
+                  <td>{{ fiche.id }}</td>
+                  <td>{{ fiche.label }}</td>
+                  <td class="hlk-num">{{ fiche.nb_beneficiaries_to_add | number:'':'fr' }}</td>
+                  <td>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                            (click)="openFicheDetail(fiche, detailTpl)">
+                      Détail
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p *ngIf="!simReport.preview.fiches_sample?.length" class="hlk-empty">
+              Aucune fiche ne serait enrichie.
+            </p>
+          </div>
+        </div>
+
+        <!-- Preview 3 : contrats HLK non reconnus -->
+        <div class="hlk-accordion" *ngIf="simReport.preview">
+          <button type="button" class="btn btn-link hlk-acc-toggle" (click)="toggle('sim-unmatched')">
+            {{ isOpen('sim-unmatched') ? '▾' : '▸' }}
+            Contrats HLK non reconnus
+            ({{ (simReport.contracts_unmatched || 0) | number:'':'fr' }})
+          </button>
+          <div *ngIf="isOpen('sim-unmatched')" class="hlk-acc-body">
+            <p class="hlk-hint">
+              Ces contrats n'existent dans aucune fiche EHA. Information métier, pas une erreur.
+            </p>
+            <ul *ngIf="simReport.preview.unmatched_samples?.length" class="hlk-flat-list">
+              <li *ngFor="let code of simReport.preview.unmatched_samples">{{ code }}</li>
+            </ul>
+            <p *ngIf="unmatchedRemaining(simReport) > 0" class="hlk-hint">
+              … et {{ unmatchedRemaining(simReport) | number:'':'fr' }} autres.
+            </p>
+            <p *ngIf="!simReport.preview.unmatched_samples?.length" class="hlk-empty">
+              Aucun contrat non reconnu dans l'échantillon.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 — VALIDER -->
+  <div class="card hlk-card">
+    <div class="card-body">
+      <div class="hlk-step-head">
+        <span class="hlk-step-badge hlk-step-badge--real">Étape 2</span>
+        <h2 class="hlk-subtitle">Valider</h2>
+      </div>
+      <p class="hlk-desc">
+        Applique réellement les changements en base à partir des données HLK.
+      </p>
+
+      <button type="button"
+              class="btn btn-primary hlk-launch-btn"
+              [disabled]="realLoading"
+              (click)="askRealConfirmation(confirmTpl)">
+        <span *ngIf="realLoading" class="spinner-border spinner-border-sm hlk-spinner" role="status" aria-hidden="true"></span>
+        <span *ngIf="!realLoading">Lancer la synchronisation réelle</span>
+        <span *ngIf="realLoading">Synchronisation en cours…</span>
+      </button>
+      <div class="hlk-danger-note">⚠ Cette action modifie la base de données.</div>
+
+      <div *ngIf="realError" class="alert alert-danger hlk-error" role="alert">
+        <strong>La synchronisation a échoué.</strong>
+        <div class="hlk-error-msg">{{ realError }}</div>
+      </div>
+
+      <div *ngIf="realReport" class="hlk-report">
+        <div class="hlk-mode-tag hlk-mode-tag--real">Exécution réelle</div>
+        <ng-container *ngTemplateOutlet="countersTpl; context: { report: realReport, mode: 'real' }"></ng-container>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ Templates réutilisables ============ -->
+
+<!-- Compteurs + dates + erreurs, communs aux deux modes -->
+<ng-template #countersTpl let-report="report" let-mode="mode">
+  <div class="hlk-report-head">
+    <div class="hlk-dates">
+      <div><span class="hlk-date-label">Démarrée :</span> {{ report.started_at | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+      <div>
+        <span class="hlk-date-label">Terminée :</span>
+        {{ report.finished_at | date:'dd/MM/yyyy HH:mm:ss' }}
+        <span class="hlk-duration">({{ formatDuration(report.duration_ms) }})</span>
+      </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm hlk-copy-btn"
+            (click)="copyReport(report, mode)">
+      {{ copiedMode === mode ? 'Copié !' : 'Copier le rapport' }}
+    </button>
+  </div>
+
+  <table class="table table-sm hlk-table">
+    <tbody>
+      <tr>
+        <td>Lignes HLK reçues</td>
+        <td class="hlk-num">{{ report.rows_fetched | number:'':'fr' }}</td>
+      </tr>
+      <tr>
+        <td>Contrats reconnus</td>
+        <td class="hlk-num">{{ report.contracts_matched | number:'':'fr' }}</td>
+      </tr>
+      <tr>
+        <td>Contrats non rattachés <span class="hlk-hint">(historique HLK, informatif)</span></td>
+        <td class="hlk-num">{{ report.contracts_unmatched | number:'':'fr' }}</td>
+      </tr>
+      <tr>
+        <td>Fiches enrichies</td>
+        <td class="hlk-num">{{ report.fiches_updated | number:'':'fr' }}</td>
+      </tr>
+      <tr>
+        <td>Liens ajoutés</td>
+        <td class="hlk-num">{{ report.links_created | number:'':'fr' }}</td>
+      </tr>
+      <tr>
+        <td>Nouvelles filiales</td>
+        <td class="hlk-num">{{ report.beneficiaries_created | number:'':'fr' }}</td>
+      </tr>
+      <tr [class.table-danger]="errorCount(report) > 0">
+        <td>Erreurs</td>
+        <td class="hlk-num">{{ errorCount(report) | number:'':'fr' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="errorCount(report) > 0" class="hlk-accordion">
+    <button type="button" class="btn btn-link hlk-acc-toggle" (click)="toggle(mode + '-errors')">
+      {{ isOpen(mode + '-errors') ? '▾' : '▸' }}
+      Voir les erreurs ({{ errorCount(report) | number:'':'fr' }})
+    </button>
+    <div *ngIf="isOpen(mode + '-errors')" class="hlk-acc-body">
+      <table class="table table-sm table-bordered">
+        <thead>
+          <tr>
+            <th>Contrat</th>
+            <th>Bénéficiaire</th>
+            <th>Fiche</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let err of report.errors">
+            <td>{{ err.contract_code || '—' }}</td>
+            <td>{{ err.beneficiary || '—' }}</td>
+            <td>{{ err.sheet_id || '—' }}</td>
+            <td>{{ err.message }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modale de confirmation du run réel -->
+<ng-template #confirmTpl>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmer la synchronisation réelle</h4>
+    <button type="button" class="close" aria-label="Fermer" (click)="declineReal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="confirmWithoutSim" class="hlk-confirm-warn">
+      <strong>Vous n'avez pas simulé.</strong> Vous êtes sur le point de modifier la base
+      sans avoir vérifié l'aperçu au préalable. Continuer sans preview ?
+    </p>
+    <p>
+      Cette opération va durer 1 à 2 minutes et <strong>applique directement les
+      changements en base</strong>. Ne fermez pas l'onglet pendant le traitement.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="declineReal()">Annuler</button>
+    <button type="button" class="btn btn-primary" (click)="confirmReal()">Lancer la synchronisation</button>
+  </div>
+</ng-template>
+
+<!-- Modale de détail d'une fiche (mode simulation) -->
+<ng-template #detailTpl>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Détail fiche {{ detailFiche?.id }}
+      <span class="hlk-detail-label">— {{ detailFiche?.label }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Fermer" (click)="closeDetail()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="detailFiche">
+    <h6 class="hlk-detail-heading">
+      Bénéficiaires à ajouter ({{ (detailFiche.beneficiaries_to_add?.length || 0) | number:'':'fr' }})
+    </h6>
+    <ul *ngIf="detailFiche.beneficiaries_to_add?.length" class="hlk-flat-list">
+      <li *ngFor="let b of detailFiche.beneficiaries_to_add">{{ b }}</li>
+    </ul>
+    <p *ngIf="!detailFiche.beneficiaries_to_add?.length" class="hlk-empty">Aucun.</p>
+
+    <h6 class="hlk-detail-heading">
+      Contrats concernés ({{ (detailFiche.contracts?.length || 0) | number:'':'fr' }})
+    </h6>
+    <ul *ngIf="detailFiche.contracts?.length" class="hlk-flat-list">
+      <li *ngFor="let c of detailFiche.contracts">{{ c }}</li>
+    </ul>
+    <p *ngIf="!detailFiche.contracts?.length" class="hlk-empty">Aucun.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="closeDetail()">Fermer</button>
+  </div>
+</ng-template>

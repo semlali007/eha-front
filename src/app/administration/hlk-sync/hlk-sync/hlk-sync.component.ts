@@ -26,6 +26,10 @@ export class HlkSyncComponent implements OnInit {
   // Au-delà de 30 fiches / contrats, le back n'envoie qu'un échantillon.
   public static readonly SAMPLE_CAP = 30;
 
+  // Le run réel est volontairement désactivé : seule la simulation est
+  // exposée pour l'instant. Repasser à false pour le réactiver.
+  public realDisabled = true;
+
   public simLoading = false;
   public realLoading = false;
 
@@ -85,7 +89,7 @@ export class HlkSyncComponent implements OnInit {
    * confirmation, dont le message dépend du fait qu'une simulation a tourné.
    */
   public askRealConfirmation(template: TemplateRef<any>): void {
-    if (this.realLoading) {
+    if (this.realDisabled || this.realLoading) {
       return;
     }
     this.confirmWithoutSim = !this.simReport;

@@ -155,17 +155,13 @@
 
       <button type="button"
               class="btn btn-primary hlk-launch-btn"
-              [disabled]="realDisabled || realLoading"
+              [disabled]="realLoading"
               (click)="askRealConfirmation(confirmTpl)">
         <span *ngIf="realLoading" class="spinner-border spinner-border-sm hlk-spinner" role="status" aria-hidden="true"></span>
         <span *ngIf="!realLoading">Lancer la synchronisation réelle</span>
         <span *ngIf="realLoading">Synchronisation en cours…</span>
       </button>
       <div class="hlk-danger-note">⚠ Cette action modifie la base de données.</div>
-      <div *ngIf="realDisabled" class="hlk-hint hlk-disabled-note">
-        La synchronisation réelle est momentanément indisponible. Seule la simulation
-        (Étape 1) est accessible.
-      </div>
 
       <div *ngIf="realError" class="alert alert-danger hlk-error" role="alert">
         <strong>La synchronisation a échoué.</strong>

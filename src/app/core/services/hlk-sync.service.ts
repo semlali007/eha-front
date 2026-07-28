@@ -30,9 +30,46 @@ export interface HlkSyncFicheSample {
  */
 export interface HlkSyncPreview {
   new_beneficiaries: string[];
+  /** Liste COMPLÈTE des fiches à enrichir (champ à privilégier). */
+  fiches?: HlkSyncFicheSample[];
+  /**
+   * Échantillon (30 fiches avec le plus d'ajouts). Conservé pour
+   * rétrocompatibilité ; à retirer une fois `fiches` généralisé côté back.
+   */
   fiches_sample: HlkSyncFicheSample[];
   fiches_total: number;
   unmatched_samples: string[];
+}
+
+/**
+ * Fiche EHA rattachée à un contrat HLK.
+ */
+export interface HlkSyncMatchedSheet {
+  id: number;
+  label: string;
+}
+
+/**
+ * Détail d'un contrat HLK unique et de ses bénéficiaires.
+ */
+export interface HlkSyncContractDetail {
+  contract_code: string;
+  nb_beneficiaries: number;
+  beneficiaries: string[];
+  matched_sheets: HlkSyncMatchedSheet[];
+  is_matched: boolean;
+}
+
+/**
+ * Bloc de détail par contrat HLK (pour vérification métier de la complétude).
+ * Le tableau `contracts` est pré-trié : contrats matchés d'abord, puis par
+ * `contract_code` alphabétique.
+ */
+export interface HlkSyncContractsDetails {
+  total: number;
+  matched: number;
+  unmatched: number;
+  contracts: HlkSyncContractDetail[];
 }
 
 /**
@@ -53,6 +90,7 @@ export interface HlkSyncReport {
   finished_at: string;
   dry_run?: boolean;
   preview?: HlkSyncPreview;
+  contracts_details?: HlkSyncContractsDetails;
 }
 
 @Injectable({

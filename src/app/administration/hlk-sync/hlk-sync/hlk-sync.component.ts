@@ -188,6 +188,7 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
         this.realReport = report;
         this.persist(HlkSyncComponent.STORAGE_KEY_REAL, report);
         this.applyContractFilter();
+        this.applyFichesFilter();
         this.realLoading = false;
       },
       (error: any) => {
@@ -381,11 +382,27 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
   // Recherche + pagination de l'aperçu des fiches enrichies
 
   /**
+   * Rapport dont on affiche l'aperçu détaillé (nouvelles filiales, fiches
+   * enrichies, contrats non reconnus) : on privilégie le run réel s'il porte
+   * un `preview`, sinon la simulation. Le back renvoie désormais `preview`
+   * dans les deux modes.
+   */
+  public get previewReport(): HlkSyncReport | null {
+    if (this.realReport && this.realReport.preview) {
+      return this.realReport;
+    }
+    if (this.simReport && this.simReport.preview) {
+      return this.simReport;
+    }
+    return null;
+  }
+
+  /**
    * Liste source des fiches à enrichir : on privilégie `preview.fiches`
    * (complet) et on retombe sur `preview.fiches_sample` pour rétrocompat.
    */
   public get sourceFiches(): HlkSyncFicheSample[] {
-    const preview = this.simReport ? this.simReport.preview : null;
+    const preview = this.previewReport ? this.previewReport.preview : null;
     if (!preview) {
       return [];
     }
@@ -452,6 +469,10 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
 
   public errorCount(report: HlkSyncReport | null): number {
     return report && report.errors ? report.errors.length : 0;
+  }
+
+  public warningCount(report: HlkSyncReport | null): number {
+    return report && report.warnings ? report.warnings.length : 0;
   }
 
   /**

@@ -292,6 +292,15 @@
   color: #b42318;
 }
 
+.hlk-stat--warn {
+  background: #fffaeb;
+  border-color: #fedf89;
+}
+
+.hlk-stat--warn .hlk-stat-value {
+  color: #b54708;
+}
+
 /* ---------- Accordéons ---------- */
 
 .hlk-acc {
@@ -303,6 +312,10 @@
 
 .hlk-acc--danger {
   border-color: #fecdca;
+}
+
+.hlk-acc--warn {
+  border-color: #fedf89;
 }
 
 .hlk-acc-head {
@@ -352,6 +365,11 @@
 .hlk-acc-count--danger {
   background: #fee4e2;
   color: #b42318;
+}
+
+.hlk-acc-count--warn {
+  background: #fef0c7;
+  color: #b54708;
 }
 
 .hlk-acc-body {

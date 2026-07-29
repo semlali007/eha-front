@@ -109,45 +109,62 @@
     </section>
   </div>
 
-  <!-- RÉSULTAT : SIMULATION -->
+  <!-- RÉSULTAT : SIMULATION (compteurs) -->
   <section *ngIf="simReport" class="hlk-card">
     <div class="hlk-result-head">
       <span class="hlk-mode-tag hlk-mode-tag--sim">Simulation — aucune écriture</span>
     </div>
-
     <ng-container *ngTemplateOutlet="countersTpl; context: { report: simReport, mode: 'sim' }"></ng-container>
+  </section>
+
+  <!-- RÉSULTAT : EXÉCUTION RÉELLE (compteurs) -->
+  <section *ngIf="realReport" class="hlk-card">
+    <div class="hlk-result-head">
+      <span class="hlk-mode-tag hlk-mode-tag--real">Exécution réelle</span>
+    </div>
+    <ng-container *ngTemplateOutlet="countersTpl; context: { report: realReport, mode: 'real' }"></ng-container>
+  </section>
+
+  <!-- APERÇU DÉTAILLÉ (simulation ou exécution réelle) -->
+  <section *ngIf="previewReport?.preview" class="hlk-card">
+    <div class="hlk-section-head">
+      <h2 class="hlk-section-title">Aperçu détaillé</h2>
+      <span class="hlk-mode-tag" [class.hlk-mode-tag--sim]="previewReport?.dry_run" [class.hlk-mode-tag--real]="!previewReport?.dry_run">
+        {{ previewReport?.dry_run ? 'Simulation' : 'Exécution réelle' }}
+      </span>
+    </div>
 
     <!-- Preview 1 : nouvelles filiales -->
-    <div class="hlk-acc" *ngIf="simReport.preview">
-      <button type="button" class="hlk-acc-head" (click)="toggle('sim-newben')">
-        <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen('sim-newben')"
+    <div class="hlk-acc">
+      <button type="button" class="hlk-acc-head" (click)="toggle('prev-newben')">
+        <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen('prev-newben')"
              xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
           <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
         </svg>
-        <span class="hlk-acc-title">Nouvelles filiales qui seront créées</span>
-        <span class="hlk-acc-count">{{ (simReport.preview.new_beneficiaries?.length || 0) | number:'':'fr' }}</span>
+        <span class="hlk-acc-title">{{ previewReport?.dry_run ? 'Nouvelles filiales qui seront créées' : 'Nouvelles filiales créées' }}</span>
+        <span class="hlk-acc-count">{{ (previewReport.preview.new_beneficiaries?.length || 0) | number:'':'fr' }}</span>
       </button>
-      <div *ngIf="isOpen('sim-newben')" class="hlk-acc-body">
-        <div *ngIf="simReport.preview.new_beneficiaries?.length" class="hlk-chip-wrap">
-          <span class="hlk-chip" *ngFor="let name of simReport.preview.new_beneficiaries">{{ name }}</span>
+      <div *ngIf="isOpen('prev-newben')" class="hlk-acc-body">
+        <div *ngIf="previewReport.preview.new_beneficiaries?.length" class="hlk-chip-wrap">
+          <span class="hlk-chip" *ngFor="let name of previewReport.preview.new_beneficiaries">{{ name }}</span>
         </div>
-        <p *ngIf="!simReport.preview.new_beneficiaries?.length" class="hlk-empty">
-          Aucune nouvelle filiale ne serait créée.
+        <p *ngIf="!previewReport.preview.new_beneficiaries?.length" class="hlk-empty">
+          Aucune nouvelle filiale.
         </p>
       </div>
     </div>
 
-    <!-- Preview 2 : aperçu des fiches enrichies -->
-    <div class="hlk-acc" *ngIf="simReport.preview">
-      <button type="button" class="hlk-acc-head" (click)="toggle('sim-fiches')">
-        <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen('sim-fiches')"
+    <!-- Preview 2 : fiches enrichies -->
+    <div class="hlk-acc">
+      <button type="button" class="hlk-acc-head" (click)="toggle('prev-fiches')">
+        <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen('prev-fiches')"
              xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
           <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
         </svg>
-        <span class="hlk-acc-title">Aperçu des fiches enrichies</span>
-        <span class="hlk-acc-count">{{ (simReport.preview.fiches_total || 0) | number:'':'fr' }}</span>
+        <span class="hlk-acc-title">Fiches enrichies</span>
+        <span class="hlk-acc-count">{{ (previewReport.preview.fiches_total || 0) | number:'':'fr' }}</span>
       </button>
-      <div *ngIf="isOpen('sim-fiches')" class="hlk-acc-body">
+      <div *ngIf="isOpen('prev-fiches')" class="hlk-acc-body">
 
         <div class="hlk-toolbar" *ngIf="sourceFiches.length">
           <div class="hlk-search">
@@ -228,44 +245,36 @@
           Aucune fiche ne correspond à la recherche.
         </p>
         <p *ngIf="!sourceFiches.length" class="hlk-empty">
-          Aucune fiche ne serait enrichie.
+          Aucune fiche enrichie.
         </p>
       </div>
     </div>
 
     <!-- Preview 3 : contrats HLK non reconnus -->
-    <div class="hlk-acc" *ngIf="simReport.preview">
-      <button type="button" class="hlk-acc-head" (click)="toggle('sim-unmatched')">
-        <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen('sim-unmatched')"
+    <div class="hlk-acc">
+      <button type="button" class="hlk-acc-head" (click)="toggle('prev-unmatched')">
+        <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen('prev-unmatched')"
              xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
           <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
         </svg>
         <span class="hlk-acc-title">Contrats HLK non reconnus</span>
-        <span class="hlk-acc-count">{{ (simReport.contracts_unmatched || 0) | number:'':'fr' }}</span>
+        <span class="hlk-acc-count">{{ (previewReport.contracts_unmatched || 0) | number:'':'fr' }}</span>
       </button>
-      <div *ngIf="isOpen('sim-unmatched')" class="hlk-acc-body">
+      <div *ngIf="isOpen('prev-unmatched')" class="hlk-acc-body">
         <p class="hlk-hint">
           Ces contrats n'existent dans aucune fiche EHA. Information métier, pas une erreur.
         </p>
-        <div *ngIf="simReport.preview.unmatched_samples?.length" class="hlk-chip-wrap">
-          <span class="hlk-chip hlk-chip--muted" *ngFor="let code of simReport.preview.unmatched_samples">{{ code }}</span>
+        <div *ngIf="previewReport.preview.unmatched_samples?.length" class="hlk-chip-wrap">
+          <span class="hlk-chip hlk-chip--muted" *ngFor="let code of previewReport.preview.unmatched_samples">{{ code }}</span>
         </div>
-        <p *ngIf="unmatchedRemaining(simReport) > 0" class="hlk-hint">
-          … et {{ unmatchedRemaining(simReport) | number:'':'fr' }} autres.
+        <p *ngIf="unmatchedRemaining(previewReport) > 0" class="hlk-hint">
+          … et {{ unmatchedRemaining(previewReport) | number:'':'fr' }} autres.
         </p>
-        <p *ngIf="!simReport.preview.unmatched_samples?.length" class="hlk-empty">
+        <p *ngIf="!previewReport.preview.unmatched_samples?.length" class="hlk-empty">
           Aucun contrat non reconnu dans l'échantillon.
         </p>
       </div>
     </div>
-  </section>
-
-  <!-- RÉSULTAT : EXÉCUTION RÉELLE -->
-  <section *ngIf="realReport" class="hlk-card">
-    <div class="hlk-result-head">
-      <span class="hlk-mode-tag hlk-mode-tag--real">Exécution réelle</span>
-    </div>
-    <ng-container *ngTemplateOutlet="countersTpl; context: { report: realReport, mode: 'real' }"></ng-container>
   </section>
 
   <!-- DÉTAIL PAR CONTRAT HLK -->
@@ -484,6 +493,10 @@
       <span class="hlk-stat-value">{{ errorCount(report) | number:'':'fr' }}</span>
       <span class="hlk-stat-label">Erreurs</span>
     </div>
+    <div *ngIf="warningCount(report) > 0" class="hlk-stat hlk-stat--warn">
+      <span class="hlk-stat-value">{{ warningCount(report) | number:'':'fr' }}</span>
+      <span class="hlk-stat-label">Cas à traiter</span>
+    </div>
   </div>
 
   <div *ngIf="errorCount(report) > 0" class="hlk-acc hlk-acc--danger">
@@ -518,6 +531,55 @@
       </div>
     </div>
   </div>
+
+  <!-- Cas à traiter manuellement (warnings) -->
+  <div *ngIf="warningCount(report) > 0" class="hlk-acc hlk-acc--warn">
+    <button type="button" class="hlk-acc-head" (click)="toggle(mode + '-warnings')">
+      <svg class="hlk-acc-chevron" [class.hlk-acc-chevron--open]="isOpen(mode + '-warnings')"
+           xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+      <span class="hlk-acc-title">Cas à traiter manuellement</span>
+      <span class="hlk-acc-count hlk-acc-count--warn">{{ warningCount(report) | number:'':'fr' }}</span>
+    </button>
+    <div *ngIf="isOpen(mode + '-warnings')" class="hlk-acc-body">
+      <p class="hlk-hint">
+        Ces bénéficiaires n'ont pas pu être ajoutés : ils sont déjà rattachés à la fiche
+        en tant que « stipulation pour autrui ». Ouvrez la fiche pour corriger si besoin.
+      </p>
+      <div class="hlk-table-wrap">
+        <table class="table table-sm hlk-data-table">
+          <thead>
+            <tr>
+              <th class="hlk-num">Fiche</th>
+              <th>Libellé fiche</th>
+              <th>Bénéficiaire</th>
+              <th class="hlk-col-action"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let warn of report.warnings">
+              <td class="hlk-num hlk-mono">{{ warn.sheet_id || '—' }}</td>
+              <td>{{ warn.sheet_label || '—' }}</td>
+              <td>{{ warn.beneficiary || '—' }}</td>
+              <td class="hlk-col-action">
+                <a *ngIf="warn.sheet_id"
+                   class="hlk-sheet-link"
+                   [routerLink]="['/app/fiches/details', warn.sheet_id]"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                  Ouvrir
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
 <!-- Modale de confirmation du run réel -->
@@ -544,7 +606,7 @@
   </div>
 </ng-template>
 
-<!-- Modale de détail d'une fiche (mode simulation) -->
+<!-- Modale de détail d'une fiche -->
 <ng-template #detailTpl>
   <div class="modal-header">
     <h4 class="modal-title">

@@ -50,6 +50,19 @@ export interface HlkSyncMatchedSheet {
 }
 
 /**
+ * Avertissement unitaire (cas à traiter manuellement), p. ex.
+ * `blocked_by_other_type` : bénéficiaire déjà rattaché à la fiche en tant que
+ * « stipulation pour autrui » (contrainte BDD sheet_filiales).
+ */
+export interface HlkSyncWarning {
+  code?: string;
+  sheet_id?: number;
+  sheet_label?: string;
+  beneficiary?: string;
+  message?: string;
+}
+
+/**
  * Détail d'un contrat HLK unique et de ses bénéficiaires.
  */
 export interface HlkSyncContractDetail {
@@ -85,6 +98,7 @@ export interface HlkSyncReport {
   links_created: number;
   beneficiaries_created: number;
   errors: HlkSyncError[];
+  warnings?: HlkSyncWarning[];
   duration_ms: number;
   started_at: string;
   finished_at: string;

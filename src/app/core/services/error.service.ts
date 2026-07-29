@@ -63,7 +63,7 @@ export class ErrorService {
       if (/Maximum execution time/i.test(rawBody)) {
         this.modalService.showErrorDetail({
           title: "L'opération a pris trop de temps",
-          message: "Le serveur a interrompu l'opération car elle dépassait le temps maximum autorisé. Ajoutez des filtres (période, statut, contrat groupe…) pour réduire le volume de données à traiter.",
+          message: "Le serveur a interrompu l'opération car elle dépassait le temps maximum autorisé. Ajoutez des filtres (période, statut, contrat ouvert aux filiales…) pour réduire le volume de données à traiter.",
           rawBody: this.cleanAndTruncate(rawBody, 2000),
           httpStatus: error.status,
         });

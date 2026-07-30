@@ -17,6 +17,14 @@ registerLocaleData(localeFr, 'fr');
 type SyncMode = 'sim' | 'real';
 type ContractStatusFilter = 'all' | 'matched' | 'unmatched';
 
+/** État recherche + pagination d'un aperçu des fiches (un par mode). */
+interface FichesPreviewState {
+  search: string;
+  filtered: HlkSyncFicheSample[];
+  itemsPerPage: number;
+  form: FormGroup;
+}
+
 @Component({
   selector: 'app-hlk-sync',
   templateUrl: './hlk-sync.component.html',
@@ -67,11 +75,8 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
   public filteredContracts: HlkSyncContractDetail[] = [];
   public expandedContracts = new Set<string>();
 
-  // --- Aperçu des fiches enrichies : recherche + pagination ---
-  public fichesItemsPerPage = 25;
-  public fichesPaginationForm!: FormGroup;
-  public fichesSearch = '';
-  public filteredFiches: HlkSyncFicheSample[] = [];
+  // --- Aperçu des fiches enrichies : état indépendant par mode (sim / réel) ---
+  public fichesState: { [mode: string]: FichesPreviewState } = {};
 
   // Au-delà de ce nombre, les bénéficiaires sont repliés en « +N autres ».
   public static readonly CHIP_LIMIT = 5;
@@ -86,9 +91,13 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
     this.simReport = this.restore(HlkSyncComponent.STORAGE_KEY_SIM);
     this.realReport = this.restore(HlkSyncComponent.STORAGE_KEY_REAL);
     this.paginationForm = this.fb.group({ currentPage: 1 });
-    this.fichesPaginationForm = this.fb.group({ currentPage: 1 });
+    this.fichesState = {
+      sim: { search: '', filtered: [], itemsPerPage: 25, form: this.fb.group({ currentPage: 1 }) },
+      real: { search: '', filtered: [], itemsPerPage: 25, form: this.fb.group({ currentPage: 1 }) },
+    };
     this.applyContractFilter();
-    this.applyFichesFilter();
+    this.applyFichesFilter('sim');
+    this.applyFichesFilter('real');
   }
 
   ngOnDestroy(): void {
@@ -142,7 +151,7 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
         this.simReport = report;
         this.persist(HlkSyncComponent.STORAGE_KEY_SIM, report);
         this.applyContractFilter();
-        this.applyFichesFilter();
+        this.applyFichesFilter('sim');
         this.simLoading = false;
       },
       (error: any) => {
@@ -188,7 +197,7 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
         this.realReport = report;
         this.persist(HlkSyncComponent.STORAGE_KEY_REAL, report);
         this.applyContractFilter();
-        this.applyFichesFilter();
+        this.applyFichesFilter('real');
         this.realLoading = false;
       },
       (error: any) => {
@@ -379,30 +388,25 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Recherche + pagination de l'aperçu des fiches enrichies
+  // ---------- Aperçu détaillé des fiches (un état par mode) ----------
 
-  /**
-   * Rapport dont on affiche l'aperçu détaillé (nouvelles filiales, fiches
-   * enrichies, contrats non reconnus) : on privilégie le run réel s'il porte
-   * un `preview`, sinon la simulation. Le back renvoie désormais `preview`
-   * dans les deux modes.
-   */
-  public get previewReport(): HlkSyncReport | null {
-    if (this.realReport && this.realReport.preview) {
-      return this.realReport;
-    }
-    if (this.simReport && this.simReport.preview) {
-      return this.simReport;
-    }
-    return null;
+  private reportForMode(mode: SyncMode): HlkSyncReport | null {
+    return mode === 'real' ? this.realReport : this.simReport;
+  }
+
+  /** Indique si un mode dispose d'un aperçu à afficher. */
+  public hasPreview(mode: SyncMode): boolean {
+    const r = this.reportForMode(mode);
+    return !!(r && r.preview);
   }
 
   /**
-   * Liste source des fiches à enrichir : on privilégie `preview.fiches`
-   * (complet) et on retombe sur `preview.fiches_sample` pour rétrocompat.
+   * Liste source des fiches à enrichir pour un mode : on privilégie
+   * `preview.fiches` (complet) et on retombe sur `preview.fiches_sample`.
    */
-  public get sourceFiches(): HlkSyncFicheSample[] {
-    const preview = this.previewReport ? this.previewReport.preview : null;
+  public sourceFiches(mode: SyncMode): HlkSyncFicheSample[] {
+    const r = this.reportForMode(mode);
+    const preview = r ? r.preview : null;
     if (!preview) {
       return [];
     }
@@ -410,13 +414,17 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Applique la recherche (id, libellé ou nom de bénéficiaire à ajouter) et
-   * remet la pagination en page 1.
+   * Applique la recherche (id, libellé ou nom de bénéficiaire à ajouter) pour
+   * un mode et remet sa pagination en page 1.
    */
-  public applyFichesFilter(): void {
-    const all = this.sourceFiches;
-    const q = (this.fichesSearch || '').trim().toLowerCase();
-    this.filteredFiches = !q
+  public applyFichesFilter(mode: SyncMode): void {
+    const st = this.fichesState[mode];
+    if (!st) {
+      return;
+    }
+    const all = this.sourceFiches(mode);
+    const q = (st.search || '').trim().toLowerCase();
+    st.filtered = !q
       ? [...all]
       : all.filter((f) => {
           const idMatch = String(f.id).includes(q);
@@ -424,34 +432,63 @@ export class HlkSyncComponent implements OnInit, OnDestroy {
           const benMatch = (f.beneficiaries_to_add || []).some((b) => (b || '').toLowerCase().includes(q));
           return idMatch || labelMatch || benMatch;
         });
-    if (this.fichesCurrentPage) {
-      this.fichesCurrentPage.setValue(1);
+    const ctrl = st.form.get('currentPage');
+    if (ctrl) {
+      ctrl.setValue(1);
     }
   }
 
-  public onFichesSearchChange(value: string): void {
-    this.fichesSearch = value;
-    this.applyFichesFilter();
-  }
-
-  public get fichesCurrentPage() { return this.fichesPaginationForm ? this.fichesPaginationForm.get('currentPage') : null; }
-  public get fichesCurrentPageValue(): number { return this.fichesCurrentPage ? (this.fichesCurrentPage.value ?? 1) : 1; }
-  public get pagedFiches(): HlkSyncFicheSample[] {
-    const start = (this.fichesCurrentPageValue - 1) * this.fichesItemsPerPage;
-    return this.filteredFiches.slice(start, start + this.fichesItemsPerPage);
-  }
-
-  public fichesPageChanged(event: any): void {
-    if (this.fichesCurrentPage) {
-      this.fichesCurrentPage.setValue(event.page);
+  public onFichesSearchChange(mode: SyncMode, value: string): void {
+    if (this.fichesState[mode]) {
+      this.fichesState[mode].search = value;
+      this.applyFichesFilter(mode);
     }
   }
 
-  public onFichesPageSizeChange(value: string): void {
+  public fichesSearchValue(mode: SyncMode): string {
+    return this.fichesState[mode] ? this.fichesState[mode].search : '';
+  }
+
+  public fichesItemsPerPage(mode: SyncMode): number {
+    return this.fichesState[mode] ? this.fichesState[mode].itemsPerPage : 25;
+  }
+
+  public filteredFiches(mode: SyncMode): HlkSyncFicheSample[] {
+    return this.fichesState[mode] ? this.fichesState[mode].filtered : [];
+  }
+
+  public fichesForm(mode: SyncMode) {
+    return this.fichesState[mode] ? this.fichesState[mode].form.get('currentPage') : null;
+  }
+
+  public pagedFiches(mode: SyncMode): HlkSyncFicheSample[] {
+    const st = this.fichesState[mode];
+    if (!st) {
+      return [];
+    }
+    const ctrl = st.form.get('currentPage');
+    const page = ctrl ? (ctrl.value ?? 1) : 1;
+    const start = (page - 1) * st.itemsPerPage;
+    return st.filtered.slice(start, start + st.itemsPerPage);
+  }
+
+  public fichesPageChanged(mode: SyncMode, event: any): void {
+    const ctrl = this.fichesForm(mode);
+    if (ctrl) {
+      ctrl.setValue(event.page);
+    }
+  }
+
+  public onFichesPageSizeChange(mode: SyncMode, value: string): void {
+    const st = this.fichesState[mode];
+    if (!st) {
+      return;
+    }
     const parsed = parseInt(value, 10);
-    this.fichesItemsPerPage = isNaN(parsed) ? 25 : parsed;
-    if (this.fichesCurrentPage) {
-      this.fichesCurrentPage.setValue(1);
+    st.itemsPerPage = isNaN(parsed) ? 25 : parsed;
+    const ctrl = st.form.get('currentPage');
+    if (ctrl) {
+      ctrl.setValue(1);
     }
   }
 

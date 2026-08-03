@@ -40,6 +40,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public contactPath = `${this.prefix}/page/contact`;
   public satisfactionPath = `${this.prefix}/satisfactions`;
   public hlkSyncPath = `${this.prefix}/hlk-sync`;
+  public hlkImportPath = `${this.prefix}/hlk-import`;
 
   public subscription!: Subscription;
   public user: User | null = null;

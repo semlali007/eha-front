@@ -73,6 +73,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public category: any = '';
   public contratGroupe: any = '';
   public miseAJourDonnee: any = '';
+  public autoCreated: boolean = false;
   public supplierSize: {id: number, name: string} | null = null;
   isCollapsed = true;
 
@@ -128,6 +129,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.showcase = sheet.showcase;
     this.contratGroupe = sheet.contratGroupe;
     this.miseAJourDonnee = sheet.miseAJourDonnee;
+    this.autoCreated = sheet.autoCreated;
     this.supplierSize = sheet.supplierSize;
     this.edf_open = sheet.edfOpen;
     this.stipulation_for_others = sheet.stipulationForOthers;

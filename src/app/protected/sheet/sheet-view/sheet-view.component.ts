@@ -189,23 +189,16 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       }
     }
 
-    sheet.beneficiaries.forEach(beneficiary => {
-      this.beneficiaries.push(
-        {
-          code: beneficiary.code,
-          label: beneficiary.label,
-        }
-      );
+    // Fusion "Bénéficiaire" = union dédupliquée (par code) des bénéficiaires
+    // directs et des stipulations pour autrui, triée par libellé.
+    const mergedBeneficiaries = new Map<any, { code: any, label: string }>();
+    [...(sheet.beneficiaries || []), ...(sheet.stipulationAutrui || [])].forEach((entity: any) => {
+      if (!mergedBeneficiaries.has(entity.code)) {
+        mergedBeneficiaries.set(entity.code, { code: entity.code, label: entity.label });
+      }
     });
-    // ***************
-    sheet.stipulationAutrui.forEach(stipulation => {
-      this.stipulationAutrui.push(
-        {
-          code: stipulation.code,
-          label: stipulation.label,
-        }
-      );
-    });
+    this.beneficiaries = Array.from(mergedBeneficiaries.values())
+      .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
 
     sheet.directions.forEach(direction => {
       this.directions.push(

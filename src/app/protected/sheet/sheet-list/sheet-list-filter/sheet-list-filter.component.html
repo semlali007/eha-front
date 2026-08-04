@@ -53,11 +53,6 @@
       (changedFilter)="onChangedFilterSheets($event)" [data]="data">
     </app-sheet-list-filter-beneficiary>
 
-    <app-sheet-list-filter-stipulation [stipulationAutrui]='stipulationAutrui' [list]="filter.stipulationAutrui"
-      (changedFilter)="onChangedFilterSheets($event)" [data]="data"
-      *ngIf="!shouldHideFilterInContratGroupeMode('stipulationAutrui')">
-    </app-sheet-list-filter-stipulation>
-
     <app-sheet-list-filter-area [areas]='areas' [list]="filter.areas"
       (changedFilter)="onChangedFilterSheets($event)">
     </app-sheet-list-filter-area>

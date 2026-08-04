@@ -133,7 +133,6 @@ export class SheetService {
     const contracts: Object = this.getContractListForApi(sheet.contracts);
     const providers: Object = this.getProviderListForApi(sheet.providers);
     const beneficiaries: Object = this.getBeneficiaryListForApi(sheet.beneficiaries);
-    const stipulationAutrui: Object = this.getStipulationListForApi(sheet.stipulationAutrui);//
     const areas: Object = this.getAreasListForApi(sheet.areas);
     const directions: Object = this.getDirectionsListForApi(sheet.directions);
     
@@ -156,8 +155,10 @@ export class SheetService {
       partnership: sheet.partnership,
       protected_sector: sheet.protectedSector,
       providers: providers || [],
+      // Champ unifié : toute la sélection "Bénéficiaire" part dans `filiales`,
+      // `filiales0` (stipulation pour autrui) est toujours vide (normalisé côté back).
       filiales: beneficiaries || [],
-      filiales0: stipulationAutrui || [],
+      filiales0: [],
       zones: areas || [],
       groups: directions || [],
       committee: sheet.committee.code,

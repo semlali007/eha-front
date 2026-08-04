@@ -134,21 +134,11 @@
 
       <div class="sv-field">
         <div class="sv-field-label">
-          <strong>Bénéficiaires</strong>
-          <span class="info-icon" tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc)" placement="top"></span>
+          <strong>Bénéficiaire</strong>
+          <span class="info-icon" tooltip="Entités du groupe EDF (y compris les filiales bénéficiaires directs ou en stipulation pour autrui)" placement="top"></span>
         </div>
         <div class="sv-field-value sv-tags">
           <span *ngFor="let beneficiary of beneficiaries" class="sv-tag">{{ beneficiary.label }}</span>
-        </div>
-      </div>
-
-      <div class="sv-field">
-        <div class="sv-field-label">
-          <strong>Stipulation pour autrui</strong>
-          <span class="info-icon" tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc)" placement="top"></span>
-        </div>
-        <div class="sv-field-value sv-tags">
-          <span *ngFor="let stipulation of stipulationAutrui" class="sv-tag">{{ stipulation.label }}</span>
         </div>
       </div>
 

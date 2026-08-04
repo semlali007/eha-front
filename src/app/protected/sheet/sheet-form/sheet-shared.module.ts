@@ -28,13 +28,10 @@ import { ProviderFormComponent } from './provider-form/provider-form.component';
 import { ProviderModalComponent } from './provider-modal/provider-modal.component';
 import { SheetFormDauphinComponent } from './sheet-form-dauphin/sheet-form-dauphin.component';
 import { SheetFormEdfOpenComponent } from './sheet-form-edf-open/sheet-form-edf-open.component';
-import { SheetFormStipulationComponent } from './sheet-form-stipulation/sheet-form-stipulation.component';
 import { SheetFormPartnershipComponent } from './sheet-form-partnership/sheet-form-partnership.component';
 import { SheetFormProtectedSectorComponent } from './sheet-form-protected-sector/sheet-form-protected-sector.component';
 import { SheetFormModalComponent } from './sheet-form-modal/sheet-form-modal.component';
 import { SheetFormBeneficiariesComponent } from './sheet-form-beneficiaries/sheet-form-beneficiaries.component';
-//
-import { SheetFormStipulationAutruiComponent } from './sheet-form-stipulationAutrui/sheet-form-stipulationAutrui.component';
 import { SheetFormAreasComponent } from './sheet-form-areas/sheet-form-areas.component';
 import { SheetFormGeographicDetailComponent } from './sheet-form-geographic-detail/sheet-form-geographic-detail.component';
 import { SheetFormAcheteurComponent } from './sheet-form-acheteur/sheet-form-acheteur.component';
@@ -78,12 +75,10 @@ defineLocale('fr', frLocale);
     ProviderModalComponent,
     SheetFormDauphinComponent,
     SheetFormEdfOpenComponent,
-    SheetFormStipulationComponent,
     SheetFormPartnershipComponent,
     SheetFormProtectedSectorComponent,
     SheetFormModalComponent,
     SheetFormBeneficiariesComponent,
-    SheetFormStipulationAutruiComponent,//
     SheetFormAreasComponent,
     SheetFormGeographicDetailComponent,
     SheetFormAcheteurComponent,

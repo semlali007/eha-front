@@ -464,33 +464,26 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       }
     }
 
-    let beneficiariesList = [];
-    sheet.beneficiaries.forEach(beneficiary => {
-      beneficiariesList.push(
-        {
-          code: beneficiary.code,
-          label: beneficiary.label,
-          display: beneficiary.label,
-          value: beneficiary.label,
-        }
-      );
+    // Champ unique "Bénéficiaire" = union dédupliquée (par code) des
+    // bénéficiaires directs et des stipulations pour autrui historiques.
+    const mergedBeneficiaries = new Map<any, any>();
+    [...(sheet.beneficiaries || []), ...(sheet.stipulationAutrui || [])].forEach((entity: any) => {
+      if (!mergedBeneficiaries.has(entity.code)) {
+        mergedBeneficiaries.set(entity.code, {
+          code: entity.code,
+          label: entity.label,
+          display: entity.label,
+          value: entity.label,
+        });
+      }
     });
+    const beneficiariesList = Array.from(mergedBeneficiaries.values())
+      .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
 
     this.beneficiaries.setValue(beneficiariesList);
-    //
-    let stipulationAutruiList = [];
-    sheet.stipulationAutrui.forEach(stipulation => {
-      stipulationAutruiList.push(
-        {
-          code: stipulation.code,
-          label: stipulation.label,
-          display: stipulation.label,
-          value: stipulation.label,
-        }
-      );
-    });
-
-    this.stipulationAutrui.setValue(stipulationAutruiList);
+    // La stipulation pour autrui est fusionnée dans "Bénéficiaire" : on
+    // n'alimente plus ce champ (envoyé vide à la sauvegarde).
+    this.stipulationAutrui.setValue([]);
     
     //
     let directionsList = [];

@@ -13,7 +13,6 @@ import { SheetListFilterPartnershipComponent } from './sheet-list-filter-partner
 import { SheetListFilterSectorComponent } from './sheet-list-filter-sector/sheet-list-filter-sector.component';
 import { SheetListFilterDauphinComponent } from './sheet-list-filter-dauphin/sheet-list-filter-dauphin.component';
 import { SheetListFilterBeneficiaryComponent } from './sheet-list-filter-beneficiary/sheet-list-filter-beneficiary.component';
-import { SheetListFilterStipulationComponent } from './sheet-list-filter-stipulation/sheet-list-filter-stipulation.component';//
 import { SheetListFilterAreaComponent } from './sheet-list-filter-area/sheet-list-filter-area.component';
 import { SheetListFilterProviderComponent } from './sheet-list-filter-provider/sheet-list-filter-provider.component';
 import { SheetListFilterDirectionComponent } from './sheet-list-filter-direction/sheet-list-filter-direction.component';
@@ -44,7 +43,6 @@ defineLocale('fr', frLocale);
     SheetListFilterSectorComponent,
     SheetListFilterDauphinComponent,
     SheetListFilterBeneficiaryComponent,
-    SheetListFilterStipulationComponent,//
     SheetListFilterAreaComponent,
     SheetListFilterProviderComponent,
     SheetListFilterDirectionComponent,

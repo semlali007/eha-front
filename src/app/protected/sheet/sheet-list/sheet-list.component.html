@@ -23,7 +23,7 @@
         <div class="content-header-text" *ngIf="activeText">
           <span [innerHtml]="welcomeText"></span>
         </div>
-        <a *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))"
+        <a *ngIf="!!user && user.hasRole('EHA_ADMIN')"
           (click)="navigate('fiche_marchee')" class="content-btn content-btn-primary">
           <i class="fas fa-plus"></i> Ajouter une fiche
         </a>

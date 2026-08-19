@@ -582,6 +582,7 @@ export class SheetService {
       entitesBeneficiairesEdfEnedis: fields.entites_beneficiaires_edf_enedis,
       geographicDetail: fields.geographic_detail,
       acheteur: fields.acheteur,
+      auto_created: fields.auto_created,
       supplierSize: fields.supplier_size ? {
         id: fields.supplier_size.id,
         name: fields.supplier_size.name

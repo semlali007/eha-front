@@ -9,6 +9,10 @@ export class Provider {
     nace: string;
     distance: number;
     activities: Activity[];
+    // Identifiants entreprise (INSEE) — nullable : null tant que le fournisseur n'a pas été matché.
+    siren: string | null;
+    numeroTva: string | null;
+    codeNaf: string | null;
     constructor(options: {
         code?: string,
         label?: string,
@@ -18,6 +22,9 @@ export class Provider {
         nace?: string,
         distance?: number,
         activities?: Activity[],
+        siren?: string | null,
+        numeroTva?: string | null,
+        codeNaf?: string | null,
     } = {}) {
         this.code = options.code || '';
         this.label = options.label || '';
@@ -27,5 +34,8 @@ export class Provider {
         this.nace = options.nace || '';
         this.distance = options.distance || 0;
         this.activities = options.activities || [];
+        this.siren = options.siren ?? null;
+        this.numeroTva = options.numeroTva ?? null;
+        this.codeNaf = options.codeNaf ?? null;
     }
 }

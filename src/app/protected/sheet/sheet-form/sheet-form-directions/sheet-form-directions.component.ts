@@ -102,7 +102,8 @@ export class SheetFormDirectionsComponent implements OnInit {
       this.bsModalRef.content.eventPaginate.subscribe(res => {
         this.directionService.getList({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.directions;
           this.bsModalRef.content.total = data.total;

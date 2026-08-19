@@ -1,0 +1,5 @@
+/* Styles spécifiques au formulaire fournisseur. La majorité de l'apparence
+   provient des classes globales adm-* (champs, boutons, modale). */
+.adm-modal-footer {
+  margin-top: 8px;
+}

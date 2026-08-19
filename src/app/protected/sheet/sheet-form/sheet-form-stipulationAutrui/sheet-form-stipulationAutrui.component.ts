@@ -110,7 +110,8 @@ export class SheetFormStipulationAutruiComponent implements OnInit {
         this.page = res.data.page;
         this.stipulationService.getList({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.stipulationAutrui;
           this.bsModalRef.content.total = data.total;

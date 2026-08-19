@@ -49,11 +49,23 @@
     </svg>
     <span>Une réponse a déjà été validée pour cette enquête.</span>
   </div>
-  <div class="sat-alert sat-alert-success" *ngIf="success">
+  <!-- Confirmation de succès (bien visible) -->
+  <div class="sat-success" *ngIf="success" role="status">
+    <div class="sat-success-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <h2 class="sat-success-title">Merci pour votre participation !</h2>
+    <p class="sat-success-text">Vos réponses ont bien été enregistrées. Elles ne pourront plus être modifiées.</p>
+  </div>
+
+  <!-- Alerte d'erreur (échec d'enregistrement) -->
+  <div class="sat-alert sat-alert-error" *ngIf="error">
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
     </svg>
-    <span>Merci pour votre participation.</span>
+    <span>Une erreur est survenue lors de l'enregistrement. Veuillez réessayer.</span>
   </div>
 
   <!-- Note champs obligatoires -->
@@ -160,7 +172,7 @@
     </section>
 
     <!-- Submit -->
-    <div class="sat-submit">
+    <div class="sat-submit" *ngIf="!success && !warning">
       <p class="sat-submit-warn">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="flex-shrink: 0">
           <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
@@ -169,11 +181,12 @@
       </p>
       <button type="submit"
               class="adm-btn adm-btn-edf"
-              [disabled]="!loginForm.valid || disabled">
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              [disabled]="!loginForm.valid || disabled || submitting">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <svg *ngIf="!submitting" xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
         </svg>
-        Valider mes réponses
+        {{ submitting ? 'Validation…' : 'Valider mes réponses' }}
       </button>
     </div>
   </form>

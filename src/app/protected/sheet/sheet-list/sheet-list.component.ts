@@ -370,7 +370,7 @@ export class SheetListComponent implements OnInit, OnDestroy {
           this.sanitizer.sanitize(
             SecurityContext.HTML,
             this.isContratGroupeMode()
-              ? originalText.replace(/Vitrine de l[''']Offre/gi, "Vitrine de l'Offre (Contrat Groupe)")
+              ? originalText.replace(/Vitrine de l[''']Offre/gi, "Vitrine de l'Offre (Contrat ouvert aux filiales)")
               : originalText,
           ) || '';
         this.activeText = response.active || false;

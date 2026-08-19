@@ -22,11 +22,24 @@
 
     <div class="adm-form-group">
       <label class="adm-label">Fournisseur</label>
-      <textarea [readonly]="!isActive"
-                formControlName="provider"
-                class="adm-textarea"
-                rows="2"
-                placeholder="Nom du fournisseur"></textarea>
+      <select formControlName="provider"
+              class="adm-select"
+              [style.pointer-events]="isActive ? 'auto' : 'none'"
+              [style.opacity]="isActive ? '1' : '0.6'">
+        <option value="" *ngIf="!hasNoProviders">{{ isActive ? 'Sélectionner un fournisseur' : 'Mode lecture' }}</option>
+        <option value="" *ngIf="hasNoProviders" disabled>Sélectionnez d'abord des fournisseurs en partie 3</option>
+        <option *ngFor="let provider of providersForContract" [value]="provider">{{ provider }}</option>
+        <!-- Valeur courante hors sélection (fournisseur retiré / import Excel / fiche existante) -->
+        <option *ngIf="currentProviderIfMissing" [value]="currentProviderIfMissing">
+          ⚠ {{ currentProviderIfMissing }} (hors sélection)
+        </option>
+      </select>
+      <span class="adm-field-hint" *ngIf="hasNoProviders && isActive">
+        Pour renseigner le fournisseur, sélectionnez-le d'abord dans la partie « Fournisseurs & bénéficiaires ».
+      </span>
+      <span class="adm-field-hint" style="color:#dc2626" *ngIf="currentProviderIfMissing && isActive">
+        Le fournisseur « {{ currentProviderIfMissing }} » n'est plus dans la sélection. Choisissez-en un disponible ou laissez vide.
+      </span>
     </div>
 
     <div class="adm-form-group">

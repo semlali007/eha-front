@@ -23,7 +23,7 @@
         <div class="content-header-text" *ngIf="activeText">
           <span [innerHtml]="welcomeText"></span>
         </div>
-        <a *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))"
+        <a *ngIf="!!user && user.hasRole('EHA_ADMIN')"
           (click)="navigate('fiche_marchee')" class="content-btn content-btn-primary">
           <i class="fas fa-plus"></i> Ajouter une fiche
         </a>
@@ -55,8 +55,8 @@
             <path d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
           </svg>
           <div>
-            <strong>Mode Contrat Groupe</strong>
-            <span>Affichage filtré sur les fiches avec contrat groupe uniquement</span>
+            <strong>Mode Contrat ouvert aux filiales</strong>
+            <span>Affichage filtré sur les fiches avec contrat ouvert aux filiales uniquement</span>
           </div>
         </div>
         <button type="button" class="contrat-groupe-banner-close" (click)="accederVitrineOffre()">

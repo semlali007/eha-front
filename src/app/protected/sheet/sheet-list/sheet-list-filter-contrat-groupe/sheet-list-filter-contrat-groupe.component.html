@@ -3,7 +3,7 @@
     (click)="isTotalCollapsed = !isTotalCollapsed"
     [attr.aria-expanded]="!isTotalCollapsed"
     aria-controls="contratGroupeList">
-    <span class="filter-header-label">Contrat groupe <span class="filter-active-badge" *ngIf="contratGroupe && contratGroupe.value !== 'all'">1</span></span>
+    <span class="filter-header-label">Contrat ouvert aux filiales <span class="filter-active-badge" *ngIf="contratGroupe && contratGroupe.value !== 'all'">1</span></span>
     <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
   </button>
   <div id="contratGroupeList" [collapse]="isTotalCollapsed" [isAnimated]="true">

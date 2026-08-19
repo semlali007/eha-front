@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ProviderService } from 'src/app/core/services/provider.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { SheetFormModalComponent } from '../sheet-form-modal/sheet-form-modal.component';
+import { ProviderModalComponent } from '../provider-modal/provider-modal.component';
 import { Provider } from 'src/app/shared/models/provider';
 @Component({
   selector: 'app-sheet-form-providers',
@@ -68,25 +68,28 @@ export class SheetFormProvidersComponent implements OnInit {
       }
 
       const initialState = {
-        type:'provider',
         items: this.items,
         total: this.total,
         title: 'Fournisseurs',
         selectedValues: selected,
         itemsPerPage: this.itemsPerPage,
-        placeholder: 'Entrer un fournisseur',
         maxSize: 6,
-        allitems: this.allproviders,
         requestAutocompleteItems: this.requestAutocompleteItems
       };
 
-      this.bsModalRef = this.modalService.show(SheetFormModalComponent, { initialState });
+      this.bsModalRef = this.modalService.show(ProviderModalComponent, { initialState });
       this.bsModalRef.content.event.subscribe(res => {
         this.providers.setValue(res.data.value);
       });
 
       this.bsModalRef.content.addElementEvent.subscribe(res => {
-        this.providerService.add(new Provider({ label: res.data.value })).subscribe(t =>
+        const payload = res.data;
+        this.providerService.add(new Provider({
+          label: payload.label,
+          siren: payload.siren,
+          numeroTva: payload.numeroTva,
+          codeNaf: payload.codeNaf,
+        })).subscribe(t =>
           this.providerService.getProviders({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
             this.bsModalRef.content.items = data.providers;
             this.bsModalRef.content.total = data.total;
@@ -95,17 +98,39 @@ export class SheetFormProvidersComponent implements OnInit {
               label:  t.element.provider_label,
               display:t.element.provider_label,
               value: t.element.provider_label,
+              numeroTva: payload.numeroTva ?? null,
+              siren: payload.siren ?? null,
+              codeNaf: payload.codeNaf ?? null,
             })
           })
         );
       });
 
+      this.bsModalRef.content.editElementEvent.subscribe((res: any) => {
+        const payload = res.data;
+        this.providerService.update(new Provider({
+          code: payload.code,
+          label: payload.label,
+          siren: payload.siren,
+          numeroTva: payload.numeroTva,
+          codeNaf: payload.codeNaf,
+        })).subscribe(_ => {
+          this.providerService.getProviders({ page: this.page, perPage: this.itemsPerPage }).subscribe((data: any) => {
+            this.bsModalRef.content.items = data.providers;
+            this.bsModalRef.content.total = data.total;
+          });
+          // Reflète le nouveau libellé sur le fournisseur s'il est déjà sélectionné dans la fiche.
+          this.bsModalRef.content.updateItemInList(payload.code, payload.label);
+        });
+      });
+
 
       this.bsModalRef.content.eventPaginate.subscribe(res => {
-        this.page = res.data.pag;
+        this.page = res.data.page;
         this.providerService.getProviders({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.providers;
           this.bsModalRef.content.total = data.total;

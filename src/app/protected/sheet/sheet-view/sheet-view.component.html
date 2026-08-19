@@ -48,15 +48,24 @@
     <!-- Titre -->
     <div class="sv-card-header">
       <h1 class="sv-sheet-title">{{ title || 'Brouillon' }}</h1>
-      <span *ngIf="status" class="sv-status-badge">{{ status }}</span>
+      <div class="sv-header-badges">
+        <span *ngIf="autoCreated" class="sv-auto-badge"
+              tooltip="Fiche générée automatiquement par le batch d'import HLK" placement="top">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/>
+          </svg>
+          Créée automatiquement (HLK)
+        </span>
+        <span *ngIf="status" class="sv-status-badge">{{ status }}</span>
+      </div>
     </div>
 
     <!-- Champs -->
     <div class="sv-fields">
       <div class="sv-field">
         <div class="sv-field-label">
-          <strong>Contrat groupe</strong>
-          <span class="info-icon" tooltip="Un contrat Groupe est un contrat EDF ou ENEDIS qui est ouvert à au moins une autre entité du Groupe (hors PEI)" placement="top"></span>
+          <strong>Contrat ouvert aux filiales</strong>
+          <span class="info-icon" tooltip="Un contrat ouvert aux filiales est un contrat EDF ou ENEDIS qui est ouvert à au moins une autre entité du Groupe (hors PEI)" placement="top"></span>
         </div>
         <div class="sv-field-value">
           <span class="sv-badge" [ngClass]="{'sv-badge-green': contratGroupe === 'true', 'sv-badge-red': contratGroupe === 'false'}">
@@ -283,8 +292,8 @@
 
       <div class="sv-field">
         <div class="sv-field-label">
-          <strong>Commentaires</strong>
-          <span class="info-icon" tooltip="Zone libre pour communiquer toute information nécessaire" placement="top"></span>
+          <strong>Informations et performance de l'achat</strong>
+          <span class="info-icon" tooltip="Info clés à destination des métiers et des filiales et performance RSE, financière, contractuelle…" placement="top"></span>
         </div>
         <div class="sv-field-value" [innerHTML]="comments"></div>
       </div>
@@ -314,7 +323,7 @@
   </div>
 
   <!-- Historique -->
-  <div class="sv-history" *ngIf="statusCode === 1 && !!history && history?.length > 0" id="history">
+  <div class="sv-history" *ngIf="!!history && history?.length > 0" id="history">
     <button class="sv-history-toggle" (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed">
       <strong>Historique des modifications</strong>

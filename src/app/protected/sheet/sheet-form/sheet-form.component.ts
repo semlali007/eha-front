@@ -131,8 +131,41 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     
     // Charger les données de filtres
     this.loadFilterData();
-    
+
+    // Synchroniser le champ TVA/DUNS avec les fournisseurs sélectionnés
+    this.setupVatSync();
+
     this.cdr.detectChanges();
+  }
+
+  /**
+   * Synchronise le champ "Numéro TVA intracommunautaire ou DUNS" avec les TVA
+   * des fournisseurs sélectionnés (séparées par des virgules) : mis à jour à
+   * chaque ajout/retrait. Les fournisseurs sans TVA (non identifiés INSEE) sont ignorés.
+   */
+  private setupVatSync(): void {
+    const providersCtrl = this.providers;
+    if (!providersCtrl) { return; }
+    const sub = providersCtrl.valueChanges.subscribe(() => this.syncVatFromProviders());
+    this.subscriptions.push(sub);
+  }
+
+  private syncVatFromProviders(): void {
+    const providers = (this.providers?.value as any[]) || [];
+
+    // Garde-fou : à l'ouverture d'une fiche existante, les fournisseurs chargés
+    // depuis le back ne portent pas la clé `numeroTva`. On ne touche alors PAS au
+    // champ pour ne pas écraser la TVA déjà enregistrée.
+    const carriesTvaInfo = providers.some(p => p && Object.prototype.hasOwnProperty.call(p, 'numeroTva'));
+    if (!carriesTvaInfo && providers.length > 0) { return; }
+
+    const tvas = providers
+      .map(p => p?.numeroTva)
+      .filter((tva): tva is string => typeof tva === 'string' && tva.trim().length > 0)
+      // dédoublonne les TVA identiques
+      .filter((tva, idx, arr) => arr.indexOf(tva) === idx);
+
+    this.supplierVatNumber?.setValue(tvas.join(', '));
   }
 
   get title() { return this.sheetForm.get('title') }

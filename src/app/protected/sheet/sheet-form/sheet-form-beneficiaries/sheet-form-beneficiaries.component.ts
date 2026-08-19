@@ -110,7 +110,8 @@ export class SheetFormBeneficiariesComponent implements OnInit {
         this.page = res.data.page;
         this.beneficiaryService.getList({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.beneficiaries;
           this.bsModalRef.content.total = data.total;

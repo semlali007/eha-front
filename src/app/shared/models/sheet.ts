@@ -53,6 +53,7 @@ export class Sheet {
     entitesBeneficiairesEdfEnedis: string;
     geographicDetail: string;
     acheteur: string;
+    autoCreated: boolean;
 
     constructor(options: {
         id?: string,
@@ -97,6 +98,7 @@ export class Sheet {
         contratGroupe?: string;
         miseAJourDonnee?: string;
         supplierSize?: {id: number, name: string};
+        auto_created?: boolean;
 
     } = {}) {
         this.id = options.id || null;
@@ -141,6 +143,7 @@ export class Sheet {
         this.entitesBeneficiairesEdfEnedis = options.entitesBeneficiairesEdfEnedis || '';
         this.geographicDetail = options.geographicDetail || '';
         this.acheteur = options.acheteur || '';
+        this.autoCreated = options.auto_created || false;
     }
 
 }

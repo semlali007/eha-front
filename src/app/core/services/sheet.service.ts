@@ -62,12 +62,14 @@ export class SheetService {
         return of(data);
       }),
 
-      tap(_ => 
+      tap(_ =>
         this.toastrService.showToastr({
         category: 'success',
         message: message
       })),
-      catchError(error => this.errorService.handleError(error)),
+      // Sauvegarde de fiche : erreur serveur affichée en modale détaillée
+      // (message complet, centré) plutôt qu'un toast en haut de page.
+      catchError(error => this.errorService.handleError(error, true)),
       finalize(() => this.loaderService.setLoading(false))
     );
   }
@@ -124,7 +126,9 @@ export class SheetService {
           category: 'success',
           message: message
         })),
-      catchError(error => this.errorService.handleError(error)),
+      // Sauvegarde de fiche : erreur serveur affichée en modale détaillée
+      // (message complet, centré) plutôt qu'un toast en haut de page.
+      catchError(error => this.errorService.handleError(error, true)),
       finalize(() => this.loaderService.setLoading(false))
     );
   }

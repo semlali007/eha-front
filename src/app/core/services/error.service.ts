@@ -87,17 +87,25 @@ export class ErrorService {
       return;
     }
 
-    if (error.error && typeof error.error === 'object' && typeof error.error.message === 'string') {
+    // Format d'erreur habituel du back EHA : { status, error: "<message>" }
+    // (certaines réponses utilisent `message` à la place) → on affiche le
+    // message serveur tel quel, bien plus parlant que "HTTP 500".
+    const serverMessage: string | null =
+      (error.error && typeof error.error === 'object' && typeof error.error.error === 'string' && error.error.error)
+      || (error.error && typeof error.error === 'object' && typeof error.error.message === 'string' && error.error.message)
+      || null;
+
+    if (serverMessage) {
       if (forceDetail) {
         this.modalService.showErrorDetail({
           title: 'Erreur',
-          message: error.error.message,
+          message: serverMessage,
           httpStatus: error.status,
         });
       } else {
         this.toastrService.showToastr({
           category: 'danger',
-          message: error.error.message
+          message: serverMessage
         });
       }
       return;

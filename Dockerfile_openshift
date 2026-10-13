@@ -1,0 +1,60 @@
+# Multi-stage Dockerfile for Achatpedia Frontend (Angular 13)
+#
+# Stage 1 compiles the Angular application; stage 2 serves the compiled bundles
+# with nginx. The previous docker/Dockerfile copied src/ straight into the nginx
+# image without ever running `ng build`, which left the web root empty and made
+# nginx answer 403 on every request.
+#
+# The final FROM must stay in sync with `build_source_image` in .gitlab-ci.yml:
+# the DVS build component runs `oc new-build <build_source_image>~<repo>`, which
+# overrides the image of the last build stage.
+
+# -----------------------------------------------------------------------------
+# Stage 1 - build
+# -----------------------------------------------------------------------------
+# Angular 13 / @angular/cli 13.1 support Node 14 and 16 only.
+FROM image-registry.openshift-image-registry.svc:5000/openshift/dck_nodejs-ubi8:16.20.1 as builder
+
+USER root
+WORKDIR /opt/app-root/src
+
+ENV NPM_MIRROR="https://si-devops-mirror.edf.fr/repository/registry.npmjs.org/"
+
+# Dependencies first so the layer is reused when only application code changes.
+COPY package.json package-lock.json ./
+
+# package-lock.json pins registry.npmjs.org URLs; rewrite them to the EDF mirror,
+# which is the only registry reachable from the build pods.
+RUN npm config set registry "${NPM_MIRROR}" && \
+    sed -i 's|https://registry.npmjs.org|https://si-devops-mirror.edf.fr/repository/registry.npmjs.org|g' package-lock.json && \
+    npm ci --no-audit --no-fund
+
+COPY . .
+
+# defaultConfiguration in angular.json is already "production"; passing it
+# explicitly keeps the intent visible in the build log.
+RUN npx ng build --configuration production
+
+# -----------------------------------------------------------------------------
+# Stage 2 - runtime
+# -----------------------------------------------------------------------------
+FROM image-registry.openshift-image-registry.svc:5000/openshift/dck_nginx-ubi8:1.26
+
+USER root
+
+RUN cp ${NGINX_BIN_DIR}/nginx /usr/local/sbin/
+
+# outputPath from angular.json. Must match the `root` directive of the nginx
+# ConfigMap shipped in deploy/openshift/deploy-frontend.yml.
+COPY --from=builder /opt/app-root/src/dist/achatpedia /appli/projects/instance/nginx/html/
+
+# OpenShift runs containers with an arbitrary UID in the root group.
+RUN chgrp -R 0 /appli/projects/instance/nginx/html && \
+    chmod -R g+rwX /appli/projects/instance/nginx/html
+
+USER default
+WORKDIR /appli/projects/instance/nginx/html
+
+EXPOSE 8080
+
+CMD ["nginx", "-c", "/appli/projects/instance/nginx/conf/nginx.conf", "-g", "daemon off;"]

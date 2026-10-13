@@ -1,0 +1,329 @@
+spec:
+  inputs:
+    enable_sonar:
+      type: boolean
+      default: false
+      description: "Enable SonarQube code quality scan"
+    enable_sca:
+      type: boolean
+      default: false
+      description: "Enable Checkmarx SCA (dependency) scan"
+    enable_sast:
+      type: boolean
+      default: false
+      description: "Enable Checkmarx SAST (source code) scan"
+    enable_build:
+      type: boolean
+      default: true
+      description: "Enable the build stage (OpenShift image build)"
+    enable_copy:
+      type: boolean
+      default: true
+      description: "Enable the copy-image stage (promote to the target registry)"
+    enable_deploy:
+      type: boolean
+      default: true
+      description: "Enable deployment to the target OpenShift namespace"
+---
+# =============================================================================
+# Achatpedia frontend (Angular 13 + nginx) - build, promote and deploy on CaaS.
+#
+# Replaces the Jenkinsfile. The frontend and the backend live in separate
+# repositories, so this pipeline deploys exactly one application; that avoids
+# the documented deploy-kubernetes limitation around reusing the component
+# twice in a single pipeline.
+#
+# Credentials are NOT loaded explicitly: the build, copy-image and deploy
+# components each resolve their own CaaS credentials from the namespace name.
+# =============================================================================
+
+default:
+  tags:
+    - gitlab-runner-dvs-srv-int-p
+
+stages:
+  - prepare
+  - scan-code
+  - build
+  - copy-image
+  - deploy
+  - clean
+
+variables:
+  APPLICATION_NAME: "achatpedia"
+  IMAGE_NAME: "dck_achatpedia-front"
+
+  # Namespaces: the build runs on caas-int-hp, the runtime lives on caas-ext-p.
+  BUILD_NAMESPACE: "eha-achatpedia-grp-hp"
+  NAMESPACE_DEPLOY_FRONTEND: "eha-achatpedia-ext-ns-fe-p"
+
+  # Registries
+  SOURCE_REGISTRY: "registry.apps.caas-int-hp.automation.edf.fr"
+  TARGET_REGISTRY: "registry.apps.caas-ext-p.automation.edf.fr"
+  NAMESPACE_REGISTRY: "image-registry.openshift-image-registry.svc:5000"
+
+  MAINTAINER_EMAIL: "luca-externe.dall-olio@edf.fr"
+
+  # The image tag is the branch slug, so branch `poc-caas` produces tag
+  # `poc-caas`. Kept explicit rather than relying on the component default.
+  IMAGE_TAG: "${CI_COMMIT_REF_SLUG}"
+
+  # ---------------------------------------------------------------------------
+  # OpenShift template parameters.
+  # deploy-kubernetes resolves template parameters from the environment, so
+  # every parameter declared in deploy/openshift/deploy-frontend.yml must appear
+  # here - except TLS_CERTIFICATE_B64 and TLS_KEY_B64, which the get-secret job
+  # supplies at run time from OpenBao.
+  # ---------------------------------------------------------------------------
+  ENV: "recette"
+  SERVICE_ACCOUNT_NAME: "achatpedia-caas-eha"
+  SERVER_NAME: "eha-v2-preprod-caas.edf.fr"
+  BACKEND_URL: "https://eha-v3-preprod-api.edf.fr"
+  BACKEND_HOST: "eha-v3-preprod-api.edf.fr"
+  ELASTICSEARCH_HOST: "padaone-preprod.edf.fr:29443"
+  ROUTE_TIMEOUT: "10m"
+  CPU_REQUEST: "100m"
+  CPU_LIMIT: "500m"
+  MEMORY_REQUEST: "256Mi"
+  MEMORY_LIMIT: "512Mi"
+
+  # --- OpenBao (secret manager) -----------------------------------------------
+  # Namespace == the DevSecOps subscription name, which is the top-level GitLab
+  # group. Authentication is by GitLab JWT, so there is no token to configure.
+  VAULT_SERVER_URL: "https://si-devops-secrets.edf.fr"
+  VAULT_NAMESPACE: "eha-web-achat"
+  VAULT_KV2: "dvs-project"
+  # Use "jwt-ee" instead when the project is hosted on si-devops-gitlab-ee.edf.fr
+  VAULT_JWT_NAME: "jwt"
+  # The secret holds two keys: "certificate" and "key" (PEM).
+  # Path = <GitLab branch>/<Secret Path as entered in MyDevOps>. MyDevOps
+  # prepends the branch, so the value below is branch-scoped: a pipeline on a
+  # branch other than poc-caas cannot read it.
+  VAULT_TLS_SECRET_PATH: "poc-caas/eha-web-achat/eha-front/preprod/tls"
+
+include:
+  # ---------------------------------------------------------------------------
+  # 0. CaaS credentials, as hpd/redis does it
+  #
+  # Exports DVS_CAAS_API_URL / DVS_CAAS_TOKEN under the given prefix, as a
+  # dotenv artifact. The deploy job override at the bottom of this file turns
+  # the destination pair into KUBE_URL / KUBE_TOKEN.
+  # ---------------------------------------------------------------------------
+  - component: $CI_SERVER_FQDN/dvs-components/load-caas-credentials/creds@main
+    inputs:
+      stage: prepare
+      namespace: $BUILD_NAMESPACE
+      job: "load-caas-credentials-source"
+      env_secret_prefix: "SRC_CAAS_"
+
+  - component: $CI_SERVER_FQDN/dvs-components/load-caas-credentials/creds@main
+    inputs:
+      stage: prepare
+      namespace: $NAMESPACE_DEPLOY_FRONTEND
+      job: "load-caas-credentials-dest"
+      env_secret_prefix: "DEST_CAAS_"
+
+  # ---------------------------------------------------------------------------
+  # 1. Code quality and security
+  # ---------------------------------------------------------------------------
+  - component: $CI_SERVER_FQDN/dvs-components/sonarqube/scan@0.2.0
+    inputs:
+      stage: scan-code
+      sonar_quality_gate: true
+      enable_sonar_scan: $[[ inputs.enable_sonar ]]
+
+  - component: $CI_SERVER_FQDN/DVS/ci-template/components/security/scan-checkmarx@0.0.5
+    inputs:
+      stage_scan: scan-code
+      enable_sca_scan: $[[ inputs.enable_sca ]]
+      enable_sast_scan: $[[ inputs.enable_sast ]]
+      # Both team names are required even when the matching scan is disabled.
+      cx_sca_team_name: "/CxServer/SCA/EDF-SA/DAG/mtb-mtb"
+      cx_flow_team_name: "/CxServer/SP/EDF-SA/DAG/mtb-mtb"
+      base_project_name: "EHA_DAG_ACHATPEDIA_FRONT"
+
+  # ---------------------------------------------------------------------------
+  # 2. Build the image
+  #
+  # build_auto_generate: true makes the component generate the BuildConfig with
+  # `oc new-build`, so no build-template.yml is maintained in this repository.
+  # build_source_image replaces the final FROM of Dockerfile_openshift and must
+  # stay in sync with it.
+  # ---------------------------------------------------------------------------
+  - component: $CI_SERVER_FQDN/dvs-components/openshift-build-image/build@0.3.1
+    rules:
+      - if: '"$[[ inputs.enable_build ]]" == "true"'
+    inputs:
+      stage_build: build
+      stage_clean: clean
+      job: "build-image-frontend"
+      env_project: $BUILD_NAMESPACE
+      application_name: $APPLICATION_NAME
+      build_name: "dck-achatpedia-front"
+      build_auto_generate: true
+      build_output_image: "${IMAGE_NAME}:${IMAGE_TAG}"
+      build_context_dir: "."
+      build_strategy: "docker"
+      build_dockerfile_path: "Dockerfile_openshift"
+      build_source_image: "openshift/dck_nginx-ubi8:1.26"
+      build_cpu_request: "1"
+      build_cpu_limit: "2"
+      build_memory_request: "2Gi"
+      build_memory_limit: "4Gi"
+      env_prefix: "SRC_CAAS"
+
+  # ---------------------------------------------------------------------------
+  # 3. Promote the image from the build cluster to the runtime cluster
+  #
+  # caas-int-hp and caas-ext-p are distinct clusters with distinct registries,
+  # so build_output_namespace cannot be used here - skopeo is required.
+  # ---------------------------------------------------------------------------
+  - component: $CI_SERVER_FQDN/dvs-components/skopeo/copy-image@0.1.0
+    rules:
+      - if: '"$[[ inputs.enable_copy ]]" == "true" && "$[[ inputs.enable_build ]]" == "true"'
+    inputs:
+      stage: copy-image
+      job: "copy-frontend-image"
+      source_namespace: $BUILD_NAMESPACE
+      source_image: "docker://${SOURCE_REGISTRY}/${BUILD_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}"
+      source_tls_verify: false
+      dest_namespace: $NAMESPACE_DEPLOY_FRONTEND
+      dest_image: "docker://${TARGET_REGISTRY}/${NAMESPACE_DEPLOY_FRONTEND}/${IMAGE_NAME}:${IMAGE_TAG}"
+      dest_tls_verify: false
+
+  # ---------------------------------------------------------------------------
+  # 4. Deploy from the descriptor committed in this repository
+  # ---------------------------------------------------------------------------
+  - component: $CI_SERVER_FQDN/DVS/ci-template/components/deployers/deploy-kubernetes@0.0.6
+    rules:
+      - if: '"$[[ inputs.enable_deploy ]]" == "true"'
+    inputs:
+      stage_deploy: deploy
+      stage_clean: clean
+      job: "deploy-achatpedia-frontend"
+      integ_ref: "/^(poc-caas|develop|main|master|preprod|production)$/"
+      kube_namespace: $NAMESPACE_DEPLOY_FRONTEND
+      application_name: $APPLICATION_NAME
+      deployment_dir: "deploy/openshift"
+      template_file: "deploy-frontend.yml"
+      deployment_name: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+      integ_application_url: "https://${SERVER_NAME}"
+
+# =============================================================================
+# Fetch the TLS certificate from OpenBao.
+#
+# Same shape as hpd/redis: read the secret here, expose it as a dotenv artifact,
+# and let deploy-kubernetes resolve it into the template parameters that create
+# the kubernetes.io/tls Secret. Nothing is committed, and no CI/CD variable
+# holds the key.
+#
+# Values are base64 on the way out. A Secret's `data` field is base64 by
+# definition, so nothing has to decode them - and it keeps the dotenv values
+# single-line, which a multi-line PEM would not be.
+#
+# Prerequisite, already done: the secret exists in OpenBao with keys
+# "certificate" and "key", created from MyDevOps so its policy is generated.
+# =============================================================================
+get-secret:
+  stage: prepare
+  image: $NAMESPACE_REGISTRY/edf-infra-dvs-catalog/agt_deploy_cloud:latest
+  tags:
+    - gitlab-runner-dvs-srv-int-p
+  rules:
+    - if: '"$[[ inputs.enable_deploy ]]" == "true"'
+  id_tokens:
+    VAULT_ID_TOKEN:
+      aud: "https://si-devops-secrets.edf.fr"
+  script:
+    # 1. Exchange the GitLab JWT for an OpenBao token.
+    - |
+      REQUEST_TOKEN=$(curl -sS --request POST \
+        --data "{\"jwt\":\"${VAULT_ID_TOKEN}\"}" \
+        "${VAULT_SERVER_URL}/v1/${VAULT_NAMESPACE}/auth/${VAULT_JWT_NAME}/login")
+      JWT_TOKEN=$(echo "${REQUEST_TOKEN}" | jq -r '.auth.client_token // empty')
+      if [ -z "${JWT_TOKEN}" ]; then
+        echo "ERROR: OpenBao login failed."
+        echo "${REQUEST_TOKEN}" | jq -r '.errors // .' 2>/dev/null || true
+        exit 1
+      fi
+
+    # 2. Read the certificate and key straight to files - never into a shell
+    #    variable, never echoed.
+    - |
+      umask 077
+      SECRET_REQUEST=$(curl -sS --header "X-Vault-Token: ${JWT_TOKEN}" \
+        "${VAULT_SERVER_URL}/v1/${VAULT_NAMESPACE}/${VAULT_KV2}/data/${VAULT_TLS_SECRET_PATH}")
+      echo "${SECRET_REQUEST}" | jq -r '.data.data.certificate // empty' > tls.crt
+      echo "${SECRET_REQUEST}" | jq -r '.data.data.key         // empty' > tls.key
+      if [ ! -s tls.crt ] || [ ! -s tls.key ]; then
+        echo "ERROR: could not read 'certificate'/'key' at ${VAULT_KV2}/${VAULT_TLS_SECRET_PATH}"
+        echo "${SECRET_REQUEST}" | jq -r '.errors // "no errors field - check the path and the key names"'
+        exit 1
+      fi
+      echo "Certificate read from OpenBao:"
+      openssl x509 -in tls.crt -noout -subject -enddate
+
+    # 3. Fail here rather than publishing a certificate that does not match the
+    #    hostname the Route claims - otherwise it only shows up as a browser
+    #    warning. Not hypothetical: the app-nginx-crt secret sitting in this
+    #    namespace is a CN=EHA certificate with no SANs that expired in 2024.
+    - |
+      if ! openssl x509 -in tls.crt -noout -checkhost "${SERVER_NAME}" >/dev/null 2>&1; then
+        echo "ERROR: certificate does not match ${SERVER_NAME}"
+        openssl x509 -in tls.crt -noout -subject -ext subjectAltName || true
+        exit 1
+      fi
+      if ! openssl x509 -in tls.crt -noout -checkend 0 >/dev/null 2>&1; then
+        echo "ERROR: certificate has expired"
+        openssl x509 -in tls.crt -noout -enddate
+        exit 1
+      fi
+
+    # 4. Hand them on as base64. A dotenv artifact carries single-line values
+    #    reliably; a multi-line PEM is exactly what it cannot carry. The deploy
+    #    job decodes them back into real environment variables, which have no
+    #    such restriction.
+    - |
+      {
+        echo "TLS_CERTIFICATE_B64=$(base64 -w0 < tls.crt)"
+        echo "TLS_KEY_B64=$(base64 -w0 < tls.key)"
+      } > openbao.env
+  after_script:
+    - shred -u tls.crt tls.key 2>/dev/null || true
+  artifacts:
+    reports:
+      dotenv: openbao.env
+    expire_in: 5 mins
+
+# =============================================================================
+# Deploy job override, following hpd/redis.
+#
+# The deploy-kubernetes component generates this job; the override supplies what
+# it cannot know:
+#
+#   * KUBE_URL / KUBE_TOKEN from the destination credentials loaded above;
+#   * TLS_CERTIFICATE / TLS_KEY decoded from the base64 the get-secret job
+#     published. `oc process` reads template parameters from the environment,
+#     and an environment variable holds a multi-line PEM perfectly well.
+#
+# NOTE ON THE JOB NAME: `dvs-<job>:branch` is the shape redis overrides
+# (`dvs-deploy-redis:branch`). The component also generates `:integ` and `:tag`
+# variants and the mapping is not documented, so check the job name in the first
+# pipeline run - if the override lands on a name the component did not generate,
+# GitLab creates a standalone job with no script instead of patching the real one.
+# =============================================================================
+dvs-deploy-achatpedia-frontend:branch:
+  needs:
+    - job: get-secret
+      artifacts: true
+    - job: load-caas-credentials-dest
+      artifacts: true
+  id_tokens:
+    VAULT_ID_TOKEN:
+      aud: "https://si-devops-secrets.edf.fr"
+  before_script:
+    - export KUBE_URL="${DEST_CAAS_DVS_CAAS_API_URL}"
+    - export KUBE_TOKEN="${DEST_CAAS_DVS_CAAS_TOKEN}"
+    - export TLS_CERTIFICATE="$(echo "${TLS_CERTIFICATE_B64}" | base64 -d)"
+    - export TLS_KEY="$(echo "${TLS_KEY_B64}" | base64 -d)"
+    - !reference [.os-deploy-base, before_script]

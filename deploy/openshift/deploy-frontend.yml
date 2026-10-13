@@ -1,0 +1,448 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: achatpedia-frontend-deploy-template
+  annotations:
+    description: >-
+      Frontend (Angular + nginx) deployment for Achatpedia on CaaS.
+      Declares the ConfigMap, Deployment, Service and Route as a single unit so
+      the whole runtime shape is versioned alongside the application code.
+parameters:
+  - name: APPLICATION_NAME
+    value: "achatpedia"
+    required: true
+  - name: IMAGE_NAME
+    description: "ImageStream holding the frontend image"
+    value: "dck_achatpedia-front"
+    required: true
+  - name: IMAGE_TAG
+    description: "Image tag, set by the pipeline from CI_COMMIT_REF_SLUG"
+    required: true
+  - name: ENV
+    description: "Deployment environment, selects the *-${ENV} secrets"
+    value: "recette"
+    required: true
+  - name: NAMESPACE_DEPLOY_FRONTEND
+    value: "eha-achatpedia-ext-ns-fe-p"
+    required: true
+  - name: SERVICE_ACCOUNT_NAME
+    value: "achatpedia-caas-eha"
+    required: true
+  - name: SERVER_NAME
+    description: "Public hostname served by this route"
+    value: "eha-v2-preprod-caas.edf.fr"
+    required: true
+  - name: BACKEND_URL
+    description: "External HTTPS URL of the backend API, target of /api"
+    value: "https://eha-v3-preprod-api.edf.fr"
+    required: true
+  - name: BACKEND_HOST
+    description: >-
+      Hostname only of BACKEND_URL. Sent as the Host header and used for SNI, so
+      the backend router can match its own route.
+    value: "eha-v3-preprod-api.edf.fr"
+    required: true
+  - name: ELASTICSEARCH_HOST
+    value: "padaone-preprod.edf.fr:29443"
+    required: true
+  - name: ROUTE_TIMEOUT
+    value: "10m"
+    required: true
+  - name: CPU_REQUEST
+    value: "100m"
+  - name: CPU_LIMIT
+    value: "500m"
+  - name: MEMORY_REQUEST
+    value: "256Mi"
+  - name: MEMORY_LIMIT
+    value: "512Mi"
+  - name: TLS_CERTIFICATE
+    description: >-
+      PEM certificate chain for SERVER_NAME. Exported by the deploy job's
+      before_script from the base64 the get-secret job read out of OpenBao -
+      never stored in git and never in a CI/CD variable.
+    required: true
+  - name: TLS_KEY
+    description: >-
+      PEM private key for SERVER_NAME. Same path as TLS_CERTIFICATE.
+    required: true
+  - name: IMAGE_RELEASE_DATE
+  - name: IMAGE_RELEASE_NUMBER
+
+objects:
+  # ---------------------------------------------------------------------------
+  # 1. nginx + filebeat configuration
+  # ---------------------------------------------------------------------------
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: "cm-frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+      namespace: "${NAMESPACE_DEPLOY_FRONTEND}"
+      labels:
+        app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+    data:
+      instance.conf: |
+        server {
+            listen      8080;
+            server_name ${SERVER_NAME};
+
+            client_max_body_size 100M;
+
+            # Required for the OpenShift router to resolve SNI when proxying
+            # upstream over HTTPS.
+            proxy_ssl_server_name on;
+            proxy_ssl_protocols TLSv1.2 TLSv1.3;
+
+            add_header Content-Security-Policy "";
+
+            open_file_cache max=5000 inactive=180;
+            open_file_cache_valid 2m;
+            open_file_cache_min_uses 2;
+            open_file_cache_errors on;
+
+            location ^~ /assets/ {
+                root /appli/projects/instance/nginx/html;
+                gzip_static on;
+                expires max;
+                add_header Cache-Control public;
+            }
+
+            location ^~ /chat/ {
+                add_header Access-Control-Allow-Origin *;
+            }
+
+            location /api {
+                proxy_pass ${BACKEND_URL};
+                rewrite /api/(.*) /$1 break;
+
+                proxy_set_header Host               ${BACKEND_HOST};
+                proxy_set_header X-Real-IP          $remote_addr;
+                proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto  https;
+                proxy_cookie_domain ${BACKEND_HOST} ${SERVER_NAME};
+
+                proxy_read_timeout    300;
+                proxy_connect_timeout 300;
+                proxy_send_timeout    300;
+            }
+
+            location /nginx-health {
+                access_log off;
+                default_type text/plain;
+                return 200 "healthy\n";
+            }
+
+            # Angular single-page application: unknown paths fall back to
+            # index.html so client-side routing works on a hard refresh.
+            location / {
+                root  /appli/projects/instance/nginx/html;
+                index index.html;
+                try_files $uri $uri/ /index.html;
+            }
+
+            error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+                root /appli/projects/instance/nginx/html;
+                try_files /index.html =404;
+            }
+        }
+
+      nginx.conf: |-
+        worker_processes  1;
+
+        error_log /dev/stdout info;
+        pid       /var/projects/instance/nginx/run/nginx.pid;
+
+        events {
+            worker_connections 1024;
+        }
+
+        http {
+            include      mime.types;
+            default_type application/octet-stream;
+
+            access_log /dev/stdout;
+
+            sendfile          on;
+            keepalive_timeout 65;
+
+            proxy_cache_path      /var/projects/instance/nginx/cache/ levels=1:2 keys_zone=instance_cache:10m max_size=10g inactive=60m use_temp_path=off;
+            client_body_temp_path /var/projects/instance/nginx/nginx-client-body;
+            proxy_temp_path       /var/projects/instance/nginx/nginx-proxy;
+            fastcgi_temp_path     /var/projects/instance/nginx/nginx-fastcgi;
+            uwsgi_temp_path       /var/projects/instance/nginx/nginx-uwsgi;
+            scgi_temp_path        /var/projects/instance/nginx/nginx-scgi;
+
+            include instance.conf;
+        }
+
+      mime.types: |
+        types {
+            text/html                                        html htm shtml;
+            text/css                                         css;
+            text/xml                                         xml;
+            text/plain                                       txt;
+            text/mathml                                      mml;
+
+            image/gif                                        gif;
+            image/jpeg                                       jpeg jpg;
+            image/png                                        png;
+            image/svg+xml                                    svg svgz;
+            image/tiff                                       tif tiff;
+            image/webp                                       webp;
+            image/x-icon                                     ico;
+            image/vnd.microsoft.icon                         ico;
+
+            application/javascript                           js mjs;
+            application/json                                 json;
+            application/manifest+json                        webmanifest;
+            application/atom+xml                             atom;
+            application/rss+xml                              rss;
+            application/pdf                                  pdf;
+            application/zip                                  zip;
+            application/font-woff                            woff;
+            application/vnd.ms-fontobject                    eot;
+            application/xhtml+xml                            xhtml;
+            application/octet-stream                         bin exe dll;
+
+            font/woff2                                       woff2;
+            font/ttf                                         ttf;
+            font/otf                                         otf;
+
+            audio/mpeg                                       mp3;
+            audio/ogg                                        ogg;
+            video/mp4                                        mp4;
+            video/webm                                       webm;
+        }
+
+      filebeat.yml: |-
+        filebeat.inputs:
+        - input_type: log
+          paths:
+            - /cockpitachat/log/*.log
+        setup.template.enabled: false
+        output.elasticsearch:
+          hosts: ["${ELASTICSEARCH_HOST}"]
+          protocol: "https"
+          username: ${SECRETS_PADAONE_USERNAME:PUSERNAME}
+          password: ${SECRETS_PADAONE_PASSWORD:PPASSWORD}
+          index: pp1-padaone-events-dag-achatpedia-logs-%{+yyyy.MM}
+
+  # ---------------------------------------------------------------------------
+  # 2. Frontend Deployment
+  # ---------------------------------------------------------------------------
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+      labels:
+        app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+        build-template: devops_openshift-simple-deploy-template-Deployment
+      annotations:
+        # The container name inside fieldPath MUST match a containers[].name
+        # below. When it does not, the trigger silently matches nothing, the
+        # application image is never injected and the pod keeps running the bare
+        # nginx base image with an empty web root.
+        image.openshift.io/triggers: |
+          [
+            {
+              "from": {
+                "kind": "ImageStreamTag",
+                "name": "${IMAGE_NAME}:${IMAGE_TAG}"
+              },
+              "fieldPath": "spec.template.spec.containers[?(@.name==\"frontend-${APPLICATION_NAME}\")].image"
+            }
+          ]
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 3
+      progressDeadlineSeconds: 600
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 25%
+          maxSurge: 25%
+      selector:
+        matchLabels:
+          app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+      template:
+        metadata:
+          labels:
+            app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+        spec:
+          serviceAccountName: "${SERVICE_ACCOUNT_NAME}"
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: "frontend-${APPLICATION_NAME}"
+              image: "image-registry.openshift-image-registry.svc:5000/${NAMESPACE_DEPLOY_FRONTEND}/${IMAGE_NAME}:${IMAGE_TAG}"
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              resources:
+                requests:
+                  cpu: "${CPU_REQUEST}"
+                  memory: "${MEMORY_REQUEST}"
+                limits:
+                  cpu: "${CPU_LIMIT}"
+                  memory: "${MEMORY_LIMIT}"
+              securityContext:
+                readOnlyRootFilesystem: false
+              readinessProbe:
+                httpGet:
+                  path: /nginx-health
+                  port: 8080
+                  scheme: HTTP
+                timeoutSeconds: 3
+                periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
+              startupProbe:
+                tcpSocket:
+                  port: 8080
+                initialDelaySeconds: 10
+                timeoutSeconds: 1
+                periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 30
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                - name: nginx-conf
+                  mountPath: /appli/projects/instance/nginx/conf
+                - name: nginx-run
+                  mountPath: /var/projects/instance/nginx/run
+                - name: nginx-cache
+                  mountPath: /var/projects/instance/nginx/cache/
+                - name: nginx-client-body
+                  mountPath: /var/projects/instance/nginx/nginx-client-body/
+                - name: nginx-proxy-temp
+                  mountPath: /var/projects/instance/nginx/nginx-proxy/
+                - name: nginx-fastcgi-temp
+                  mountPath: /var/projects/instance/nginx/nginx-fastcgi/
+                - name: nginx-uwsgi-temp
+                  mountPath: /var/projects/instance/nginx/nginx-uwsgi/
+                - name: nginx-scgi-temp
+                  mountPath: /var/projects/instance/nginx/nginx-scgi/
+                - name: nginx-default-logs
+                  mountPath: /opt/nginx/1.26/logs
+                - name: log-dir
+                  mountPath: /cockpitachat/log/
+
+            - name: filebeat-container
+              image: "image-registry.openshift-image-registry.svc:5000/openshift/dck_filebeat-ubi:7.9.3"
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: SECRETS_PADAONE_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      key: PUSERNAME
+                      name: "padaone-credentials-${ENV}"
+                - name: SECRETS_PADAONE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: PPASSWORD
+                      name: "padaone-credentials-${ENV}"
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                - name: log-dir
+                  mountPath: /cockpitachat/log/
+                - name: filebeat-config-volume
+                  mountPath: /opt/filebeat/config/
+                  readOnly: true
+                - name: filebeat-data-volume
+                  mountPath: /opt/filebeat/data/
+          volumes:
+            - name: nginx-conf
+              configMap:
+                name: "cm-frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+                defaultMode: 420
+            - name: filebeat-config-volume
+              configMap:
+                name: "cm-frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+                defaultMode: 420
+            - name: nginx-run
+              emptyDir: {}
+            - name: nginx-cache
+              emptyDir: {}
+            - name: nginx-client-body
+              emptyDir: {}
+            - name: nginx-proxy-temp
+              emptyDir: {}
+            - name: nginx-fastcgi-temp
+              emptyDir: {}
+            - name: nginx-uwsgi-temp
+              emptyDir: {}
+            - name: nginx-scgi-temp
+              emptyDir: {}
+            - name: nginx-default-logs
+              emptyDir: {}
+            - name: log-dir
+              emptyDir: {}
+            - name: filebeat-data-volume
+              emptyDir: {}
+
+  # ---------------------------------------------------------------------------
+  # 3. Frontend Service
+  # ---------------------------------------------------------------------------
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: "frontend-${APPLICATION_NAME}"
+      labels:
+        app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+    spec:
+      type: ClusterIP
+      sessionAffinity: None
+      ports:
+        - name: http
+          port: 8080
+          targetPort: 8080
+          protocol: TCP
+      selector:
+        app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+
+  # ---------------------------------------------------------------------------
+  # 4. Route
+  # ---------------------------------------------------------------------------
+  # The host is claimed by the legacy route object named
+  # "eha-v2-preprod-caas.edf.fr". OpenShift rejects a newer route claiming a host
+  # an older one already owns (HostAlreadyClaimed), so delete the legacy route
+  # once before the first deploy:
+  #   oc delete route eha-v2-preprod-caas.edf.fr -n eha-achatpedia-ext-ns-fe-p
+  - kind: Route
+    apiVersion: route.openshift.io/v1
+    metadata:
+      name: "frontend-${APPLICATION_NAME}-${ENV}"
+      labels:
+        app: "frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+      annotations:
+        haproxy.router.openshift.io/timeout: "${ROUTE_TIMEOUT}"
+    spec:
+      host: "${SERVER_NAME}"
+      to:
+        kind: Service
+        name: "frontend-${APPLICATION_NAME}"
+        weight: 100
+      port:
+        targetPort: http
+      tls:
+        termination: edge
+        insecureEdgeTerminationPolicy: Redirect
+        # Inline, from parameters the deploy job exports out of OpenBao. The
+        # alternative, spec.tls.externalCertificate, needs a one-time RBAC grant
+        # so the *router's* service account can read the secret - a different
+        # identity from the one the pipeline deploys with, and not something
+        # hpd/redis ever needed because it has no Route.
+        certificate: "${TLS_CERTIFICATE}"
+        key: "${TLS_KEY}"
+      wildcardPolicy: None

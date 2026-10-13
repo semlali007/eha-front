@@ -1,0 +1,14 @@
+# Keep the build context small and avoid shipping host-local state into the
+# builder stage. node_modules in particular must come from `npm ci` inside the
+# image, never from a developer workstation.
+.git
+.gitignore
+.vscode
+.angulardoc.json
+node_modules
+dist
+e2e
+*.log
+Dockerfile_openshift
+.dockerignore
+deploy

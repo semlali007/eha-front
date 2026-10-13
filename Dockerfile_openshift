@@ -20,14 +20,23 @@ WORKDIR /opt/app-root/src
 
 ENV NPM_MIRROR="https://si-devops-mirror.edf.fr/repository/registry.npmjs.org/"
 
+# The s2i nodejs image ships NODE_ENV=production, which makes npm skip
+# devDependencies. That breaks this build twice over: the `postinstall: ngcc`
+# hook fails with `ngcc: command not found` (ngcc is a bin of
+# @angular/compiler-cli, a devDependency), and `ng build` would then have no
+# @angular/cli either. Building needs the dev tree; only the compiled output is
+# copied into the runtime stage, so nothing dev-only reaches the final image.
+ENV NODE_ENV=development
+
 # Dependencies first so the layer is reused when only application code changes.
 COPY package.json package-lock.json ./
 
 # package-lock.json pins registry.npmjs.org URLs; rewrite them to the EDF mirror,
 # which is the only registry reachable from the build pods.
+# --include=dev is belt-and-braces alongside NODE_ENV above.
 RUN npm config set registry "${NPM_MIRROR}" && \
     sed -i 's|https://registry.npmjs.org|https://si-devops-mirror.edf.fr/repository/registry.npmjs.org|g' package-lock.json && \
-    npm ci --no-audit --no-fund
+    npm ci --no-audit --no-fund --include=dev
 
 COPY . .
 

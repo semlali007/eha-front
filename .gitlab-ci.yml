@@ -306,24 +306,40 @@ get-secret:
 #     published. `oc process` reads template parameters from the environment,
 #     and an environment variable holds a multi-line PEM perfectly well.
 #
-# NOTE ON THE JOB NAME: `dvs-<job>:branch` is the shape redis overrides
-# (`dvs-deploy-redis:branch`). The component also generates `:integ` and `:tag`
-# variants and the mapping is not documented, so check the job name in the first
-# pipeline run - if the override lands on a name the component did not generate,
-# GitLab creates a standalone job with no script instead of patching the real one.
+# JOB NAME: the component generates one variant per ref type. On `poc-caas`,
+# which matches integ_ref, the job is `dvs-deploy-achatpedia-frontend:integration`
+# - confirmed against the expanded pipeline, not guessed:
+#
+#   python plugins/gitlab/scripts/ci_lint.py \
+#     --project eha-web-achat/eha-front --ref poc-caas --jobs
+#
+# hpd/redis overrides `:branch`, which is the variant for a ref that does NOT
+# match integ_ref. Copying that name here would have been silent: `:branch` is
+# defined by the component but ruled out on this ref, so the exports below would
+# never have run and the deploy would have gone ahead without KUBE_URL. Both
+# variants are overridden so the pipeline behaves on any branch.
 # =============================================================================
-dvs-deploy-achatpedia-frontend:branch:
+.deploy-overrides: &deploy_overrides
   needs:
     - job: get-secret
       artifacts: true
     - job: load-caas-credentials-dest
       artifacts: true
-  id_tokens:
-    VAULT_ID_TOKEN:
-      aud: "https://si-devops-secrets.edf.fr"
+    # `needs` replaces stage ordering: without this the deploy could start
+    # before the image has been promoted to the runtime cluster. Optional so the
+    # pipeline still builds when enable_copy is false.
+    - job: copy-frontend-image
+      optional: true
+      artifacts: false
   before_script:
     - export KUBE_URL="${DEST_CAAS_DVS_CAAS_API_URL}"
     - export KUBE_TOKEN="${DEST_CAAS_DVS_CAAS_TOKEN}"
     - export TLS_CERTIFICATE="$(echo "${TLS_CERTIFICATE_B64}" | base64 -d)"
     - export TLS_KEY="$(echo "${TLS_KEY_B64}" | base64 -d)"
     - !reference [.os-deploy-base, before_script]
+
+dvs-deploy-achatpedia-frontend:integration:
+  <<: *deploy_overrides
+
+dvs-deploy-achatpedia-frontend:branch:
+  <<: *deploy_overrides

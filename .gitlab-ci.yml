@@ -78,8 +78,17 @@ variables:
   ENV: "recette"
   SERVICE_ACCOUNT_NAME: "achatpedia-caas-eha"
   SERVER_NAME: "eha-v2-preprod-caas.edf.fr"
-  BACKEND_URL: "https://eha-v3-preprod-api.edf.fr"
-  BACKEND_HOST: "eha-v3-preprod-api.edf.fr"
+  # The backend this repository's sibling deploys, not the v3 stack. The nginx
+  # in this pod is the only way in: the backend sits behind a firewall and must
+  # never be called directly from the browser.
+  #
+  # Previously pointed at eha-v3-preprod-api.edf.fr, inherited from the legacy
+  # cm-rp-nginx. That host is served by api-achatpedia-feature-conf-k8s and
+  # returns 404 for every path including /, which is what produced
+  #   "GET /api/saml/login/... HTTP/1.1" 404
+  # in the frontend access log during webSSO.
+  BACKEND_URL: "https://achatpedia-preprod-back.ext-ns-be-p.caas-ext-p.automation.edf.fr"
+  BACKEND_HOST: "achatpedia-preprod-back.ext-ns-be-p.caas-ext-p.automation.edf.fr"
   ELASTICSEARCH_HOST: "padaone-preprod.edf.fr:29443"
   ROUTE_TIMEOUT: "10m"
   CPU_REQUEST: "100m"

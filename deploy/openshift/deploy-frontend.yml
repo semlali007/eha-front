@@ -215,6 +215,34 @@ objects:
             video/webm                                       webm;
         }
 
+      # Runtime configuration fetched by the Angular APP_INITIALIZER from
+      # /assets/e_config.json. On the legacy VMs Ansible rendered this and
+      # ansible-vault encrypted it; here it is a plain ConfigMap entry, because
+      # the browser downloads it and nothing in it can be secret.
+      #
+      # `api.host` is "/api" rather than the backend hostname: the nginx above
+      # proxies /api to ${BACKEND_URL} and strips the prefix, so the browser
+      # stays same-origin and no CORS is involved.
+      #
+      # authConfig is intentionally minimal - OIDC is dormant, the application
+      # authenticates through SAML on the backend. The legacy template also
+      # carried a dummyClientSecret here; it is deliberately not reproduced.
+      e_config.json: |-
+        {
+          "production": true,
+          "authConfig": {},
+          "appConfig": {
+            "api": {
+              "host": "/api"
+            },
+            "loaderToStart": true,
+            "padaoneURL": "https://padaone-ux.edf.fr/",
+            "padaoneSiteId": 156,
+            "userInactivity": 1800,
+            "userTimeout": 300
+          }
+        }
+
       filebeat.yml: |-
         filebeat.inputs:
         - input_type: log
@@ -311,6 +339,14 @@ objects:
               volumeMounts:
                 - name: nginx-conf
                   mountPath: /appli/projects/instance/nginx/conf
+                # Single-file mount over the built assets directory, so the
+                # image stays environment-agnostic and only this file changes
+                # between environments. subPath means it does not refresh on a
+                # ConfigMap edit - a redeploy is required, which is what we want.
+                - name: app-config
+                  mountPath: /appli/projects/instance/nginx/html/assets/e_config.json
+                  subPath: e_config.json
+                  readOnly: true
                 - name: nginx-run
                   mountPath: /var/projects/instance/nginx/run
                 - name: nginx-cache
@@ -370,6 +406,13 @@ objects:
               configMap:
                 name: "cm-frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
                 defaultMode: 420
+            - name: app-config
+              configMap:
+                name: "cm-frontend-${APPLICATION_NAME}-${IMAGE_TAG}"
+                defaultMode: 420
+                items:
+                  - key: e_config.json
+                    path: e_config.json
             - name: nginx-run
               emptyDir: {}
             - name: nginx-cache

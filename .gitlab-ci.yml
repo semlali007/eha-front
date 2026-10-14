@@ -82,13 +82,19 @@ variables:
   # in this pod is the only way in: the backend sits behind a firewall and must
   # never be called directly from the browser.
   #
-  # Previously pointed at eha-v3-preprod-api.edf.fr, inherited from the legacy
-  # cm-rp-nginx. That host is served by api-achatpedia-feature-conf-k8s and
-  # returns 404 for every path including /, which is what produced
-  #   "GET /api/saml/login/... HTTP/1.1" 404
-  # in the frontend access log during webSSO.
-  BACKEND_URL: "https://achatpedia-preprod-back.ext-ns-be-p.caas-ext-p.automation.edf.fr"
-  BACKEND_HOST: "achatpedia-preprod-back.ext-ns-be-p.caas-ext-p.automation.edf.fr"
+  # History of this value, because it moved twice:
+  #   * eha-v3-preprod-api.edf.fr, inherited from the legacy cm-rp-nginx. Served
+  #     by api-achatpedia-feature-conf-k8s, which returns 404 for every path
+  #     including / - that produced "GET /api/saml/login/... 404".
+  #   * achatpedia-preprod-back.ext-ns-be-p.caas-ext-p.automation.edf.fr, the
+  #     router's default wildcard host. Correct target, but only ever a stopgap:
+  #     an infrastructure hostname with no certificate of its own.
+  #   * eha-v2-preprod-api-caas.edf.fr, the real hostname, with its own
+  #     certificate served from OpenBao by the eha-back pipeline. Must stay in
+  #     step with SERVER_NAME in eha-back/.gitlab-ci.yml - nginx verifies the
+  #     upstream certificate against BACKEND_HOST, so a mismatch breaks /api.
+  BACKEND_URL: "https://eha-v2-preprod-api-caas.edf.fr"
+  BACKEND_HOST: "eha-v2-preprod-api-caas.edf.fr"
   ELASTICSEARCH_HOST: "padaone-preprod.edf.fr:29443"
   ROUTE_TIMEOUT: "10m"
   CPU_REQUEST: "100m"

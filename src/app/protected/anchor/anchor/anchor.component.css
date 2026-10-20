@@ -1,51 +1,467 @@
-.text-simple{
-    position: static;
-left: 0px;
-right: 80px;
-top: 0px;
+/* ====== Ancrage territorial — styles globaux (ViewEncapsulation.None) ======
+   Prefixe `anc-` pour éviter toute collision avec le reste de l'application. */
 
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-
-/* or 138% */
-display: flex;
-align-items: center;
-text-align: right;
-
-/* Noir (Charte) */
-color: #000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 0px 10px;
+.anc-page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 16px 2rem;
+  color: #1f2937;
 }
 
-.ddown-per-page{ 
-    height: 37px;
-    left: 0px;
-    right: 0px;
-    /* Blanc (Charte) */
-    background: #FFFFFF;
-    
-    /* Noir (Charte) */
-    border: 1px solid green;
-    box-sizing: border-box;
-    border-radius: 5px;
-    text-align:left;
-
-    flex:none;
+/* En-tête */
+.anc-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1rem 0 1.25rem;
 }
 
+.anc-header-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4f46e5;
+}
 
+.anc-header-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
 
-.dropdown-toggle::after{
-    position: absolute;
-    right: 10px;
-    top:17px;
+.anc-header-sub {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 680px;
+}
+
+/* Cartes */
+.anc-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Formulaire ---------- */
+.anc-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.anc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.anc-label {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.anc-field-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;           /* tag-input & bouton à hauteur égale */
+}
+
+.anc-field-row .anc-tag-input {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.anc-btn-codes {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  height: 38px;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+}
+
+.anc-input {
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.anc-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.anc-btn-reset {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.anc-btn-apply {
+  min-width: 130px;
+  font-weight: 600;
+}
+
+/* ngx-chips : on force exactement la même hauteur (38px) qu'un .form-control */
+.anc-tag-input,
+.anc-tag-input tag-input,
+.anc-tag-input tag-input-form,
+.anc-tag-input tag-input-form > form {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.anc-tag-input tag-input-form form {
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.anc-tag-input .ng2-tag-input {
+  background: #fff !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 6px !important;
+  padding: 0 8px !important;
+  min-height: 38px !important;
+  height: 38px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  overflow: hidden !important;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.anc-tag-input .ng2-tag-input.ng2-tag-input--focused {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15) !important;
+}
+
+.anc-tag-input .ng2-tags-container {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: thin !important;
+  padding: 0 !important;
+}
+
+.anc-tag-input tag-input-form {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.anc-tag-input input.ng2-tag-input__text-input,
+.anc-tag-input .ng2-tag-input__text-input,
+.anc-tag-input .tag-input-form-inputText,
+.anc-tag-input tag-input-form input,
+.anc-tag-input tag-input-form input[type="text"] {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  font-family: inherit !important;
+  font-size: 0.95rem !important;
+  color: #1f2937 !important;
+  line-height: 1.4 !important;
+  box-shadow: none !important;
+}
+
+.anc-tag-input input.ng2-tag-input__text-input::placeholder,
+.anc-tag-input .ng2-tag-input__text-input::placeholder,
+.anc-tag-input tag-input-form input::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+.anc-tag-input tag {
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+  height: 26px !important;
+  line-height: 26px !important;
+}
+
+/* ---------- Récapitulatif ---------- */
+.anc-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.anc-summary-text {
+  flex: 1 1 320px;
+}
+
+.anc-summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.anc-summary-list li {
+  padding: 0.1rem 0;
+}
+
+.anc-summary-list .anc-muted {
+  color: #9ca3af;
+}
+
+.anc-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+/* nombre par page */
+.anc-perpage {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.anc-perpage-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.anc-perpage-btn {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-width: 72px;
+  text-align: left;
+  position: relative;
+  padding-right: 1.6rem;
+  color: #1f2937;
+}
+
+.anc-perpage-btn .caret {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  margin-top: -2px;
+  border-top: 5px solid #6b7280;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+/* ---------- Résultats ---------- */
+.anc-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.anc-col {
+  display: block;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+  padding: 1.1rem 1.2rem;
+}
+
+.anc-result-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.anc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+}
+
+.anc-badge .anc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.anc-badge--active { background: #ecfdf3; color: #067647; }
+.anc-badge--active .anc-dot { background: #12b76a; }
+
+.anc-badge--inactive { background: #f3f4f6; color: #4b5563; }
+.anc-badge--inactive .anc-dot { background: #9ca3af; }
+
+.anc-result-count {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Liste des fournisseurs */
+.anc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.anc-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  background: #fff;
+}
+
+.anc-item--link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.anc-item--link:hover {
+  background: #f5f7ff;
+  border-color: #c7d2fe;
+}
+
+.anc-item-pics {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 2px;
+}
+
+.anc-pic {
+  border-radius: 4px;
+}
+
+.anc-item-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.anc-item-title {
+  font-weight: 600;
+  color: #111827;
+  font-size: 0.92rem;
+}
+
+.anc-distance {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  margin-right: 0.35rem;
+  vertical-align: 1px;
+}
+
+.anc-item-sub {
+  color: #6b7280;
+  font-size: 0.82rem;
+  margin-top: 0.1rem;
+}
+
+.anc-item-chevron {
+  flex: 0 0 auto;
+  color: #c0c4cc;
+}
+
+.anc-empty {
+  background: #fffaeb;
+  border: 1px solid #fedf89;
+  color: #7a4a09;
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.88rem;
+}
+
+/* ---------- Pagination ---------- */
+.anc-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.anc-pager-info {
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.anc-pager form {
+  margin: 0;
+}
+
+.anc-pagination .pagination {
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.anc-pagination .page-link {
+  color: #4f46e5;
+  border-color: #e5e7eb;
+  margin-left: 4px;
+  border-radius: 6px;
+  min-width: 32px;
+  text-align: center;
+  padding: 4px 8px;
+}
+
+.anc-pagination .page-item.active .page-link {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+  color: #fff;
+}
+
+.anc-pagination .page-item.disabled .page-link {
+  color: #c0c4cc;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .anc-form-grid { grid-template-columns: 1fr; }
+  .anc-results { grid-template-columns: 1fr; }
 }

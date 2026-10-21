@@ -22,7 +22,7 @@ export class SheetListFilterDateComponent implements OnInit, OnDestroy {
   @Output() onFiltersChange = new EventEmitter<{ dateStart: string; dateEnd: string }>();
 
   dateForm: FormGroup;
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
 
   private subscriptions = new Subscription();
   private isResetting = false;

@@ -13,7 +13,7 @@ export class SheetListFilterEdfOpenComponent implements OnInit,OnChanges {
   @Input() edfOpen: FormControl;
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   private initialized = false;
 
   constructor() { }

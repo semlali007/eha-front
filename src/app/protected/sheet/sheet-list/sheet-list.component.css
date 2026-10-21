@@ -204,6 +204,7 @@ app-sheet-list > .container-fluid {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
   padding: 12px;
   margin-top: 0;
+  margin-bottom: 16px;
 }
 
 /* ─── Empty state ─────────────────────────────────────────── */
@@ -632,6 +633,41 @@ app-sheet-list-filter .dropdown-item.active,
 app-sheet-list-filter .dropdown-menu button:hover,
 app-sheet-list-filter .dropdown-menu a:hover,
 app-sheet-list-filter .dropdown-menu .active {
+  background: #eef2fb !important;
+  color: #001a70 !important;
+}
+
+/* ── Typeahead rendu via container="body" (hors du bloc filtres) ──
+   Cible uniquement l'élément ngx-bootstrap du dropdown, même rendu. */
+typeahead-container {
+  z-index: 1060 !important;
+}
+typeahead-container,
+typeahead-container .dropdown-menu {
+  border: 1px solid #e0e4ea !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  padding: 4px !important;
+  max-height: 260px !important;
+  overflow-y: auto !important;
+}
+typeahead-container .dropdown-item,
+typeahead-container button,
+typeahead-container a {
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  color: #374151 !important;
+  border-radius: 5px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  white-space: normal !important;
+  transition: background 0.1s ease !important;
+}
+typeahead-container .dropdown-item:hover,
+typeahead-container .dropdown-item.active,
+typeahead-container button:hover,
+typeahead-container .active {
   background: #eef2fb !important;
   color: #001a70 !important;
 }

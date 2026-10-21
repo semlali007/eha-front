@@ -17,7 +17,7 @@ export class SheetListFilterBeneficiaryComponent implements OnInit, OnChanges {
   @Input() list: any = [];
   myForm: FormGroup;
   isCollapsed = true;
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   textButton = "Afficher plus";
   constructor(
     private fb: FormBuilder

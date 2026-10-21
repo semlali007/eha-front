@@ -9,7 +9,7 @@ export class SheetListFilterMiseAJourDonneeComponent implements OnInit, OnChange
   @Input() miseAJourDonnee: FormControl;
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   private initialized = false;
 
   constructor() { }

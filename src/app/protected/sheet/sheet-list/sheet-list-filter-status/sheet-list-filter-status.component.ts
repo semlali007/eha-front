@@ -12,7 +12,7 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
   @Input() status: any = [];
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   private initialized = false;
 
   constructor() { }

@@ -1,87 +1,69 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-sheet-list-filter-category',
   templateUrl: './sheet-list-filter-category.component.html',
   styleUrls: ['./sheet-list-filter-category.component.scss']
 })
-export class SheetListFilterCategoryComponent implements OnInit, OnChanges, OnDestroy {
+export class SheetListFilterCategoryComponent implements OnInit, OnChanges {
   @Input() categories: any = [];
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  
-  isTotalCollapsed = false;
-  isCollapsed = true;
-  textButton = 'Voir plus';
-  activeFilter = '';
-  private initialized = false;
-  private subscription: Subscription = new Subscription();
 
-  constructor() {}
+  myForm: FormGroup;
+  isTotalCollapsed = true;
+  selectedItems: any[] = [];
+  available: any[] = [];
 
-  ngOnInit() {
-    if (this.categories) {
-      if (!this.categories.value || this.categories.value.length === 0) {
-        this.categories.setValue([]);
-      } else {
-        this.activeFilter = this.categories.value[0];
-      }
+  constructor(private fb: FormBuilder) {}
 
-      // Écouter les changements du FormControl pour détecter les réinitialisations
-      const valueChanges$ = this.categories.valueChanges.subscribe((value) => {
-        if (!value || value.length === 0) {
-          this.activeFilter = '';
-        }
-      });
-      
-      this.subscription.add(valueChanges$);
+  ngOnInit(): void {
+    this.myForm = this.fb.group({ state: [''] });
+    this.syncSelected();
+  }
+
+  ngOnChanges(): void {
+    this.syncSelected();
+  }
+
+  private currentCodes(): any[] {
+    return this.categories && this.categories.value ? this.categories.value : [];
+  }
+
+  /** Reconstruit les tags affichés + les suggestions à partir des codes sélectionnés. */
+  private syncSelected(): void {
+    const codes = this.currentCodes();
+    const byCode = new Map<any, any>();
+    (this.list || []).forEach((o: any) => byCode.set(o.code, o));
+    this.selectedItems = codes.map((c: any) => byCode.get(c) || { code: c, name: c, count: null });
+    this.recomputeAvailable();
+  }
+
+  /** Suggestions = liste complète moins ce qui est déjà sélectionné (référence stable). */
+  private recomputeAvailable(): void {
+    const codes = this.currentCodes();
+    this.available = (this.list || []).filter((o: any) => !codes.includes(o.code));
+  }
+
+  onSelect(event: any): void {
+    const item = event.item;
+    const codes = this.currentCodes();
+    if (item && !codes.includes(item.code)) {
+      const value = [...codes, item.code];
+      this.categories.setValue(value);
+      this.selectedItems = [...this.selectedItems, item];
+      this.recomputeAvailable();
+      this.changedFilter.emit({ type: 'categories', value });
     }
+    this.myForm.reset();
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    // Vérifier si le FormControl categories a changé
-    if (changes['categories'] && this.categories) {
-      // Surveillance des changements du FormControl
-      this.checkFilterState();
-    }
-  }
-
-  private checkFilterState() {
-    if (this.categories && this.categories.value) {
-      if (this.categories.value.length > 0) {
-        if (!this.initialized) {
-          this.isTotalCollapsed = false;
-        }
-        if (!this.activeFilter && this.categories.value.length === 1) {
-          this.activeFilter = this.categories.value[0];
-        }
-      } else {
-        this.activeFilter = '';
-      }
-    } else {
-      this.activeFilter = '';
-    }
-    this.initialized = true;
-  }
-
-  changeFilter(code: string) {
-    this.activeFilter = code === 'all' ? '' : code;
-    const value = code === 'all' ? [] : [code];
+  deleteOne(code: any): void {
+    const value = this.currentCodes().filter((c: any) => c !== code);
     this.categories.setValue(value);
+    this.selectedItems = this.selectedItems.filter((s) => s.code !== code);
+    this.recomputeAvailable();
     this.changedFilter.emit({ type: 'categories', value });
-  }
-
-  isActive(code: string): boolean {
-    return this.activeFilter === code;
-  }
-
-  showMore() {
-    this.isCollapsed = !this.isCollapsed;
-    this.textButton = this.isCollapsed ? 'Voir plus' : 'Voir moins';
   }
 }

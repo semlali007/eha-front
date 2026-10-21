@@ -8,7 +8,7 @@ export class SheetListFilterSupplierSizeComponent implements OnInit, OnChanges {
   @Input() supplierSize: any = [];
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
 
   constructor() { }
 

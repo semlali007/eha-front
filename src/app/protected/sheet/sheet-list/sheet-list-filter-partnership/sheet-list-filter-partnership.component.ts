@@ -12,7 +12,7 @@ export class SheetListFilterPartnershipComponent implements OnInit,OnChanges {
   @Input() partnership: any={};
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   private initialized = false;
 
   constructor() { }

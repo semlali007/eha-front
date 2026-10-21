@@ -83,7 +83,7 @@ export class BannerComponent implements OnInit {
         },
         checkboxValidation: true
       };
-      this.bsModalRef = this.modalService.show(ModalNotificationComponent, { initialState });
+      this.bsModalRef = this.modalService.show(ModalNotificationComponent, { initialState, class: 'notif-dialog' });
       this.bsModalRef.content.closeBtnName = 'Close';
     })
   }

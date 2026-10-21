@@ -3,25 +3,28 @@
    .adm-page-wrap, .adm-search, .adm-empty viennent de ui-kit.css
    ═══════════════════════════════════════════════════════════ */
 
-/* En-tête de page (icône + titre + description) */
+/* En-tête de page — carte claire & élégante (accent orange discret) */
 .ver-header {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
-  background: linear-gradient(135deg, #f0f4ff 0%, #fff 60%);
-  border: 1px solid #dfe3e8;
-  border-radius: 12px;
+  gap: 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #fe5815;
+  border-radius: 14px;
   padding: 22px 26px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(2, 12, 45, 0.06);
 }
 .ver-header-icon {
   flex: none;
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   border-radius: 14px;
-  background: #001a70;
-  color: #fff;
+  background: #eef2fb;
+  border: 1px solid #e3e9f7;
+  color: #001a70;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,10 +32,11 @@
 .ver-header-text { min-width: 0; }
 .ver-title {
   margin: 0 0 4px 0;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 23px;
+  font-weight: 800;
   color: #001a70;
   line-height: 1.2;
+  letter-spacing: 0.2px;
 }
 .ver-subtitle {
   margin: 0;
@@ -40,11 +44,49 @@
   color: #6b7280;
 }
 
+/* Bascule Front / Back (segmented pill) */
+.ver-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  background: #ffffff;
+  border: 1px solid #e3e8f0;
+  border-radius: 99px;
+  box-shadow: 0 2px 8px rgba(2, 12, 45, 0.05);
+  margin-right: auto;
+}
+.ver-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 99px;
+  background: transparent;
+  color: #4b5563;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.ver-tab:hover {
+  color: #001a70;
+}
+.ver-tab.is-active {
+  background: linear-gradient(115deg, #001a70 0%, #0a3bbf 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 26, 112, 0.22);
+}
+.ver-tab.is-active svg {
+  color: #fff;
+}
+
 /* Toolbar de recherche */
 .ver-toolbar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 16px;
   margin-bottom: 20px;
   flex-wrap: wrap;
@@ -52,7 +94,6 @@
 .ver-count {
   font-size: 13px;
   color: #6b7280;
-  margin-right: auto;
 }
 .ver-count strong { color: #1f2937; font-weight: 700; }
 
@@ -70,7 +111,8 @@
   top: 8px;
   bottom: 8px;
   width: 2px;
-  background: linear-gradient(to bottom, #dfe3e8 0%, #dfe3e8 calc(100% - 30px), transparent 100%);
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #8a99b5 0%, #8a99b5 calc(100% - 40px), rgba(138, 153, 181, 0) 100%);
 }
 
 .ver-item {
@@ -88,7 +130,8 @@
   height: 16px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid #dfe3e8;
+  border: 2px solid #8a99b5;
+  box-shadow: 0 0 0 3px #dce1e8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +145,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #c0c5cc;
+  background: #8a99b5;
 }
 .ver-item-marker.is-latest .ver-item-dot {
   background: #fe5815;
@@ -146,16 +189,22 @@
   font-variant-numeric: tabular-nums;
 }
 .ver-badge--latest {
-  background: #001a70;
+  background: linear-gradient(115deg, #001a70 0%, #0a3bbf 100%);
   color: #fff;
+  box-shadow: 0 3px 10px rgba(0, 26, 112, 0.25);
 }
 
 .ver-date {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   font-size: 12.5px;
+  line-height: 1;
   color: #6b7280;
+}
+.ver-date svg {
+  flex: none;
+  display: block;
 }
 
 .ver-tag-latest {

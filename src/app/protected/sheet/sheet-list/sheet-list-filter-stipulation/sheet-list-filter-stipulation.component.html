@@ -14,6 +14,7 @@
     <form [formGroup]="myForm" class="filter-typeahead-form">
       <input formControlName="state"
         [typeahead]="list"
+        container="body"
         typeaheadOptionField="name"
         [typeaheadOptionsLimit]="7"
         [typeaheadMinLength]="0"

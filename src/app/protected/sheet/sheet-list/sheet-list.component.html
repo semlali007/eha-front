@@ -19,7 +19,7 @@
     <div class="col-md-9 content-col">
 
       <!-- Texte d'accueil + Ajouter -->
-      <div class="content-header">
+      <div class="content-header" *ngIf="activeText || (!!user && user.hasRole('EHA_ADMIN'))">
         <div class="content-header-text" *ngIf="activeText">
           <span [innerHtml]="welcomeText"></span>
         </div>

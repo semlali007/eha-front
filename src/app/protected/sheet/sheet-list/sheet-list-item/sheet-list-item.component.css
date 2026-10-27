@@ -34,7 +34,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 600px;
   transition: color 0.15s ease;
 }
 

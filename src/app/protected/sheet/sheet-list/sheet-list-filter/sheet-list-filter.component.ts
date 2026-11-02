@@ -50,7 +50,7 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Output() clearedAllFilters = new EventEmitter<void>();
 
   public resetFilters$ = new Subject<void>();
-  public allCollapsed = false;
+  public allCollapsed = true;
   public hasActiveDate = false;
 
   @ViewChild('filterSections', { static: false }) filterSections!: ElementRef;
@@ -93,7 +93,17 @@ export class SheetListFilterComponent implements OnInit, OnDestroy, OnChanges {
       this.initForm();
       const d = changes['defaultFilter'].currentValue;
       this.hasActiveDate = !!(d.dateStart || d.dateEnd);
+      // Les sections s'ouvrent d'elles-mêmes si un filtre est actif : on aligne le bouton global après leur rendu
+      setTimeout(() => this.syncAllCollapsed());
     }
+  }
+
+  private syncAllCollapsed(): void {
+    if (!this.filterSections) return;
+    const headers = this.filterSections.nativeElement.querySelectorAll('.filter-header');
+    this.allCollapsed = !Array.from(headers).some(
+      (header: HTMLElement) => header.getAttribute('aria-expanded') === 'true',
+    );
   }
 
   ngOnDestroy(): void {

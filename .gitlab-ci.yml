@@ -41,6 +41,18 @@ default:
   tags:
     - gitlab-runner-dvs-srv-int-p
 
+# A push to a branch with an open MR otherwise produces two pipelines a second
+# apart, a branch one and a merge_request_event one. Both run oc start-build
+# against the same BuildConfig, and the build component cancels any in-flight
+# build before starting its own, so they kill each other.
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - if: '$CI_COMMIT_BRANCH'
+    - if: '$CI_COMMIT_TAG'
+
 stages:
   - prepare
   - scan-code
@@ -217,6 +229,12 @@ include:
       stage_clean: clean
       job: "deploy-achatpedia-frontend"
       integ_ref: "/^(poc-caas|develop|main|master|preprod|production)$/"
+      # No deploy from a feature branch. The TLS entry this deployment needs is
+      # registered for poc-caas, and dvs-project policies are
+      # dvs-b-<projectId>-<ref>-ce -- scoped to the project AND the branch --
+      # so a pipeline on any other ref gets `permission denied` on a path that
+      # plainly exists. The ":branch" variant could never have worked.
+      skip_dev_branch: true
       kube_namespace: $NAMESPACE_DEPLOY_FRONTEND
       application_name: $APPLICATION_NAME
       deployment_dir: "deploy/openshift"
@@ -245,7 +263,10 @@ get-secret:
   tags:
     - gitlab-runner-dvs-srv-int-p
   rules:
-    - if: '"$[[ inputs.enable_deploy ]]" == "true"'
+    # Same branch scoping as the deploy itself: the secret lives under
+    # poc-caas/... and the policy is bound to that ref, so running this
+    # anywhere else only produces `permission denied`.
+    - if: '"$[[ inputs.enable_deploy ]]" == "true" && $CI_COMMIT_REF_NAME =~ /^(poc-caas|develop|main|master|preprod|production)$/'
   id_tokens:
     VAULT_ID_TOKEN:
       aud: "https://si-devops-secrets.edf.fr"
@@ -356,5 +377,6 @@ get-secret:
 dvs-deploy-achatpedia-frontend:integration:
   <<: *deploy_overrides
 
-dvs-deploy-achatpedia-frontend:branch:
-  <<: *deploy_overrides
+# The ":branch" variant is no longer generated -- skip_dev_branch on the
+# component -- so overriding it here would be a dangling reference, which
+# GitLab rejects with "job ... not found" rather than ignoring.

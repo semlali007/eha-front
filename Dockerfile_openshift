@@ -46,8 +46,16 @@ RUN npx ng build --configuration production
 
 # -----------------------------------------------------------------------------
 # Stage 2 - runtime
+#
+# alma8, not ubi8: the ubi8 nginx line is stuck on rhel 8.8 and ships
+# autorite_chain.pem, the G2-only EDF CA bundle, even in its newest tag.
+# dck_nginx-alma8:1.30 is rhel 8.10 with ac_bundle_edf.pem (G3). Both probed.
+#
+# NGINX_BIN_DIR moves with the version (now /opt/nginx/1.30/sbin/), which the
+# cp below picks up from the environment. The html path is not versioned, so
+# it is unaffected. Only the logs mount in deploy-frontend.yml had to follow.
 # -----------------------------------------------------------------------------
-FROM image-registry.openshift-image-registry.svc:5000/openshift/dck_nginx-ubi8:1.26
+FROM image-registry.openshift-image-registry.svc:5000/openshift/dck_nginx-alma8:1.30
 
 USER root
 

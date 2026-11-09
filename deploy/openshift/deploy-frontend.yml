@@ -245,10 +245,16 @@ objects:
 
       filebeat.yml: |-
         filebeat.inputs:
-        - input_type: log
+        # `type`, not `input_type`: the latter is a pre-6.0 alias that 8.19
+        # still honours but warns about on every start.
+        - type: log
           paths:
             - /cockpitachat/log/*.log
         setup.template.enabled: false
+        # Explicitly off. Left unset ILM defaults to auto, and against an
+        # ILM-capable cluster filebeat writes to its own rollover alias and
+        # ignores output.elasticsearch.index below.
+        setup.ilm.enabled: false
         output.elasticsearch:
           hosts: ["${ELASTICSEARCH_HOST}"]
           protocol: "https"
@@ -362,12 +368,18 @@ objects:
                 - name: nginx-scgi-temp
                   mountPath: /var/projects/instance/nginx/nginx-scgi/
                 - name: nginx-default-logs
-                  mountPath: /opt/nginx/1.26/logs
+                  mountPath: /opt/nginx/1.30/logs
                 - name: log-dir
                   mountPath: /cockpitachat/log/
 
+            # ubi9, not ubi: dck_filebeat-ubi:8.19.2 is rhel 9.2 and still
+            # ships autorite_chain.pem (G2 only), while
+            # dck_filebeat-ubi9:8.19.2 is rhel 9.8 with ac_bundle_edf.pem
+            # (G3). Both probed. This sidecar speaks TLS to PADAONE.
+            # FILEBEAT_CONFIG and FILEBEAT_DATA are unchanged, so the mounts
+            # below still apply.
             - name: filebeat-container
-              image: "image-registry.openshift-image-registry.svc:5000/openshift/dck_filebeat-ubi:7.9.3"
+              image: "image-registry.openshift-image-registry.svc:5000/openshift/dck_filebeat-ubi9:8.19.2"
               imagePullPolicy: IfNotPresent
               env:
                 - name: SECRETS_PADAONE_USERNAME

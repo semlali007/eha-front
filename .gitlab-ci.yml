@@ -180,7 +180,7 @@ include:
       build_context_dir: "."
       build_strategy: "docker"
       build_dockerfile_path: "Dockerfile_openshift"
-      build_source_image: "openshift/dck_nginx-ubi8:1.26"
+      build_source_image: "openshift/dck_nginx-alma8:1.30"
       build_cpu_request: "1"
       build_cpu_limit: "2"
       build_memory_request: "2Gi"

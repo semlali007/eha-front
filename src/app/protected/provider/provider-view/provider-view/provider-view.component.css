@@ -1,0 +1,101 @@
+/* ═══════════════════════════════════════════════════════════
+   PROVIDER VIEW — Détail d'un fournisseur
+   ViewEncapsulation.None
+   Les styles partagés sont dans ui-kit.css (.adm-*).
+   Ce fichier ne contient que ce qui est spécifique au fournisseur.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Adresse multi-lignes ────────────────────────────────── */
+.pv-address {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ─── Liste des contrats ──────────────────────────────────── */
+.pv-contract-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pv-contract-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, transform 0.12s;
+  text-decoration: none;
+  color: inherit;
+}
+.pv-contract-item:hover {
+  background: #fafbfc;
+  border-color: #001a70;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.pv-contract-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.pv-contract-system {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: #001a70;
+  background: #e8eef8;
+  border-radius: 99px;
+  padding: 3px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.pv-contract-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.pv-contract-code {
+  font-size: 13px;
+  font-weight: 700;
+  color: #001a70;
+  font-variant-numeric: tabular-nums;
+}
+.pv-contract-label {
+  font-size: 13px;
+  color: #1f2937;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pv-contract-end {
+  flex: none;
+  font-size: 12px;
+  color: #6b7280;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.pv-contract-arrow {
+  flex: none;
+  color: #c0c5cc;
+  transition: color 0.12s, transform 0.12s;
+}
+.pv-contract-item:hover .pv-contract-arrow {
+  color: #fe5815;
+  transform: translateX(3px);
+}

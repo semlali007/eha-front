@@ -14,7 +14,7 @@ export class Status {
         return [
             {
                 code: 0,
-                label: 'En attente',
+                label: 'Brouillon',
             },
             {
                 code: 1,

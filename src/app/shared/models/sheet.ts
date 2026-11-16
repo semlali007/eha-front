@@ -8,11 +8,14 @@ import { Area } from './area';
 import { Direction } from './direction';
 import { Committee } from './committee';
 import { Option } from './option';
-import { Domain } from './domain';
+import { EhaDomain } from './eha-domain';
 import { Category } from './category';
 export class Sheet {
     readonly id: string;
     title: string;
+    supplierVatNumber: string;
+    contractManager: string;
+    pcmLink: string;
     comments: string;
     words: string;
     startDate: string;
@@ -28,7 +31,7 @@ export class Sheet {
     providers: Provider[];
     beneficiaries: Beneficiary[];
     stipulationAutrui: Stipulation[];//*************************************** */
-    areas: Area[];
+    areas: Area[] | Area; // Support ancien format array et nouveau format objet unique
     directions: Direction[];
     documents: Document[];
     updatedAt: string;
@@ -40,14 +43,27 @@ export class Sheet {
     netachatId: number;
     content: string;
     netachatType: string;
-    domains: Domain[];
-    subDomains: Domain[];
+    domains: EhaDomain[];
+    subDomains: EhaDomain[];
     history: any[];
     category: Category;
+    contratGroupe: string;
+    miseAJourDonnee: string;
+    supplierSize: {id: number, name: string};
+    entitesBeneficiairesEdfEnedis: string;
+    geographicDetail: string;
+    acheteur: string;
+    autoCreated: boolean;
 
     constructor(options: {
         id?: string,
         title?: string,
+        supplierVatNumber?: string,
+        contractManager?: string,
+        pcmLink?: string,
+        entitesBeneficiairesEdfEnedis?: string,
+        geographicDetail?: string,
+        acheteur?: string,
         comments?: string,
         words?: string,
         startDate?: string,
@@ -76,13 +92,20 @@ export class Sheet {
         netachatId?: number,
         content?: string,
         netachatType?: string;
-        domains?: Domain[];
-        subDomains?: Domain[];
+        domains?: EhaDomain[];
+        subDomains?: EhaDomain[];
         history?: any[];
+        contratGroupe?: string;
+        miseAJourDonnee?: string;
+        supplierSize?: {id: number, name: string};
+        auto_created?: boolean;
 
     } = {}) {
         this.id = options.id || null;
         this.title = options.title || '';
+        this.supplierVatNumber = options.supplierVatNumber || '';
+        this.contractManager = options.contractManager || '';
+        this.pcmLink = options.pcmLink || '';
         this.comments = options.comments || '';
         this.words = options.words || '';
         this.startDate = options.startDate || '';
@@ -111,9 +134,16 @@ export class Sheet {
         this.netachatId = options.netachatId || 0;
         this.netachatType = options.netachatType || '';
         this.content = options.content || '';
-        this.domains = options.domains || [new Domain()];
-        this.subDomains = options.subDomains || [new Domain()];
+        this.domains = options.domains || [new EhaDomain()];
+        this.subDomains = options.subDomains || [new EhaDomain()];
         this.history = options.history || [];
+        this.contratGroupe = options.contratGroupe || '';
+        this.miseAJourDonnee = options.miseAJourDonnee || '';
+        this.supplierSize = options.supplierSize || null;
+        this.entitesBeneficiairesEdfEnedis = options.entitesBeneficiairesEdfEnedis || '';
+        this.geographicDetail = options.geographicDetail || '';
+        this.acheteur = options.acheteur || '';
+        this.autoCreated = options.auto_created || false;
     }
 
 }

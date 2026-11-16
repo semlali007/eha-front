@@ -1,0 +1,71 @@
+/* Styles pour le composant Acheteur */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.form-control:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.small {
+  font-size: 0.875em;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+/* Styles pour le composant kit de portage */
+
+/* Classe pour l'icône d'information */
+.info-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../../../assets/img/info-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Style pour le contenu du tooltip */
+::ng-deep .tooltip-content {
+    max-width: 250px;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+}
+
+::ng-deep .tooltip-inner {
+    max-width: 300px;
+    text-align: left;
+}
+
+/* Classe pour aligner le texte et l'icône */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0;
+}

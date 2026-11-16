@@ -1,426 +1,373 @@
+<div class="sv-page" id="htmlData">
+  <app-breadcrumb data-html2canvas-ignore="true"></app-breadcrumb>
 
-<div class="row justify-content-center">
+  <!-- Actions bar -->
+  <div class="sv-actions" data-html2canvas-ignore="true">
+    <a (click)="list()" class="sv-back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Vitrine de l'offre
+    </a>
+    <div class="sv-actions-right">
+      <button *ngIf="!!subscribed" type="button" class="sv-btn sv-btn-subscribe starred" (click)="unsubscribe(sheetId)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        Se désabonner
+      </button>
+      <button *ngIf="!subscribed" type="button" class="sv-btn sv-btn-subscribe" (click)="subscribe(sheetId)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+        </svg>
+        S'abonner
+      </button>
+      <a *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))"
+        (click)="modification(sheetId)" class="sv-btn sv-btn-edit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+        </svg>
+        Modifier
+      </a>
+      <button *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))"
+        type="button" class="sv-btn sv-btn-danger" (click)="openModal(template)">
+        Supprimer
+      </button>
+      <button class="sv-btn sv-btn-export" (click)="openPDF()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        Exporter
+      </button>
+    </div>
+  </div>
 
-    <div id="htmlData" class="col-11 col-md-10">
-        <app-breadcrumb data-html2canvas-ignore="true"></app-breadcrumb>
-        <div class="row" data-html2canvas-ignore="true">
-            <div class="col-lg-6">
-                <div >
-                    <button  (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
-                </div>
-            </div>
-            <div  class="col-lg-3 initial" >
-                <button *ngIf="!!subscribed" type="button" class="btn btn-edf float-right" (click)="unsubscribe(sheetId)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  fill="rgb(255, 158, 44)" class="mrsvg bi bi-star-fill"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    Se désabonner
-                </button>
+  <!-- Fiche détail -->
+  <div class="sv-card" id="print-section">
+    <!-- Titre -->
+    <div class="sv-card-header">
+      <h1 class="sv-sheet-title">{{ title || 'Brouillon' }}</h1>
+      <div class="sv-header-badges">
+        <span *ngIf="autoCreated" class="sv-auto-badge"
+              tooltip="Fiche générée automatiquement par le batch d'import HLK" placement="top">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/>
+          </svg>
+          Créée automatiquement (HLK)
+        </span>
+        <span *ngIf="status" class="sv-status-badge">{{ status }}</span>
+      </div>
+    </div>
 
-                <button *ngIf="!subscribed" type="button" class="btn btn-edf float-right" (click)="subscribe(sheetId)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-star-fill mrsvg"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    S'abonner
-                </button>
-            </div>
-            <div class="col-lg-1" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
-                <div class="pull-right"  >
-                    <a (click)="modification(sheetId)"
-                        class="btn btn-edf float-left" ><i class="fas fa-plus" ></i>
-                        Modifier
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-2" *ngIf="!!sheetId && !!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE')) ">
-                <button type="button" class="btn btn-danger float-left initial"  (click)="openModal(template)" >
-                    Supprimer
-                </button>
-            </div>
+    <!-- Champs -->
+    <div class="sv-fields">
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Contrat ouvert aux filiales</strong>
+          <span class="info-icon" tooltip="Un contrat ouvert aux filiales est un contrat EDF ou ENEDIS qui est ouvert à au moins une autre entité du Groupe (hors PEI)" placement="top"></span>
         </div>
+        <div class="sv-field-value">
+          <span class="sv-badge" [ngClass]="{'sv-badge-green': contratGroupe === 'true', 'sv-badge-red': contratGroupe === 'false'}">
+            {{ contratGroupe === 'true' ? 'Oui' : (contratGroupe === 'false' ? 'Non' : 'Non renseigné') }}
+          </span>
+        </div>
+      </div>
 
-        <ul class="list-group" id="print-section">
-            <li class="list-group-item row border-right-0 border-left-0 border-top-0">
-                <h1 >
-                    <span >{{title}}
+      <div class="sv-field">
+        <div class="sv-field-label"><strong>Catégorie Achats</strong></div>
+        <div class="sv-field-value">{{ category.label }}</div>
+      </div>
 
-                    </span>
-                </h1>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <h3 class="cover-heading">
-                    Informations générales sur la fiche :
-                </h3>
-            </li>
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Mots clés</strong>
+          <span class="info-icon" tooltip="Proposer un maximum de mots clés pour favoriser les recherches des utilisateurs EDF SA et filiales" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ words }}</div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Titre</strong></div>
-                <div class="col-9 ">{{title}}</div>
-            </li>
+      <div class="sv-field">
+        <div class="sv-field-label"><strong>Date de début de validité</strong></div>
+        <div class="sv-field-value">{{ startDate }}</div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de début de validité</strong></div>
-                <div class="col-9">{{startDate}}</div>
-            </li>
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Date de fin de validité</strong>
+          <span class="info-icon" tooltip="Date de fin options incluses" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ endDate }}</div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de fin de validité</strong></div>
-                <div class="col-9">{{endDate}}</div>
-            </li>
+      <div class="sv-field" *ngIf="options.length > 0">
+        <div class="sv-field-label"><strong>Options</strong></div>
+        <div class="sv-field-value">
+          <div *ngFor="let option of options; index as i" class="sv-option-item">
+            Option {{ i + 1 }} : du {{ option.startDate }} au {{ option.endDate }}
+          </div>
+        </div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Options</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let option of options;index as i;">
-                                <label>Option {{i + 1}} : du {{option.startDate}} au {{option.endDate}}</label>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Commentaires</strong></div>
-                <div [innerHTML]="comments" class="col-9">
-                </div>
-            </li>
+      <div class="sv-field sv-field-full" *ngIf="!!netachatId && netachatId > 0">
+        <div class="sv-field-label"><strong>Contenu</strong></div>
+        <div class="sv-field-value sv-content" [innerHTML]="fullContent | safe: 'rich-html'"></div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Mots clés</strong></div>
-                <div class="col-9 ">{{words}}</div>
-            </li>
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Fournisseurs</strong>
+          <span class="info-icon" tooltip="Raison sociale : indiquer tous les fournisseurs du contrat mère" placement="top"></span>
+        </div>
+        <div class="sv-field-value sv-tags">
+          <span *ngFor="let provider of providers" class="sv-tag">{{ provider.label }}</span>
+        </div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Approvisionnement sous dauphin</strong></div>
-                <div class="col-9">
-                    {{dauphin | showBooleanText}}
-                    </div>
-            </li>
+      <div class="sv-field" *ngIf="supplierVatNumber">
+        <div class="sv-field-label">
+          <strong>Numéros TVA intracommunautaire / DUNS</strong>
+          <span class="info-icon" tooltip="Numéro de TVA intracommunautaire du fournisseur" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ supplierVatNumber }}</div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Marché ouvert au personnel EDF</strong></div>
-                <div class="col-9">
-                    {{edf_open | showBooleanText}}
-                </div>
-            </li>
-            <!-- <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Stipulation pour autrui</strong></div>
-                <div class="col-9">
-                    {{stipulation_for_others | showBooleanText}}
-                </div>
-            </li> -->
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Partenariat de productivité</strong></div>
-                <div class="col-9">
-                    {{partnership | showBooleanText}}
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Secteur protégé</strong></div>
-                <div class="col-9">
-                    {{protected_sector | showBooleanText}}
-                </div>
-            </li>
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Bénéficiaires</strong>
+          <span class="info-icon" tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc)" placement="top"></span>
+        </div>
+        <div class="sv-field-value sv-tags">
+          <span *ngFor="let beneficiary of beneficiaries" class="sv-tag">{{ beneficiary.label }}</span>
+        </div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Fournisseurs</strong></div>
-                <div *ngFor="let provider of providers" class="StatutEn-instruction">
-                    <span class="En-instruction Body---16---Regular">
-                        {{provider.label}}
-                    </span>
-                </div>
-            </li>
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Stipulation pour autrui</strong>
+          <span class="info-icon" tooltip="Entités du groupe (filiales, CCAS, Fondation Groupe, etc)" placement="top"></span>
+        </div>
+        <div class="sv-field-value sv-tags">
+          <span *ngFor="let stipulation of stipulationAutrui" class="sv-tag">{{ stipulation.label }}</span>
+        </div>
+      </div>
 
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Bénéficiaires</strong></div>
-                <div *ngFor="let beneficiary of beneficiaries" class="StatutEn-instruction">
-                    <span class="En-instruction Body---16---Regular">
-                        {{beneficiary.label}}
-                    </span>
-                </div>
-            </li>
-            <!-- ***************************************** -->
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Stipulation pour autrui</strong></div>
-                <div *ngFor="let stipulation of stipulationAutrui" class="StatutEn-instruction">
-                    <span class="En-instruction Body---16---Regular">
-                        {{stipulation.label}}
-                    </span>
-                </div>
-            </li>
+      <div class="sv-field" *ngIf="entitesBeneficiairesEdfEnedis">
+        <div class="sv-field-label">
+          <strong>Entités bénéficiaires d'EDF SA / ENEDIS</strong>
+          <span class="info-icon" tooltip="Si entités spécifiques à EDF SA / ENEDIS, préciser ici" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ entitesBeneficiairesEdfEnedis }}</div>
+      </div>
 
-           <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Zone géographique d’application des marchés</strong></div>
-                <div *ngFor="let area of areas" class="StatutEn-instruction">
-                    <span class="En-instruction Body---16---Regular">
-                        {{area.label}}
-                    </span>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Directions opérationnelles (DOA)</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let direction of directions">
-                            {{direction.label}}
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Comité de Gestion de la Demande</strong></div>
-                <div class="col-9">
-                   {{committee.label}}
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Segments</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let d of domain">
-                            {{d.label}}
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Sous-ensemble</strong></div>
-                <div class="col-9">
-                    <ul>
-                        <li *ngFor="let d of subDomain">
-                            {{d.label}}
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Catégorie Achats</strong></div>
-                <div class="col-9">
-                   {{category.label}}
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Statut</strong></div>
-                <div class="col-9">{{status}}</div>
-            </li>
-
-        <li class="list-group-item row border-right-0 border-left-0" *ngIf="kits.length > 0">
-            <div class="col-3"><strong>Kit de déploiement</strong> </div>
-            <div class="col-9">
-                <ul>
-                    <li *ngFor="let kit of kits">
-                        <a (click)="downloadKit(kit)" class="link">{{kit.name}}</a>
-                    </li>
-                </ul>
+      <!-- Lots -->
+      <div class="sv-field sv-field-full" *ngIf="!netachatId && lots.length > 0">
+        <div class="sv-field-label"><strong>Lots</strong></div>
+        <div class="sv-field-value">
+          <div class="sv-table">
+            <div class="sv-table-header">
+              <span class="sv-table-col-3">Nom</span>
+              <span class="sv-table-col-9">Description</span>
             </div>
-        </li>
+            <div class="sv-table-row" *ngFor="let lot of lots">
+              <span class="sv-table-col-3">{{ lot.name }}</span>
+              <span class="sv-table-col-9">{{ lot.description }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <li class="list-group-item row border-right-0 border-left-0" *ngIf="privates.length > 0">
-            <div class="col-3"><strong>Contenu privé</strong></div>
-            <div class="col-9">
-                <ul>
-                    <li *ngFor="let private of privates">
-                        <a (click)="downloadKit(private)" class="link">{{private.name}}</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+      <!-- Contrats -->
+      <div class="sv-field sv-field-full" *ngIf="!netachatId && contracts.length > 0">
+        <div class="sv-field-label">
+          <strong>Numéros de contrats</strong>
+          <span class="info-icon" tooltip="Indiquer tous les numéros rattachés au contrat" placement="top"></span>
+        </div>
+        <div class="sv-field-value">
+          <accordion [closeOthers]="true">
+            <accordion-group #group [isDisabled]="true" panelClass="sv-accordion">
+              <div class="sv-table-header" accordion-heading>
+                <span class="sv-table-col-auto">Lots</span>
+                <span class="sv-table-col-auto">Contrat</span>
+                <span class="sv-table-col-auto">Fournisseur</span>
+                <span class="sv-table-col-auto">Contacts</span>
+              </div>
+            </accordion-group>
+            <accordion-group #group *ngFor="let contract of contracts"
+              (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0"
+              (click)="showContract(contract)" panelClass="sv-accordion">
+              <div class="sv-table-row sv-table-row-clickable" accordion-heading>
+                <span class="sv-table-col-auto">{{ contract.lots }}</span>
+                <span class="sv-table-col-auto">
+                  <i *ngIf="contract.systems.length > 0" [class.icon-plus]="!isOpened(contract)" [class.icon-minus]="isOpened(contract)"></i>
+                  {{ contract.code }}
+                </span>
+                <span class="sv-table-col-auto" [innerHTML]="contract.provider"></span>
+                <span class="sv-table-col-auto" [innerHTML]="contract.contacts"></span>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
 
+      <!-- Kit de portage -->
+      <div class="sv-field" *ngIf="kits.length > 0">
+        <div class="sv-field-label">
+          <strong>Kit de portage</strong>
+          <span class="info-icon" tooltip="Insérer le ppt unique pour l'ensemble des contrats de l'affaire" placement="top"></span>
+        </div>
+        <div class="sv-field-value">
+          <a *ngFor="let kit of kits" (click)="downloadKit(kit)" class="sv-file-link">{{ kit.name }}</a>
+        </div>
+      </div>
 
-        <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEnedis.length > 0">
-            <div class="col-3"><strong>Contenu privé (Enedis)</strong> </div>
-            <div class="col-9">
-                <ul>
-                    <li *ngFor="let privateEnedis of privatesEnedis">
-                        <a (click)="downloadKit(privateEnedis)" class="link">{{privateEnedis.name}}</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+      <div class="sv-field">
+        <div class="sv-field-label"><strong>Comité de Gestion de la Demande</strong></div>
+        <div class="sv-field-value">{{ committee.label }}</div>
+      </div>
 
-        <li class="list-group-item row border-right-0 border-left-0" *ngIf="privatesEdfEnedis.length > 0">
-            <div class="col-3"><strong>Contenu privé (Groupe EDF / Enedis)</strong> </div>
-            <div class="col-9">
-                <ul>
-                    <li *ngFor="let privateEdfEnedis of privatesEdfEnedis">
-                        <a (click)="downloadKit(privateEdfEnedis)" class="link">{{privateEdfEnedis.name}}</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!!netachatId && netachatId>0">
-            <div class="col-3"><strong>Contenu</strong></div>
-            <div class="col-9"></div>
-            <div class="col-12" style="width: 726.9px;" [innerHTML]="fullContent | safe: 'html'">
-            </div>
-        </li>
-        <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!netachatId">
-            <div class="col-3"><strong>Lots</strong></div>
-            <div class="col-9"></div>
-            <div class="col-12" *ngIf="lots.length>0">
-                <accordion [closeOthers]="true">
-                    <accordion-group #group [isDisabled]="true" panelClass="accordion-header">
-                        <div class="row" accordion-heading>
-                            <div class="col-sm-2">
-                                Nom
-                            </div>
-                            <div class="col-sm-3">
-                                Description
-                            </div>
-                        </div>
-                    </accordion-group>
-                    <accordion-group #group *ngFor="let lot of lots">
-                        <div class="row" accordion-heading>
-                            <div class="col-sm-2">
-                                <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item"> {{lot.name}} </li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-9">
-                                {{lot.description}}
-                            </div>
-                        </div>
-                    </accordion-group>
-                </accordion>
-            </div>
-        </li>
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Zone géographique d'application</strong>
+          <span class="info-icon" [tooltip]="geographicZoneTooltipTemplate" placement="top" container="body"></span>
+        </div>
+        <div class="sv-field-value sv-tags" *ngIf="selectedArea">
+          <span class="sv-tag">{{ selectedArea.label }}</span>
+        </div>
+      </div>
 
-        <li class="list-group-item row border-right-0 border-left-0 border-bottom-0" *ngIf="!netachatId">
-            <div class="col-3"><strong>Contrats</strong></div>
-            <div class="col-9"></div>
-            <div class="col-12" *ngIf="contracts.length>0">
-                <accordion [closeOthers]="true">
-                    <accordion-group #group [isDisabled]="true" panelClass="accordion-header">
-                        <div class="row" accordion-heading>
-                            <div class="col-sm-2">
-                                Lots
-                            </div>
-                            <div class="col-sm-3">
-                                Contrat
-                            </div>
-                            <div class="col-sm-3">
-                                Fournisseur
-                            </div>
-                            <div class="col-sm-4">
-                                Contacts
-                            </div>
-        
-                        </div>
-                    </accordion-group>
-                    <accordion-group #group *ngFor="let contract of contracts"
-                        (isOpenChange)="openChange($event, contract.code)" [isDisabled]="contract.systems.length==0"
-                        (click)="showContract(contract)" class="blue_link">
-                        <div class="row" accordion-heading>
-                            <div class="col-sm-2">
-                                <ul class="list-group list-group-horizontal" *ngIf="contract.lots && contract.lots.length > 0">
-                                    <li class="list-group-item">
-                                        {{ contract.lots}}
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-2" *ngIf="contract.lots && contract.lots.length === 0">
-                                <!-- Aucun affichage quand il n'y a pas de lots -->
-                            </div>
-                            <div class="col-sm-3">
-                                <div> <i *ngIf="contract.systems.length>0" [class.icon-plus]="!isOpened(contract)"
-                                        [class.icon-minus]="isOpened(contract)"></i>{{contract.code}}</div>
-                            </div>
-                            <div class="col-sm-3" [innerHTML]="contract.provider">
-                                
-                            </div>
-                            <div class="col-sm-4" [innerHTML]="contract.contacts">
-                                <!-- <pre style="font-size: inherit; color: inherit;">{{ contract.contacts }}</pre> -->
-                            </div>
-                        </div>
-                    </accordion-group>
-        
-                    <!-- <accordion-group #group [isDisabled]="true" *ngIf="lots.length>0">
-                        <div class="row" accordion-heading>
-                            <ul>
-                                <li *ngFor="let lot of lots">
-                                    <strong>{{lot.name}} :</strong> {{lot.description}}
-                                </li>
-                            </ul>
-                        </div>
-                    </accordion-group> -->
-        
-                </accordion>
-            </div>
-        </li>
-        </ul>
+      <div class="sv-field" *ngIf="geographicDetail">
+        <div class="sv-field-label">
+          <strong>Zone géographique détail si région</strong>
+          <span class="info-icon" tooltip="Détails géographiques spécifiques à la région" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ geographicDetail }}</div>
+      </div>
+
+      <div class="sv-field">
+        <div class="sv-field-label"><strong>Approvisionnement sous dauphin</strong></div>
+        <div class="sv-field-value">{{ dauphin | showBooleanText }}</div>
+      </div>
+
+      <div class="sv-field">
+        <div class="sv-field-label"><strong>Marché ouvert au personnel EDF</strong></div>
+        <div class="sv-field-value">{{ edf_open | showBooleanText }}</div>
+      </div>
+
+      <div class="sv-field" *ngIf="acheteur">
+        <div class="sv-field-label">
+          <strong>Acheteur</strong>
+          <span class="info-icon" tooltip="Saisir le nom de l'acheteur" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ acheteur }}</div>
+      </div>
+
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Contract manager</strong>
+          <span class="info-icon" tooltip="Saisir le nom du contract manager, si pas nommé écrire N/A" placement="top"></span>
+        </div>
+        <div class="sv-field-value">{{ contractManager || 'Non renseigné' }}</div>
+      </div>
+
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Mise à jour de la donnée</strong>
+          <span class="info-icon" tooltip="Donnée temporaire utilisée dans le cadre de la mise à jour globale achatpédia S2 2025" placement="top"></span>
+        </div>
+        <div class="sv-field-value">
+          <span class="sv-badge" [ngClass]="{'sv-badge-green': miseAJourDonnee === 'oui', 'sv-badge-orange': miseAJourDonnee === 'en_cours', 'sv-badge-red': miseAJourDonnee === 'non'}">
+            {{ miseAJourDonnee === 'oui' ? 'Oui' : (miseAJourDonnee === 'en_cours' ? 'En cours' : (miseAJourDonnee === 'non' ? 'Non' : 'Non renseigné')) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Statut</strong>
+          <span class="info-icon" tooltip="L'acheteur archive la fiche dès la fin du marché" placement="top" container="body"></span>
+        </div>
+        <div class="sv-field-value">{{ status }}</div>
+      </div>
+
+      <div class="sv-field">
+        <div class="sv-field-label">
+          <strong>Informations et performance de l'achat</strong>
+          <span class="info-icon" tooltip="Info clés à destination des métiers et des filiales et performance RSE, financière, contractuelle…" placement="top"></span>
+        </div>
+        <div class="sv-field-value" [innerHTML]="comments"></div>
+      </div>
+
+      <!-- Documents privés -->
+      <div class="sv-field" *ngIf="privates.length > 0">
+        <div class="sv-field-label"><strong>Contenu privé</strong></div>
+        <div class="sv-field-value">
+          <a *ngFor="let p of privates" (click)="downloadKit(p)" class="sv-file-link">{{ p.name }}</a>
+        </div>
+      </div>
+
+      <div class="sv-field" *ngIf="privatesEnedis.length > 0">
+        <div class="sv-field-label"><strong>Contenu privé (Enedis)</strong></div>
+        <div class="sv-field-value">
+          <a *ngFor="let p of privatesEnedis" (click)="downloadKit(p)" class="sv-file-link">{{ p.name }}</a>
+        </div>
+      </div>
+
+      <div class="sv-field" *ngIf="privatesEdfEnedis.length > 0">
+        <div class="sv-field-label"><strong>Contenu privé (Groupe EDF / Enedis)</strong></div>
+        <div class="sv-field-value">
+          <a *ngFor="let p of privatesEdfEnedis" (click)="downloadKit(p)" class="sv-file-link">{{ p.name }}</a>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4 mb-4">
-    </div>
-    <div class="w-50 text-center col-md-4 mb-4">
-        <button class="btn btn-edf btn-block" (click)="openPDF()">Exporter</button>
-    </div>
-    <div class="col-md-4 mb-4">
-    </div>
-    <div>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div> 
-    
+  </div>
 
-    <div class="col-11 col-md-10" >
-        <ng-container *ngIf="statusCode === 1">
-            <div class="col-md-5 mb-5" *ngIf="!!history && history?.length>0">
-                <button class="list-group-item filter-header smaller-text" (click)="isCollapsed = !isCollapsed"
-                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-                 Historique des modifications <i class="fleche fleche-droite" [class.fleche-bas]="isCollapsed == false"></i>
-               </button>
-            </div>
-            <div class="col-md-5 mb-5">
-
-            </div>
-        </ng-container>
+  <!-- Historique -->
+  <div class="sv-history" *ngIf="!!history && history?.length > 0" id="history">
+    <button class="sv-history-toggle" (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed">
+      <strong>Historique des modifications</strong>
+      <svg [class.sv-chevron-open]="!isCollapsed" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </button>
+    <div [collapse]="isCollapsed" [isAnimated]="true">
+      <div class="sv-history-table">
+        <div class="sv-table-header">
+          <span class="sv-table-col-2">Date</span>
+          <span class="sv-table-col-2">Champ</span>
+          <span class="sv-table-col-4">Valeur d'origine</span>
+          <span class="sv-table-col-4">Nouvelle valeur</span>
+        </div>
+        <div class="sv-table-row" *ngFor="let h of history">
+          <span class="sv-table-col-2 sv-history-date">{{ h.date | customDate : "dd/MM/yyyy à HH:mm" }}</span>
+          <span class="sv-table-col-2">{{ h.changement_fields }}</span>
+          <span class="sv-table-col-4" [innerHTML]="h.old_value"></span>
+          <span class="sv-table-col-4" [innerHTML]="h.new_value"></span>
+        </div>
+      </div>
+      <button *ngIf="totalHistory > history.length" class="sv-btn sv-btn-more" (click)="onScroll()">Charger plus</button>
     </div>
-    <div id="collapseBasic" [collapse]="isCollapsed" class="col-11 col-md-10" >
-        <h4 *ngIf="statusCode === 1 && !!history && history?.length > 0"><strong>Historique des modifications</strong></h4>
-        <br>
-
-     <ul *ngFor="let h of history; let isFirst = first;" class="list-group" id="print-section">
-        <ng-container *ngIf="statusCode === 1 && !!history && history?.length > 0">
-            <li>
-                Modifications - {{h.date | customDate : "dd/MM/yyyy à HH:mm:ss" }}
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="isFirst">
-                <div class="col-2"><strong>Champ</strong> </div>
-                <div class="col-5">
-                    <strong>Valeur d'origine</strong>
-                </div>
-                <div class="col-5">
-                    <strong>Nouvelle valeur</strong>
-                </div>
-            </li>
-    
-            <li class="list-group-item row border-right-0 border-left-0" *ngIf="!!history && history?.length > 0">
-                <div class="col-2">{{ h.changement_fields }}</div>
-                <div [innerHTML]="h.old_value" class="col-5">
-                </div>
-                <div [innerHTML]="h.new_value" class="col-5">
-                </div>
-            </li>
-        </ng-container>
-    </ul>
-    </div>
-    <div class="w-50 text-center col-md-4 mb-4" *ngIf="totalHistory >  history.length">
-        <button class="btn btn-edf btn-block" (click)="onScroll()">Plus</button>
-    </div>
+  </div>
 </div>
+
+<!-- Modal suppression -->
 <ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="sv-modal-delete">
+    <p>Voulez-vous supprimer l'élément ?</p>
+    <div class="sv-modal-actions">
+      <button type="button" class="sv-btn sv-btn-danger" (click)="confirm()">Oui, supprimer</button>
+      <button type="button" class="sv-btn sv-btn-secondary" (click)="decline()">Annuler</button>
     </div>
+  </div>
 </ng-template>
 
+<!-- Tooltips templates -->
+<ng-template #geographicZoneTooltipTemplate>
+  <div class="tooltip-content">
+    <div>• France métropolitaine (hors Corse)</div>
+    <div>• France métropolitaine + Corse</div>
+    <div>• France métropolitaine + Corse + DROM</div>
+    <div>• France et international</div>
+  </div>
+</ng-template>

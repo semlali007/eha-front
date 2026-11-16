@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import * as fileSaver from 'file-saver';
 import { FileService } from 'src/app/core/services/file.service';
+import { ViewModeService } from 'src/app/core/services/view-mode.service';
 
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -18,11 +19,18 @@ import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-sheet-view',
   templateUrl: './sheet-view.component.html',
-  styleUrls: ['./sheet-view.component.css']
+  styleUrls: ['./sheet-view.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SheetViewComponent implements OnInit, OnDestroy {
   public sheetId: string;
   public title: any = '';
+  public supplierVatNumber: any = '';
+  public entitesBeneficiairesEdfEnedis: any = '';
+  public geographicDetail: any = '';
+  public acheteur: any = '';
+  public contractManager: any = '';
+  public pcmLink: any = '';
   public page = 0;
   public totalHistory = 0;
   public startDate: any;
@@ -45,6 +53,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public beneficiaries: Object[] = [];
   public stipulationAutrui: Object[] = [];
   public areas: Object[] = [];
+  public selectedArea: any = null; // Zone unique sélectionnée
   public directions: Object[] = [];
   public status: any;
   public statusCode: number;
@@ -62,8 +71,11 @@ export class SheetViewComponent implements OnInit, OnDestroy {
   public subDomain: Object[] = [];
   public history: any[] = [];
   public category: any = '';
+  public contratGroupe: any = '';
+  public miseAJourDonnee: any = '';
+  public autoCreated: boolean = false;
+  public supplierSize: {id: number, name: string} | null = null;
   isCollapsed = true;
-  
 
   @ViewChild('content') content:ElementRef;
 
@@ -75,6 +87,7 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private authService: AuthService,
     private fileService: FileService,
+    private viewModeService: ViewModeService
   ) { }
 
   ngOnInit(): void {
@@ -105,9 +118,19 @@ export class SheetViewComponent implements OnInit, OnDestroy {
     this.comments = sheet.comments;
     this.words = sheet.words;
     this.title = sheet.title;
+    this.supplierVatNumber = sheet.supplierVatNumber;
+    this.entitesBeneficiairesEdfEnedis = sheet.entitesBeneficiairesEdfEnedis;
+    this.geographicDetail = sheet.geographicDetail;
+    this.acheteur = sheet.acheteur;
+    this.contractManager = sheet.contractManager;
+    this.pcmLink = sheet.pcmLink;
     this.committee = sheet.committee;
     this.category = sheet.category;
     this.showcase = sheet.showcase;
+    this.contratGroupe = sheet.contratGroupe;
+    this.miseAJourDonnee = sheet.miseAJourDonnee;
+    this.autoCreated = sheet.autoCreated;
+    this.supplierSize = sheet.supplierSize;
     this.edf_open = sheet.edfOpen;
     this.stipulation_for_others = sheet.stipulationForOthers;
     this.partnership = sheet.partnership;
@@ -145,14 +168,26 @@ export class SheetViewComponent implements OnInit, OnDestroy {
       );
     });
 
-    sheet.areas.forEach(area => {
-      this.areas.push(
-        {
+    // Gestion de la zone géographique (migration vers zone unique)
+    if (sheet.areas) {
+      if (Array.isArray(sheet.areas) && sheet.areas.length > 0) {
+        // Ancien format array - prendre le premier élément
+        this.selectedArea = {
+          code: sheet.areas[0].code,
+          label: sheet.areas[0].label,
+        };
+        // Maintenir la compatibilité affichage
+        this.areas = [this.selectedArea];
+      } else if (sheet.areas && !Array.isArray(sheet.areas)) {
+        // Nouveau format objet unique
+        const area = sheet.areas as any; // Cast temporaire pour éviter erreur typage
+        this.selectedArea = {
           code: area.code,
           label: area.label,
-        }
-      );
-    });
+        };
+        this.areas = [this.selectedArea];
+      }
+    }
 
     sheet.beneficiaries.forEach(beneficiary => {
       this.beneficiaries.push(
@@ -399,5 +434,33 @@ onScroll(): void {
       this.totalHistory = data.history.total;
       this.page++;
     });
+}
+
+/**
+ * Vérifie si on est en mode contrat groupe
+ */
+isContratGroupeMode(): boolean {
+  return this.viewModeService.isContratGroupeMode();
+}
+
+/**
+ * Détermine si un champ doit être masqué en mode contrat groupe
+ * OU si c'est un champ définitivement masqué
+ * @param fieldName - Le nom du champ à vérifier
+ */
+shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+  // Champs masqués définitivement
+  const permanentlyHiddenFields = ['partnership', 'protected_sector', 'supplierSize', 'pcmLink', 'showcase'];
+  if (permanentlyHiddenFields.includes(fieldName)) {
+    return true;
+  }
+
+  // Champs masqués en mode contrat groupe uniquement
+  if (!this.isContratGroupeMode()) {
+    return false;
+  }
+  
+  const hiddenFields = ['dauphin', 'directions', 'stipulationAutrui', 'committees', 'domain', 'subDomain'];
+  return hiddenFields.includes(fieldName);
 }
 }

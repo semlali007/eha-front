@@ -1,0 +1,18 @@
+<div [formGroup]="sheetForm" class="adm-form-group">
+  <label for="geographicDetail" class="adm-label">Détail géographique (si région)</label>
+  <textarea id="geographicDetail"
+            formControlName="geographicDetail"
+            class="adm-textarea"
+            rows="2"
+            placeholder="Précisez les détails géographiques de la région"
+            autocorrect="off"
+            autocomplete="off"></textarea>
+  <span *ngIf="sheetForm.get('geographicDetail')?.errors && sheetForm.get('geographicDetail')?.touched" class="adm-field-error">
+    <ng-container *ngIf="sheetForm.get('geographicDetail')?.errors?.['required']">
+      Détail géographique requis.
+    </ng-container>
+    <ng-container *ngIf="sheetForm.get('geographicDetail')?.errors?.['maxlength']">
+      Le détail ne peut dépasser {{ sheetForm.get('geographicDetail')?.errors?.['maxlength']?.requiredLength }} caractères.
+    </ng-container>
+  </span>
+</div>

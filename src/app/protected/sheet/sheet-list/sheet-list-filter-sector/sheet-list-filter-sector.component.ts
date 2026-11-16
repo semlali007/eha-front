@@ -12,7 +12,7 @@ export class SheetListFilterSectorComponent implements OnInit,OnChanges {
   @Input() sector: any={};
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   constructor() { }
 
   ngOnInit(): void {

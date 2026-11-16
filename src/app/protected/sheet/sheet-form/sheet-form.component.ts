@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy, HostListener, ChangeDetectorRef, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SheetService } from 'src/app/core/services/sheet.service';
 import { Sheet } from 'src/app/shared/models/sheet';
@@ -20,22 +20,27 @@ import { SheetFormModalDraftComponent } from './sheet-form-modal-draft/sheet-for
 import { of } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Category } from 'src/app/shared/models/category';
+import { ViewModeService } from 'src/app/core/services/view-mode.service';
 
 @Component({
   selector: 'app-sheet-form',
   templateUrl: './sheet-form.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class SheetFormComponent implements OnInit, OnDestroy{
 
+  @Input() mode: 'create' | 'edit' = 'create';
+  @Input() sheetId: string | null = null;
+  @Input() initialData: any = null;
+
   sheetForm: FormGroup;
+  submitted = false;
   kitUploader: FileUploader;
   privateUploader: FileUploader;
   privateEnedisUploader: FileUploader;
   privateEdfEnedisUploader: FileUploader;
-  sheetId: string;
   bsModalRef?: BsModalRef;
   bsConfirmModalRef?: BsModalRef;
   bsDraftModalRef?: BsModalRef;
@@ -43,6 +48,8 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   public user: User;
   public subscription: Subscription;
   fromNetAchat:boolean=false;
+  private subscriptions: Subscription[] = [];
+  private disableAutoRestore: boolean = false;
 
   public data = {
     subscribe: [],
@@ -97,24 +104,77 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     private dateService: DateService,
     private modalService: BsModalService,
     private contractService: ContractService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private viewModeService: ViewModeService
   ) {
   }
 
   ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
-    this.init();
-    this.sheetService.getSheets(this.params).subscribe(
-      data => {
-        this.data = data.filter;
-      }
-    );
+    this.subscriptions.push(this.subscription);
+    
+    // Initialiser le formulaire de base
+    this.initializeBasicForm();
+    
+    // Déterminer le mode d'opération
+    this.determineMode();
+    
+    // Initialiser selon le mode
+    if (this.mode === 'create') {
+      this.initializeCreateMode();
+    } else if (this.mode === 'edit' && this.sheetId) {
+      this.initializeEditMode();
+    } else {
+      // Fallback - logique existante pour compatibilité
+      this.init();
+    }
+    
+    // Charger les données de filtres
+    this.loadFilterData();
+
+    // Synchroniser le champ TVA/DUNS avec les fournisseurs sélectionnés
+    this.setupVatSync();
+
     this.cdr.detectChanges();
-   // this.openDraftModal();
-   // this.autosaveDraft();
+  }
+
+  /**
+   * Synchronise le champ "Numéro TVA intracommunautaire ou DUNS" avec les TVA
+   * des fournisseurs sélectionnés (séparées par des virgules) : mis à jour à
+   * chaque ajout/retrait. Les fournisseurs sans TVA (non identifiés INSEE) sont ignorés.
+   */
+  private setupVatSync(): void {
+    const providersCtrl = this.providers;
+    if (!providersCtrl) { return; }
+    const sub = providersCtrl.valueChanges.subscribe(() => this.syncVatFromProviders());
+    this.subscriptions.push(sub);
+  }
+
+  private syncVatFromProviders(): void {
+    const providers = (this.providers?.value as any[]) || [];
+
+    // Garde-fou : à l'ouverture d'une fiche existante, les fournisseurs chargés
+    // depuis le back ne portent pas la clé `numeroTva`. On ne touche alors PAS au
+    // champ pour ne pas écraser la TVA déjà enregistrée.
+    const carriesTvaInfo = providers.some(p => p && Object.prototype.hasOwnProperty.call(p, 'numeroTva'));
+    if (!carriesTvaInfo && providers.length > 0) { return; }
+
+    const tvas = providers
+      .map(p => p?.numeroTva)
+      .filter((tva): tva is string => typeof tva === 'string' && tva.trim().length > 0)
+      // dédoublonne les TVA identiques
+      .filter((tva, idx, arr) => arr.indexOf(tva) === idx);
+
+    this.supplierVatNumber?.setValue(tvas.join(', '));
   }
 
   get title() { return this.sheetForm.get('title') }
+  get supplierVatNumber() { return this.sheetForm.get('supplierVatNumber') }
+  get entitesBeneficiairesEdfEnedis() { return this.sheetForm.get('entitesBeneficiairesEdfEnedis') }
+  get geographicDetail() { return this.sheetForm.get('geographicDetail') }
+  get acheteur() { return this.sheetForm.get('acheteur') }
+  get contractManager() { return this.sheetForm.get('contractManager') }
+  get pcmLink() { return this.sheetForm.get('pcmLink') }
   get startDate() { return this.sheetForm.get('startDate') }
   get endDate() { return this.sheetForm.get('endDate') }
   get contracts() { return this.sheetForm.get('contracts') as FormArray; }
@@ -139,6 +199,10 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   get categoryCode() { return this.sheetForm.get('categoryCode') as any; }
   get showcase() { return this.sheetForm.get('showcase') as any; }
   get subdomains() { return this.sheetForm.get('subdomains') as any; }
+  get contratGroupe() { return this.sheetForm.get('contratGroupe') as any; }
+  get miseAJourDonnee() { return this.sheetForm.get('miseAJourDonnee') as any; }
+  get supplierSize() { return this.sheetForm.get('supplierSize') as any; }
+  
   get options() { return this.sheetForm.get('options') as FormArray; }
   resetSheetForm() {
     this.sheetForm.reset();
@@ -154,6 +218,7 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.privateEdfEnedisUploader = this.uploaderService.initKit();
     this.route.params.subscribe(params => {
       if (params.id) {
+        // Mode modification - conserver le mode actuel
         this.sheetId = params.id;
         
         this.sheetService.getSheet(params.id).subscribe(sheet => {
@@ -162,10 +227,105 @@ export class SheetFormComponent implements OnInit, OnDestroy{
           if (!sheet) return;
           this.initEditForm(sheet);
         });
-      }else{
+      } else {
+        // Mode création - basculer automatiquement en mode normal pour accéder à tous les champs
+        if (this.viewModeService.isContratGroupeMode()) {
+          console.log('SheetForm: Mode création détecté, passage en mode normal pour accéder à tous les champs');
+          this.viewModeService.setNormalMode();
+        }
         this.contracts.setValidators(Validators.required);
       }
     });
+  }
+
+  /**
+   * Détermine le mode d'opération basé sur les inputs ou la route
+   */
+  private determineMode(): void {
+    // Si le mode est explicitement passé via @Input ET qu'il vaut 'create', on force la création
+    if (this.mode === 'create' && !this.route.snapshot.params.id) {
+      this.sheetId = null;
+      return;
+    }
+    
+    // Si un sheetId est fourni via @Input, c'est prioritaire
+    if (this.sheetId) {
+      this.mode = 'edit';
+    } else if (this.route.snapshot.params.id) {
+      // Sinon, vérifier les paramètres de route
+      this.mode = 'edit';
+      this.sheetId = this.route.snapshot.params.id;
+    } else {
+      // Pas d'ID, c'est donc une création
+      this.mode = 'create';
+      this.sheetId = null;
+    }
+  }
+
+  /**
+   * Initialise le formulaire de base pour éviter les erreurs de template
+   */
+  private initializeBasicForm(): void {
+    if (!this.sheetForm) {
+      this.deletedFiles = [];
+      this.sheetForm = this.createsheetForm();
+      this.initializeBasicComponents();
+    }
+  }
+
+  /**
+   * Initialise le composant en mode création
+   */
+  private initializeCreateMode(): void {
+    // Réinitialiser les variables de base
+    this.sheetId = '';
+    this.deletedFiles = [];
+    
+    // Basculer en mode normal pour accéder à tous les champs
+    if (this.viewModeService.isContratGroupeMode()) {
+      this.viewModeService.setNormalMode();
+    }
+    
+    // Ajouter les validators requis pour la création
+    this.contracts.setValidators(Validators.required);
+  }
+
+    /**
+   * Initialise les composants de base (uploaders, etc.)
+   */
+  private initializeBasicComponents(): void {
+    this.kitUploader = this.uploaderService.initKit();
+    this.privateUploader = this.uploaderService.initKit();
+    this.privateEnedisUploader = this.uploaderService.initKit();
+    this.privateEdfEnedisUploader = this.uploaderService.initKit();
+  }
+
+  /**
+   * Charge les données de filtres depuis le service
+   */
+  private loadFilterData(): void {
+    const subscription = this.sheetService.getSheets(this.params).subscribe(
+      data => {
+        this.data = data.filter;
+      }
+    );
+    this.subscriptions.push(subscription);
+  }
+
+  /**
+   * Initialise le composant en mode édition
+   */
+  private initializeEditMode(): void {
+    // Charger la fiche existante
+    if (this.sheetId) {
+      const subscription = this.sheetService.getSheet(this.sheetId).subscribe(sheet => {
+        this.fromNetAchat = !!sheet.netachatId && sheet.netachatId > 0;
+        this.resetSheetForm();
+        if (!sheet) return;
+        this.initEditForm(sheet);
+      });
+      this.subscriptions.push(subscription);
+    }
   }
 
   cancel() {
@@ -189,6 +349,15 @@ export class SheetFormComponent implements OnInit, OnDestroy{
         Validators.required,
         Validators.minLength(4),
       ]],
+      'supplierVatNumber': [''],
+      'entitesBeneficiairesEdfEnedis': [''],
+      'contractManager': ['', [
+        Validators.minLength(2),
+      ]],
+      'pcmLink': ['', [
+        Validators.minLength(10),
+        //Validators.pattern('https?://.+')
+      ]],
       'contracts': this.fb.array([]), //*************** */
       'lots': this.fb.array([]),
       'comments': '',
@@ -209,16 +378,23 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       'areas': [[], [
 				Validators.required,
 			]],
-      'directions': [[], [
-				Validators.required,
-			]],
+      'geographicDetail': ['', [
+        Validators.maxLength(1000)
+      ]],
+      'acheteur': ['', [
+        Validators.maxLength(500)
+      ]],
+      'directions': [[]],
       'domains': [[]],
       'subdomains': [[]],
       'status': 0,
       'committeeCode': 0,
       'categoryCode': 0,
       'kits': this.fb.array([File]),
-      'showcase': false
+      'showcase': false,
+      'contratGroupe': 'false',
+      'miseAJourDonnee': 'non',
+      'supplierSize': ''
     },{ validators : customValidator });
   }
 
@@ -227,6 +403,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.comments.setValue(sheet.comments);
     this.content.setValue(sheet.content);
     this.title.setValue(sheet.title);
+    this.supplierVatNumber.setValue(sheet.supplierVatNumber || '');
+    this.entitesBeneficiairesEdfEnedis.setValue(sheet.entitesBeneficiairesEdfEnedis || '');
+    this.geographicDetail.setValue(sheet.geographicDetail || '');
+    this.acheteur.setValue(sheet.acheteur || '');
+    this.contractManager.setValue(sheet.contractManager || '');
+    this.pcmLink.setValue(sheet.pcmLink || '');
     this.words.setValue(sheet.words);
     this.status.setValue(sheet.status);
     this.edf_open.setValue(sheet.edfOpen);
@@ -248,6 +430,10 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     this.committeeCode.setValue(sheet.committee.code);
     this.categoryCode.setValue(sheet.category.code);
     this.showcase.setValue(sheet.showcase);
+    this.contratGroupe.setValue(sheet.contratGroupe || 'false');
+    this.miseAJourDonnee.setValue(sheet.miseAJourDonnee || 'non');
+    this.supplierSize.setValue(sheet.supplierSize?.id || '');
+    
     let providersList = [];
     sheet.providers.forEach(provider => {
       providersList.push(
@@ -264,18 +450,19 @@ export class SheetFormComponent implements OnInit, OnDestroy{
 
     let areasList = [];
 
-    sheet.areas.forEach(area => {
-      areasList.push(
-        {
-          code: area.code,
-          label: area.label,
-          display: area.label,
-          value: area.label,
+    // Gestion du nouveau format areas (Area | Area[])
+    if (sheet.areas) {
+      if (Array.isArray(sheet.areas)) {
+        // Ancien format array - migration vers sélection unique (prendre le premier)
+        if (sheet.areas.length > 0) {
+          const firstArea = sheet.areas[0];
+          this.areas.setValue(firstArea);
         }
-      );
-    });
-
-    this.areas.setValue(areasList);
+      } else {
+        // Nouveau format objet unique
+        this.areas.setValue(sheet.areas);
+      }
+    }
 
     let beneficiariesList = [];
     sheet.beneficiaries.forEach(beneficiary => {
@@ -440,6 +627,15 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
 
   submit(draft? : boolean): void {
+    this.submitted = true;
+    if (!draft && this.sheetForm && this.sheetForm.invalid) {
+      this.sheetForm.markAllAsTouched();
+      setTimeout(() => {
+        const banner = document.querySelector('.adm-form-error-banner');
+        banner?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+      return;
+    }
     let dateOptions = [];
     this.options.value.forEach(op => {
       dateOptions.push(new Option({id:op.id, startdate:op.startDate, enddate:op.endDate}));
@@ -447,6 +643,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
     let $options = {
       id: null,
       title: this.title.value,
+      supplierVatNumber: this.supplierVatNumber.value,
+      entitesBeneficiairesEdfEnedis: this.entitesBeneficiairesEdfEnedis.value,
+      geographicDetail: this.geographicDetail.value,
+      acheteur: this.acheteur.value,
+      contractManager: this.contractManager.value,
+      pcmLink: this.pcmLink.value,
       startDate: this.startDate.value,
       endDate: this.endDate.value,
       comments: this.comments.value,
@@ -470,6 +672,12 @@ export class SheetFormComponent implements OnInit, OnDestroy{
       committee: new Committee({code:this.committeeCode.value}),
       category: new Category({code:this.categoryCode.value}),
       showcase: this.showcase.value,
+      contratGroupe: this.contratGroupe.value,
+      miseAJourDonnee: this.miseAJourDonnee.value,
+      supplierSize: this.supplierSize.value ? {
+        id: parseInt(this.supplierSize.value),
+        name: ''
+      } : null,
       options : dateOptions
     };
 
@@ -594,8 +802,45 @@ export class SheetFormComponent implements OnInit, OnDestroy{
   }
   
 
+  /**
+   * Vérifie si on est en mode contrat groupe
+   */
+  public isContratGroupeMode(): boolean {
+    return this.viewModeService.isContratGroupeMode();
+  }
+
+  /**
+   * Vérifie si un champ doit être masqué en mode contrat groupe
+   * OU si c'est un champ définitivement masqué
+   */
+  public shouldHideFieldInContratGroupeMode(fieldName: string): boolean {
+    // Champs masqués définitivement
+    const permanentlyHiddenFields = ['partnership', 'protected_sector', 'supplierSize', 'pcmLink', 'showcase'];
+    if (permanentlyHiddenFields.includes(fieldName)) {
+      return true;
+    }
+
+    // Champs masqués en mode contrat groupe uniquement
+    if (!this.isContratGroupeMode()) {
+      return false;
+    }
+    
+    const hiddenFields = ['dauphin', 'directions', 'stipulationAutrui', 'committees'];
+    return hiddenFields.includes(fieldName);
+  }
+
   ngOnDestroy() {
-		this.subscription.unsubscribe();
-	}
+    // Nettoyer toutes les subscriptions
+    this.subscriptions.forEach(sub => {
+      if (sub && !sub.closed) {
+        sub.unsubscribe();
+      }
+    });
+    
+    // Nettoyer la subscription principale
+    if (this.subscription && !this.subscription.closed) {
+      this.subscription.unsubscribe();
+    }
+  }
 }
 

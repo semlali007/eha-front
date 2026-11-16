@@ -235,6 +235,11 @@ const routes: Routes = [
         path: 'enquete/cockpit/:cockpit',
         loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
         data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: null, label: "Enquête de satisfaction" },
+          ],
+          title: "Enquête de satisfaction",
           is_external: true
         }
       },
@@ -242,6 +247,11 @@ const routes: Routes = [
         path: 'enquete/cockpit/:cockpit/pgi/:pgi',
         loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
         data: {
+          breadcrumb: [
+            { route: "/app/accueil", label: "Accueil" },
+            { route: null, label: "Enquête de satisfaction" },
+          ],
+          title: "Enquête de satisfaction",
           is_external: true
         }
       },

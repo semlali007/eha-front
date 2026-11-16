@@ -1,0 +1,17 @@
+<div class="form-group">
+    <label for="pcmLink">Lien PCM</label>
+    <span class="info-icon" 
+          tooltip="Lien PCM" 
+          placement="top" 
+          role="img" 
+          aria-label="Information"></span>
+    <input type="url" 
+           class="form-control" 
+           id="pcmLink"
+           [formControl]="control"
+           placeholder="https://exemple.com/pcm/contrat123">
+    <div *ngIf="control?.invalid && control?.touched" class="text-danger">
+        <small *ngIf="control?.errors?.['minlength']">Minimum 10 caractères requis </small>
+        <small *ngIf="control?.errors?.['pattern']">Veuillez saisir une URL valide</small>
+    </div>
+</div>

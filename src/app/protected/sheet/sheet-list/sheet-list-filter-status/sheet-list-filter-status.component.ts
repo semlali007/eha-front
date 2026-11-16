@@ -12,16 +12,18 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
   @Input() status: any = [];
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
+  private initialized = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (this.status.value != 'all') {
+    if (!this.initialized && Array.isArray(this.status.value) && this.status.value.length > 0) {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
 
   changeFilter0(code) {
@@ -35,7 +37,12 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
   changeFilter(code) {
     if (code == 'all') {
       this.status.setValue([]);
-    } else
+    } else {
+      // S'assurer que status.value est un tableau
+      if (!Array.isArray(this.status.value)) {
+        this.status.setValue([]);
+      }
+      
       if (this.isActive(code) == true) {
         const index = this.status.value.indexOf(code);
         if (index !== -1) {
@@ -44,6 +51,7 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
       } else {
         this.status.value.push(code);
       }
+    }
 
     this.changedFilter.emit({
       type: 'status',
@@ -56,6 +64,10 @@ export class SheetListFilterStatusComponent implements OnInit, OnChanges {
   }
 
   public isActive(code): boolean {
+    // S'assurer que status.value est un tableau avant d'utiliser includes
+    if (!Array.isArray(this.status.value)) {
+      return false;
+    }
     return this.status.value.includes(code);
   }
 }

@@ -1,77 +1,78 @@
-<div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Ajouter un élément</h5>
-        <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form novalidate [formGroup]="documentationForm" (ngSubmit)="submit()">
-            <div class="form-group">
-                <label for="title"><strong>Titre :</strong></label>
-                <!--<input type="text" class="form-control" placeholder="titre" [formControl]="title">-->
-                <editor [formControl]="title" id="title"
-                    [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
-                </editor>
-                <small *ngIf="title.errors" class="form-text text-danger">
-                    <span [hidden]="!title.errors.required">
-                        Titre requis.
-                    </span>
-                </small>
-            </div>
-            <div class="form-group">
-                <label for="shortdescription"><strong>Description courte :</strong></label>
-                <!--<input type="text" class="form-control" placeholder="titre" [formControl]="title">-->
-                <textarea class="form-control"  type="text" [formControl]="shortdescription" name="shortdescription" id="shortdescription" >
-                </textarea>
-                <small *ngIf="shortdescription.errors" class="form-text text-danger">
-                    <span [hidden]="!shortdescription.errors.required">
-                        shortdescription requis.
-                    </span>
-                </small>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="col-sm-3">
-                            <strong>Fil d'ariane:</strong>
-                        </div>
-                        <input type="text" name="breadcrumb" formControlName="breadcrumb" id="breadcrumb"
-                            class="form-control">
-                            <small *ngIf="breadcrumb.errors" class="form-text text-danger">
-                                <span [hidden]="!breadcrumb.errors.required">
-                                    Fil d'ariane requis.
-                                </span>
-                            </small>
-                    </div>
-                   
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="url"><strong>URL :</strong></label>
-                <input type="text" class="form-control" placeholder="url" [formControl]="url">
-            </div>
-            <div class="form-group">
-                <label for="description"><strong>Description :</strong></label>
-                <div>
-                    <editor [formControl]="description" id="description"
-                        [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
-                    </editor>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="warning"><strong>Message(alerte):</strong></label>
-                <div>
-                    <editor [formControl]="warning" id="warning"
-                        [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
-                    </editor>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="submit()"
-            [disabled]="!documentationForm.valid">Valider</button>
-        <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
-    </div>
+<div class="adm-modal-header">
+  <h4 class="adm-modal-title">{{ documentationId ? 'Modifier l\'élément' : 'Ajouter un élément' }}</h4>
+  <button type="button" class="adm-modal-close" aria-label="Fermer" (click)="bsModalRef.hide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
 </div>
+
+<form novalidate [formGroup]="documentationForm" (ngSubmit)="submit()">
+  <div class="adm-modal-body" style="max-height: 70vh; overflow-y: auto">
+
+    <div class="adm-form-group">
+      <label class="adm-label">Titre<span class="adm-required">*</span></label>
+      <div class="adm-editor-wrap">
+        <editor [formControl]="$any(title)" id="doc-title"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link', branding: false, menubar: false, height: 180}">
+        </editor>
+      </div>
+      <span *ngIf="title?.errors?.required && title?.dirty" class="adm-field-error">Titre requis.</span>
+    </div>
+
+    <div class="adm-form-group">
+      <label for="doc-breadcrumb" class="adm-label">Fil d'ariane<span class="adm-required">*</span></label>
+      <input id="doc-breadcrumb"
+             class="adm-input"
+             type="text"
+             formControlName="breadcrumb"
+             placeholder="Ex : Accueil › Achat › Contrat">
+      <span *ngIf="breadcrumb?.errors?.required && breadcrumb?.dirty" class="adm-field-error">Fil d'ariane requis.</span>
+    </div>
+
+    <div class="adm-form-group">
+      <label for="doc-short" class="adm-label">Description courte</label>
+      <textarea id="doc-short"
+                class="adm-textarea"
+                [formControl]="$any(shortdescription)"
+                rows="3"
+                placeholder="Résumé affiché dans la liste"></textarea>
+    </div>
+
+    <div class="adm-form-group">
+      <label for="doc-url" class="adm-label">URL</label>
+      <input id="doc-url"
+             class="adm-input"
+             type="text"
+             [formControl]="$any(url)"
+             placeholder="https://... (optionnel)">
+    </div>
+
+    <div class="adm-form-group">
+      <label class="adm-label">Description</label>
+      <div class="adm-editor-wrap">
+        <editor [formControl]="$any(description)" id="doc-description"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link', branding: false, menubar: false, height: 220}">
+        </editor>
+      </div>
+    </div>
+
+    <div class="adm-form-group">
+      <label class="adm-label">Message d'alerte</label>
+      <div class="adm-editor-wrap">
+        <editor [formControl]="$any(warning)" id="doc-warning"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link', branding: false, menubar: false, height: 150}">
+        </editor>
+      </div>
+      <span class="adm-field-hint">Message d'avertissement visible sur la page (optionnel).</span>
+    </div>
+
+  </div>
+
+  <div class="adm-modal-footer">
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="bsModalRef.hide()">Annuler</button>
+    <button type="submit" class="adm-btn adm-btn-edf" [disabled]="!documentationForm.valid">
+      {{ documentationId ? 'Enregistrer' : 'Ajouter' }}
+    </button>
+  </div>
+</form>

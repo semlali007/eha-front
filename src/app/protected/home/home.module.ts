@@ -6,6 +6,7 @@ import { HomeSearchComponent } from './home-search/home-search.component';
 import { HomeContactComponent } from './home-contact/home-contact.component';
 import { HomeSearchFormComponent } from './home-search-form/home-search-form.component';
 import { HomeSheetComponent } from './home-sheet/home-sheet.component';
+import { homeContratGroupeComponent } from './home-contrat-groupe/home-contrat-groupe.component';
 import { HomePurchaseFormComponent } from './home-purchase-form/home-purchase-form.component';
 import { HomeSearchFormZipComponent } from './home-search-form-zip/home-search-form-zip.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -16,7 +17,7 @@ import { ConfigService } from 'src/app/core/services/config.service';
 
 
 @NgModule({
-  declarations: [HomeComponent, HomeDocumentationComponent, HomeSearchComponent, HomeContactComponent, HomeSearchFormComponent,HomeSheetComponent, HomeSearchFormZipComponent, HomeModalComponent, HomeInformationComponent, HomePurchaseFormComponent, HomeNewsCastComponent],
+  declarations: [HomeComponent, HomeDocumentationComponent, HomeSearchComponent, HomeContactComponent, HomeSearchFormComponent, HomeSheetComponent, HomeSearchFormZipComponent, HomeModalComponent, HomeInformationComponent, HomePurchaseFormComponent, HomeNewsCastComponent, homeContratGroupeComponent],
   imports: [
     SharedModule,
     HomeRoutingModule

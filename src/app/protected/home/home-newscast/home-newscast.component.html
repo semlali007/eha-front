@@ -1,70 +1,48 @@
-<div class="row " *ngIf="(data$ | async) as data">
-    <div  *ngIf="!!data && !!data.total && data.total>0" class="col-12 col-md-12">
-        <div class="Bloc-actualit">
-            <div class="row Frame-931">
-                <div class="col-8 col-md-8 ">
-                    <div class="list-group Frame-315">
-                        <img src="../../../../assets/img/mdi_announcement.png"
-                            srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
-                            class="mdiannouncement">
-                        <span class="Actualit H2---26---Semi-Bold">
-                            Actualités
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="col-4 col-md-4 ">
-                    <div class="list-group Frame-315">
-                        <span class="Consulter-toute-lactualit Body---14---Semi-Bold" (click)="navigateToList()">
-                            Consulter toute l’actualité
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="row Frame-930">
-                <div class="col-12 col-md-12 ">
-                    <div class="list-group Frame-934">
-                        <tabset [vertical]="true" customClass="customClass">
-                            <tab *ngFor="let news of data.data |  slice:0:3;">
-                                <ng-template tabHeading>
-                                    <div class="Frame-938">
-                                        <div class="Frame-933">
-                                            <span class="Nascetur-diam-arcu-ut-neque-purus-maur Body---14---Semi-Bold">
-                                                {{news.title|slice:0:35}}<span *ngIf="news.title.length > 35">...</span>
-                                            </span>
-                                            <span class="Modification-de-march---Publi-le-22012023 Body---12---Regular">
-                                                {{news.categ}} - Publié le {{news.published_date| customDate: "dd.MM.yyyy"  }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                   
-                                </ng-template>
-                                <div class="Frame-316">
-                                    <div class="Frame-410">
-                                        <div class="Frame-937">
-                                          <div >
-                                            <span class="badge {{news.categ_code|newsCastCategoryColor}}" style="float:left"> {{ news.categ }}</span>
-                                          </div>
-                                          <span class="Publi-le-02022023 Body---16---Semi-Bold">
-                                           Publié le {{news.published_date| customDate: "dd.MM.yyyy" }}
-                                          </span>
-                                      </div>
-                                      <span class="Elit-donec-fermentum-dignissim-amet-massa-sed-dolor-enim H3---22---Regular">
-                                        {{news.title}}
-                                      </span>
-                                      <span *ngIf="(news.short_description|striphtml).length<=250" [innerHtml]="(news.short_description|striphtml|slice:0:250)" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular"></span>
-                                      <span *ngIf="(news.short_description|striphtml).length>250" [innerHtml]="(news.short_description|striphtml|slice:0:250) + '...'" class="Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a Body---16---Regular"></span>
-                                      <span class="Lire-la-suite Body---16---Semi-Bold" (click)="navigate(news.id)">
-                                        Lire la suite
-                                      </span>
-                                    </div>
-                                  </div>
-                               
-                            </tab>
-                        </tabset>
-                    </div>
-                </div>
-            </div>
+<div class="hnc" *ngIf="(data$ | async) as data">
+  <div class="hnc-panel" *ngIf="!!data && !!data.total && data.total > 0">
+
+    <!-- ══ État grille ══ -->
+    <ng-container *ngIf="!selected">
+      <div class="hnc-head">
+        <div class="hnc-head-left">
+          <img src="assets/img/mdi_announcement.png" class="hnc-icon" alt="">
+          <span class="hnc-head-title">Actualités</span>
         </div>
+        <button type="button" class="hnc-all" (click)="navigateToList()">
+          Consulter toute l'actualité
+          <span class="hnc-all-arrow">&#8594;</span>
+        </button>
+      </div>
+
+      <div class="hnc-grid">
+        <article class="hnc-card" *ngFor="let news of data.data | slice:0:6" (click)="open(news)">
+          <div class="hnc-card-top">
+            <span class="badge hnc-badge {{ news.categ_code | newsCastCategoryColor }}">{{ news.categ }}</span>
+            <span class="hnc-date">{{ news.published_date | customDate: "dd.MM.yyyy" }}</span>
+          </div>
+          <h3 class="hnc-card-title">{{ news.title }}</h3>
+          <p class="hnc-card-desc" [innerHtml]="news.short_description | striphtml"></p>
+          <span class="hnc-more">Lire la suite</span>
+        </article>
+      </div>
+    </ng-container>
+
+    <!-- ══ État détail (plein bloc) ══ -->
+    <div class="hnc-detail" *ngIf="selected">
+      <div class="hnc-detail-top">
+        <span class="badge hnc-badge {{ selected.categ_code | newsCastCategoryColor }}">{{ selected.categ }}</span>
+        <span class="hnc-date">Publié le {{ selected.published_date | customDate: "dd.MM.yyyy" }}</span>
+        <button type="button" class="hnc-close" (click)="close()" aria-label="Fermer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+
+      <h2 class="hnc-detail-title">{{ selected.title }}</h2>
+
+      <div class="hnc-detail-body" [innerHtml]="selected.long_description || selected.short_description"></div>
     </div>
+
+  </div>
 </div>

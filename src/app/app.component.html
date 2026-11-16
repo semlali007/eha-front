@@ -6,10 +6,11 @@
             <router-outlet></router-outlet>
         </div>
     </main>
+    <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
 <app-loader></app-loader>
 <app-toastr></app-toastr>
 <app-inactivity *ngIf="!!(user$|async) && !!(user$|async).nni"></app-inactivity>
 <app-global-toastr></app-global-toastr>
 <app-modal-info></app-modal-info>
+<app-modal-error></app-modal-error>

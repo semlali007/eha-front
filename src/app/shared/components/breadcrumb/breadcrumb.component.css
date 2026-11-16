@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════════════════════
+   BREADCRUMB GLOBAL — Fil d'Ariane partagé par toutes les pages
+   Préfixe : .bc-*
+   ═══════════════════════════════════════════════════════════ */
+
+/* Forcer le host custom-element en block (sinon inline par défaut) */
+app-breadcrumb { display: block; }
+
+.bc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0 14px 0;
+  padding: 0;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13px;
+}
+
+/* ── Lien cliquable ────────────────────────────────────────── */
+.bc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #001a70;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s;
+}
+.bc-link:hover {
+  background: #eef2fb;
+  color: #fe5815;
+}
+
+/* ── Item courant (page active, non cliquable) ─────────────── */
+.bc-current {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ── Séparateur chevron ────────────────────────────────────── */
+.bc-sep {
+  display: inline-flex;
+  align-items: center;
+  color: #64748b;
+}

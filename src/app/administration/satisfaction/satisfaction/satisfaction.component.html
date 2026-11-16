@@ -1,81 +1,112 @@
-<h1>Enquête de satisfaction</h1>
+<div class="adm-page">
 
-<div class="form-group row" style="margin-left:0 !important">
-    Télécharger les réponses:
-    <div>
-        <a class="titre-listing link" style="color: #001A70!important" (click)="download('csv')"> (CSV) </a>
-    </div>
-    <div>
-        <a class="titre-listing link" style="color: #001A70!important" (click)="download('excel')"> (Excel) </a>
-    </div>
-    <div>
-        <a class="titre-listing link" style="color: #001A70!important" (click)="download('json')"> (JSON) </a>
-    </div>
-</div>
+  <h1 class="adm-title">Enquête de satisfaction</h1>
 
-<table class="table">
-    <thead>
+  <!-- Toolbar : compteur + recherche + exports -->
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> réponse{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ all.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher par cockpit, DA PGI ou NNI…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+
+    <div class="ast-exports">
+      <span class="ast-exports-label">Exporter</span>
+      <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="download('csv')" [disabled]="filtered.length === 0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        CSV
+      </button>
+      <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="download('excel')" [disabled]="filtered.length === 0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        Excel
+      </button>
+      <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="download('json')" [disabled]="filtered.length === 0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        JSON
+      </button>
+    </div>
+  </div>
+
+  <!-- Tableau -->
+  <div class="adm-table-card" *ngIf="paged.length > 0">
+    <table class="adm-table ast-table">
+      <thead>
         <tr>
-            <th>
-                cockpit_id
-            </th>
-            <th>
-                da_pgi
-            </th>
-            <th>
-                nni
-            </th>
-            <th>
-                accompaniement
-            </th>
-            <th>
-                contractual
-            </th>
-            <th>
-                timing
-            </th>
-            <th>
-                strong_points
-            </th>
-            <th>
-                improvement
-            </th>
-            <th>
-                Date
-            </th>
+          <th style="width: 130px">Date</th>
+          <th style="width: 130px">Cockpit</th>
+          <th style="width: 110px">DA PGI</th>
+          <th style="width: 90px">NNI</th>
+          <th>Accompagnement</th>
+          <th>Clauses</th>
+          <th>Timing</th>
+          <th>Points forts</th>
+          <th>Axes d'amélioration</th>
         </tr>
-    </thead>
-    <tbody>
-
-        <tr *ngFor="let factsheet of satisfactions$ | async">
-            <td>
-                {{factsheet.cockpit_id}}
-            </td>
-
-            <td>
-                {{factsheet.da_pgi}}
-            </td>
-            <td>
-                {{factsheet.nni}}
-            </td>
-            <td>
-                {{factsheet.accompaniement}}
-            </td>
-            <td>
-                {{factsheet.contractual}}
-            </td>
-            <td>
-                {{factsheet.timing}}
-            </td>
-            <td>
-                {{factsheet.strong_points}}
-            </td>
-            <td>
-                {{factsheet.improvement}}
-            </td>
-            <td> 
-                {{factsheet.created_at | customDate : "dd/MM/yyyy à HH:mm:ss" }}
-            </td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of paged">
+          <td class="adm-table-col-muted">{{ item.created_at | customDate : "dd/MM/yyyy à HH:mm" }}</td>
+          <td>{{ item.cockpit_id || '—' }}</td>
+          <td class="adm-table-col-muted">{{ item.da_pgi || '—' }}</td>
+          <td class="adm-table-col-muted">{{ item.nni || '—' }}</td>
+          <td><span class="ast-rating" [attr.data-level]="ratingLabel(item.accompaniement).level">{{ ratingLabel(item.accompaniement).label }}</span></td>
+          <td><span class="ast-rating" [attr.data-level]="ratingLabel(item.contractual).level">{{ ratingLabel(item.contractual).label }}</span></td>
+          <td><span class="ast-rating" [attr.data-level]="ratingLabel(item.timing).level">{{ ratingLabel(item.timing).label }}</span></td>
+          <td class="ast-text-cell" [title]="item.strong_points || ''">{{ item.strong_points || '—' }}</td>
+          <td class="ast-text-cell" [title]="item.improvement || ''">{{ item.improvement || '—' }}</td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty state -->
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <p class="adm-empty-title">Aucune réponse trouvée</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucune enquête n'a encore été remplie.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>

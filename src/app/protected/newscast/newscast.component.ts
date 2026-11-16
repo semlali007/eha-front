@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NewsCastService } from 'src/app/core/services/newscast.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -6,7 +6,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 @Component({
   selector: 'app-newscast',
   templateUrl: './newscast.component.html',
-  styleUrls: ['./newscast.component.css']
+  styleUrls: ['./newscast.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NewsCastComponent implements OnInit {
   id: number = 0;

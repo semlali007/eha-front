@@ -1,48 +1,71 @@
-  <div class="container-fluid">
-    <div class="row sidenav">
+<div class="adm-page">
 
-      <div class="col-md-12" style="margin-top:-8px;">
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="form-group row">
-                  <div class="col-3 col-sm-3" *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))">
-                    <a (click)="navigate('creation')" class="btn btn-sheet-search"><i class="fas fa-plus"></i>
-                      Ajouter une actualité</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div>
-                <div class="tab-content">
-                  <div class="active">
-                    <div>
-                      <div class="list-group my-items-for-trainings" *ngIf="newsList">
-                        <app-newscast-list-item *ngFor="let news of newsList" [news]="news" >
-                        </app-newscast-list-item>
-                        <div class="row">
-                          <form class="col-xs-12 col-12" [formGroup]="paginationForm">
-                            <nav aria-label="pagination" >
-                            <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-                              [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-                              (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;"
-                              firstText="&laquo;" lastText="&raquo;">
-                            </pagination>
-                            </nav>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="adm-header">
+    <h1 class="adm-title">Actualités</h1>
+    <div class="adm-header-actions"
+         *ngIf="!!user && (user.hasRole('EHA_ADMIN') || user.hasRole('EHA_GESTIONNAIRE'))">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="navigateCreate()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter une actualité
+      </button>
     </div>
   </div>
 
-  
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> actualité{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ newsList.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher une actualité…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-newscast-list" *ngIf="filtered.length > 0">
+    <app-newscast-list-item
+      *ngFor="let news of filtered"
+      [news]="news"
+      (click)="openDetail(news.id)">
+    </app-newscast-list-item>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/>
+    </svg>
+    <p class="adm-empty-title">Aucune actualité trouvée</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucune actualité — créez-en une avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="totalItems > itemsPerPage">
+    <p class="adm-pagination-info">
+      Page {{ currentPageValue }} sur {{ totalPages }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="totalItems"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>

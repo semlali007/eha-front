@@ -1,25 +1,28 @@
-<div class="form-group">
-    <strong>Directions opérationnelles (DOA) :</strong><span class="required">*</span>
-    <div class="row">
-        <div class="col-sm-10">
-            <tag-input [formControl]="directions"  [placeholder]="''" [onTextChangeDebounce]="500"
-                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
-                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
-                    [identifyBy]="'code'" [displayBy]="'label'">
-                </tag-input-dropdown>
-            </tag-input>
-        </div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-edf"
-            (click)="openModalWithComponent()"
-               >DOA</button>
-        </div>
-
-    </div>
-    <small *ngIf="directions.errors" class="form-text text-danger">
-        <span [hidden]="!directions.errors.required">
-            DOA requis.
-        </span>
-       
-    </small>
+<div class="adm-form-group">
+  <label class="adm-label">
+    Directions opérationnelles (DOA)<span class="adm-required">*</span>
+  </label>
+  <div class="adm-tag-input-row">
+    <tag-input class="adm-tag-input"
+               [formControl]="directions"
+               [placeholder]="''"
+               [onTextChangeDebounce]="500"
+               [secondaryPlaceholder]="'Commencez à taper pour rechercher une DOA…'"
+               [onlyFromAutocomplete]="true">
+      <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems"
+                          [minimumTextLength]="3"
+                          [identifyBy]="'code'"
+                          [displayBy]="'label'">
+      </tag-input-dropdown>
+    </tag-input>
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="openModalWithComponent()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+      DOA
+    </button>
+  </div>
+  <span *ngIf="directions.errors && directions.touched" class="adm-field-error">
+    <ng-container *ngIf="directions.errors.required">DOA requise.</ng-container>
+  </span>
 </div>

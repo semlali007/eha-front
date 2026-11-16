@@ -1,123 +1,117 @@
-<app-breadcrumb></app-breadcrumb>
-<div class="row">
+<div class="ps-page">
+  <app-breadcrumb></app-breadcrumb>
 
-<div class="col-5">
-    <h1 class="titre">
-        Ma situation achat
-    </h1>
-</div>
+  <!-- Header -->
+  <div class="ps-header">
+    <h1 class="ps-title">Ma situation achat</h1>
+    <app-purchase-situation-form (submittedForm)="onSubmittedForm($event)"></app-purchase-situation-form>
+  </div>
 
-
-    <div class="col-12">
-        <app-purchase-situation-form (submittedForm)="onSubmittedForm($event)"></app-purchase-situation-form>
-        <hr class="hr">
-        <div>
-            <div class="row">
-                <div class="col-2">
-                    <h1 class="titre-result">
-                        {{filteredlist.length}} demande<span *ngIf="filteredlist.length > 1">s</span> d'achat </h1>
-                </div>
-                <div class="col-3">
-                    <p *ngIf="isFiltered()" class="critere">&nbsp;avec vos critères de recherche</p>
-                </div>
-                <div class="col-2">
-                    <a *ngIf="isFiltered()" class="open-da clickable" (click)="clearFilter()">Supprimer mes critères</a>
-                </div>
-                <div class="col-2" *ngIf='isOpen!=true'>
-                    <a class="open-da clickable" (click)="open()"><img
-                            src="../../../../assets/img/icon-list-da.png">&nbsp;Ouvrir toutes les DA</a>
-                </div>
-                <div class="col-2" *ngIf='isOpen==true'>
-                    <a class="open-da clickable" (click)="close()"><img
-                            src="../../../../assets/img/icon-list-da.png">&nbsp;Fermer toutes les DA</a>
-                </div>
-                <div>
-                    <p class="text-simple">DA par page</p>
-                </div>
-                <div class="col-1">
-                    <div class="btn-group" dropdown style="width:100px">
-                        <button id="button-basic" dropdownToggle type="button"
-                            class="btn btn-default ddown-per-page dropdown-toggle"
-                            aria-controls="dropdown-basic">{{itemsPerPage}}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-                                class="caret"></span>
-                        </button>
-                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
-                            aria-labelledby="button-basic">
-                            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
-                            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
-                            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <p class="t-key element">Numéro <img class="img-left clickable"
-                            src="../../../../assets/img/flech-down.png"
-                            (click)="sort({'column':'need_system_id', 'direction':'desc'})"><img class="img clickable"
-                            src="../../../../assets/img/flech-up.png"
-                            (click)="sort({'column':'need_system_id', 'direction':'asc'})"></p>
-                    <input type="text" class="form-control text-field-filter" [formControl]="filterCode"
-                        (keyup)="filter()" placeholder="Saisir pour filtrer la liste">
-                </div>
-                <div class="col-3">
-                    <p class="t-key element">Libellé
-                        <img class="img-left-label clickable" src="../../../../assets/img/flech-down.png"
-                            (click)="sortText({'column':'need_mtb_desc', 'direction':'desc'})"><img
-                            class="img clickable" src="../../../../assets/img/flech-up.png"
-                            (click)="sortText({'column':'need_mtb_desc', 'direction':'asc'})">
-                    </p>
-                    <input type="text" class="form-control text-field-filter" placeholder="Saisir pour filtrer la liste"
-                        [formControl]="filterLabel" (keyup)="filter()">
-                </div>
-
-                <div class="col-1">
-                    <p class="t-key element">Crée le <img class="img-left clickable"
-                            src="../../../../assets/img/flech-down.png"
-                            (click)="sortDate({'column':'need_system_validation_date', 'direction':'desc'})"><img
-                            class="img clickable" src="../../../../assets/img/flech-up.png"
-                            (click)="sortDate({'column':'need_system_validation_date', 'direction':'asc'})"> </p>
-                </div>
-                <div class="col-2">
-                    <p class="t-key element">Statut </p>
-                    <div class="btn-group" dropdown [insideClick]="true">
-                        <button id="button-basic" dropdownToggle type="button"
-                            class="btn btn-default ddown-per-page dropdown-toggle status"
-                            aria-controls="dropdown-basic">
-                            <span class="caret"></span>
-                        </button>
-                        <form [formGroup]="filterForm">
-                            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                <li role="menuitem"><span class="dropdown-item noClick" *ngFor="let stat of status">
-                                        <span>{{stat.label}}</span><input type="checkbox" class="checkbox"
-                                            (click)="changeStatus($event,{'status':stat})"></span></li>
-                            </ul>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <p class="t-key element">Statut modifié le
-                        <img class="img-left clickable"
-                            (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'desc'})"
-                            src="../../../../assets/img/flech-down.png"><img class="img clickable"
-                            src="../../../../assets/img/flech-up.png"
-                            (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'asc'})">
-                    </p>
-                </div>
-                <div class="col-2">
-                    <p class="t-key element">Responsable
-                        <img class="img-left clickable" (click)="sortText({'column':'owner_label', 'direction':'desc'})"
-                            src="../../../../assets/img/flech-down.png"><img class="img clickable"
-                            (click)="sortText({'column':'owner_label', 'direction':'asc'})"
-                            src="../../../../assets/img/flech-up.png">
-                    </p>
-                    <input type="text" class="form-control text-field-filter" [formControl]="filterOwner" style="width:90%"
-                        (keyup)="filter()" placeholder="Saisir pour filtrer la liste">
-                </div>
-            </div>
-            <br>
-            <app-purchase-situation-list [params]="params" [purchases]="filteredlist" [isOpen]="isOpen" [itemsPerPage]="itemsPerPage" [startItem]="startItem" [endItem]="endItem" ></app-purchase-situation-list>
-        </div>
+  <!-- Toolbar résultats -->
+  <div class="ps-toolbar">
+    <div class="ps-toolbar-left">
+      <span class="ps-result-count">
+        {{ filteredlist.length }} demande<span *ngIf="filteredlist.length > 1">s</span> d'achat
+      </span>
+      <span *ngIf="isFiltered()" class="ps-result-criteria">avec vos critères de recherche</span>
+      <a *ngIf="isFiltered()" class="ps-link" (click)="clearFilter()">Supprimer mes critères</a>
     </div>
+    <div class="ps-toolbar-right">
+      <a class="ps-link" *ngIf="isOpen != true" (click)="open()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z"/></svg>
+        Ouvrir toutes les DA
+      </a>
+      <a class="ps-link" *ngIf="isOpen == true" (click)="close()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M7.646 4.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1-.708.708L8 5.207 4.354 8.854a.5.5 0 1 1-.708-.708l4-4zm0 7a.5.5 0 0 1 .708 0l4-4a.5.5 0 0 1-.708.708L8 12.207l-3.646-3.647a.5.5 0 0 1 .708-.708l4 4z"/></svg>
+        Fermer toutes les DA
+      </a>
+      <div class="ps-per-page">
+        <span>DA par page</span>
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="ps-dropdown-btn" aria-controls="dropdown-basic">
+            {{ itemsPerPage }}
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu">
+            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(10)">10</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(20)">20</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="changePerPage(30)">30</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table header -->
+  <div class="ps-table-header">
+    <div class="ps-col ps-col-code">
+      <span class="ps-col-title">
+        Numéro
+        <span class="ps-sort-arrows">
+          <svg (click)="sort({'column':'need_system_id', 'direction':'asc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/></svg>
+          <svg (click)="sort({'column':'need_system_id', 'direction':'desc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+        </span>
+      </span>
+      <input type="text" class="ps-filter-input" [formControl]="filterCode" (keyup)="filter()" placeholder="Filtrer...">
+    </div>
+    <div class="ps-col ps-col-label">
+      <span class="ps-col-title">
+        Libellé
+        <span class="ps-sort-arrows">
+          <svg (click)="sortText({'column':'need_mtb_desc', 'direction':'asc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/></svg>
+          <svg (click)="sortText({'column':'need_mtb_desc', 'direction':'desc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+        </span>
+      </span>
+      <input type="text" class="ps-filter-input" [formControl]="filterLabel" (keyup)="filter()" placeholder="Filtrer...">
+    </div>
+    <div class="ps-col ps-col-date">
+      <span class="ps-col-title">
+        Créé le
+        <span class="ps-sort-arrows">
+          <svg (click)="sortDate({'column':'need_system_validation_date', 'direction':'asc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/></svg>
+          <svg (click)="sortDate({'column':'need_system_validation_date', 'direction':'desc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+        </span>
+      </span>
+    </div>
+    <div class="ps-col ps-col-status">
+      <span class="ps-col-title">Statut</span>
+      <div class="btn-group" dropdown [insideClick]="true">
+        <button dropdownToggle type="button" class="ps-dropdown-btn ps-dropdown-btn-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+        </button>
+        <form [formGroup]="filterForm">
+          <ul *dropdownMenu class="dropdown-menu">
+            <li role="menuitem" *ngFor="let stat of status">
+              <label class="ps-checkbox-item">
+                <input type="checkbox" (click)="changeStatus($event, {'status': stat})">
+                <span>{{ stat.label }}</span>
+              </label>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+    <div class="ps-col ps-col-modified">
+      <span class="ps-col-title">
+        Statut modifié le
+        <span class="ps-sort-arrows">
+          <svg (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'asc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/></svg>
+          <svg (click)="sortDate({'column':'main_mtb_status_last_event_date', 'direction':'desc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+        </span>
+      </span>
+    </div>
+    <div class="ps-col ps-col-owner">
+      <span class="ps-col-title">
+        Responsable
+        <span class="ps-sort-arrows">
+          <svg (click)="sortText({'column':'owner_label', 'direction':'asc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/></svg>
+          <svg (click)="sortText({'column':'owner_label', 'direction':'desc'})" class="clickable" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+        </span>
+      </span>
+      <input type="text" class="ps-filter-input" [formControl]="filterOwner" (keyup)="filter()" placeholder="Filtrer...">
+    </div>
+  </div>
+
+  <!-- Liste -->
+  <app-purchase-situation-list [params]="params" [purchases]="filteredlist" [isOpen]="isOpen" [itemsPerPage]="itemsPerPage" [startItem]="startItem" [endItem]="endItem"></app-purchase-situation-list>
 </div>

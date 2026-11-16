@@ -1,38 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
-import {  ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  url:string='';
+  url: string = '';
   sub: Subscription;
+
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
+
   ngOnInit(): void {
     this.sub = this.route.queryParams.subscribe(params => {
       if (!!params && !!params.url) {
-        this.url = params.url.replace(/\//g,'w_t_p');
+        this.url = params.url.replace(/\//g, 'w_t_p');
       }
-  });
-
+    });
   }
 
-  login() { 
+  login() {
     this.authService.login(this.url);
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
-   }
-
+    if (this.sub) this.sub.unsubscribe();
+  }
 }
-
-
-

@@ -1,14 +1,21 @@
-<div [formGroup]="sheetForm">
-  <label for="lots"><strong>Options :</strong></label>
-  <div formArrayName="options">
-    <app-sheet-form-options-item *ngFor="let option of options.controls; index as i; first as isFirst; last as isLast;"
-      [index]="i" [isFirst]="isFirst" [isLast]="isLast" [option]="option" (removedTask)="onRemovedTask($event)">
+<div [formGroup]="sheetForm" class="adm-form-group">
+  <label class="adm-label">Options de reconduction</label>
 
+  <div formArrayName="options" class="adm-array-list">
+    <app-sheet-form-options-item *ngFor="let option of options.controls; index as i; first as isFirst; last as isLast;"
+                                  [index]="i"
+                                  [isFirst]="isFirst"
+                                  [isLast]="isLast"
+                                  [option]="option"
+                                  (removedTask)="onRemovedTask($event)">
     </app-sheet-form-options-item>
+
+    <div *ngIf="options.controls.length === 0" class="adm-array-empty">
+      Aucune option de reconduction.
+    </div>
   </div>
-  <div >
-    
-    <app-sheet-form-options-add *ngIf="options.controls.length < 6" (addedTask)="onAddedTask()">
-    </app-sheet-form-options-add>
+
+  <div class="adm-array-add" *ngIf="options.controls.length < 6">
+    <app-sheet-form-options-add (addedTask)="onAddedTask()"></app-sheet-form-options-add>
   </div>
 </div>

@@ -9,14 +9,23 @@ import { SheetFormContractsItemComponent } from './sheet-form-contracts-item/she
 import { SheetFormContractsAddComponent } from './sheet-form-contracts-add/sheet-form-contracts-add.component';
 import { SheetFormCommentsComponent } from './sheet-form-comments/sheet-form-comments.component';
 import { SheetFormContentComponent } from './sheet-form-content/sheet-form-content.component';
+import { SheetFormContratGroupeComponent } from './sheet-form-contrat-groupe/sheet-form-contrat-groupe.component';
+import { SheetFormMiseAJourDonneeComponent } from './sheet-form-mise-a-jour-donnee/sheet-form-mise-a-jour-donnee.component';
+import { SheetFormSupplierSizeComponent } from './sheet-form-supplier-size/sheet-form-supplier-size.component';
 import { SheetFormLotsComponent } from './sheet-form-lots/sheet-form-lots.component';
 import { SheetFormLotsItemComponent } from './sheet-form-lots-item/sheet-form-lots-item.component';
 import { SheetFormLotsAddComponent } from './sheet-form-lots-add/sheet-form-lots-add.component';
 import { SheetFormTitleComponent } from './sheet-form-title/sheet-form-title.component';
+import { SheetFormSupplierVatNumberComponent } from './sheet-form-supplier-vat-number/sheet-form-supplier-vat-number.component';
+import { SheetFormEntitesBeneficiairesEdfEnedisComponent } from './sheet-form-entites-beneficiaires-edf-enedis/sheet-form-entites-beneficiaires-edf-enedis.component';
+import { SheetFormContractManagerComponent } from './sheet-form-contract-manager/sheet-form-contract-manager.component';
+import { SheetFormPcmLinkComponent } from './sheet-form-pcm-link/sheet-form-pcm-link.component';
 import { SheetFormWordsComponent } from './sheet-form-words/sheet-form-words.component';
 
 import { SheetFormKitComponent } from './sheet-form-kit/sheet-form-kit.component';
 import { SheetFormProvidersComponent } from './sheet-form-providers/sheet-form-providers.component';
+import { ProviderFormComponent } from './provider-form/provider-form.component';
+import { ProviderModalComponent } from './provider-modal/provider-modal.component';
 import { SheetFormDauphinComponent } from './sheet-form-dauphin/sheet-form-dauphin.component';
 import { SheetFormEdfOpenComponent } from './sheet-form-edf-open/sheet-form-edf-open.component';
 import { SheetFormStipulationComponent } from './sheet-form-stipulation/sheet-form-stipulation.component';
@@ -27,6 +36,8 @@ import { SheetFormBeneficiariesComponent } from './sheet-form-beneficiaries/shee
 //
 import { SheetFormStipulationAutruiComponent } from './sheet-form-stipulationAutrui/sheet-form-stipulationAutrui.component';
 import { SheetFormAreasComponent } from './sheet-form-areas/sheet-form-areas.component';
+import { SheetFormGeographicDetailComponent } from './sheet-form-geographic-detail/sheet-form-geographic-detail.component';
+import { SheetFormAcheteurComponent } from './sheet-form-acheteur/sheet-form-acheteur.component';
 import { SheetFormDirectionsComponent } from './sheet-form-directions/sheet-form-directions.component';
 import { SheetFormDomainComponent } from './sheet-form-domain/sheet-form-domain.component';
 
@@ -56,9 +67,15 @@ defineLocale('fr', frLocale);
     SheetFormLotsItemComponent,
     SheetFormLotsAddComponent,
     SheetFormTitleComponent,
+    SheetFormSupplierVatNumberComponent,
+    SheetFormEntitesBeneficiairesEdfEnedisComponent,
+    SheetFormContractManagerComponent,
+    SheetFormPcmLinkComponent,
     SheetFormWordsComponent,
     SheetFormKitComponent,
     SheetFormProvidersComponent,
+    ProviderFormComponent,
+    ProviderModalComponent,
     SheetFormDauphinComponent,
     SheetFormEdfOpenComponent,
     SheetFormStipulationComponent,
@@ -68,6 +85,8 @@ defineLocale('fr', frLocale);
     SheetFormBeneficiariesComponent,
     SheetFormStipulationAutruiComponent,//
     SheetFormAreasComponent,
+    SheetFormGeographicDetailComponent,
+    SheetFormAcheteurComponent,
     SheetFormDirectionsComponent,
     SheetFormDomainComponent,
     SheetFormStatusComponent,
@@ -78,7 +97,10 @@ defineLocale('fr', frLocale);
     SheetFormOptionsItemComponent,
     SheetFormModalDraftComponent,
     SheetFormSubdomainComponent,
-    SheetFormCategoryComponent
+    SheetFormCategoryComponent,
+    SheetFormContratGroupeComponent,
+    SheetFormMiseAJourDonneeComponent,
+    SheetFormSupplierSizeComponent
   ],
   imports: [
     SharedModule,

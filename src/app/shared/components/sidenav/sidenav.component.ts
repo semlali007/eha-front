@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { Subscription } from 'rxjs';
@@ -7,11 +7,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styles: [`.list-group-item:hover {
-    cursor: pointer;
-    box-shadow: 0px 3px 3px 0px #cfcfcf;
-   }`
-  ]
+  styleUrls: [
+    './sidenav.component.css',
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SidenavComponent implements OnInit, OnDestroy {
   public prefix = 'admin';
@@ -39,29 +38,32 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public newsCastPath = `${this.prefix}/actualites`;
   public newsCastHomePath = `${this.prefix}/actualites/accueil`;
   public contactPath = `${this.prefix}/page/contact`;
-  
-  public subscription: Subscription;
-	public user: User;
+  public satisfactionPath = `${this.prefix}/satisfactions`;
+  public hlkSyncPath = `${this.prefix}/hlk-sync`;
+  public hlkImportPath = `${this.prefix}/hlk-import`;
+
+  public subscription!: Subscription;
+  public user: User | null = null;
   public isDropup = true;
+
   constructor(
     private router: Router,
-    private authService: AuthService
-    ) { }
+    private authService: AuthService,
+  ) {}
 
-  ngOnInit() { 
+  ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.user = user);
   }
 
   public navigate(page: string): void {
     this.router.navigate([page]);
   }
-  
+
   public isActive(page: string): boolean {
     return this.router.isActive(page, true);
   }
 
   ngOnDestroy() {
-		this.subscription.unsubscribe();
-	}
-
+    this.subscription.unsubscribe();
+  }
 }

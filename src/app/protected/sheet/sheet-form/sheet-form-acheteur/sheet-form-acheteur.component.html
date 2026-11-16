@@ -1,0 +1,12 @@
+<div class="adm-form-group">
+  <label for="acheteur" class="adm-label">Acheteur</label>
+  <input id="acheteur"
+         type="text"
+         class="adm-input"
+         [formControl]="acheteur"
+         placeholder="Nom de l'acheteur"
+         maxlength="500">
+  <span *ngIf="acheteur?.errors?.['maxlength'] && acheteur?.touched" class="adm-field-error">
+    L'acheteur ne peut pas dépasser 500 caractères.
+  </span>
+</div>

@@ -1,0 +1,72 @@
+/* Styles pour le composant statut */
+
+/* Classe pour l'icône d'information */
+.info-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../../../assets/img/info-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Style pour le contenu du tooltip */
+::ng-deep .tooltip-content {
+    max-width: 250px;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+}
+
+::ng-deep .tooltip-inner {
+    max-width: 300px;
+    text-align: left;
+}
+
+/* Classe pour aligner le texte et l'icône */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0;
+}
+
+/* Styles pour les badges et items du tooltip de statut */
+::ng-deep .status-item {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.4;
+}
+
+::ng-deep .status-item:last-child {
+    margin-bottom: 0;
+}
+
+::ng-deep .status-item .badge {
+    margin-right: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Couleurs des badges pour le tooltip */
+::ng-deep .badge-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+::ng-deep .badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+::ng-deep .badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}

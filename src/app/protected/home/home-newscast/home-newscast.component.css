@@ -1,345 +1,269 @@
-.Bloc-actualit {
-    align-self: stretch;
-    flex-grow: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 5px;
-    padding: 7px;
-    border-radius: 3px;
-    border: solid 5px var(--bleu-tr-s-clair-aaa-alice-blue);
-    background-color: var(--blanc-charte);
+/* ═══════════════════════════════════════════════════════════
+   PANNEAU ACTUALITÉS — grille de cartes (restyle moderne)
+   Préfixe : .hnc-*   (ViewEncapsulation.None)
+   ═══════════════════════════════════════════════════════════ */
+
+.hnc {
+  margin-top: 16px;
 }
 
-.Frame-315 {
-    flex-grow: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
-    padding: 0;
+.hnc-panel {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e3e8f0;
+  border-radius: 14px;
+  box-shadow: 0 8px 26px rgba(2, 12, 45, 0.07);
+  padding: 20px 24px 22px;
+  overflow: hidden;
+}
+/* Accent dégradé en haut (cohérence navbar/footer) */
+.hnc-panel::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #001a70 0%, #0a3bbf 55%, #fe5815 100%);
 }
 
-img.mdiannouncement {
-    flex-grow: 0;
-    object-fit: contain;
+/* ── En-tête ──────────────────────────────────────────────── */
+.hnc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.hnc-head-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hnc-icon {
+  height: 26px;
+  width: auto;
+}
+.hnc-head-title {
+  font-family: "Work Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #001a70;
+  letter-spacing: 0.2px;
+}
+.hnc-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 99px;
+  background: #eef2fb;
+  color: #001a70;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.hnc-all:hover {
+  background: #001a70;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.hnc-all-arrow {
+  transition: transform 0.15s ease;
+}
+.hnc-all:hover .hnc-all-arrow {
+  transform: translateX(3px);
 }
 
-.Actualit {
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 26px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.38;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--gris-fonce-aaa-jet);
+/* ── Grille 3×3 ───────────────────────────────────────────── */
+.hnc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  animation: hnc-fade 0.25s ease;
+}
+@media (max-width: 992px) {
+  .hnc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .hnc-grid { grid-template-columns: 1fr; }
 }
 
-.Frame-930 {
-    align-self: stretch;
-    flex-grow: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 5px;
-    padding: 0;
+@keyframes hnc-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
 
-.Frame-933 {
-    flex-grow: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    padding: 5px;
+/* ── Carte actualité ──────────────────────────────────────── */
+.hnc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #f7f9fc;
+  border: 1px solid #e8edf5;
+  border-radius: 12px;
+  padding: 14px 16px 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+.hnc-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: #fe5815;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.18s ease;
+}
+.hnc-card:hover {
+  background: #fff;
+  border-color: #cfdcf3;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 26, 112, 0.1);
+}
+.hnc-card:hover::before {
+  transform: scaleY(1);
 }
 
-.Vector-28 {
-    flex-grow: 0;
-    width: 15px;
-    height: 58px;
-    border: solid 1px var(--bleu-tr-s-clair-aaa-alice-blue);
-    background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
+.hnc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.hnc-badge {
+  border-radius: 99px !important;
+  padding: 4px 11px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+}
+.hnc-date {
+  font-size: 12px;
+  color: #8a94a6;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.Elit-donec-fermentum-dignissim-amet- {
-    align-self: stretch;
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 14px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--noir-charte);
+.hnc-card-title {
+  font-family: "Work Sans", sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.35;
+  margin: 2px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.Nouveaut---Publi-le-02022023 {
-    align-self: stretch;
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 12px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.33;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--gris-fonce-aa-sonic-silver);
+.hnc-card-desc {
+  font-family: "Work Sans", sans-serif;
+  font-size: 13.5px;
+  color: #556070;
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hnc-card-desc * {
+  margin: 0 !important;
 }
 
-.Bloc-actualit .Frame-934 {
-    flex-grow: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    background-color: var(--blanc-charte);
+.hnc-more {
+  margin-top: auto;
+  padding-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #fe5815;
+  font-size: 13px;
+  font-weight: 700;
+}
+.hnc-more::after {
+  content: "\2192";
+  transition: transform 0.15s ease;
+}
+.hnc-card:hover .hnc-more::after {
+  transform: translateX(3px);
 }
 
-.Frame-410 {
-    align-self: stretch;
-    flex-grow: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 2px;
-    padding: 0;
+/* ── Détail inline (plein bloc) ───────────────────────────── */
+.hnc-detail {
+  animation: hnc-fade 0.28s ease;
+}
+.hnc-detail-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 
-.NOUVEAUT {
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 12px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.33;
-    letter-spacing: normal;
-    text-align: center;
-    color: var(--blanc-charte);
+/* Croix de fermeture : rouge, centrée, alignée à droite sur la ligne du badge */
+.hnc-close {
+  margin-left: auto;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid #fecaca;
+  border-radius: 50%;
+  background: #fef2f2;
+  color: #dc2626;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
-
-.Publi-le-02022023 {
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 16px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--gris-fonce-aa-sonic-silver);
+.hnc-close svg {
+  display: block;
 }
-
-.Elit-donec-fermentum-dignissim-amet-massa-sed-dolor-enim {
-    align-self: stretch;
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 22px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.27;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--bleu-fonce-charte);
+.hnc-close:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+  transform: rotate(90deg);
 }
-
-.Imperdiet-habitant-egestas-at-ac-amet-dolor-Dui-proin-molestie-amet-duis-varius-Fermentum-ligula-a {
-    align-self: stretch;
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--noir-charte);
+.hnc-detail-title {
+  font-family: "Work Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #001a70;
+  line-height: 1.3;
+  margin: 0 0 14px;
 }
-
-.Lire-la-suite {
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 16px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--bleu-fonce-charte);
-    cursor: pointer;
+.hnc-detail-body {
+  font-family: "Work Sans", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #374151;
+  max-width: 900px;
 }
-
-
-.Bloc-actualit .tab-container {
-    display: inherit;
+.hnc-detail-body p {
+  margin: 0 0 12px;
 }
-
-.Frame-3 {
-    flex-grow: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 5px;
-    padding: 2px 5px;
-    border-radius: 3px;
-    background-color: var(--bleu-azure);
+.hnc-detail-body a {
+  color: #0a3bbf;
+  text-decoration: underline;
 }
-
-.Frame-937 {
-    align-self: stretch;
-    flex-grow: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
-    padding: 0;
+.hnc-detail-body a:hover {
+  color: #fe5815;
 }
-
-.Consulter-toute-lactualit {
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 16px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--bleu-fonce-charte);
-    padding-left: 100px;
-    cursor: pointer;
+.hnc-detail-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
-
-.Nascetur-diam-arcu-ut-neque-purus-maur {
-    align-self: stretch;
-    flex-grow: 0;
-    font-family: 'Work Sans';
-    font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: normal;
-    text-align: left;
-    color: var(--bleu-fonce-charte);
+.hnc-detail-body ul,
+.hnc-detail-body ol {
+  margin: 0 0 12px;
+  padding-left: 22px;
 }
-
-
-.Bloc-actualit .nav-tabs .nav-link.active,
-
-.Bloc-actualit.nav-tabs .nav-item.show .nav-link {
-    color: #495057;
-    background-color: #fff;
-    flex-grow: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    padding: 5px;
-    background-color: var(--bleu-tr-s-clair-aaa-alice-blue);
-    font-family: WorkSans;
-    font-size: 14px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: normal;
-    border: none;
-   
-}
-.Bloc-actualit .nav-item.active{
-border: none;
-}
-
-
-
-.Bloc-actualit .Frame-938 {
-    flex-grow: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 0;
-}
-
-
-
-
-.Bloc-actualit .Frame-316 {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 5px;
-    padding-left: 22px;
-}
-
-.Bloc-actualit .tab-content {
-    width: 70%;
-    margin-right: 26px;
-}
-
-.Bloc-actualit .nav .nav-stacked .flex-column .nav-tabs {
-    width: 30%;
-}
-.Bloc-actualit .nav-tabs {
-    border-bottom: none;
-}
-
-
-.Bloc-actualit .nav-link.active span.Nascetur-diam-arcu-ut-neque-purus-maur {
-    font-size: 14px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: normal;
-}
-
-
-.Bloc-actualit .Body---12---Regular {
-    font-family: 'Work Sans';
-    font-size: 12px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.33;
-    letter-spacing: normal;
-}
-
-.Bloc-actualit .nav-tabs .nav-link {
-    color: #495057;
-    background-color: #fff;
-    flex-grow: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    padding: 5px;
-    font-family: WorkSans;
-    font-size: 14px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: normal;
-}
-

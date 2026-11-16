@@ -1,54 +1,103 @@
-<div [formGroup]="contract" class="form-group row">
-    <table class="table table-striped table-hover" style="background-color: #59a1a079;">
-        <tbody [ngClass]="{'bg-light text-dark': !isActive, 'bg-white text-black': isActive}">
-            <tr>
-                <td>
-                    <input [readonly]="!isActive" formControlName="code" type="text" class="form-control border-0" [placeholder]="'Code contrat'">
-                    <div class="spinner-border text-primary" role="status" *ngIf="code.pending">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <small *ngIf="code.errors && isActive" class="form-text text-danger">
-                        <span [hidden]="!code.errors.required">- Code requis.<br></span>
-                        <span [hidden]="!code.errors.minlength">- Le code doit faire plus de 9 caractères.<br></span>
-                        <span [hidden]="!code.errors.maxlength">- Le code doit faire moins de 10 caractères.<br></span>
-                        <span [hidden]="!code.errors.pattern">- Le code doit commencer par un 'C'.<br></span>
-                        <span [hidden]="!code?.errors?.invalidContractCode">- Le code n'existe pas.<br></span>
-                    </small>
-                    <!-- <small *ngIf="!code.errors && isActive && !code.pending" class="form-text text-success">
-                        <span [hidden]="!!code?.errors">- Votre code contrat est valide.<br></span>
-                    </small> -->
-                </td>
-                <td>
-                    <textarea [readonly]="!isActive" formControlName="provider" class="form-control border-0" style="max-height: 400px; width: 250px; " [placeholder]="'Fournisseur'"></textarea>
-                </td>
-                <td class="col-5">
-                    <!-- <textarea [readonly]="!isActive" formControlName="contacts" class="form-control border-0" style="max-height: 400px; width: 350px; " [placeholder]="'Contacts'"></textarea> -->
-                    <editor *ngIf ="isActive" formControlName="contacts" id="contact{{index}}" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
-                    <div *ngIf ="!isActive" [innerHTML]="contract.value.contacts"></div>
-                </td>
-                <td>
-                    <div style="display: flex; align-items: center;">
-                        <input [readonly]="!isActive" formControlName="lots" type="text" class="form-control border-0" [placeholder]="'lots'" style="width:90px;"
-                          (input)="onLotInput($event.target.value)">
-                    
-                        <select [disabled]="!isActive" class="form-control border-0" style="width:auto;" (change)="selectLot($event.target.value)">
-                          <option *ngFor="let lot of filteredLots" [value]="" >{{ lot }}</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <button class="remove" style="width: 40px; height: 40px; padding: 5;" (click)="confirmation(template)" type="button">-</button>
-                    <button class="edit" style="width: 40px; height: 40px; padding: 5;" (click)="changeState(index)" type="button"><i>&#9998;</i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br><br>
-    <ng-template #template>
-        <div class="modal-body text-center">
-            <p>Voulez-vous confirmer la suppression ?</p>
-            <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
-            <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
-        </div>
-    </ng-template>
+<div [formGroup]="contract" class="adm-contract-card" [class.is-readonly]="!isActive">
+  <div class="adm-contract-fields">
+    <div class="adm-form-group">
+      <label class="adm-label">Code contrat</label>
+      <input [readonly]="!isActive"
+             formControlName="code"
+             type="text"
+             class="adm-input"
+             placeholder="Ex : C12345678">
+      <div class="adm-field-hint" *ngIf="code.pending">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Vérification…
+      </div>
+      <span *ngIf="code.errors && isActive" class="adm-field-error">
+        <ng-container *ngIf="code.errors.required">Code requis.</ng-container>
+        <ng-container *ngIf="code.errors.minlength">Le code doit faire au moins 9 caractères.</ng-container>
+        <ng-container *ngIf="code.errors.maxlength">Le code doit faire moins de 10 caractères.</ng-container>
+        <ng-container *ngIf="code.errors.pattern">Le code doit commencer par un "C".</ng-container>
+        <ng-container *ngIf="code?.errors?.invalidContractCode">Ce code n'existe pas.</ng-container>
+      </span>
+    </div>
+
+    <div class="adm-form-group">
+      <label class="adm-label">Fournisseur</label>
+      <select formControlName="provider"
+              class="adm-select"
+              [style.pointer-events]="isActive ? 'auto' : 'none'"
+              [style.opacity]="isActive ? '1' : '0.6'">
+        <option value="" *ngIf="!hasNoProviders">{{ isActive ? 'Sélectionner un fournisseur' : 'Mode lecture' }}</option>
+        <option value="" *ngIf="hasNoProviders" disabled>Sélectionnez d'abord des fournisseurs en partie 3</option>
+        <option *ngFor="let provider of providersForContract" [value]="provider">{{ provider }}</option>
+        <!-- Valeur courante hors sélection (fournisseur retiré / import Excel / fiche existante) -->
+        <option *ngIf="currentProviderIfMissing" [value]="currentProviderIfMissing">
+          ⚠ {{ currentProviderIfMissing }} (hors sélection)
+        </option>
+      </select>
+      <span class="adm-field-hint" *ngIf="hasNoProviders && isActive">
+        Pour renseigner le fournisseur, sélectionnez-le d'abord dans la partie « Fournisseurs & bénéficiaires ».
+      </span>
+      <span class="adm-field-hint" style="color:#dc2626" *ngIf="currentProviderIfMissing && isActive">
+        Le fournisseur « {{ currentProviderIfMissing }} » n'est plus dans la sélection. Choisissez-en un disponible ou laissez vide.
+      </span>
+    </div>
+
+    <div class="adm-form-group">
+      <label class="adm-label">Lot associé</label>
+      <select formControlName="lots"
+              class="adm-select"
+              [style.pointer-events]="isActive ? 'auto' : 'none'"
+              [style.opacity]="isActive ? '1' : '0.6'">
+        <option value="" *ngIf="!hasNoLots">{{ isActive ? 'Aucun lot' : 'Mode lecture' }}</option>
+        <option value="" *ngIf="hasNoLots" disabled>Créez d'abord un lot ci-dessus</option>
+        <option *ngFor="let lot of filteredLots" [value]="lot">{{ lot }}</option>
+        <!-- Si la valeur courante n'est plus dans la liste (lot renommé/supprimé) -->
+        <option *ngIf="currentLotIfMissing" [value]="currentLotIfMissing">
+          ⚠ {{ currentLotIfMissing }} (lot supprimé)
+        </option>
+      </select>
+      <span class="adm-field-hint" *ngIf="hasNoLots && isActive">
+        Pour associer un lot à ce contrat, créez d'abord un lot dans la section "Lots".
+      </span>
+      <span class="adm-field-hint" style="color:#dc2626" *ngIf="currentLotIfMissing && isActive">
+        Le lot « {{ currentLotIfMissing }} » n'existe plus. Sélectionnez un lot disponible ou laissez vide.
+      </span>
+    </div>
+
+    <div class="adm-form-group adm-contract-contacts">
+      <label class="adm-label">Contacts fournisseur</label>
+      <div class="adm-editor-wrap" *ngIf="isActive">
+        <editor formControlName="contacts"
+                id="contact{{ index }}"
+                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins: 'advlist autolink link lists charmap print preview table', branding: false, menubar: false, height: 180}">
+        </editor>
+      </div>
+      <div *ngIf="!isActive" class="adm-contract-contacts-readonly" [innerHTML]="contract.value.contacts"></div>
+    </div>
+  </div>
+
+  <div class="adm-contract-actions">
+    <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="changeState(index)" title="{{ isActive ? 'Verrouiller' : 'Modifier' }}">
+      <svg *ngIf="!isActive" xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/>
+      </svg>
+      <svg *ngIf="isActive" xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+      </svg>
+      {{ isActive ? 'Verrouiller' : 'Modifier' }}
+    </button>
+    <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="confirmation(template)">
+      Supprimer
+    </button>
+  </div>
 </div>
+
+<ng-template #template>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">Confirmer la suppression ?</p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    </div>
+  </div>
+</ng-template>

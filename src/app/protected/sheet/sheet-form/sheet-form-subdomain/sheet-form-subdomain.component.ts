@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { SubdomainService } from 'src/app/core/services/subdomain.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SheetFormModalComponent } from '../sheet-form-modal/sheet-form-modal.component';
-import { Domain } from 'src/app/shared/models/domain';
+import { EhaDomain } from 'src/app/shared/models/eha-domain';
 
 @Component({
   selector: 'app-sheet-form-subdomain',
@@ -19,7 +19,7 @@ export class SheetFormSubdomainComponent implements OnInit {
   @Input() sheetForm: FormGroup;
   @Input() allSubdomains: [];
   private page: number;
-  private items: Domain[];
+  private items: EhaDomain[];
   private total: number;
   bsModalRef: BsModalRef;
   itemsPerPage: number;
@@ -83,7 +83,7 @@ export class SheetFormSubdomainComponent implements OnInit {
       });
 
       this.bsModalRef.content.addElementEvent.subscribe(res => {
-        this.subdomainService.add(new Domain({ label: res.data.value })).subscribe(t =>
+        this.subdomainService.add(new EhaDomain({ label: res.data.value })).subscribe(t =>
           this.subdomainService.getList({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
             this.bsModalRef.content.items = data.subdomains;
             this.bsModalRef.content.total = data.total;
@@ -94,7 +94,8 @@ export class SheetFormSubdomainComponent implements OnInit {
       this.bsModalRef.content.eventPaginate.subscribe(res => {
         this.subdomainService.getList({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.subdomains;
           this.bsModalRef.content.total = data.total;

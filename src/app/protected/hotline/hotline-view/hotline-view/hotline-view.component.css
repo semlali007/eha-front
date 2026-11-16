@@ -1,0 +1,450 @@
+/* ═══════════════════════════════════════════════════════════
+   HOTLINE VIEW — Discussion (style messagerie pro)
+   ═══════════════════════════════════════════════════════════ */
+
+.hl-conv {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 16px 96px;          /* padding-bottom = hauteur du composer sticky */
+  font-family: 'Work Sans', sans-serif;
+  color: #1f2937;
+}
+
+
+/* ─── Header sticky ─────────────────────────────────────────── */
+.hl-conv-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  margin-bottom: 14px;
+}
+
+.hl-conv-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  color: #4b5563;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.hl-conv-back:hover {
+  background: #eef2fb;
+  color: #001a70;
+}
+
+.hl-conv-header-titles { flex: 1; min-width: 0; }
+
+.hl-conv-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+.hl-conv-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #001a70;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.hl-conv-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.hl-conv-status[data-step="new"]      { background: #eef2fb; color: #001a70; }
+.hl-conv-status[data-step="progress"] { background: #fff4ef; color: #fe5815; }
+.hl-conv-status[data-step="end"]      { background: #ecfdf5; color: #15803d; }
+
+.hl-conv-meta {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.hl-conv-meta strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+.hl-conv-meta-sep {
+  color: #d1d5db;
+  font-weight: 400;
+}
+
+/* Menu kebab */
+.hl-conv-menu .hl-conv-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  color: #4b5563;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.hl-conv-menu .hl-conv-menu-btn:hover {
+  background: #eef2fb;
+  color: #001a70;
+}
+
+.hl-conv-menu-list {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12) !important;
+  padding: 4px !important;
+  min-width: 200px !important;
+  margin-top: 4px !important;
+}
+.hl-conv-menu-item {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  color: #1f2937 !important;
+}
+.hl-conv-menu-item:hover {
+  background: #eef2fb !important;
+  color: #001a70 !important;
+}
+.hl-conv-menu-item--danger { color: #b91c1c !important; }
+.hl-conv-menu-item--danger:hover {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+}
+.hl-conv-menu-list .dropdown-divider {
+  margin: 4px 6px;
+  border-top: 1px solid #f3f4f6;
+}
+
+/* ─── Bandeau confirmation ──────────────────────────────────── */
+.hl-conv-feedback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  color: #065f46;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+.hl-conv-feedback svg { flex-shrink: 0; color: #059669; }
+.hl-conv-feedback > div :first-child { margin-top: 0; }
+.hl-conv-feedback > div :last-child  { margin-bottom: 0; }
+
+/* ─── Fil de discussion ─────────────────────────────────────── */
+.hl-conv-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 8px 4px 24px;
+}
+
+/* Note système (centrée) */
+.hl-conv-system {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #9a3412;
+}
+
+/* Message — Demandeur à gauche, Hotline DAG à droite */
+.hl-conv-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 78%;
+}
+.hl-conv-msg--user {
+  align-self: flex-start;
+}
+.hl-conv-msg--hotline {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+/* Avatar */
+.hl-conv-avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #6b7280;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  user-select: none;
+}
+.hl-conv-avatar[data-author="hotline"] {
+  background: linear-gradient(135deg, #001a70 0%, #00237a 100%);
+}
+.hl-conv-avatar[data-author="user"] {
+  background: linear-gradient(135deg, #fe5815 0%, #ff7a3a 100%);
+}
+
+/* Wrapper auteur + bulle */
+.hl-conv-bubble-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hl-conv-msg--hotline .hl-conv-bubble-wrap {
+  align-items: flex-end;
+}
+
+.hl-conv-author {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #6b7280;
+  margin: 0 4px 4px 4px;
+}
+.hl-conv-author-name {
+  font-weight: 600;
+  color: #4b5563;
+}
+.hl-conv-date {
+  font-size: 11px;
+  color: #9ca3af;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Bulle de message */
+.hl-conv-bubble {
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #1f2937;
+  word-break: break-word;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.hl-conv-bubble :first-child { margin-top: 0; }
+.hl-conv-bubble :last-child  { margin-bottom: 0; }
+
+/* Bulle Hotline DAG (à droite, navy) */
+.hl-conv-msg--hotline .hl-conv-bubble {
+  background: #001a70;
+  border-color: #001a70;
+  color: #fff;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 4px;
+}
+.hl-conv-msg--hotline .hl-conv-bubble strong,
+.hl-conv-msg--hotline .hl-conv-bubble b {
+  color: #fff;
+}
+.hl-conv-msg--hotline .hl-conv-bubble a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Message vide / placeholder */
+.hl-conv-empty {
+  font-size: 12.5px;
+  color: #9ca3af;
+}
+.hl-conv-msg--hotline .hl-conv-empty {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Pièce jointe dans une bulle */
+.hl-conv-file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+.hl-conv-file svg { flex-shrink: 0; color: #6b7280; }
+.hl-conv-msg--hotline .hl-conv-file svg { color: rgba(255, 255, 255, 0.85); }
+
+.hl-conv-file-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hl-conv-file-name {
+  font-size: 13px;
+  font-weight: 600;
+  word-break: break-all;
+}
+.hl-conv-file-dl {
+  align-self: flex-start;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #001a70;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hl-conv-file-dl:hover { color: #fe5815; }
+.hl-conv-msg--hotline .hl-conv-file-dl { color: #ffd5c2; }
+.hl-conv-msg--hotline .hl-conv-file-dl:hover { color: #fff; }
+
+/* ─── Bandeau discussion fermée ─────────────────────────────── */
+.hl-conv-closed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  color: #6b7280;
+  font-size: 12.5px;
+  font-style: italic;
+  margin-top: 16px;
+}
+.hl-conv-closed svg { color: #9ca3af; }
+
+/* ─── Composer sticky ───────────────────────────────────────── */
+.hl-conv-composer {
+  position: sticky;
+  bottom: 16px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), 0 0 1px rgba(15, 23, 42, 0.06);
+  margin-top: auto;
+}
+
+.hl-conv-composer-attach {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.hl-conv-composer-attach:hover {
+  background: #eef2fb;
+  color: #001a70;
+}
+
+.hl-conv-composer-input {
+  flex: 1;
+  min-height: 36px;
+  max-height: 140px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #1f2937;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+}
+.hl-conv-composer-input::placeholder { color: #9ca3af; }
+
+.hl-conv-composer-count {
+  align-self: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #b45309;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hl-conv-composer-count.is-ok { color: #15803d; }
+
+.hl-conv-composer-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  background: #fe5815;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.12s, box-shadow 0.12s;
+}
+.hl-conv-composer-send:hover:not(:disabled) {
+  background: #e54e12;
+  box-shadow: 0 4px 12px rgba(254, 88, 21, 0.28);
+}
+.hl-conv-composer-send:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .hl-conv { padding: 0 10px 96px; }
+  .hl-conv-msg { max-width: 92%; }
+  .hl-conv-meta { font-size: 11px; }
+  .hl-conv-composer-count { display: none; }
+  .hl-conv-composer-send {
+    padding: 0 12px;
+    font-size: 0;
+  }
+  .hl-conv-composer-send svg { width: 16px; height: 16px; }
+}

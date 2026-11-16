@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentationService } from 'src/app/core/services/documentation.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-documentation',
   templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.css']
+  styleUrls: ['./documentation.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DocumentationComponent implements OnInit {
   id: number = 0;
@@ -14,6 +15,8 @@ export class DocumentationComponent implements OnInit {
   warning: string = '';
   description: string = '';
   myDocumentation: any = null;
+  /** Items du fil d'Ariane passés au composant partagé <app-breadcrumb>. */
+  bcItems: { label: string, route: string | null }[] = [];
   constructor(
     private route: ActivatedRoute,
     private documentationService: DocumentationService,
@@ -50,25 +53,94 @@ export class DocumentationComponent implements OnInit {
   loadDocumentation() {
     this.section = [];
     this.parents = [];
+    this.bcItems = [];
     this.documentationService.getDocumentation({ cache: 'cache' }).subscribe(data => {
+      if (!Array.isArray(data)) {
+        return;
+      }
+
       let d = data.filter(t => t.id == this.id);
-      this.description = d[0].description;
-      this.warning = d[0].warning;
+      if (d.length === 0) {
+        return;
+      }
+
+      // Extraire uniquement les propriétés attendues (whitelist)
+      this.description = typeof d[0].description === 'string' ? d[0].description : '';
+      this.warning = typeof d[0].warning === 'string' ? d[0].warning : '';
 
       data.filter(s => s.parent == this.id).forEach(element => {
-        this.section.push(element);
+        // Créer une copie propre avec uniquement les propriétés attendues
+        this.section.push(this.sanitizeDocItem(element));
       });
+
       let ItemParentId: number = this.id;
       let position = 1;
       while (ItemParentId !== 0) {
-        let item = data.filter(s => s.id == ItemParentId).forEach(element => {
-          element.position = position;
+        data.filter(s => s.id == ItemParentId).forEach(element => {
+          // Créer une copie propre au lieu de muter l'objet API
+          const sanitizedElement = this.sanitizeDocItem(element);
+          sanitizedElement.position = position;
           position++;
-          this.parents.unshift(element);
-          ItemParentId = element.parent;
+          this.parents.unshift(sanitizedElement);
+          ItemParentId = typeof element.parent === 'number' ? element.parent : 0;
         });
       }
+
+      this.buildBreadcrumbs();
     })
+  }
+
+  /**
+   * Construit la liste d'items pour <app-breadcrumb>.
+   * Préfixe par "Accueil", puis chaîne des parents.
+   * L'item courant (id == this.id) a route: null pour s'afficher non cliquable.
+   */
+  private buildBreadcrumbs() {
+    const items: { label: string, route: string | null }[] = [
+      { label: 'Accueil', route: 'app/accueil' },
+    ];
+    for (const p of this.parents) {
+      if (p.id == this.id) {
+        items.push({ label: p.breadcrumb, route: null });
+        continue;
+      }
+      const link = (!p.link || p.link === '#' || p.link.length === 0)
+        ? `app/documentation/${p.id}`
+        : p.link;
+      items.push({ label: p.breadcrumb, route: link });
+    }
+    this.bcItems = items;
+  }
+
+  /**
+   * Extrait uniquement les propriétés attendues d'un objet documentation.
+   * Protection contre le Prototype Pollution en créant un objet propre
+   * sans copier de propriétés dangereuses (__proto__, constructor, prototype).
+   */
+  private sanitizeDocItem(item: any): any {
+    if (!item || typeof item !== 'object') {
+      return {};
+    }
+    const allowedKeys = [
+      'id', 'parent', 'label', 'description', 'warning',
+      'breadcrumb', 'link', 'position', 'order', 'active'
+    ];
+    const clean: any = Object.create(null);
+    for (const key of allowedKeys) {
+      // hasOwnProperty via Object.prototype pour se protéger d'une
+      // éventuelle pollution de item.hasOwnProperty lui-même.
+      if (Object.prototype.hasOwnProperty.call(item, key) && !this.isDangerousKey(key)) {
+        clean[key] = item[key];
+      }
+    }
+    return clean;
+  }
+
+  /**
+   * Vérifie si une clé de propriété est dangereuse (Prototype Pollution).
+   */
+  private isDangerousKey(key: string): boolean {
+    return ['__proto__', 'constructor', 'prototype'].includes(key);
   }
 
 }

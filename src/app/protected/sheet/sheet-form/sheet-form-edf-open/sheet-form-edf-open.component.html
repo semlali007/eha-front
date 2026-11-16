@@ -1,7 +1,10 @@
-
-<div class="form-group">
-    <div class="form-check">
-        <input type="checkbox" [formControl]="edf_open" id="edf_open" class="form-check-input" />
-        <label class="form-check-label" ><strong>Marché ouvert au personnel EDF</strong></label>
-    </div>
+<div class="adm-form-group">
+  <label class="adm-switch">
+    <input type="checkbox" [formControl]="edf_open">
+    <span class="adm-switch-track"></span>
+    <span class="adm-switch-label">Marché ouvert au personnel EDF</span>
+  </label>
+  <span class="adm-field-hint">
+    Le personnel EDF peut passer des commandes personnelles sur ce marché.
+  </span>
 </div>

@@ -1,22 +1,18 @@
-<p *ngIf="!!filter.zipcode">
-    Vous avez demandé l'ancrage territorial pour le code postal <b>{{filter.zipcode}}</b>
-</p>
-<p *ngIf="!!filter.nace">
-    Vous avez restreint les fournisseurs aux codes NACE <b>{{filter.nace}}</b>
-</p>
-<p *ngIf="!!filter.articles">
-    Vous avez restreint les fournisseurs aux codes articles <b>{{filter.articles}}</b>
-</p>
-<p *ngIf="!filter.zipcode">
-    Aucun code postal transmis.
-</p>
-<p *ngIf="!!anchor.maxRadius">
-    La rayon de recherche a été restreint à {{anchor.maxRadius}} km autour du code postal.
-</p>
-<p *ngIf="!!anchor.maxProviders">
-    Le nombre de fournisseurs affichés a été restreint à {{anchor.maxProviders}}.
-</p>
-<p *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders">
-    Cliquer sur le bouton ci-après pour exporter les données sous Excel : <button
-        class="btn btn-search btn-sm my-auto" (click)="export()">exporter</button>
-</p>
+<ul class="anc-summary-list">
+  <li *ngIf="!!filter.zipcode">
+    Ancrage territorial pour le code postal <strong>{{ filter.zipcode }}</strong>
+  </li>
+  <li *ngIf="!filter.zipcode" class="anc-muted">Aucun code postal transmis.</li>
+  <li *ngIf="!!filter.nace">Restreint aux codes NACE <strong>{{ filter.nace }}</strong></li>
+  <li *ngIf="!!filter.articles">Restreint aux codes articles <strong>{{ filter.articles }}</strong></li>
+  <li *ngIf="!!anchor.maxRadius">Rayon de recherche limité à <strong>{{ anchor.maxRadius }} km</strong> autour du code postal.</li>
+  <li *ngIf="!!anchor.maxProviders">Nombre de fournisseurs affichés limité à <strong>{{ anchor.maxProviders }}</strong>.</li>
+</ul>
+
+<button *ngIf="!!anchor.activeProviders || !!anchor.notActiveProviders"
+  class="btn btn-outline-primary btn-sm anc-export" (click)="export()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+  </svg>
+  exporter
+</button>

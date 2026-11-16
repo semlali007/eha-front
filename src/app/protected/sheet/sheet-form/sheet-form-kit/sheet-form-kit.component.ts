@@ -9,8 +9,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-sheet-form-kit',
   templateUrl: './sheet-form-kit.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-kit.component.css']
 })
 export class SheetFormKitComponent {
   @Output() removedItem = new EventEmitter<void>();

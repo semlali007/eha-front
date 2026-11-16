@@ -1,6 +1,10 @@
-<div class="form-group">
-    <label for="description">
-        <strong>Description longue :</strong>
-    </label>
-    <editor [formControl]="description" id="description" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
+<div class="adm-form-group">
+  <label for="nc-description" class="adm-label">Description longue</label>
+  <div class="adm-editor-wrap">
+    <editor id="nc-description"
+            [formControl]="$any(description)"
+            [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins: 'advlist autolink link lists charmap print preview table', branding: false, menubar: false, height: 280}">
+    </editor>
+  </div>
+  <span class="adm-field-hint">Affichée sur la page de détail.</span>
 </div>

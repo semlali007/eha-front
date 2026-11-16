@@ -1,24 +1,19 @@
-<div class="form-group">
-    <strong>Zones :</strong><span class="required">*</span>
-    <div class="row">
-        <div class="col-sm-10">
-            <tag-input [formControl]="areas"  [placeholder]="''" [onTextChangeDebounce]="500"
-                [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
-                <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
-                    [identifyBy]="'code'" [displayBy]="'label'">
-                </tag-input-dropdown>
-            </tag-input>
-        </div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-edf"
-            (click)="openModalWithComponent()"
-               >Zones</button>
-        </div>
-    </div>
-    <small *ngIf="areas.errors" class="form-text text-danger">
-        <span [hidden]="!areas.errors.required">
-            Zones requis.
-        </span>
-       
-    </small>
+<div class="adm-form-group">
+  <label class="adm-label">
+    Zone géographique<span class="adm-required">*</span>
+  </label>
+  <select class="adm-select" [formControl]="areas" [compareWith]="compareAreas" required>
+    <option value="">Sélectionnez une zone géographique…</option>
+    <option *ngFor="let area of availableAreas" [ngValue]="area">{{ area.label }}</option>
+  </select>
+  <span *ngIf="isLoading" class="adm-field-hint">Chargement des zones…</span>
+  <span *ngIf="!isLoading && availableAreas.length === 0" class="adm-field-error">
+    Aucune zone disponible.
+  </span>
+  <span class="adm-field-hint" *ngIf="!isLoading && availableAreas.length > 0">
+    Options : France métropolitaine (hors Corse) · France métropolitaine + Corse · France métropolitaine + Corse + DROM · France et international.
+  </span>
+  <span *ngIf="areas.errors && areas.touched" class="adm-field-error">
+    <ng-container *ngIf="areas.errors.required">Zone géographique requise.</ng-container>
+  </span>
 </div>

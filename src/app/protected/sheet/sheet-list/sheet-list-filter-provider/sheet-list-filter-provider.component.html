@@ -1,29 +1,33 @@
 <ng-template #customItemTemplate let-model="item">
-    {{model.name}} ({{ model.count }})
-  </ng-template>
+  {{ model.name }} ({{ model.count }})
+</ng-template>
 
-<div class="list-group card" style="width: 18rem" *ngIf="list.length > 0">
-    <button class="list-group-item filter-header smaller-text" (click)="isTotalCollapsed = !isTotalCollapsed"
-    [attr.aria-expanded]="!isTotalCollapsed" aria-controls="providerList">
-        Fournisseurs <i class="fleche fleche-droite" [class.fleche-bas]="isTotalCollapsed == false"></i>
-    </button>
-    <div id="providerList" [collapse]="isTotalCollapsed" [isAnimated]="true">
-        <form [formGroup]="myForm">
-            <input formControlName="state"
-                [typeahead]="list"
-                [typeaheadOptionsLimit]="7"
-                [typeaheadMinLength]="0"
-                typeaheadOptionField="name"
-                (typeaheadOnSelect)="onSelect($event)"
-                [typeaheadItemTemplate]="customItemTemplate"
-                placeholder="Entrer un fournisseur"
-                class="form-control">
-        </form>    
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor='let item of providers.value' >
-                {{item.name}} ({{item.count}})<i style="float: right; cursor:pointer" (click)="deleteOneProvider(item.code)" >&#10005;</i>
-            </li>
-        </ul>
-    </div>
+<div class="list-group card" *ngIf="list.length > 0">
+  <button class="list-group-item filter-header smaller-text"
+    (click)="isTotalCollapsed = !isTotalCollapsed"
+    [attr.aria-expanded]="!isTotalCollapsed"
+    aria-controls="providerList">
+    <span class="filter-header-label">Fournisseurs <span class="filter-active-badge" *ngIf="providers?.value?.length">{{ providers.value.length }}</span></span>
+    <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
+  </button>
+  <div id="providerList" [collapse]="isTotalCollapsed" [isAnimated]="true">
+    <form [formGroup]="myForm" class="filter-typeahead-form">
+      <input formControlName="state"
+        [typeahead]="list"
+        container="body"
+        [typeaheadOptionsLimit]="7"
+        [typeaheadMinLength]="0"
+        typeaheadOptionField="name"
+        (typeaheadOnSelect)="onSelect($event)"
+        [typeaheadItemTemplate]="customItemTemplate"
+        placeholder="Entrer un fournisseur"
+        class="form-control">
+    </form>
+    <ul class="list-group list-group-flush filter-tag-list">
+      <li class="list-group-item filter-tag" *ngFor="let item of providers.value">
+        <span>{{ item.name }} ({{ item.count }})</span>
+        <button type="button" class="filter-tag-remove" (click)="deleteOneProvider(item.code)" title="Retirer">&#10005;</button>
+      </li>
+    </ul>
+  </div>
 </div>
-

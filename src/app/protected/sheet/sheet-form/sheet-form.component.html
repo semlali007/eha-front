@@ -1,87 +1,190 @@
-<form novalidate [formGroup]="sheetForm" (ngSubmit)="submit()">
+<div class="sheet-form-page">
+  <app-breadcrumb></app-breadcrumb>
 
-    <div class="row">
-        <div class="col-lg-9">
-            <div>
-                <button (click)="list()" class="btn btn-edf">Vitrine de l'offre</button>
-            </div>
-        </div>
-        <div class="col-lg-3 margin-tb">
-            <div class="row">
-                
-                <div class="ml-auto">
-                    <button type="button" class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();' >
-                        Annuler
-                    </button>
-                </div>
+<form class="adm-page" novalidate [formGroup]="sheetForm" (ngSubmit)="submit()">
 
-                <div class="ml-auto">
-                    <button type="submit" class="btn btn-edf float-left" [disabled]="sheetForm.invalid">
-                        Enregistrer
-                    </button>
-                </div>
-            </div>
-        </div>
+  <!-- Header sticky : titre + actions -->
+  <div class="adm-form-header">
+    <div class="adm-form-header-left">
+      <h1 class="adm-form-header-title">
+        {{ sheetId ? 'Modifier la fiche' : 'Nouvelle fiche marché' }}
+      </h1>
     </div>
-    <span *ngIf="sheetForm.invalid" class="form-text font-italic text-danger">
-            Les champs avec une étoile doivent obligatoirement être remplis.
-    </span>
+    <div class="adm-form-header-actions">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="cancel(); $event.stopPropagation()">
+        Annuler
+      </button>
+      <button type="submit" class="adm-btn adm-btn-edf">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+        </svg>
+        Enregistrer
+      </button>
+    </div>
+  </div>
 
-    
-   
+  <!-- Bandeau d'erreur global (visible uniquement après tentative de sauvegarde) -->
+  <div class="adm-form-error-banner" *ngIf="submitted && sheetForm && sheetForm.invalid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+    </svg>
+    <span>Certains champs obligatoires ne sont pas renseignés. Vérifiez les champs marqués d'une étoile (<strong>*</strong>).</span>
+  </div>
 
-    <app-sheet-form-title [title]="title"></app-sheet-form-title>
-    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate" [sheetForm]="sheetForm"></app-sheet-form-date>
-    <app-sheet-form-options [sheetForm]="sheetForm" [options]="options"></app-sheet-form-options>
-    <app-sheet-form-comments [comments]="comments"></app-sheet-form-comments>
-    <app-sheet-form-words [words]="words"></app-sheet-form-words>
-    <app-sheet-form-dauphin [dauphin]="dauphin"></app-sheet-form-dauphin>
-    <app-sheet-form-edf-open [edf_open]="edf_open"></app-sheet-form-edf-open>
-    <!-- <app-sheet-form-stipulation [stipulation_for_others]="stipulation_for_others"></app-sheet-form-stipulation> -->
-    <app-sheet-form-partnership [partnership]="partnership"></app-sheet-form-partnership>
-    <app-sheet-form-protected-sector [protected_sector]="protected_sector"></app-sheet-form-protected-sector>
-    <app-sheet-form-providers [providers]="providers" [allproviders]="data.providers"></app-sheet-form-providers>
-    <app-sheet-form-beneficiaries [beneficiaries]="beneficiaries" [allbeneficiaries]="data.beneficiaries"></app-sheet-form-beneficiaries>
-    <!-- *********** -->
-    <app-sheet-form-stipulationAutrui [stipulationAutrui]="stipulationAutrui" [allstipulationAutrui]="data.stipulationAutrui"></app-sheet-form-stipulationAutrui>
-    <app-sheet-form-areas [areas]="areas" [allareas]="data.areas"></app-sheet-form-areas>
-    <app-sheet-form-directions [directions]="directions" [alldirections]="data.directions"></app-sheet-form-directions>
-    <app-sheet-form-domain [domains]="domains" [allDomains]="[]"></app-sheet-form-domain>
-    <app-sheet-form-subdomain [subdomains]="subdomains" [allSubdomains]="[]"></app-sheet-form-subdomain>
-    <app-sheet-form-category [categoryCode]="categoryCode"></app-sheet-form-category>
-    <app-sheet-form-committee [committeeCode]="committeeCode"></app-sheet-form-committee>
-    <app-sheet-form-lots *ngIf="fromNetAchat==false" [sheetForm]="sheetForm" [lots]="lots"></app-sheet-form-lots>
+  <!-- 1. Informations générales -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">1</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Informations générales</h3>
+        <p class="adm-section-sub">Titre, catégorie et mots-clés de la fiche marché</p>
+      </div>
+    </div>
+    <app-sheet-form-title [title]="title" [mode]="mode"></app-sheet-form-title>
+    <app-sheet-form-contrat-groupe [contratGroupe]="contratGroupe"></app-sheet-form-contrat-groupe>
+    <app-sheet-form-category [categoryCode]="categoryCode" [mode]="mode"></app-sheet-form-category>
+    <app-sheet-form-words [words]="words" [mode]="mode"></app-sheet-form-words>
+  </section>
 
-    <app-sheet-form-contracts *ngIf="fromNetAchat==false" [sheetForm]="sheetForm"[contracts]="contracts">  <!-- [lotsList]="lots" > -->
-    </app-sheet-form-contracts>
-    <app-sheet-form-content [content]="content" *ngIf="fromNetAchat==true" ></app-sheet-form-content>
+  <!-- 2. Calendrier -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">2</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Calendrier du marché</h3>
+        <p class="adm-section-sub">Dates de début et fin du contrat, options de reconduction</p>
+      </div>
+    </div>
+    <app-sheet-form-date [startDate]="startDate" [endDate]="endDate" [sheetForm]="sheetForm" [mode]="mode"></app-sheet-form-date>
+    <app-sheet-form-options [sheetForm]="sheetForm" [options]="options" [mode]="mode"></app-sheet-form-options>
+  </section>
+
+  <!-- (conditionnelle) Contenu Netachat -->
+  <section class="adm-section" *ngIf="fromNetAchat == true">
+    <div class="adm-section-head">
+      <span class="adm-section-number">✓</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Contenu (import Netachat)</h3>
+        <p class="adm-section-sub">Contenu synchronisé depuis Netachat</p>
+      </div>
+    </div>
+    <app-sheet-form-content [content]="content"></app-sheet-form-content>
+  </section>
+
+  <!-- 3. Fournisseurs & bénéficiaires -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">3</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Fournisseurs & bénéficiaires</h3>
+        <p class="adm-section-sub">Entités fournisseurs, bénéficiaires et stipulations</p>
+      </div>
+    </div>
+    <app-sheet-form-providers [providers]="providers" [allproviders]="data.providers" [mode]="mode"></app-sheet-form-providers>
+    <app-sheet-form-supplier-vat-number [supplierVatNumber]="supplierVatNumber" [mode]="mode"></app-sheet-form-supplier-vat-number>
+    <app-sheet-form-beneficiaries [beneficiaries]="beneficiaries" [allbeneficiaries]="data.beneficiaries" [mode]="mode"></app-sheet-form-beneficiaries>
+    <app-sheet-form-stipulationAutrui [stipulationAutrui]="stipulationAutrui" [allstipulationAutrui]="data.stipulationAutrui" [mode]="mode"></app-sheet-form-stipulationAutrui>
+    <app-sheet-form-entites-beneficiaires-edf-enedis [entitesBeneficiairesEdfEnedis]="entitesBeneficiairesEdfEnedis" [mode]="mode"></app-sheet-form-entites-beneficiaires-edf-enedis>
+  </section>
+
+  <!-- 4. Lots & contrats -->
+  <section class="adm-section" *ngIf="fromNetAchat == false">
+    <div class="adm-section-head">
+      <span class="adm-section-number">4</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Lots & contrats</h3>
+        <p class="adm-section-sub">Structure contractuelle : lots et numéros de contrats associés</p>
+      </div>
+    </div>
+    <app-sheet-form-lots [sheetForm]="sheetForm" [lots]="lots" [mode]="mode" [sheetId]="sheetId"></app-sheet-form-lots>
+    <app-sheet-form-contracts [sheetForm]="sheetForm" [contracts]="contracts" [mode]="mode" [sheetId]="sheetId"></app-sheet-form-contracts>
+  </section>
+
+  <!-- 5. Kit de portage -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">5</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Kit de portage</h3>
+        <p class="adm-section-sub">Documents officiels : PDF, Word, Excel, PowerPoint</p>
+      </div>
+    </div>
+    <app-sheet-form-kit [uploader]="kitUploader" (removedItem)="onRemovedItem($event)" label="Kit de portage"></app-sheet-form-kit>
+  </section>
+
+  <!-- 6. Zone géographique -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">6</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Zone géographique</h3>
+        <p class="adm-section-sub">Couverture géographique du marché</p>
+      </div>
+    </div>
+    <app-sheet-form-areas [areas]="areas" [allareas]="data.areas" [mode]="mode"></app-sheet-form-areas>
+    <app-sheet-form-geographic-detail [sheetForm]="sheetForm"></app-sheet-form-geographic-detail>
+  </section>
+
+  <!-- 7. Conditions d'achat -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">7</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Conditions d'achat</h3>
+        <p class="adm-section-sub">Options de commande et conditions spécifiques au marché</p>
+      </div>
+    </div>
+    <div class="adm-toggle-group">
+      <app-sheet-form-dauphin [dauphin]="dauphin" [mode]="mode"></app-sheet-form-dauphin>
+      <app-sheet-form-edf-open [edf_open]="edf_open" [mode]="mode"></app-sheet-form-edf-open>
+      <app-sheet-form-supplier-size [supplierSize]="supplierSize"
+        *ngIf="!shouldHideFieldInContratGroupeMode('supplierSize')"></app-sheet-form-supplier-size>
+      <app-sheet-form-partnership [partnership]="partnership"
+        *ngIf="!shouldHideFieldInContratGroupeMode('partnership')"></app-sheet-form-partnership>
+      <app-sheet-form-protected-sector [protected_sector]="protected_sector"
+        *ngIf="!shouldHideFieldInContratGroupeMode('protected_sector')"></app-sheet-form-protected-sector>
+    </div>
+  </section>
+
+  <!-- 8. Gestion -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">8</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Gestion du contrat</h3>
+        <p class="adm-section-sub">Acheteur, contract manager, comité et mise à jour de la donnée</p>
+      </div>
+    </div>
+    <app-sheet-form-acheteur [acheteur]="acheteur"></app-sheet-form-acheteur>
+    <app-sheet-form-contract-manager [contractManager]="contractManager"></app-sheet-form-contract-manager>
+    <app-sheet-form-committee [committeeCode]="committeeCode" [mode]="mode"></app-sheet-form-committee>
+    <app-sheet-form-mise-a-jour-donnee [miseAJourDonnee]="miseAJourDonnee"></app-sheet-form-mise-a-jour-donnee>
+  </section>
+
+  <!-- 9. Publication & commentaires -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">9</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Publication & commentaires</h3>
+        <p class="adm-section-sub">Statut de publication et notes internes</p>
+      </div>
+    </div>
     <app-sheet-form-status [status]="status"></app-sheet-form-status>
-    <app-sheet-form-kit [uploader]="kitUploader" (removedItem)="onRemovedItem($event)" label="Kit de déploiement (PDF, Word, Excel, PowerPoint)"></app-sheet-form-kit>
-    <div class="row">
-        <div class="col-lg-10">
-        </div>
-        <div class="col-lg-2">
-            <div class="row">
-                <div class="ml-auto">
-                    <button class="btn btn-edf float-left" (click)='cancel();$event.stopPropagation();'>
-                        Annuler
-                    </button>
-                </div>
+    <app-sheet-form-comments [comments]="comments" [mode]="mode"></app-sheet-form-comments>
+  </section>
 
-                <div class="ml-auto">
-                    <button type="submit" class="btn btn-edf float-left" [disabled]="sheetForm.invalid">
-                        Enregistrer
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 </form>
+</div>
 
 <ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer cet élément ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
     </div>
-  </ng-template>
+  </div>
+</ng-template>

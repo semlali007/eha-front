@@ -1,85 +1,70 @@
-<div class="row justify-content-center">
-    <div id="htmlData" class="col-11 col-md-10">
-        <div class="row" data-html2canvas-ignore="true">
-            <div class="col-lg-6">
-                <div >
-                    <button  (click)="list()" class="btn btn-edf">Liste des actualités</button>
-                </div>
-            </div>
-          
-            <div class="col-lg-3" >
-                <div class="pull-right"  >
-                    <a (click)="modification(id)"
-                        class="btn btn-edf float-left" ><i class="fas fa-plus" ></i>
-                        Modifier
-                    </a>
-                </div>
-            </div>
+<div class="adm-page">
 
-            <div class="col-lg-3">
-                <button type="button" class="btn btn-danger float-left initial"  (click)="openModal(template)" >
-                    Supprimer
-                </button>
-            </div>
-        </div>
-        <ul class="list-group" id="print-section">
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Titre</strong></div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-11 ">{{news.title}}</div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Date de création</strong></div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-9">{{news.created_date | customDate}}</div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Catégorie</strong></div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-9">{{news.categ}}</div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Déscription courte</strong></div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div [innerHTML]="news.short_description" class="col-12">
-                </div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Déscription longue</strong></div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div [innerHTML]="news.long_description |safe: 'html'"  class="col-12">
-                </div>
-            </li>
-
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Publié</strong></div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-12"> {{news.status | showBooleanText}}</div>
-                   
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-3"><strong>Sur la page d'accueil</strong></div>
-            </li>
-            <li class="list-group-item row border-right-0 border-left-0">
-                <div class="col-12">{{news.is_home | showBooleanText}}</div>
-            </li>
-            </ul>
-         </div>  
-</div>
-<ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-header">
+    <div class="adm-row" style="gap: 10px; flex-wrap: wrap">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="list()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+        </svg>
+        Retour à la liste
+      </button>
     </div>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="modification(id)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/>
+        </svg>
+        Modifier
+      </button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="openModal(template)">
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <div class="adm-nc-view">
+    <!-- Méta : catégorie / date / statut -->
+    <div class="adm-nc-view-meta">
+      <span [class]="'adm-cat-badge ' + (news.categ_code | newsCastCategoryColor)" *ngIf="news.categ">
+        {{ news.categ }}
+      </span>
+      <span class="adm-nc-view-date" *ngIf="news.created_date">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+        </svg>
+        Créée le {{ news.created_date | customDate }}
+      </span>
+      <span *ngIf="news.status == 1" class="adm-chip adm-chip--green">Publiée</span>
+      <span *ngIf="news.status == 0" class="adm-chip adm-chip--muted">Non publiée</span>
+      <span *ngIf="news.is_home" class="adm-chip adm-chip--orange">Page d'accueil</span>
+    </div>
+
+    <!-- Titre principal -->
+    <h1 class="adm-nc-view-title">{{ news.title }}</h1>
+
+    <!-- Description courte -->
+    <div class="adm-nc-view-section" *ngIf="news.short_description">
+      <h3 class="adm-nc-view-section-label">Description courte</h3>
+      <div class="adm-nc-view-content" [innerHTML]="news.short_description"></div>
+    </div>
+
+    <!-- Description longue -->
+    <div class="adm-nc-view-section" *ngIf="news.long_description">
+      <h3 class="adm-nc-view-section-label">Description longue</h3>
+      <div class="adm-nc-view-content" [innerHTML]="news.long_description | safe: 'html'"></div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #template>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer cette actualité ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    </div>
+  </div>
 </ng-template>
-
-

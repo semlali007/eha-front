@@ -1,89 +1,418 @@
-.title {
-    font-weight: bold;
-    color: var(--my-color-orange);
-}
-.full-width{
-    width:100% ;
-    margin-top:30px;
-}
-.p-danger{
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 22px; 
-    color: #B20C1F;
-    margin-top:5px;
-}
-.titre-cadre{
-    margin-bottom:0 ;
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 28px;
-    /* identical to box height, or 127% */
-    /* Gris fonce ++ (AAA, Jet) */
-    color: #333333;
+/* ═══════════════════════════════════════════════════════════
+   HOME PAGE — Layout & Global Overrides (ViewEncapsulation.None)
+   ═══════════════════════════════════════════════════════════ */
 
- 
- 
-  
-}
-.titre-2{
-    /* Body - 16 - Semi Bold */
-font-family: 'Work Sans';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-
-/* identical to box height, or 150% */
-
-/* Bleu fonce (Charte) */
-color: #001A70;
- 
-}
-.hr{ 
-/* Inside auto layout */
-    border: 1px solid B2B2B2;
-    width:100%; 
-}
-.row-table {
-    display: flex;
-    flex-wrap: wrap;
-}
-.cadre{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height:100%;
-    margin-top: 15px;
-    padding-right: 32px ;
-    background: #F1F3F9;
-    /* Ombre légère sur bloc */
-    box-shadow: 1px 2px 2px #DADADA;
-    border-radius: 3px;
-    align-self: stretch;
-}
-.p{
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px; 
-    color: #333333;
-   
+/* ─── Page layout ─────────────────────────────────────────── */
+.home-page {
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
-.table-se-doc{
-    border-collapse: collapse;
-    width: 100%;
-    margin-left:8px; 
+/* ─── Cards grid ──────────────────────────────────────────── */
+.home-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.home-cards-row-2 {
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 24px;
+}
+.home-card-col,
+.home-card-col-half {
+  display: flex;
+  min-width: 0;
 }
 
-.td{
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
+@media (max-width: 992px) {
+  .home-cards-row {
+    grid-template-columns: 1fr;
+  }
+  .home-cards-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Card override (`.cadre` utilisé dans chaque composant enfant) ─── */
+app-home .cadre,
+app-home .list-group.cadre {
+  background: #f9fafb !important;
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1) !important;
+  padding: 22px 24px !important;
+  margin-top: 0 !important;
+  gap: 12px !important;
+  height: 100% !important;
+  width: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+app-home .cadre [class*="col-"],
+app-home .list-group.cadre [class*="col-"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+app-home .cadre .row,
+app-home .list-group.cadre .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Effet de survol moderne sur les cartes */
+app-home .cadre {
+  transition: box-shadow 0.18s ease, transform 0.18s ease !important;
+}
+app-home .cadre:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 28px rgba(2, 12, 45, 0.1) !important;
+}
+
+/* Boutons CTA toujours en bas des cartes */
+app-home-contrat-groupe .cadre > div:last-child,
+app-home-sheet .cadre > button:last-of-type {
+  margin-top: auto !important;
+}
+
+/* ─── Titres des cartes ───────────────────────────────────── */
+app-home .titre-cadre {
+  font-family: 'Work Sans', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #001a70 !important;
+  margin-bottom: 4px !important;
+  line-height: 1.3 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  white-space: normal !important;
+}
+app-home .titre-cadre img {
+  height: 22px !important;
+  width: auto !important;
+  opacity: 0.8;
+}
+app-home .sous-titre-cadre {
+  display: block !important;
+  width: 100% !important;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #001a70 !important;
+  background: #e8eef8 !important;
+  border: 2px solid #fe5815;
+  padding: 8px 14px !important;
+  margin: 8px 0 4px 0 !important;
+  border-radius: 6px;
+  box-sizing: border-box !important;
+}
+
+/* ─── Paragraphes ─────────────────────────────────────────── */
+app-home .cadre .p,
+app-home .cadre p:not(.titre-cadre):not(.p-danger):not(.savoir-plus):not(.sous-titre-cadre) {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #4b5563 !important;
+  margin-bottom: 4px !important;
+}
+
+/* ─── Boutons "blanc" (CTA dans les cartes) ───────────────── */
+app-home .btn-blanc {
+  background: #fff !important;
+  color: #001a70 !important;
+  border: 1px solid #001a70 !important;
+  border-radius: 8px !important;
+  padding: 12px 18px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.1s !important;
+  height: auto !important;
+  gap: 8px !important;
+}
+app-home .btn-blanc:hover {
+  background: #001a70 !important;
+  color: #fff !important;
+  border-color: #001a70 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 26, 112, 0.2) !important;
+}
+
+/* ─── Boutons EDF v2/v3 ───────────────────────────────────── */
+app-home .btn-edf-v2,
+app-home .btn-edf-v3 {
+  background: #001a70 !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  transition: background 0.15s !important;
+}
+app-home .btn-edf-v2:hover,
+app-home .btn-edf-v3:hover {
+  background: #00237a !important;
+}
+
+/* ─── Inputs ──────────────────────────────────────────────── */
+app-home .input-edf {
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  transition: border-color 0.15s !important;
+}
+app-home .input-edf:focus {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1) !important;
+  outline: none !important;
+}
+
+/* ─── Lien "en savoir plus" ───────────────────────────────── */
+app-home .savoir-plus {
+  font-size: 14px !important;
+  color: #001a70 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+  cursor: pointer !important;
+}
+app-home .savoir-plus:hover {
+  color: #fe5815 !important;
+}
+
+/* ─── Texte danger ────────────────────────────────────────── */
+app-home .p-danger {
+  font-size: 12px !important;
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  margin-top: 2px !important;
+}
+
+/* ─── Information banner ──────────────────────────────────── */
+app-home-information .global {
+  border: 1px solid #dfe3e8 !important;
+  border-left: 4px solid #001a70 !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  background: #f9fafb !important;
+  align-items: center !important;
+}
+app-home-information .icone-info {
+  width: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+app-home-information .left {
+  margin-left: 0 !important;
+}
+app-home-information .description {
+  margin-left: auto !important;
+  margin-top: 0 !important;
+  font-size: 14px !important;
+}
+
+/* Panneau actualites : styles deplaces dans home-newscast.component.css (grille). */
+
+/* ─── Documentation table ─────────────────────────────────── */
+app-home-documentation .full-width {
+  width: 100% !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+app-home-documentation .row-table {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+}
+app-home-documentation .row-table > .col-5,
+app-home-documentation .row-table > .col-7 {
+  flex: none !important;
+  width: auto !important;
+  padding: 0 !important;
+}
+app-home-documentation .row-table .titre-cadre {
+  margin-bottom: 0 !important;
+  white-space: nowrap !important;
+}
+app-home-documentation .p-danger {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 12px !important;
+  white-space: nowrap !important;
+}
+app-home-documentation .table-se-doc {
+  margin-left: 0 !important;
+}
+app-home-documentation .td {
+  padding: 10px 8px !important;
+  border-bottom: 1px solid #e8eaed !important;
+}
+app-home-documentation .titre-2 {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* ─── Documentation en blocs cliquables ───────────────────── */
+app-home-documentation .doc-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-top: 4px !important;
+}
+
+app-home-documentation .doc-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 12px 16px !important;
+  background: #fff !important;
+  border: 1px solid #e8eaed !important;
+  border-left: 3px solid transparent !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease !important;
+}
+app-home-documentation .doc-item:hover {
+  border-color: #cfdcf3 !important;
+  border-left-color: #fe5815 !important;
+  box-shadow: 0 5px 16px rgba(0, 26, 112, 0.09) !important;
+  transform: translateX(2px) !important;
+}
+
+app-home-documentation .doc-item-main {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+app-home-documentation .doc-item-title {
+  font-family: 'Work Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #001a70 !important;
+  line-height: 1.3 !important;
+  transition: color 0.14s ease !important;
+}
+app-home-documentation .doc-item:hover .doc-item-title {
+  color: #fe5815 !important;
+}
+app-home-documentation .doc-item-desc {
+  font-family: 'Work Sans', sans-serif !important;
+  font-size: 13px !important;
+  color: #6b7280 !important;
+  line-height: 1.45 !important;
+  margin-top: 3px !important;
+}
+
+/* Pastille d'icône — type de lien */
+app-home-documentation .doc-item-icon {
+  flex: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  transition: color 0.14s ease, background 0.14s ease, transform 0.14s ease !important;
+}
+app-home-documentation .doc-item-icon--ext {
+  color: #fe5815 !important;
+  background: #fff4ef !important;
+  border: 1px solid #fde3d4 !important;
+}
+app-home-documentation .doc-item-icon--mail {
+  color: #0a3bbf !important;
+  background: #eef2fb !important;
+  border: 1px solid #d7e1f7 !important;
+}
+app-home-documentation .doc-item-icon--go {
+  color: #c0c7d2 !important;
+  background: transparent !important;
+}
+app-home-documentation .doc-item:hover .doc-item-icon--go {
+  color: #fe5815 !important;
+  transform: translateX(2px) !important;
+}
+
+/* ─── Contact ─────────────────────────────────────────────── */
+app-home-contact .full-width {
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+app-home-contact .titre-cadre {
+  margin-bottom: 8px !important;
+}
+
+/* Liens du contenu (admin) — affordance claire + icône de type */
+app-home-contact [innerHtml] a,
+app-home-contact a {
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: color 0.14s ease !important;
+}
+app-home-contact a:hover {
+  color: #fe5815 !important;
+  text-decoration: underline !important;
+}
+/* Pastille d'icône après le lien, teintée par la couleur du lien */
+app-home-contact a[href^="http"]::after,
+app-home-contact a[href^="mailto"]::after {
+  content: "" !important;
+  display: inline-block !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin-left: 4px !important;
+  vertical-align: -1px !important;
+  background-color: currentColor !important;
+  background-repeat: no-repeat !important;
+}
+/* Lien externe (nouvel onglet) */
+app-home-contact a[href^="http"]::after {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25'/%3E%3C/svg%3E") no-repeat center / contain !important;
+}
+/* Lien e-mail */
+app-home-contact a[href^="mailto"]::after {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'/%3E%3C/svg%3E") no-repeat center / contain !important;
+}
+
+/* ─── Bouton encart contrat groupe ────────────────────────── */
+app-home .btn-contrat-groupe {
+  background: #001a70 !important;
+  color: #fff !important;
+  border: 1px solid #001a70 !important;
+}
+app-home .btn-contrat-groupe:hover {
+  background: #00237a !important;
+  color: #fff !important;
+}
+
+/* ─── Search : remove ugly <br> spacing + full width forms ── */
+app-home-search br {
+  display: none !important;
+}
+app-home-search app-home-search-form,
+app-home-search app-home-search-form-zip {
+  display: block !important;
+  width: 100% !important;
+}
+app-home-search .my-form-for-searches {
+  width: 100% !important;
+}
+app-home-search .my-form-for-searches .row {
+  margin: 0 !important;
+  display: flex !important;
+  gap: 8px !important;
+}
+app-home-search .my-form-for-searches .col-8 {
+  flex: 1 !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+app-home-search .my-form-for-searches .col-4 {
+  flex: none !important;
+  width: auto !important;
+  max-width: none !important;
+  padding: 0 !important;
 }

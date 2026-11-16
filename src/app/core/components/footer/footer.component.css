@@ -1,155 +1,166 @@
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — Achatpédia (restyle moderne, en symétrie avec l'en-tête)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Barre footer desktop ─────────────────────────────────── */
+.cadre-footer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  background: linear-gradient(115deg, #001a70 0%, #012a8f 46%, #06154f 100%);
+  box-shadow: 0 -6px 20px rgba(2, 12, 45, 0.18);
+}
+/* Liseré orange EDF en haut (symétrie avec le bandeau) */
+.cadre-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 138, 77, 0) 32%, #ff8a4d 72%, #fe5815 100%);
+}
+
+.p-footer {
+  font-family: "Work Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13.5px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+}
+
+/* Séparateurs "|" discrets (le lien à l'intérieur reste vif) */
 .textFooter {
-    font-size: .875rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.p-footer{
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-    /* Blanc (Charte) */
-    color: #FFFFFF;
+/* Liens footer (Mentions légales, Administration, Version) */
+.white {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 4px 12px !important;
+  border-radius: 7px !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
+}
+.white:hover,
+.white:focus {
+  color: #ffd2bb !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
 
-.white{
-    text-decoration-line: underline ;
-    color: #FFFFFF;
+.link {
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.link:hover {
+  color: #ffd2bb;
 }
 
-.container, .container-sm, .container-md, .container-lg, .container-xl {
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    gap: 20px;
-    color:#fff;
-    /* Bleu fonce (Charte) */
-    background: #001A70;
-    /* Ombre footer bleu */
-    box-shadow: 4px 0px 10px #75787B;
+/* ── Footer mobile ────────────────────────────────────────── */
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  color: #fff;
+  background: linear-gradient(115deg, #001a70 0%, #06154f 100%);
+  border-top: 3px solid #fe5815;
+  box-shadow: 0 -4px 14px rgba(2, 12, 45, 0.18);
 }
 
-.container[_ngcontent-aen-c24], .container-sm[_ngcontent-aen-c24], .container-md[_ngcontent-aen-c24], .container-lg[_ngcontent-aen-c24], .container-xl[_ngcontent-aen-c24] {
-    padding: 0;
+.responsive-header {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  width: 100%;
+  height: 50px;
+  background: #f1f3f9;
+  border-bottom: 1px solid #001a70;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
-
-.cadre-footer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    /* Bleu fonce (Charte) */
-    background: #001A70;
-    /* Ombre footer bleu */
-    box-shadow: 4px 0px 10px #75787B;
-}
-.link{
-    cursor: pointer;
-    text-decoration:underline ;
-}
+/* ── Responsive (logique d'affichage conservée) ───────────── */
 @media screen and (min-width: 790px) {
-
-    #footer-desktop{
-        display:inline-flex ;
-      }
-      #footer-mobile{
-        display:none ;
-      }
-
-.row{
+  #footer-desktop {
+    display: inline-flex;
+  }
+  #footer-mobile {
+    display: none;
+  }
+  .row {
     height: 17px;
-}
-
-.left{
+  }
+  .left {
     margin-left: 46px;
-}
-
-.col-md-2 {
+  }
+  .col-md-2 {
     flex: 0 0 12.667%;
     max-width: 12.666667%;
-}
-
-.col-md-6 {
+  }
+  .col-md-6 {
     flex: 0 0 51%;
     max-width: 51%;
-}
-
-.margin-1{
+  }
+  .margin-1 {
     max-width: 12.667% !important;
-}
-
-.p-footer{
-    font-size:14px;
-}
-.margin-0{
+  }
+  .p-footer {
+    font-size: 13.5px;
+  }
+  .margin-0 {
     max-width: 20%;
-    margin:0;
-}
-}
-
-.responsive-header{
-    box-sizing: border-box;
-
-/* Auto layout */
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-padding: 0px;
-
-width: 100%;
-height: 50px;
-
-/* Bleu très clair (AAA, Alice Blue) */
-background: #F1F3F9;
-
-/* Bleu fonce (Charte) */
-border-bottom: 1px solid #001A70;
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+    margin: 0;
+  }
 }
 
 @media (max-width: 800px) {
-
-    #footer-desktop{
-        display:none ;
-      }
-      #footer-mobile{
-        display:block ;
-      }
-
-    .fixed-bottom {
-            position:relative ;
-    }
-    
-.left{
+  #footer-desktop {
+    display: none;
+  }
+  #footer-mobile {
+    display: block;
+  }
+  .fixed-bottom {
+    position: relative;
+  }
+  .left {
     position: relative;
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
+  }
+  .cadre-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    gap: 16px;
+    width: 100%;
+    background: linear-gradient(115deg, #001a70 0%, #06154f 100%);
+  }
 }
-
-    .cadre-footer{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 0px;
-        gap: 20px;
-    
-        width: 104%;
-        height: 20%;
-    
-        /* Bleu fonce (Charte) */
-        background: #001A70;
-    
-        /* Ombre footer bleu */
-        box-shadow: 4px 0px 10px #75787B;
-    }
-}
-  

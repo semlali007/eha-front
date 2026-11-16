@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sheet-form-partnership',
   templateUrl: './sheet-form-partnership.component.html',
-  styles: []
+  styleUrls: ['./sheet-form-partnership.component.css']
 })
 export class SheetFormPartnershipComponent implements OnInit, OnDestroy {
   @Input() partnership: FormControl;

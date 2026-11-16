@@ -1,22 +1,54 @@
+<div *ngIf="(error$ | async) as error"
+     [config]="{ show: true }"
+     (onHidden)="onHidden()"
+     bsModal #autoShownModal="bs-modal"
+     class="modal fade mi-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="mi-modal-title">
 
-  <div *ngIf="(error$ | async) as error" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
-    class="modal fade modal-bg" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
- 
-    <div class="modal-dialog modal-dialog-hlk">
-  <div class="modal-content modal-content-hlk">
-    <div class="modal-header modal-header-hlk">
-      <h4 id="dialog-auto-name" class="modal-title pull-left  font-weight-bold">&nbsp;</h4>
-      <center>
-      <button type="button" class="btn-close close btn-close-hlk" aria-label="Close" (click)="hideModal()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </center>
-    </div>
-    <div class="modal-body font-weight-bold" >
-     <p>Nous sommes désolés, votre recherche n'a pas pu aboutir. <br>Merci de ré-essayer ultérieurement.<p></p>
-     <p>Pour tout renseignement complémentaire ou si le problème persiste, vous pouvez <u><a class="white-color" href="mailto:gu@supportdag.edf.fr?subject=EHA - HLK indisponible">nous écrire</a></u></p>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="adm-modal-header">
+        <h4 id="mi-modal-title" class="adm-modal-title">Service de recherche indisponible</h4>
+        <button type="button"
+                class="adm-modal-close"
+                aria-label="Fermer"
+                (click)="hideModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="adm-modal-body">
+        <div class="mi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+          </svg>
+        </div>
+        <p class="mi-text">
+          Nous sommes désolés, votre recherche n'a pas pu aboutir.<br>
+          Merci de réessayer ultérieurement.
+        </p>
+        <p class="mi-text-muted">
+          Pour tout renseignement complémentaire ou si le problème persiste, vous pouvez nous écrire.
+        </p>
+      </div>
+
+      <div class="adm-modal-footer">
+        <button type="button" class="mi-btn mi-btn-secondary" (click)="hideModal()">Fermer</button>
+        <a class="mi-btn mi-btn-primary"
+           href="mailto:gu@supportdag.edf.fr?subject=EHA - HLK indisponible"
+           (click)="hideModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z"/>
+          </svg>
+          Nous écrire
+        </a>
+      </div>
+
     </div>
   </div>
- </div>
 </div>
-

@@ -15,15 +15,113 @@ export class ExcelService {
     const header = data.header;
     let workbook = new Workbook();
     let worksheet = workbook.addWorksheet(options.sheet || '');
-    worksheet.addRow(header);
-    data.data.forEach(d => {
+    
+    // Ajouter la ligne d'en-tête
+    const headerRow = worksheet.addRow(header);
+    
+    // Styliser les en-têtes
+    headerRow.eachCell((cell, colNumber) => {
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FF4472C4' } // Bleu professionnel
+      };
+      cell.font = {
+        color: { argb: 'FFFFFFFF' }, // Texte blanc
+        bold: true,
+        size: 12
+      };
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+        wrapText: true
+      };
+      cell.border = {
+        top: { style: 'thin', color: { argb: 'FF000000' } },
+        left: { style: 'thin', color: { argb: 'FF000000' } },
+        bottom: { style: 'thin', color: { argb: 'FF000000' } },
+        right: { style: 'thin', color: { argb: 'FF000000' } }
+      };
+    });
+    
+    // Définir la hauteur de la ligne d'en-tête
+    headerRow.height = 30;
+    
+    // Ajouter les données
+    const meta = Array.isArray(data.meta) ? data.meta : [];
+    let rowIndex = 2; // Commencer à la ligne 2 (après l'en-tête)
+    data.data.forEach((d: any, dataIndex: number) => {
       const line = [];
-      for (let key of Object.keys(d)) {
-        line.push(d[key]);
+      if (Array.isArray(d)) {
+        // Si d est déjà un tableau
+        line.push(...d);
+      } else {
+        // Si d est un objet
+        for (let key of Object.keys(d)) {
+          line.push(d[key]);
+        }
       }
-      worksheet.addRow(line);
-    }
-    );
+
+      const dataRow = worksheet.addRow(line);
+      const strike = !!(meta[dataIndex] && meta[dataIndex].strikethrough);
+
+      // Styliser les lignes de données avec alternance de couleurs
+      dataRow.eachCell((cell, colNumber) => {
+        // Couleur de fond alternée
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: rowIndex % 2 === 0 ? 'FFF2F2F2' : 'FFFFFFFF' } // Gris clair / Blanc
+        };
+
+        cell.font = {
+          size: 11,
+          strike: strike
+        };
+
+        cell.alignment = {
+          vertical: 'middle',
+          horizontal: 'left',
+          wrapText: true
+        };
+
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'FFD3D3D3' } },
+          left: { style: 'thin', color: { argb: 'FFD3D3D3' } },
+          bottom: { style: 'thin', color: { argb: 'FFD3D3D3' } },
+          right: { style: 'thin', color: { argb: 'FFD3D3D3' } }
+        };
+      });
+
+      // Définir la hauteur des lignes de données
+      dataRow.height = 25;
+      rowIndex++;
+    });
+    
+    // Ajuster automatiquement la largeur des colonnes
+    worksheet.columns.forEach((column, index) => {
+      let maxLength = 0;
+      
+      // Calculer la largeur basée sur le contenu
+      worksheet.getColumn(index + 1).eachCell({ includeEmpty: false }, (cell) => {
+        const columnLength = cell.value ? cell.value.toString().length : 0;
+        if (columnLength > maxLength) {
+          maxLength = columnLength;
+        }
+      });
+      
+      // Définir une largeur minimale et maximale
+      const minWidth = 10;
+      const maxWidth = 50;
+      column.width = Math.min(Math.max(maxLength + 2, minWidth), maxWidth);
+    });
+    
+    // Figer la première ligne (en-têtes)
+    worksheet.views = [
+      { state: 'frozen', ySplit: 1 }
+    ];
+    
+    // Générer et télécharger le fichier
     workbook.xlsx.writeBuffer().then((data) => {
       let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       fs.saveAs(blob, options.name || '');

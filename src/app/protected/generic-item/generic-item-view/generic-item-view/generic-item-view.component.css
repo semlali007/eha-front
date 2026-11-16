@@ -1,12 +1,81 @@
-.progress {
-    display: flex;
-    height: 1rem;
-    overflow: hidden;
-    line-height: 0;
-    font-size: .75rem;
-    background-color: #fbf2f2;
-    border-radius: .25rem;
-    border-color: #000;
-    border: 1px solid #9a9a9a;
-    color: #000;
-  }
+/* ═══════════════════════════════════════════════════════════
+   GENERIC-ITEM-VIEW — Article générique
+   Les classes .adm-* viennent de ui-kit.css
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Segment (3 niveaux) ──────────────────────────────────── */
+.gi-segment {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.gi-segment li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 13.5px;
+  color: #1f2937;
+}
+.gi-segment li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fe5815;
+}
+
+/* ── Comptes (e + i) ──────────────────────────────────────── */
+.gi-account-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #1f2937;
+}
+.gi-account-line + .gi-account-line { margin-top: 4px; }
+.gi-account-label {
+  display: inline-block;
+  min-width: 110px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── Barre de poids (remplace ngx-bootstrap progressbar) ──── */
+.gi-weight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gi-weight-track {
+  flex: 1;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  overflow: hidden;
+  min-width: 0;
+}
+.gi-weight-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.gi-weight-fill--low  { background: linear-gradient(90deg, #15803d, #22c55e); }
+.gi-weight-fill--mid  { background: linear-gradient(90deg, #b45309, #f59e0b); }
+.gi-weight-fill--high { background: linear-gradient(90deg, #fe5815, #ff7a3a); }
+
+.gi-weight-value {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1f2937;
+  font-variant-numeric: tabular-nums;
+  min-width: 42px;
+  text-align: right;
+}

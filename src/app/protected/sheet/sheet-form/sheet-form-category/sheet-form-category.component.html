@@ -1,9 +1,7 @@
-<div class="form-group">
-    <label for="committeeCode"><strong>Catégorie Achats :</strong></label>
-    <select class="form-control" [formControl]="categoryCode" style="width:auto;">
-        <option value=0>Choisissez une catégorie</option>
-        <option *ngFor="let item of categories" [ngValue]="item.code">
-            {{item.label}}
-        </option>
-    </select>
+<div class="adm-form-group">
+  <label for="categoryCode" class="adm-label">Catégorie achats</label>
+  <select id="categoryCode" class="adm-select" [formControl]="categoryCode">
+    <option [ngValue]="0">Choisissez une catégorie</option>
+    <option *ngFor="let item of categories" [ngValue]="item.code">{{ item.label }}</option>
+  </select>
 </div>

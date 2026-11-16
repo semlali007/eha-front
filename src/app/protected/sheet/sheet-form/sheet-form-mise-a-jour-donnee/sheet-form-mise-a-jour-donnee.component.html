@@ -1,0 +1,13 @@
+<div class="adm-form-group" *ngIf="miseAJourDonnee">
+  <label for="mise_a_jour_donnee" class="adm-label">
+    Mise à jour de la donnée
+  </label>
+  <select id="mise_a_jour_donnee" [formControl]="miseAJourDonnee" class="adm-select">
+    <option value="non">Non</option>
+    <option value="en_cours">En cours</option>
+    <option value="oui">Oui</option>
+  </select>
+  <span class="adm-field-hint">
+    Donnée temporaire utilisée dans le cadre de la mise à jour globale Achatpédia S2 2025.
+  </span>
+</div>

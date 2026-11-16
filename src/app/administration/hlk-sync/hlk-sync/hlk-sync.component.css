@@ -1,0 +1,767 @@
+.hlk-sync {
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #1f2937;
+}
+
+/* ---------- En-tête ---------- */
+
+.hlk-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.hlk-header-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.hlk-header-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.hlk-header-sub {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 640px;
+}
+
+/* ---------- Callout ---------- */
+
+.hlk-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.hlk-callout svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+/* ---------- Cartes ---------- */
+
+.hlk-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Étapes ---------- */
+
+.hlk-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.hlk-steps .hlk-card {
+  margin-bottom: 0;
+}
+
+.hlk-step {
+  display: flex;
+  flex-direction: column;
+}
+
+.hlk-step--real {
+  border-color: #fed7aa;
+  background: #fffdfa;
+}
+
+.hlk-step-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hlk-step-num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.hlk-step-num--real {
+  background: #ea580c;
+}
+
+.hlk-step-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hlk-step-sub {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin: 0.15rem 0 0;
+}
+
+.hlk-launch-btn {
+  min-width: 260px;
+  align-self: flex-start;
+  font-weight: 600;
+}
+
+.hlk-spinner {
+  margin-right: 0.5rem;
+}
+
+.hlk-danger-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #b45309;
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+}
+
+/* ---------- Progression ---------- */
+
+.hlk-progress {
+  margin-top: 1rem;
+}
+
+.hlk-progress-bar {
+  height: 6px;
+  border-radius: 999px;
+}
+
+.hlk-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.hlk-elapsed {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Erreurs (alertes) ---------- */
+
+.hlk-error {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.hlk-error-msg {
+  margin-top: 0.35rem;
+  white-space: pre-wrap;
+}
+
+/* ---------- En-tête résultat + tag mode ---------- */
+
+.hlk-result-head {
+  margin-bottom: 1rem;
+}
+
+.hlk-subheading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1.5rem 0 0.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eef0f4;
+}
+
+.hlk-mode-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.7rem;
+  border-radius: 6px;
+}
+
+.hlk-mode-tag--sim {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.hlk-mode-tag--real {
+  background: #fef2e8;
+  color: #c2410c;
+}
+
+.hlk-report-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hlk-dates {
+  color: #374151;
+  font-size: 0.88rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.hlk-date-label {
+  font-weight: 600;
+  color: #6b7280;
+  margin-right: 0.2rem;
+}
+
+.hlk-date-sep {
+  color: #d1d5db;
+}
+
+.hlk-duration {
+  color: #6b7280;
+}
+
+.hlk-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+/* ---------- Tuiles de statistiques ---------- */
+
+.hlk-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.hlk-stat {
+  background: #f9fafb;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hlk-stat-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.hlk-stat-label {
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+.hlk-stat--danger {
+  background: #fef3f2;
+  border-color: #fecdca;
+}
+
+.hlk-stat--danger .hlk-stat-value {
+  color: #b42318;
+}
+
+.hlk-stat--warn {
+  background: #fffaeb;
+  border-color: #fedf89;
+}
+
+.hlk-stat--warn .hlk-stat-value {
+  color: #b54708;
+}
+
+/* ---------- Accordéons ---------- */
+
+.hlk-acc {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-top: 0.85rem;
+  overflow: hidden;
+}
+
+.hlk-acc--danger {
+  border-color: #fecdca;
+}
+
+.hlk-acc--warn {
+  border-color: #fedf89;
+}
+
+.hlk-acc-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  background: #f9fafb;
+  border: none;
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.92rem;
+  color: #1f2937;
+}
+
+.hlk-acc-head:hover {
+  background: #f3f4f6;
+}
+
+.hlk-acc-chevron {
+  flex: 0 0 auto;
+  color: #9ca3af;
+  transition: transform 0.15s ease;
+}
+
+.hlk-acc-chevron--open {
+  transform: rotate(90deg);
+}
+
+.hlk-acc-title {
+  font-weight: 600;
+  flex: 1 1 auto;
+}
+
+.hlk-acc-count {
+  flex: 0 0 auto;
+  background: #e5e7eb;
+  color: #374151;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.hlk-acc-count--danger {
+  background: #fee4e2;
+  color: #b42318;
+}
+
+.hlk-acc-count--warn {
+  background: #fef0c7;
+  color: #b54708;
+}
+
+.hlk-acc-body {
+  padding: 0.9rem;
+  border-top: 1px solid #eef0f4;
+}
+
+/* ---------- Toolbar (recherche + filtres) ---------- */
+
+.hlk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.hlk-search {
+  position: relative;
+  flex: 1 1 280px;
+  display: flex;
+  align-items: center;
+}
+
+.hlk-search svg {
+  position: absolute;
+  left: 0.6rem;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.hlk-search input {
+  padding-left: 2rem;
+}
+
+.hlk-filter-min {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hlk-filter-min input {
+  width: 90px;
+}
+
+.hlk-filter-label {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.hlk-reset {
+  padding: 0;
+  white-space: nowrap;
+}
+
+.hlk-result-count {
+  font-size: 0.85rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.hlk-result-count--block {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- Récap contrats ---------- */
+
+.hlk-recap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin: 0.5rem 0 1.1rem;
+}
+
+.hlk-recap-tile {
+  background: #f9fafb;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.hlk-recap-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.hlk-recap-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.hlk-recap-tile--ok {
+  background: #ecfdf3;
+  border-color: #abefc6;
+}
+
+.hlk-recap-tile--ok .hlk-recap-value { color: #067647; }
+.hlk-recap-tile--ok .hlk-recap-label { color: #05603a; }
+
+.hlk-recap-tile--ko {
+  background: #fef3f2;
+  border-color: #fecdca;
+}
+
+.hlk-recap-tile--ko .hlk-recap-value { color: #b42318; }
+.hlk-recap-tile--ko .hlk-recap-label { color: #912018; }
+
+/* ---------- Section (détail contrats) ---------- */
+
+.hlk-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.hlk-section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hlk-source-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #4338ca;
+  background: #eef2ff;
+  border-radius: 6px;
+  padding: 0.15rem 0.5rem;
+}
+
+.hlk-desc {
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.hlk-hint {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 0.82rem;
+}
+
+/* ---------- Tables ---------- */
+
+.hlk-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+}
+
+.hlk-data-table {
+  margin-bottom: 0;
+  font-size: 0.88rem;
+}
+
+.hlk-data-table thead th {
+  background: #f9fafb;
+  border-top: none;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #6b7280;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.hlk-data-table td {
+  vertical-align: middle;
+}
+
+.hlk-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.hlk-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: nowrap;
+}
+
+.hlk-col-action {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+}
+
+.hlk-count-pill {
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 6px;
+  padding: 0.05rem 0.4rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.hlk-contracts-table {
+  font-size: 0.86rem;
+}
+
+.hlk-contract-row {
+  cursor: pointer;
+}
+
+.hlk-contract-row:hover {
+  background: #f5f7ff;
+}
+
+.hlk-contract-code {
+  font-weight: 600;
+}
+
+/* ---------- Chips ---------- */
+
+.hlk-chip {
+  display: inline-block;
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 6px;
+  padding: 0.1rem 0.45rem;
+  margin: 0.12rem 0.28rem 0.12rem 0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.hlk-chip--muted {
+  background: #f3f4f6;
+  color: #4b5563;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.hlk-chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hlk-chip-more {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.1rem 0.25rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hlk-chip-more:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Liens fiche ---------- */
+
+.hlk-sheet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0.1rem 0.4rem 0.1rem 0;
+  color: #2563eb;
+  white-space: nowrap;
+  font-size: 0.82rem;
+}
+
+.hlk-sheet-link:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+/* ---------- Badges statut ---------- */
+
+.hlk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.hlk-badge .hlk-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.hlk-badge--ok {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.hlk-badge--ok .hlk-dot { background: #12b76a; }
+
+.hlk-badge--ko {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.hlk-badge--ko .hlk-dot { background: #f04438; }
+
+.hlk-muted {
+  color: #9ca3af;
+}
+
+/* ---------- Divers ---------- */
+
+.hlk-flat-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.hlk-flat-list li {
+  margin-bottom: 0.2rem;
+}
+
+.hlk-empty {
+  color: #9ca3af;
+  font-style: italic;
+  margin: 0.5rem 0 0;
+}
+
+.hlk-detail-heading {
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.hlk-detail-heading:first-child {
+  margin-top: 0;
+}
+
+.hlk-detail-label {
+  font-weight: 400;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.hlk-confirm-warn {
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Pagination ---------- */
+
+.hlk-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.hlk-page-size {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hlk-page-size select {
+  width: auto;
+}
+
+.hlk-pagination-bar ::ng-deep .pagination {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .hlk-launch-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}

@@ -1,0 +1,28 @@
+/* ═══════════════════════════════════════════════════════════
+   DAUPHIN-VIEW — Article sous Dauphin
+   Les classes .adm-* viennent de ui-kit.css
+   ═══════════════════════════════════════════════════════════ */
+
+.dv-cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 0 0 16px auto;
+  padding: 9px 16px;
+  background: #001a70;
+  color: #fff;
+  border: 1px solid #001a70;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.12s, box-shadow 0.12s;
+}
+.dv-cta:hover {
+  background: #00237a;
+  box-shadow: 0 2px 6px rgba(0, 26, 112, 0.2);
+  color: #fff;
+  text-decoration: none;
+}

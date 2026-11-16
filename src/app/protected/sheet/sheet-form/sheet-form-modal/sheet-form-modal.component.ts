@@ -1,13 +1,17 @@
-import { Component, Input, EventEmitter, OnInit, ViewChild  } from '@angular/core';
+import { Component, Input, EventEmitter, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'app-sheet-form-modal',
   templateUrl: './sheet-form-modal.component.html',
-  styleUrls: ['./sheet-form-modal.component.css']
+  styleUrls: ['./sheet-form-modal.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class SheetFormModalComponent implements OnInit {
+export class SheetFormModalComponent implements OnInit, OnDestroy {
+  private searchSub?: Subscription;
   @ViewChild('autoShownModal', { static: false }) autoShownModal?: ModalDirective;
   isModalShown :boolean;
   modalMessage = '';
@@ -41,13 +45,28 @@ export class SheetFormModalComponent implements OnInit {
   ) { }
   public requestAutocompleteItems: any;
   get currentPage() { return this.sheetModalForm.get('currentPage') }
-  get search() { return this.searchModalForm.get('search') }
+  get search() { return this.searchModalForm.get('search') as FormControl }
+  get selectedCount(): number { return (this.selectedItems?.value || []).length; }
   ngOnInit() {
     this.selectedItems = new FormControl();
     this.selectedItems.setValue(this.selectedValues);
     this.sheetModalForm = this.createsheetModalForm();
     this.searchModalForm = this.createSearchModalForm();
     this.names = this.allitems.map(t=>t.name);
+
+    // Recherche serveur "live" : relance la recherche après une courte pause de frappe.
+    this.searchSub = this.search.valueChanges
+      .pipe(debounceTime(350), distinctUntilChanged())
+      .subscribe(() => this.submitSearch());
+  }
+
+  ngOnDestroy(): void {
+    this.searchSub?.unsubscribe();
+  }
+
+  clearSearch(): void {
+    // setValue déclenche valueChanges -> submitSearch (liste complète).
+    this.search.setValue('');
   }
   get newItem() { return this.sheetModalForm.get('newItem') }
   createsheetModalForm(): FormGroup {

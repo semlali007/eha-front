@@ -1,51 +1,22 @@
-<div class="row cadre-item-purchase">
-    <p class="text" [innerHTML]="purchase.need_mtb_desc | safe: 'html'"></p>
-    <div class="Frame-978">
-        <div class="Frame-284">
-            <div class="Frame-979">
+<div class="ps-body">
+  <div class="ps-body-desc" [innerHTML]="purchase.need_mtb_desc"></div>
 
-                <span class="Catgories-dachat Body---16---Semi-Bold">
-                    Catégorie Achat 
-                </span>
-            </div>
-            <span class="FOURNITURES-ET-PRESTATIONS-INDUSTRIELLES Body---16---Regular">
-                
-                {{purchase.mtb_purchase_category_label_list}}
-            </span>
-        </div>
-
-        <div class="Frame-284">
-            <div class="Frame-979">
-
-                <span class="Catgories-dachat Body---16---Semi-Bold">
-                    Direction 
-                </span>
-            </div>
-            <span class="FOURNITURES-ET-PRESTATIONS-INDUSTRIELLES Body---16---Regular">
-                {{purchase.buyer_party_level_1_label}}
-            </span>
-        </div>
-        <div class="Frame-284">
-            <div class="Frame-979">
-
-                <span class="Catgories-dachat Body---16---Semi-Bold">
-                    Division 
-                </span>
-            </div>
-            <span class="FOURNITURES-ET-PRESTATIONS-INDUSTRIELLES Body---16---Regular">
-                {{purchase.buyer_party_level_2_label}}
-            </span>
-        </div>
-        <div class="Frame-284">
-            <div class="Frame-979">
-
-                <span class="Catgories-dachat Body---16---Semi-Bold">
-                    Numéro de contrat  
-                </span>
-            </div>
-            <span class="FOURNITURES-ET-PRESTATIONS-INDUSTRIELLES Body---16---Regular">
-                {{purchase.contract_awarding_id}}
-            </span>
-        </div>
+  <div class="ps-body-meta">
+    <div class="ps-meta-item">
+      <span class="ps-meta-label">Catégorie achat</span>
+      <span class="ps-meta-value">{{ purchase.mtb_purchase_category_label_list || '—' }}</span>
     </div>
+    <div class="ps-meta-item">
+      <span class="ps-meta-label">Direction</span>
+      <span class="ps-meta-value">{{ purchase.buyer_party_level_1_label || '—' }}</span>
+    </div>
+    <div class="ps-meta-item">
+      <span class="ps-meta-label">Division</span>
+      <span class="ps-meta-value">{{ purchase.buyer_party_level_2_label || '—' }}</span>
+    </div>
+    <div class="ps-meta-item">
+      <span class="ps-meta-label">Numéro de contrat</span>
+      <span class="ps-meta-value">{{ purchase.contract_awarding_id || '—' }}</span>
+    </div>
+  </div>
 </div>

@@ -1,70 +1,49 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message.service';
+
 @Component({
   selector: 'app-sheet-list-search-form',
   templateUrl: './sheet-list-search-form.component.html',
-  styles: [
-  ]
+  styles: [],
 })
-
 export class SheetListSearchFormComponent implements OnInit {
   sheetSearchForm: FormGroup;
-  @Input() defaultFilter : any;
-  @Output() submittedSearchSheets = new EventEmitter<Object>();
+
+  @Input() defaultFilter: any;
+  @Output() submittedSearchSheets = new EventEmitter<{ searchText: string; searchProvider: string }>();
+  @Output() resetted = new EventEmitter<void>();
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-  ) {
+  ) {}
+
+  get searchText() {
+    return this.sheetSearchForm.get('searchText');
   }
 
-  get searchProvider() { return this.sheetSearchForm.get('searchProvider') }
-  get searchText() { return this.sheetSearchForm.get('searchText') }
+  get searchProvider() {
+    return this.sheetSearchForm.get('searchProvider');
+  }
 
   ngOnInit(): void {
-    this.createSheetSearchForm();
-  }
-
-  createSheetSearchForm(): FormGroup {
-    return this.sheetSearchForm = this.fb.group({
-      'searchText': [this.defaultFilter.search.searchText],
-      'searchProvider': [this.defaultFilter.search.searchProvider],
+    this.sheetSearchForm = this.fb.group({
+      searchText: [this.defaultFilter.search.searchText],
+      searchProvider: [this.defaultFilter.search.searchProvider],
     });
   }
 
   submit(): void {
-
-    this.messageService.sendMessage({
-      initSheetFilter: true
+    this.submittedSearchSheets.emit({
+      searchText: this.searchText?.value ?? '',
+      searchProvider: this.searchProvider?.value ?? '',
     });
-
-    this.messageService.sendMessage({
-      initSheetSortBy: true
-    });
-
-    let filter = {
-      searchText: this.searchText.value,
-      searchProvider : this.searchProvider.value
-    }
-    
-    this.submittedSearchSheets.emit(filter);
   }
+
   resetForm(): void {
-
-    this.messageService.sendMessage({
-      initSheetFilter: true
-    });
-
-    this.messageService.sendMessage({
-      initSheetSortBy: true
-    });
-
-    let filter = {
-      searchText: '',
-      searchProvider : ''
-    }
-    this.sheetSearchForm.reset();
-    this.submittedSearchSheets.emit(filter);
+    this.sheetSearchForm.reset({ searchText: '', searchProvider: '' });
+    this.messageService.sendMessage({ initSheetSortBy: true });
+    this.resetted.emit();
   }
-  
 }

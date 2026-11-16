@@ -15,6 +15,7 @@ export class SheetListFilterProviderComponent implements OnInit, OnChanges {
   @Input() list: any = [];
 
   myForm: FormGroup;
+  isTotalCollapsed = true;
   constructor(private fb: FormBuilder
   ) { }
 

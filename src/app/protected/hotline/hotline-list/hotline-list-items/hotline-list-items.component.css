@@ -1,82 +1,120 @@
-form {
-    margin-top: 1%;
+/* ═══════════════════════════════════════════════════════════
+   HOTLINE LIST ITEMS — Liste des demandes (par statut)
+   Les classes .adm-* viennent de ui-kit.css
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Toolbar (compteur + per-page) ─────────────────────────── */
+.hl-items-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.hl-items-count {
+  font-size: 13px;
+  color: #4b5563;
+}
+.hl-items-count strong {
+  color: #001a70;
+  font-weight: 700;
+}
+.hl-items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+.hl-items-per-page .btn-group { width: auto; margin: 0; }
+.hl-items-per-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  min-width: 64px;
+  justify-content: space-between;
+  transition: border-color 0.12s;
+}
+.hl-items-per-page-btn:hover { border-color: #001a70; }
+
+app-hotline-list-items .dropdown-menu {
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px !important;
+  min-width: 80px !important;
+}
+app-hotline-list-items .dropdown-item {
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+}
+app-hotline-list-items .dropdown-item:hover {
+  background: #eef2fb !important;
+  color: #001a70 !important;
 }
 
-.perPage {
-    text-align: right;
+/* ── Liste : cartes cliquables ─────────────────────────────── */
+.hl-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.hl-item {
+  display: block;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #1f2937;
+  cursor: pointer;
+  transition: border-color 0.12s, box-shadow 0.12s, transform 0.12s;
+}
+.hl-item:hover {
+  border-color: #001a70;
+  box-shadow: 0 2px 8px rgba(0, 26, 112, 0.08);
+  transform: translateY(-1px);
+  text-decoration: none;
+  color: #1f2937;
+}
+.hl-item-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.hl-item-code {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #001a70;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hl-item-date {
+  font-size: 12px;
+  color: #6b7280;
+}
+.hl-item-question {
+  font-size: 13.5px;
+  color: #1f2937;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.ddown-per-page{ 
-    height: 37px;
-    left: 0px;
-    right: 0px;
-    /* Blanc (Charte) */
-    background: #FFFFFF;
-    
-    /* Noir (Charte) */
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    border-radius: 5px;
-    text-align:left;
-}
-
-.reversed{
-    transform: rotate(0.5turn);
-}
-
-::ng-deep .card.customClass,
-::ng-deep .card.customClass .card-header,
-::ng-deep .panel.customClass {
-  background-color: #fff;
-  border-width: 0px;
-  
-}
-
-::ng-deep .card.customClass .card-header {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    background-color: white;
-    border-width: 0px;
-
-}
-
-::ng-deep .paginationClass .page-item.active .page-link{
-    background-color: #fff;
-    color:#001A70;
-}
-
-::ng-deep .paginationClass .page-item.disabled .page-link{
-    background-color: #fff;
-    color: #001A70;
-}
-
-::ng-deep .paginationClass .page-item .page-link{
-    margin-left: 10px;
-    margin-top: 4px;
-    color:#fff;
-    background-color: #001A70;
-    width: 30px;
-    height: 30px;
-    padding-top:3px;
-    padding-left:10px;
-}
-
-::ng-deep .paginationClass .pagination-prev .page-link{
-    margin-right: 10px;
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    color: #fff;
-    border: 0px;
-    padding: 0px;
-}
-
-::ng-deep .paginationClass .pagination-next .page-link{
-    margin-left: 20px;
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    color: #fff;
-    border: 0px;
-    padding: 0px;
-}
+/* ── Empty state propre à la liste ─────────────────────────── */
+.hl-empty { margin-bottom: 16px; }

@@ -1,5 +1,5 @@
 <div  class="row cadre-item-purchase" *ngIf="(purchase$|async) as p;" >
-    <p class="text" [innerHTML]="purchase.purchase_demand_label | safe: 'html'"></p>
+    <p class="text" [innerHTML]="purchase.purchase_demand_label"></p>
         <div *ngIf="p[0].section=='1'">
             <p class="message" *ngIf="!p[0].isPHA">
                 Le numéro saisi correspond à une DA traitée directement dans PGI.

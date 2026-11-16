@@ -1,70 +1,168 @@
-<div class="container">
-	<app-breadcrumb></app-breadcrumb>
-		<div class="alert alert-info" *ngIf="warningMessage.length > 0">
-			<div class="row align-items-center">
-				<div class="col-12">
-					<div [innerHTML]="warningMessage"></div>
-				</div>
-			</div>
-		</div>
+<div class="hl-conv">
+  <app-breadcrumb></app-breadcrumb>
 
-	<p class="text-center">
-		<a class="link" (click)="showList(informations.step)">retour</a>
-	</p>
-	<p>Question <b>n° {{informations.id}}</b> rattachée au thème <b>{{informations.info_theme}}</b>, à la catégorie
-		<b>{{informations.info_category}}</b>, posée par <b>{{informations.email_from}}</b> de l'entité
-		<b>{{informations.info_entity}}</b>.</p>
+  <!-- Header compact : retour + titre + statut + menu actions -->
+  <header class="hl-conv-header" *ngIf="informations?.id">
+    <button class="hl-conv-back" type="button" (click)="showList(informations.step)" title="Retour à mes demandes">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+    </button>
 
-		<ul class="timeline" *ngIf="timeline.length > 0">
-			<li *ngFor="let row of timeline| slice:0:16"  [ngClass]="{'timeline-inverted' : row.is_hotline}" >
-				<div class="timeline-badge {{row.is_hotline ? 'info' : 'warning'}}">
-					<img src="../../../../assets/img/picto-{{row.nature}}_white.png" height="30px">
-				</div>
-				<div class="timeline-panel">
-					<div class="timeline-body" >
-						<p *ngIf="row.nature != 'N'" [innerHtml]="row.message"> </p>
-						<p *ngIf="row.nature != 'N'">
-							<a (click)="downloadFile(row.file)" *ngIf="row.nature == 'U'" class="btn btn-link">visualiser</a>
-						</p>
-						<!-- <p *ngIf="row.nature == 'N'">
-							<div *ngIf="row.message == 4" style="display: inline-block; background-color: green; padding: 5px;">
-								<label class="form-check-label">😃</label>
-							</div>
-							<div *ngIf="row.message == 3" style="display: inline-block; background-color: lightgreen; padding: 5px;">
-								<label class="form-check-label">😊</label>
-							</div>
-							<div *ngIf="row.message == 2" style="display: inline-block; background-color: orange; padding: 5px;">
-								<label class="form-check-label">😟</label>
-							</div>
-							<div *ngIf="row.message == 1" style="display: inline-block; background-color: red; padding: 5px;">
-								<label class="form-check-label">😠</label>
-							</div> -->
-					</div>
-					<div class="timeline-heading">
-						<p><small class="text-muted">{{row.quand| slice:0:10}}</small></p>
-					</div>
-				</div>
-			</li>
-		</ul>
-		<div class="row justify-content-end" *ngIf="isHotliner">
-			<div class="col-6">
-				<p>
-					<button type="button" class="btn btn-info btn-left"  (click)="openPostMessage()">Poster un messages</button>
-					<button type="button" class="btn btn-info btn-center"  (click)="openAddFile()">Ajouter un fichier</button>
-					<button type="button" class="btn btn-info btn-right"  (click)="openForward()">Faire suivre</button>
-				</p>
-			</div>
-		</div>
-		<div class="row justify-content-start" >
-			<div class="col-6">
-				<div *ngIf="!isDiscussionClosed">
-					<p>
-						<button type="button" class="btn btn-warning btn-left"  (click)="openPostMessage()" *ngIf="isRequester">Poster un message</button> 
-						<button type="button" class="btn btn-warning btn-center"  (click)="openForward()" *ngIf="isRequester">Faire suivre</button>
-						<button type="button" class="btn btn-warning btn-center"  (click)="openAddFile()" *ngIf="isRequester">Ajouter un fichier</button>
-						<button type="button" class="btn btn-warning btn-right"  (click)="openCloseHotline()" *ngIf="(isRequester || (!!user && user.hasRole('EHA_GESTIONNAIRE')) || isCurrentFowarded == user.email) && informations.step!='end' ">Clore</button>
-					</p>
-				</div>
-			</div>
-		</div>
+    <div class="hl-conv-header-titles">
+      <div class="hl-conv-header-row">
+        <h1 class="hl-conv-title">Question n°&nbsp;{{ informations.id }}</h1>
+        <span class="hl-conv-status" [attr.data-step]="informations.step">
+          {{ statusLabel(informations.step) }}
+        </span>
+      </div>
+      <p class="hl-conv-meta">
+        <span>{{ informations.info_theme || '—' }}</span>
+        <span class="hl-conv-meta-sep">·</span>
+        <span>{{ informations.info_category || '—' }}</span>
+        <span class="hl-conv-meta-sep">·</span>
+        <strong>{{ informations.email_from || '—' }}</strong>
+        <span class="hl-conv-meta-sep">·</span>
+        <span>{{ informations.info_entity || '—' }}</span>
+      </p>
+    </div>
+
+    <!-- Menu d'actions ⋯ -->
+    <div class="btn-group hl-conv-menu" dropdown placement="bottom right" *ngIf="canPost">
+      <button dropdownToggle type="button" class="hl-conv-menu-btn" aria-controls="hl-actions-menu" title="Plus d'actions">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+        </svg>
+      </button>
+      <ul id="hl-actions-menu" *dropdownMenu class="dropdown-menu dropdown-menu-right hl-conv-menu-list" role="menu">
+        <li role="menuitem">
+          <a class="dropdown-item hl-conv-menu-item" (click)="openAddFile()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13"/>
+            </svg>
+            Joindre un fichier
+          </a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item hl-conv-menu-item" (click)="openForward()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.405 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061A1.125 1.125 0 013 16.811V8.69zM12.75 8.689c0-.864.933-1.405 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061a1.125 1.125 0 01-1.683-.977V8.69z"/>
+            </svg>
+            Faire suivre
+          </a>
+        </li>
+        <li class="dropdown-divider" *ngIf="canClose"></li>
+        <li role="menuitem" *ngIf="canClose">
+          <a class="dropdown-item hl-conv-menu-item hl-conv-menu-item--danger" (click)="openCloseHotline()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Clore la demande
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Bandeau confirmation -->
+  <div class="hl-conv-feedback" *ngIf="warningMessage.length > 0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <div [innerHTML]="warningMessage"></div>
+  </div>
+
+  <!-- Fil de discussion -->
+  <section class="hl-conv-thread" *ngIf="timeline?.length > 0">
+    <ng-container *ngFor="let row of timeline | slice:0:16">
+
+      <!-- Note système (évaluation, etc.) -->
+      <div class="hl-conv-system" *ngIf="row.nature === 'N'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        <span>Évaluation : {{ row.message }}/4</span>
+      </div>
+
+      <!-- Message standard : Demandeur à gauche, Hotline DAG à droite -->
+      <div *ngIf="row.nature !== 'N'"
+           class="hl-conv-msg"
+           [class.hl-conv-msg--hotline]="row.is_hotline"
+           [class.hl-conv-msg--user]="!row.is_hotline">
+
+        <span class="hl-conv-avatar"
+              [attr.data-author]="row.is_hotline ? 'hotline' : 'user'"
+              [title]="row.is_hotline ? 'Hotline DAG' : informations.email_from">
+          {{ row.is_hotline ? 'DAG' : userInitials(informations.email_from) }}
+        </span>
+
+        <div class="hl-conv-bubble-wrap">
+          <p class="hl-conv-author">
+            <span class="hl-conv-author-name">{{ row.is_hotline ? 'Hotline DAG' : (informations.email_from || 'Demandeur') }}</span>
+            <span class="hl-conv-date">{{ row.quand | slice:0:10 }}</span>
+          </p>
+
+          <div class="hl-conv-bubble">
+            <!-- Contenu textuel (toujours rendu sauf si pièce jointe seule) -->
+            <div class="hl-conv-text"
+                 *ngIf="row.message && row.nature !== 'U'"
+                 [innerHtml]="row.message"></div>
+
+            <!-- Pièce jointe -->
+            <div *ngIf="row.nature === 'U'" class="hl-conv-file">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                <path d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
+              </svg>
+              <div class="hl-conv-file-info">
+                <span class="hl-conv-file-name" [innerHtml]="row.message || row.file"></span>
+                <button type="button" class="hl-conv-file-dl" (click)="downloadFile(row.file)">Télécharger</button>
+              </div>
+            </div>
+
+            <!-- Fallback si vraiment aucun contenu -->
+            <div class="hl-conv-empty" *ngIf="!row.message && row.nature !== 'U'">
+              <em>(message vide)</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+
+  <!-- Discussion close -->
+  <div class="hl-conv-closed" *ngIf="!canPost && informations?.id">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+    </svg>
+    Cette discussion est fermée. Vous ne pouvez plus y répondre.
+  </div>
+
+  <!-- Composer sticky en bas -->
+  <form class="hl-conv-composer"
+        *ngIf="canPost && composerForm"
+        [formGroup]="composerForm"
+        (ngSubmit)="sendQuickMessage()">
+    <button type="button" class="hl-conv-composer-attach" (click)="openAddFile()" title="Joindre un fichier">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13"/>
+      </svg>
+    </button>
+    <textarea class="hl-conv-composer-input"
+              rows="1"
+              placeholder="Écrire un message (5 mots minimum)…"
+              [formControl]="composerMessage"
+              (keydown.enter)="onComposerEnter($event)"></textarea>
+    <span class="hl-conv-composer-count" [class.is-ok]="(composerMessage.value | countWord) >= 5">
+      {{ composerMessage.value | countWord }} / 5
+    </span>
+    <button type="submit"
+            class="hl-conv-composer-send"
+            [disabled]="!composerForm.valid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
+      </svg>
+      Envoyer
+    </button>
+  </form>
 </div>

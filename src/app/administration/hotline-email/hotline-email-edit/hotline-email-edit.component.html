@@ -1,24 +1,31 @@
-<div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Modifier l'E-mail</h5>
-        <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form novalidate [formGroup]="editForm" (ngSubmit)="submit()">
-            <div class="form-group">
-                <label>Email </label>
-                <input type="email" class="form-control" placeholder="email" [formControl]="email">
-                <small *ngIf="email.errors && email.dirty" class="form-text text-muted">
-                    <span [hidden]="!email.errors.email">Entrez une adresse email valide.</span>
-                </small>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="submit()"
-            [disabled]="!editForm.valid">Valider</button>
-        <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Annuler</button>
-    </div>
+<div class="adm-modal-header">
+  <h4 class="adm-modal-title">Modifier l'e-mail</h4>
+  <button type="button" class="adm-modal-close" aria-label="Fermer" (click)="bsModalRef.hide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
 </div>
+
+<form novalidate [formGroup]="editForm" (ngSubmit)="submit()">
+  <div class="adm-modal-body">
+    <div class="adm-form-group">
+      <label for="hee-email" class="adm-label">
+        Adresse e-mail<span class="adm-required">*</span>
+      </label>
+      <input id="hee-email"
+             class="adm-input"
+             type="email"
+             placeholder="Ex : nom.prenom@edf.fr"
+             [formControl]="$any(email)">
+      <span *ngIf="email?.errors?.email && email?.dirty" class="adm-field-error">
+        Entrez une adresse e-mail valide.
+      </span>
+    </div>
+  </div>
+
+  <div class="adm-modal-footer">
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="bsModalRef.hide()">Annuler</button>
+    <button type="submit" class="adm-btn adm-btn-edf" [disabled]="!editForm.valid">Enregistrer</button>
+  </div>
+</form>

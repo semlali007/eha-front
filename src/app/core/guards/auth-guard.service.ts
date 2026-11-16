@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot,): Observable<boolean|any> {
     return this.authService.user$.pipe(
       map(user => {
-        console.log('user', user);
         if (!!user && !!user.nni && user.nni.length > 0 && user.status[0] !== 'P') {
           return true;
         } else if (!!user && !!user.nni && user.nni.length > 0 && user.status[0] == 'P') {

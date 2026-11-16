@@ -1,0 +1,214 @@
+.text-item{
+  color:#000;
+  margin-bottom:5px;
+}
+.link{
+  cursor: pointer;
+}
+
+.list-item{
+  margin-bottom: 5px;
+}
+
+.bleue-edf{
+  color: var(--my-color-blue)
+}
+.title {
+  font-weight: bold;
+  color: var(--my-color-orange);
+}
+
+.titre-cadre{
+  margin-bottom:-11px ;
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px; /* Réduit de 22px à 20px pour éviter le retour à la ligne */
+  line-height: 26px; /* Ajusté proportionnellement */
+  /* identical to box height, or 127% */
+  /* Gris fonce ++ (AAA, Jet) */
+  color: #333333;
+  /* Empêcher le retour à la ligne pour les titres longs */
+  white-space: nowrap;
+
+  /* Inside auto layout */
+  flex: none;
+}
+
+.cadre{
+  height:96%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 0px;
+  margin-top: 15px;
+  background: #F1F3F9;
+
+  /* Ombre légère sur bloc */
+  box-shadow: 1px 2px 2px #DADADA;
+  border-radius: 3px;
+
+  /* Inside auto layout */
+  flex: none;
+  align-self: stretch;
+}
+
+
+.disable-deco{
+  Text-Decoration: None !important;
+}
+
+.color-or{
+  color: var(--my-color-orange)!important;
+}
+
+.item{
+  margin-bottom:-16px!important ;
+  cursor: pointer;
+}
+
+.btn-blanc{
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 33px;
+  gap: 10px;
+
+  /* Blanc (Charte) */
+  background: #FFFFFF;
+
+  /* Body - 16 - Semi Bold */
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  /* identical to box height, or 150% */
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* Bleu fonce (Charte) */
+  color: #001A70;
+  /* Bleu fonce (Charte) */
+  border: 1px solid #001A70;
+  border-radius: 5px;
+}
+
+.p{
+
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333333;
+  margin-bottom: 8px;
+  flex: none;
+}
+
+.input-edf{
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 8px 10px;
+  gap: 10px;
+  height: 40px;
+
+  /* Blanc (Charte) */
+  background: #FFFFFF;
+
+  /* Gris fonce ++ (AAA, Jet) */
+  border: 1px solid #333333;
+  border-radius: 5px;
+}
+
+.btn-edf-v2{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 10px;
+  color:#fff;
+  width: 74px;
+  height: 40px;
+
+  /* Bleu fonce (Charte) */
+  background: #001A70;
+  border-radius: 5px;
+}
+.btn-edf-v3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 10px;
+  color: #fff;
+  /* Bleu fonce (Charte) */
+  background: #001A70;
+  border-radius: 5px;
+
+  padding: 15px;
+  gap: 10px;
+  height: 64px;
+  font-family: 'Work Sans';
+}
+.black{
+  color:#000;
+}
+.savoir-plus{
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #001A70;
+  /* identical to box height, or 150% */
+  display: flex;
+  align-items: center;
+}
+
+.label{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 10px;
+
+  width: 70px;
+  height: 20px;
+  padding-left:5px;
+  /* Bleu clair (Charte) */
+  background: #005BBB;
+  border-radius: 3px;
+
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #FFFFFF;
+}
+.no-space{
+  padding-bottom: 0px;
+}
+
+.btn-blanc:hover {
+  background-color: #007bff !important;
+  color: white !important;
+  border-color: #007bff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}

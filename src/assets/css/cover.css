@@ -10,6 +10,7 @@ body {
   height: 100%;
   color:black;
   margin: 0;
+  background-color: #dce1e8;
 }
 /*
 body {
@@ -38,9 +39,7 @@ body {
 
 .my-content {
   flex: 1;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  background-color: white;
+  background-color: #dce1e8;
   min-height: calc(100% - 90px);
 }
 .my-footer {

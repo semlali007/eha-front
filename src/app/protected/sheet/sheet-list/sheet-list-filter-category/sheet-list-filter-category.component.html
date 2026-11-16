@@ -1,0 +1,33 @@
+<ng-template #customItemTemplate let-model="item">
+  <b>{{ model.name }}</b> ({{ model.count }})
+</ng-template>
+
+<div class="list-group card" *ngIf="list && list.length > 0">
+  <button class="list-group-item filter-header smaller-text"
+    (click)="isTotalCollapsed = !isTotalCollapsed"
+    [attr.aria-expanded]="!isTotalCollapsed"
+    aria-controls="categoryList">
+    <span class="filter-header-label">Catégorie d'achat <span class="filter-active-badge" *ngIf="categories?.value?.length">{{ categories.value.length }}</span></span>
+    <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
+  </button>
+  <div id="categoryList" [collapse]="isTotalCollapsed" [isAnimated]="true">
+    <form [formGroup]="myForm" class="filter-typeahead-form">
+      <input formControlName="state"
+        [typeahead]="available"
+        typeaheadOptionField="name"
+        [typeaheadOptionsLimit]="10"
+        [typeaheadMinLength]="0"
+        container="body"
+        (typeaheadOnSelect)="onSelect($event)"
+        [typeaheadItemTemplate]="customItemTemplate"
+        placeholder="Rechercher une catégorie…"
+        class="form-control">
+    </form>
+    <ul class="list-group list-group-flush filter-tag-list" *ngIf="selectedItems.length">
+      <li class="list-group-item filter-tag" *ngFor="let item of selectedItems">
+        <span>{{ item.name }}<ng-container *ngIf="item.count != null"> ({{ item.count }})</ng-container></span>
+        <button type="button" class="filter-tag-remove" (click)="deleteOne(item.code)" title="Retirer">&#10005;</button>
+      </li>
+    </ul>
+  </div>
+</div>

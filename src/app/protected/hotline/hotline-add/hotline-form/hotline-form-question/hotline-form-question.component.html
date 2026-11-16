@@ -1,13 +1,24 @@
-<div class="form-group">
-    <label>3/ Votre <b>question</b> (au moins 5 mots)</label>
-    <small class="form-text text-muted">Vous êtes responsable du contenu que vous fournissez, y compris de la conformité
-        aux lois, règles et réglementations en vigueur. Vous ne devez fournir un contenu que dans la mesure où cela ne
-        vous gêne pas de le partager avec d’autres et qu'il ne puisse porter préjudice à d'autres. Nous vous remercions de ne pas saisir de donnée à caractère personnel dans ce champ.</small>
-    <textarea class="form-control" rows="3" required [formControl]="question" ></textarea>
+<div class="adm-form-group">
+  <label class="adm-label" for="hl-question">Votre question (au moins 5 mots)<span class="adm-required">*</span></label>
+  <textarea id="hl-question"
+            class="adm-textarea"
+            rows="5"
+            [formControl]="question"
+            placeholder="Décrivez votre besoin (numéro de contrat, contexte, etc.)"></textarea>
 
-    <small *ngIf="question.errors">
-        <span [hidden]="!question.errors.minWordsCount">
-            <span class="form-text text-danger">Vous avez tapé <b>{{question.value | countWord}} mots</b> sur 5 mots obligatoires.</span>
-        </span>
-    </small>
+  <span class="hl-question-count" [class.is-ok]="(question.value | countWord) >= 5">
+    {{ question.value | countWord }} mot<span *ngIf="(question.value | countWord) > 1">s</span> / 5 minimum
+  </span>
+
+  <p class="hl-question-disclaimer">
+    Vous êtes responsable du contenu que vous fournissez, y compris de la conformité aux lois, règles et réglementations
+    en vigueur. Vous ne devez fournir un contenu que dans la mesure où cela ne vous gêne pas de le partager avec d'autres
+    et qu'il ne puisse porter préjudice à d'autres. Nous vous remercions de ne pas saisir de donnée à caractère personnel
+    dans ce champ.
+  </p>
+
+  <span class="adm-field-error" *ngIf="submitted && question?.errors?.required">La question est obligatoire.</span>
+  <span class="adm-field-error" *ngIf="submitted && question?.errors?.minWordsCount">
+    Votre question doit contenir au moins 5 mots ({{ question.value | countWord }} actuellement).
+  </span>
 </div>

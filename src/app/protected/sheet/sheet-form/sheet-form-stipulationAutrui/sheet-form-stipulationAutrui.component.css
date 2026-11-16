@@ -1,0 +1,37 @@
+/* Styles pour le composant stipulation pour autrui */
+
+/* Classe pour l'icône d'information */
+.info-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../../../assets/img/info-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Style pour le contenu du tooltip */
+::ng-deep .tooltip-content {
+    max-width: 250px;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+}
+
+::ng-deep .tooltip-inner {
+    max-width: 300px;
+    text-align: left;
+}
+
+/* Classe pour aligner le texte et l'icône */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0;
+}

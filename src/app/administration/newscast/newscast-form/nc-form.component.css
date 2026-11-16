@@ -1,0 +1,23 @@
+/* Styles spécifiques au formulaire d'actualité */
+
+.adm-radio-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.adm-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #4b5563;
+  background: #fff;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+.adm-radio:hover { border-color: #d1d5db; }
+.adm-radio input[type="radio"] { accent-color: #001a70; }
+.adm-radio input[type="radio"]:checked ~ * { color: #001a70; font-weight: 600; }

@@ -1,9 +1,9 @@
-<div class="form-group">
-    <label for="status"><strong>Statut :</strong></label>
-    <div class="radio" *ngFor="let s of statusList">
-        <label for="status">
-            <input type="radio" name="status" [formControl]="status" [value]="s.code">
-            {{s.label}}
-        </label>
-    </div>
+<div class="adm-form-group">
+  <label class="adm-label">Statut</label>
+  <div class="adm-radio-group">
+    <label class="adm-radio" *ngFor="let s of statusList">
+      <input type="radio" name="status" [formControl]="$any(status)" [value]="s.code">
+      <span>{{ s.label }}</span>
+    </label>
+  </div>
 </div>

@@ -12,17 +12,18 @@ export class SheetListFilterDauphinComponent implements OnInit, OnChanges {
   @Input() dauphin: any={};
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
+  private initialized = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-    //this.dauphin.setValue('all');
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (this.dauphin.value != 'all') {
+    if (!this.initialized && this.dauphin.value != 'all') {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
   
   changeFilter(code) {
@@ -34,6 +35,6 @@ export class SheetListFilterDauphinComponent implements OnInit, OnChanges {
   }
 
   public isActive(code): boolean {
-    return this.dauphin.value == code;
+    return this.dauphin.value === code;
   }
 }

@@ -5,14 +5,14 @@ import { Status } from 'src/app/shared/models/status';
 @Component({
   selector: 'app-sheet-form-status',
   templateUrl: './sheet-form-status.component.html',
-  styles: [
-  ]
+  styleUrls: ['./sheet-form-status.component.scss']
 })
 export class SheetFormStatusComponent implements OnInit {
   @Input() status: any;
   statusList:any ;
   
   @Input() sheetForm: FormGroup;
+  
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {

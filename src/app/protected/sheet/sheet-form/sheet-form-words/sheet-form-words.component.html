@@ -1,5 +1,13 @@
-<div class="form-group">
-    <label for="words" ><strong>Mots clés :</strong></label>
-    <input id="words" [formControl]="words" type="words" class="form-control" placeholder="Mots clés" autocorrect="off"
-        autocomplete="off" />
+<div class="adm-form-group">
+  <label for="words" class="adm-label">Mots-clés</label>
+  <input id="words"
+         [formControl]="words"
+         type="text"
+         class="adm-input"
+         placeholder="Ex : papeterie, fournitures, bureau"
+         autocorrect="off"
+         autocomplete="off">
+  <span class="adm-field-hint">
+    Proposez un maximum de mots-clés pour favoriser les recherches. Mettez les mots au singulier.
+  </span>
 </div>

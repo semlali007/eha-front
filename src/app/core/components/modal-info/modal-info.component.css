@@ -1,39 +1,78 @@
-alert {
-    cursor: pointer;
-    position: absolute;
-    top: 100px;
-    right: 25px;
-    z-index: 1000;
-   }
-.modal-content-hlk{
-    border-radius:1.3rem!important;
-    width:74%!important;
-    color:#cabebe;
-    background-color: rgba(0,0,0,0);
-    border:2px solid rgba(255, 255, 255, 0.7)
+/* ═══════════════════════════════════════════════════════════
+   MODAL-INFO — Erreur de recherche / service HLK indisponible
+   Réutilise .adm-modal-* (ui-kit.css) ; styles locaux ci-dessous
+   ═══════════════════════════════════════════════════════════ */
+
+.mi-modal .modal-dialog {
+  max-width: 480px;
 }
 
-.btn-close-hlk{
-    opacity:initial;font-size: 8.5rem !important;
-    color: #fff !important;
-    margin-bottom: -45px;
-    margin-right: -47px;
-    margin-top: -46px;
+.mi-modal .adm-modal-body {
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 24px 22px 8px;
 }
 
-.modal-dialog-hlk{
-    opacity:1 !important;
-    margin: 6.75rem 22rem !important;
-    width:747px ;
-}   
+.mi-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff7ed;
+  color: #c2410c;
+  margin-bottom: 4px;
+}
 
-.modal-header-hlk{
-    width:54%!important;
-    border-bottom:0px solid #dee2e6!important 
+.mi-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.5;
 }
-.white-color {
-    color:#fff ;
+
+.mi-text-muted {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
 }
-.modal-bg{
-    background-color: rgba(0,0,0,0.7);
-}   
+
+/* Boutons */
+.mi-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background 0.12s, border-color 0.12s, color 0.12s, box-shadow 0.12s;
+}
+.mi-btn-secondary {
+  background: #fff;
+  color: #4b5563;
+  border-color: #dfe3e8;
+}
+.mi-btn-secondary:hover {
+  background: #f3f4f6;
+  border-color: #c8cdd5;
+  color: #1f2937;
+}
+.mi-btn-primary {
+  background: #001a70;
+  color: #fff;
+  border-color: #001a70;
+}
+.mi-btn-primary:hover {
+  background: #00237a;
+  box-shadow: 0 2px 6px rgba(0, 26, 112, 0.22);
+  color: #fff;
+  text-decoration: none;
+}

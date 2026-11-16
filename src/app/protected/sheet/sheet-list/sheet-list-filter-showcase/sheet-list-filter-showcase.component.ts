@@ -12,7 +12,7 @@ export class SheetListFilterShowcaseComponent implements OnInit, OnChanges {
   @Input() showcase: any={};
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
   constructor() { }
 
   ngOnInit(): void {

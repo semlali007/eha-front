@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { ProviderService } from 'src/app/core/services/provider.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'provider-view',
   templateUrl: './provider-view.component.html',
-  styles: [
-  ]
+  styleUrls: ['./provider-view.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProviderViewComponent implements OnInit {
   public code: string = '';
@@ -21,9 +22,24 @@ export class ProviderViewComponent implements OnInit {
     private providerService: ProviderService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
   ) {
   }
+
+  back(): void {
+    this.location.back();
+  }
+
+  public hasAddress(): boolean {
+    const i = this.provider?.infos;
+    return !!(i && (i.supplier_business_unit_address_street || i.supplier_business_unit_address_postal_zone || i.supplier_business_unit_address_town));
+  }
+
+  public getActiveContracts(): any[] {
+    return (this.provider?.contracts || []).filter(c => !!c?.contract_code);
+  }
+
   ngOnInit(): void {
     this.filterForm = this.fb.group({
       'contractFilterText': '',

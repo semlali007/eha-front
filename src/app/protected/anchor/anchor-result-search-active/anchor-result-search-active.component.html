@@ -1,35 +1,39 @@
-<p *ngIf="activeProviders.length > 0">
-    <b>{{ activeProviders.length }}</b> fournisseurs <b>avec</b> des contrats actifs :
-</p>
-<div class="list-group my-items-for-searches">
-    <a class="list-group-item link" *ngFor="let row  of activeProviders| slice:startItem:endItem;"  (click) = "showProvider(row.code)">
-        <table>
-            <tr>
-                <td style="width: 35px; padding-right: 10px;">
-                    <img *ngFor="let activity  of row.activities" src="../../../../assets/img/pictogramme-{{activity.code}}.png" height="25px"
-                        style="background-color:green;">
-                </td>
-                <td>
-                    <small ng-if="row.distance > -1">{{row.distance}} km</small> <b> {{row.label}}</b>
-                    <br>
-                    {{row.zipcode}} {{row.town}}
-                </td>
-            </tr>
-        </table>
-    </a>
-</div>
-<div class="alert alert-warning" *ngIf="activeProviders.length == 0">
-    Désolé, je n'ai trouvé aucun fournisseur avec un contrat actif proche de ce code postal.
+<div class="anc-result-head" *ngIf="activeProviders.length > 0">
+  <span class="anc-badge anc-badge--active">
+    <span class="anc-dot"></span> Contrats actifs
+  </span>
+  <span class="anc-result-count"><strong>{{ activeProviders.length }}</strong> fournisseur(s)</span>
 </div>
 
-<div class="row" *ngIf="activeProviders.length>0">
-    <p class="pageText">Page {{ this.currentPage.value }} sur {{ totalPage }}</p>
-    <form  [formGroup]="paginationForm">
-        <nav aria-label="pagination" >
-        <pagination [totalItems]='activeProviders.length' [itemsPerPage]="itemsPerPage"
-        [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="10"
-        (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" class="paginationClass" [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
-        </pagination>
-        </nav>
-    </form>
+<div class="anc-list" *ngIf="activeProviders.length > 0">
+  <a class="anc-item anc-item--link" *ngFor="let row of activeProviders | slice:startItem:endItem" (click)="showProvider(row.code)">
+    <div class="anc-item-pics" *ngIf="row.activities?.length">
+      <img *ngFor="let activity of row.activities"
+        src="../../../../assets/img/pictogramme-{{activity.code}}.png" height="24" class="anc-pic" alt="">
+    </div>
+    <div class="anc-item-body">
+      <div class="anc-item-title">
+        <span class="anc-distance" *ngIf="row.distance > -1">{{ row.distance }} km</span>
+        {{ row.label }}
+      </div>
+      <div class="anc-item-sub">{{ row.zipcode }} {{ row.town }}</div>
+    </div>
+    <svg class="anc-item-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+    </svg>
+  </a>
+</div>
+
+<div class="anc-empty" *ngIf="activeProviders.length == 0">
+  Aucun fournisseur avec un contrat actif proche de ce code postal.
+</div>
+
+<div class="anc-pager" *ngIf="activeProviders.length > 0">
+  <span class="anc-pager-info">Page {{ this.currentPage.value }} / {{ totalPage }}</span>
+  <form [formGroup]="paginationForm">
+    <pagination class="anc-pagination" [totalItems]="activeProviders.length" [itemsPerPage]="itemsPerPage"
+      [formControl]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="7"
+      (numPages)="smallnumPages = $event" previousText="&lsaquo;" nextText="&rsaquo;">
+    </pagination>
+  </form>
 </div>

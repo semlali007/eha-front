@@ -1,20 +1,21 @@
-<form [formGroup]="lot" class="form-group row">
-    <div class="col-sm-2">
-        <input formControlName="name" type="text" class="form-control" [placeholder]="'Entrer un lot'">
-    </div>
-    <div class="col-sm-9">
-        <input formControlName="description" type="text" class="form-control" [placeholder]="'Entrer une description'">
-    </div>
-    <div class="col">
-        <button class="remove" (click)="confirmation(template)">-</button>
-    </div>
-  </form>
+<form [formGroup]="lot" class="adm-array-item">
+  <div class="adm-array-item-fields">
+    <input formControlName="name" type="text" class="adm-input adm-lot-name" placeholder="Nom du lot">
+    <input formControlName="description" type="text" class="adm-input" placeholder="Description du lot">
+  </div>
+  <button type="button" class="adm-btn adm-btn-danger adm-btn-sm adm-btn-icon" (click)="confirmation(template)" title="Supprimer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
+</form>
 
-<br><br>
 <ng-template #template>
-  <div class="modal-body text-center">
-    <p>Voulez-vous confirmer la suppression ?</p>
-    <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
-    <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">Confirmer la suppression ?</p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    </div>
   </div>
 </ng-template>

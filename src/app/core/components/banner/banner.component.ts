@@ -41,9 +41,11 @@ export class BannerComponent implements OnInit {
     this.subscription = 
       this.authService.user$.subscribe(user => {
           this.user = user;
+          // Rafraîchir les notifications uniquement après avoir chargé l'utilisateur
+          if (this.user && this.user.nni) {
+            this.refreshNotifications();
+          }
     });
-    
-    this.refreshNotifications();
 
     this.notificationDeletedService.notificationDeleted$.subscribe(() => {
       this.refreshNotifications();
@@ -63,6 +65,12 @@ export class BannerComponent implements OnInit {
    }
 
    openModal() {
+    // Vérifier que l'utilisateur est chargé
+    if (!this.user || !this.user.nni) {
+      console.warn('openModal: user not loaded yet');
+      return;
+    }
+    
     this.notificationService.getUserNotification({nni:this.user.nni}).subscribe(data => {
       this.list = data;
       const initialState = {
@@ -75,7 +83,7 @@ export class BannerComponent implements OnInit {
         },
         checkboxValidation: true
       };
-      this.bsModalRef = this.modalService.show(ModalNotificationComponent, { initialState });
+      this.bsModalRef = this.modalService.show(ModalNotificationComponent, { initialState, class: 'notif-dialog' });
       this.bsModalRef.content.closeBtnName = 'Close';
     })
   }
@@ -85,11 +93,16 @@ export class BannerComponent implements OnInit {
   }
 
   private refreshNotifications() {
+    // Vérifier que l'utilisateur est chargé avant d'appeler l'API
+    if (!this.user || !this.user.nni) {
+      console.warn('refreshNotifications: user or user.nni is not available yet');
+      return;
+    }
+    
     this.notificationService.getUserNotification({ nni: this.user.nni }).subscribe(data => {
       this.list = data;
       if (Array.isArray(data)) {
         this.numberOfNotifications = data.length;
-        console.log('Nombre de notifications:', this.numberOfNotifications);
       } else {
         this.numberOfNotifications = 0; 
       }

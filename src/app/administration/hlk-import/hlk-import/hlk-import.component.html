@@ -1,0 +1,338 @@
+<div class="hlki">
+
+  <!-- En-tête -->
+  <header class="hlki-header">
+    <span class="hlki-header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+      </svg>
+    </span>
+    <div>
+      <h1 class="hlki-header-title">Import automatique des fiches HLK</h1>
+      <p class="hlki-header-sub">
+        Le batch importe les fiches marché depuis HLK chaque nuit (2 h). Vous pouvez aussi
+        le relancer manuellement et consulter l'historique des runs.
+      </p>
+    </div>
+  </header>
+
+  <!-- ZONE 1 — Actions -->
+  <section class="hlki-card">
+    <h2 class="hlki-card-title">Relancer le batch</h2>
+    <div class="hlki-actions">
+      <button type="button" class="btn btn-primary hlki-action-btn"
+              [disabled]="loading"
+              (click)="askTriggerNow(confirmTpl)">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm hlki-spin" role="status" aria-hidden="true"></span>
+        <span *ngIf="!loading">▶ Relancer maintenant</span>
+        <span *ngIf="loading">Batch en cours…</span>
+      </button>
+      <button type="button" class="btn btn-outline-primary"
+              [disabled]="loading"
+              (click)="openDateModal(dateTpl)">
+        📅 Relancer depuis une date…
+      </button>
+    </div>
+
+    <!-- Attente -->
+    <div *ngIf="loading" class="hlki-waiting">
+      <div class="progress hlki-progress-bar">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%"></div>
+      </div>
+      <p class="hlki-hint">
+        Le batch peut durer <strong>5 à 10 minutes</strong>. Ne fermez pas l'onglet et ne
+        rechargez pas la page pendant l'exécution.
+      </p>
+    </div>
+
+    <!-- Résultat du trigger -->
+    <div *ngIf="triggerResult" class="hlki-result" [ngClass]="'hlki-result--' + statusClass(triggerResult.status)">
+      <button type="button" class="hlki-result-close" (click)="dismissTriggerResult()" aria-label="Fermer">&times;</button>
+      <div class="hlki-result-head">
+        <span class="hlki-status">
+          <span class="hlki-dot" [ngClass]="'hlki-dot--' + statusClass(triggerResult.status)"></span>
+          Batch terminé — {{ statusLabel(triggerResult.status) }}
+        </span>
+        <span *ngIf="triggerResult.dry_run" class="hlki-tag hlki-tag--sim">simulation</span>
+      </div>
+      <div class="hlki-result-stats">
+        <span><strong>{{ (triggerResult.created || 0) | number:'':'fr' }}</strong> créée(s)</span>
+        <span><strong>{{ (triggerResult.rows_eligible || 0) | number:'':'fr' }}</strong> éligibles</span>
+        <span><strong>{{ (triggerResult.skipped_existing || 0) | number:'':'fr' }}</strong> déjà existantes</span>
+        <span [class.hlki-warn-text]="(triggerResult.warnings?.length || 0) > 0"><strong>{{ triggerResult.warnings?.length || 0 }}</strong> warning(s)</span>
+        <span [class.hlki-error-text]="(triggerResult.errors?.length || 0) > 0"><strong>{{ triggerResult.errors?.length || 0 }}</strong> erreur(s)</span>
+        <span class="hlki-muted">durée {{ formatDuration(triggerResult.duration_ms) }}</span>
+      </div>
+      <p *ngIf="triggerResult.sync_run_id" class="hlki-hint">
+        Run #{{ triggerResult.sync_run_id }} — voir le détail dans l'historique ci-dessous.
+      </p>
+    </div>
+
+    <!-- Erreur du trigger -->
+    <div *ngIf="triggerError" class="alert alert-warning hlki-trigger-error">
+      <button type="button" class="hlki-result-close" (click)="dismissTriggerResult()" aria-label="Fermer">&times;</button>
+      {{ triggerError }}
+    </div>
+  </section>
+
+  <!-- ZONE 2 — Historique des runs -->
+  <section class="hlki-card">
+    <div class="hlki-card-head">
+      <h2 class="hlki-card-title">Historique des runs</h2>
+      <div class="hlki-card-head-actions">
+        <label class="hlki-check">
+          <input type="checkbox" [checked]="includeDryRuns"
+                 (change)="toggleIncludeDryRuns($any($event.target).checked)">
+          Inclure les simulations
+        </label>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="refreshRuns()" [disabled]="runsLoading">
+          Actualiser
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="runsError" class="alert alert-danger">{{ runsError }}</div>
+
+    <div class="hlki-table-wrap" *ngIf="runs.length; else noRuns">
+      <table class="table table-sm table-hover hlki-table">
+        <thead>
+          <tr>
+            <th>Statut</th>
+            <th>Démarré le</th>
+            <th>Déclencheur</th>
+            <th class="hlki-num">Créées</th>
+            <th>Durée</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let run of runs" class="hlki-run-row" (click)="openRunDetail(run, runDetailTpl)">
+            <td>
+              <span class="hlki-status">
+                <span class="hlki-dot" [ngClass]="'hlki-dot--' + statusClass(run.status)"></span>
+                {{ statusLabel(run.status) }}
+                <span *ngIf="run.dry_run" class="hlki-tag hlki-tag--sim">simulation</span>
+              </span>
+            </td>
+            <td>{{ run.started_at | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td><span class="hlki-tag" [ngClass]="'hlki-tag--' + triggeredByKind(run.triggered_by)">{{ run.triggered_by }}</span></td>
+            <td class="hlki-num">
+              <span *ngIf="run.status !== 'running'">{{ (run.stats?.created || 0) | number:'':'fr' }}</span>
+              <span *ngIf="run.status === 'running'" class="hlki-muted">…</span>
+            </td>
+            <td class="hlki-muted-cell">{{ formatDuration(run.duration_ms) }}</td>
+            <td class="hlki-chevron-cell">›</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noRuns>
+      <p class="hlki-empty">{{ runsLoading ? 'Chargement…' : 'Aucun run pour le moment.' }}</p>
+    </ng-template>
+
+    <div class="hlki-pager" *ngIf="runsTotal > runsLimit">
+      <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="runsOffset <= 0" (click)="runsPrev()">‹ Précédent</button>
+      <span class="hlki-pager-info">Page {{ runsPage }} / {{ runsPageCount }} — {{ runsTotal | number:'':'fr' }} run{{ runsTotal > 1 ? 's' : '' }}</span>
+      <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="runsOffset + runsLimit >= runsTotal" (click)="runsNext()">Suivant ›</button>
+    </div>
+  </section>
+
+  <!-- ZONE 3 — Fiches auto-créées -->
+  <section class="hlki-card">
+    <h2 class="hlki-card-title">Fiches auto-créées</h2>
+
+    <div class="hlki-filters">
+      <div class="hlki-field">
+        <label class="hlki-field-label">Du</label>
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="csFrom">
+      </div>
+      <div class="hlki-field">
+        <label class="hlki-field-label">Au</label>
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="csTo">
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" (click)="applyCreatedSheetsFilter()" [disabled]="csLoading">Filtrer</button>
+    </div>
+
+    <div *ngIf="csError" class="alert alert-danger">{{ csError }}</div>
+
+    <div class="hlki-table-wrap" *ngIf="createdSheets.length; else noSheets">
+      <table class="table table-sm hlki-table">
+        <thead>
+          <tr>
+            <th class="hlki-num">ID</th>
+            <th>Libellé</th>
+            <th>Statut</th>
+            <th>Créée le</th>
+            <th>Acheteur</th>
+            <th class="hlki-num">Achat cockpit</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sheet of createdSheets">
+            <td class="hlki-num hlki-mono">{{ sheet.id }}</td>
+            <td>{{ sheet.label }}</td>
+            <td><span class="hlki-tag" [class.hlki-tag--draft]="sheet.status === 0">{{ sheetStatusLabel(sheet.status) }}</span></td>
+            <td>{{ sheet.created_at | date:'dd/MM/yyyy' }}</td>
+            <td>{{ sheet.acheteur || '—' }}</td>
+            <td class="hlki-num hlki-mono">{{ sheet.achat_id_cockpit || '—' }}</td>
+            <td class="hlki-col-action">
+              <a class="hlki-link" [routerLink]="editSheetLink(sheet.id)" target="_blank" rel="noopener noreferrer">Voir →</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noSheets>
+      <p class="hlki-empty">{{ csLoading ? 'Chargement…' : 'Aucune fiche auto-créée sur cette période.' }}</p>
+    </ng-template>
+
+    <div class="hlki-pager" *ngIf="csTotal > csLimit">
+      <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="csOffset <= 0" (click)="csPrev()">‹ Précédent</button>
+      <span class="hlki-pager-info">Page {{ csPage }} / {{ csPageCount }} — {{ csTotal | number:'':'fr' }} fiche{{ csTotal > 1 ? 's' : '' }}</span>
+      <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="csOffset + csLimit >= csTotal" (click)="csNext()">Suivant ›</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ Modale : confirmation "Relancer maintenant" ============ -->
+<ng-template #confirmTpl>
+  <div class="modal-header">
+    <h4 class="modal-title">Relancer le batch d'import</h4>
+    <button type="button" class="close" aria-label="Fermer" (click)="declineTrigger()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Le batch peut prendre <strong>5 à 10 minutes</strong> et la page doit rester ouverte
+      pendant toute l'exécution. Continuer ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="declineTrigger()">Annuler</button>
+    <button type="button" class="btn btn-primary" (click)="confirmTriggerNow()">Lancer le batch</button>
+  </div>
+</ng-template>
+
+<!-- ============ Modale : relancer depuis une date ============ -->
+<ng-template #dateTpl>
+  <div class="modal-header">
+    <h4 class="modal-title">Relancer depuis une date</h4>
+    <button type="button" class="close" aria-label="Fermer" (click)="cancelDateModal()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="modal-body">
+    <div class="hlki-field hlki-field--block">
+      <label class="hlki-field-label">Importer les fiches signées depuis le</label>
+      <input type="date" class="form-control" [(ngModel)]="triggerDate">
+    </div>
+    <label class="hlki-check hlki-check--block">
+      <input type="checkbox" [(ngModel)]="triggerDryRun">
+      Simulation (dry-run) — aucune écriture en base
+    </label>
+    <p class="hlki-hint">
+      Le batch peut durer 5 à 10 minutes. Ne fermez pas l'onglet pendant l'exécution.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="cancelDateModal()">Annuler</button>
+    <button type="button" class="btn btn-primary" (click)="confirmTriggerFromDate()">Lancer le batch</button>
+  </div>
+</ng-template>
+
+<!-- ============ Modale : détail d'un run ============ -->
+<ng-template #runDetailTpl>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Run #{{ selectedRun?.id }}
+      <span *ngIf="selectedRun" class="hlki-status">
+        <span class="hlki-dot" [ngClass]="'hlki-dot--' + statusClass(selectedRun.status)"></span>
+        {{ statusLabel(selectedRun.status) }}
+      </span>
+      <span *ngIf="selectedRun?.dry_run" class="hlki-tag hlki-tag--sim">simulation</span>
+    </h4>
+    <button type="button" class="close" aria-label="Fermer" (click)="closeRunDetail()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="runDetailLoading" class="hlki-empty">Chargement du détail…</p>
+
+    <ng-container *ngIf="selectedRun && !runDetailLoading">
+      <div class="hlki-detail-meta">
+        <div><span class="hlki-meta-label">Démarré</span> {{ selectedRun.started_at | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+        <div><span class="hlki-meta-label">Terminé</span> {{ selectedRun.finished_at ? (selectedRun.finished_at | date:'dd/MM/yyyy HH:mm:ss') : '—' }}</div>
+        <div><span class="hlki-meta-label">Durée</span> {{ formatDuration(selectedRun.duration_ms) }}</div>
+      </div>
+
+      <h6 class="hlki-section-title">Origine</h6>
+      <div class="hlki-kv">
+        <div><span class="hlki-meta-label">Déclencheur</span>
+          <span class="hlki-tag" [ngClass]="'hlki-tag--' + triggeredByKind(selectedRun.triggered_by)">{{ selectedRun.triggered_by }}</span>
+        </div>
+        <div><span class="hlki-meta-label">Signé depuis</span> {{ selectedRun.signed_since_used || '—' }}</div>
+        <div><span class="hlki-meta-label">Prochain curseur</span> {{ selectedRun.next_cursor || '—' }}</div>
+      </div>
+
+      <h6 class="hlki-section-title">Résultats</h6>
+      <div class="hlki-stats">
+        <div class="hlki-stat"><span class="hlki-stat-value">{{ (selectedRun.stats?.rows_fetched || 0) | number:'':'fr' }}</span><span class="hlki-stat-label">Lignes HLK</span></div>
+        <div class="hlki-stat"><span class="hlki-stat-value">{{ (selectedRun.stats?.rows_eligible || 0) | number:'':'fr' }}</span><span class="hlki-stat-label">Éligibles</span></div>
+        <div class="hlki-stat"><span class="hlki-stat-value">{{ (selectedRun.stats?.sheets_aggregated || 0) | number:'':'fr' }}</span><span class="hlki-stat-label">Agrégées</span></div>
+        <div class="hlki-stat"><span class="hlki-stat-value">{{ (selectedRun.stats?.created || 0) | number:'':'fr' }}</span><span class="hlki-stat-label">Créées</span></div>
+        <div class="hlki-stat"><span class="hlki-stat-value">{{ (selectedRun.stats?.skipped_existing || 0) | number:'':'fr' }}</span><span class="hlki-stat-label">Déjà existantes</span></div>
+      </div>
+
+      <ng-container *ngIf="selectedRun.warnings?.length">
+        <h6 class="hlki-section-title hlki-section-title--warn">Warnings ({{ selectedRun.warnings.length }})</h6>
+        <div *ngFor="let w of selectedRun.warnings" class="hlki-warn-item">
+          <div class="hlki-warn-msg">{{ w.message }}</div>
+          <div *ngIf="w.pages_skipped?.length" class="hlki-hint">
+            Pages ignorées : {{ w.pages_skipped.join(', ') }}
+            <span *ngIf="w.total_pages_hlk"> / {{ w.total_pages_hlk }}</span>
+            <span *ngIf="w.coverage_ratio != null"> — couverture {{ (w.coverage_ratio * 100) | number:'1.0-1':'fr' }} %</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedRun.errors?.length">
+        <h6 class="hlki-section-title hlki-section-title--error">Erreurs ({{ selectedRun.errors.length }})</h6>
+        <div class="hlki-table-wrap">
+          <table class="table table-sm hlki-table">
+            <thead><tr><th class="hlki-num">Achat cockpit</th><th>Message</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let e of selectedRun.errors">
+                <td class="hlki-num hlki-mono">{{ e.achat_id_cockpit || '—' }}</td>
+                <td>{{ e.message }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedRun.created_sheets?.length">
+        <h6 class="hlki-section-title">Fiches créées ({{ selectedRun.created_sheets.length }})</h6>
+        <div class="hlki-table-wrap">
+          <table class="table table-sm hlki-table">
+            <thead><tr><th class="hlki-num">ID</th><th>Libellé</th><th>Statut</th><th></th></tr></thead>
+            <tbody>
+              <tr *ngFor="let s of selectedRun.created_sheets">
+                <td class="hlki-num hlki-mono">{{ s.id }}</td>
+                <td>{{ s.label }}</td>
+                <td><span class="hlki-tag" [class.hlki-tag--draft]="s.status === 0">{{ sheetStatusLabel(s.status) }}</span></td>
+                <td class="hlki-col-action">
+                  <a class="hlki-link" [routerLink]="editSheetLink(s.id)" target="_blank" rel="noopener noreferrer">Voir →</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <p *ngIf="!selectedRun.warnings?.length && !selectedRun.errors?.length && !selectedRun.created_sheets?.length && selectedRun.status !== 'running'"
+         class="hlki-hint">Aucune fiche créée, ni erreur ni warning sur ce run.</p>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="closeRunDetail()">Fermer</button>
+  </div>
+</ng-template>

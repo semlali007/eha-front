@@ -1,86 +1,161 @@
-<h1>Administration de la modal : {{title}}</h1>
-<form [formGroup]="pageForm" (ngSubmit)="submit()" *ngIf="type=='home_page'">
-    <div class="form-group">
-        <label for="content"><strong>Contenu :</strong></label>
-        <div>
-            <editor id="content" formControlName="content"
-                [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist lists preview link',branding: false}">
-            </editor>
-            <small *ngIf="content.errors" class="form-text text-danger">
-                <span [hidden]="!content.errors.required">
-                    Contenu requise.
-                </span>
-            </small>
+<div class="adm-page">
+
+  <h1 class="adm-title">Nouveautés — {{ title }}</h1>
+
+  <!-- Formulaire page statique (uniquement pour home_page) -->
+  <form *ngIf="type === 'home_page'" [formGroup]="pageForm" (ngSubmit)="submit()">
+
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">1</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Contenu de la modale</h3>
+          <p class="adm-section-sub">Texte affiché dans la modale d'accueil aux utilisateurs</p>
         </div>
+        <span *ngIf="saved" class="adm-chip adm-chip--green" style="margin-left:auto">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+          </svg>
+          Enregistré
+        </span>
+      </div>
+      <div class="adm-form-group">
+        <label class="adm-label">Contenu<span class="adm-required">*</span></label>
+        <div class="adm-editor-wrap">
+          <editor id="content" formControlName="content"
+                  [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins: 'advlist lists preview link', branding: false, menubar: false, height: 260}">
+          </editor>
+        </div>
+        <span *ngIf="content?.errors?.required && content?.dirty" class="adm-field-error">Contenu requis.</span>
+      </div>
+    </section>
+
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">2</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Visibilité</h3>
+          <p class="adm-section-sub">Activer ou désactiver l'affichage de la modale</p>
+        </div>
+      </div>
+      <div class="adm-form-group">
+        <label class="adm-switch">
+          <input type="checkbox" formControlName="active">
+          <span class="adm-switch-track"></span>
+          <span class="adm-switch-label">Modale active</span>
+        </label>
+        <span class="adm-field-hint">Quand activée, la modale s'affichera automatiquement aux utilisateurs.</span>
+      </div>
+    </section>
+
+    <div style="display: flex; justify-content: flex-end; margin: 0 0 24px 0">
+      <button type="submit" [disabled]="!pageForm.valid" class="adm-btn adm-btn-edf">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+        </svg>
+        Enregistrer
+      </button>
     </div>
-    <div class="form-group row">
-        <div class="col-sm-3">
-            <strong>Activer</strong>
-        </div>
-        <div class="col-sm-9">
-            <div class="form-check">
-                <input type="checkbox" formControlName="active" id="active"  class="form-check-input"/>
+  </form>
+
+  <!-- Header de la liste + bouton ajouter -->
+  <div class="adm-header">
+    <h2 class="adm-io-title" style="font-size:16px; margin:0">Liste des nouveautés</h2>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter une nouveauté
+      </button>
+    </div>
+  </div>
+
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> nouveauté{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ news.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher dans les nouveautés…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th style="width: 70px">ID</th>
+          <th style="width: 30%">Titre</th>
+          <th>Description</th>
+          <th style="width: 140px">Date</th>
+          <th style="width: 220px; text-align: right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of paged">
+          <td class="adm-table-col-muted">#{{ item.id }}</td>
+          <td [innerHtml]="item.title"></td>
+          <td class="adm-news-desc" [innerHtml]="item.description"></td>
+          <td class="adm-table-col-muted">{{ item.date }}</td>
+          <td style="text-align: right">
+            <div style="display: flex; justify-content: flex-end; gap: 6px; flex-wrap: nowrap">
+              <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="openAdd(item.id)">Modifier</button>
+              <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="openModal(template, item.id)">Supprimer</button>
             </div>
-        </div>
-    </div>
-    <div class="text-right mt-3">
-        <button type="submit" [disabled]="!pageForm.valid" class="btn btn-primary">Sauvegarder</button>
-    </div>
-</form>
-<div class="row">
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
-        </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/>
+    </svg>
+    <p class="adm-empty-title">Aucune nouveauté trouvée</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucune nouveauté — ajoutez-en une avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Titre
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Date
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let new of news$ | async">
-            <td>
-                {{new.id}}
-            </td>
-
-            <td [innerHtml]="new.title">
-            </td>
-
-            <td [innerHtml]="new.description">
-            </td>
-
-            <td>
-                {{new.date}}
-            </td>
-
-            <td>
-                <button class="btn btn-primary" (click)="openAdd(new.id)">Modifier</button>
-                <button class="btn btn-danger" (click)="openModal(template, new.id)" >Supprimer</button>
-            </td>
-        </tr> 
-
-    </tbody>
-</table>
-
 <ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer cette nouveauté ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
     </div>
-  </ng-template>
+  </div>
+</ng-template>

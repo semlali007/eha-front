@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { DomainService } from 'src/app/core/services/domain.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SheetFormModalComponent } from '../sheet-form-modal/sheet-form-modal.component';
-import { Domain } from 'src/app/shared/models/domain';
+import { EhaDomain } from 'src/app/shared/models/eha-domain';
 
 @Component({
   selector: 'app-sheet-form-domain',
@@ -19,7 +19,7 @@ export class SheetFormDomainComponent implements OnInit {
   @Input() sheetForm: FormGroup;
   @Input() allDomains: [];
   private page: number;
-  private items: Domain[];
+  private items: EhaDomain[];
   private total: number;
   bsModalRef: BsModalRef;
   itemsPerPage: number;
@@ -84,7 +84,7 @@ export class SheetFormDomainComponent implements OnInit {
       });
 
       this.bsModalRef.content.addElementEvent.subscribe(res => {
-        this.domainService.add(new Domain({ label: res.data.value })).subscribe(t =>
+        this.domainService.add(new EhaDomain({ label: res.data.value })).subscribe(t =>
           this.domainService.getList({ page: this.page, perPage: this.itemsPerPage }).subscribe(data => {
             this.bsModalRef.content.items = data.domains;
             this.bsModalRef.content.total = data.total;

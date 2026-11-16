@@ -1,268 +1,193 @@
-<div class="container">
-  <span class="Accueil-Actualit Body---16---Semi-Bold">
-    <span class="Body---16---Semi-Bold link" (click)="navigate('app/accueil')">Accueil</span>
-    / Enquête de satisfaction
-  </span>
-  <br>
-  <br>
-  <div class="row">
-    <div class="col-12 col-md-12">
-      <div class="Frame-315">
-        <i class="fas fa-box"></i>
-        <img src="../../../../assets/img/mdi_announcement.png"
-          srcset="../../../../assets/img/mdi_announcement@2x.png 2x,../../../../assets/img/mdi_announcement@3x.png 3x"
-          class="mdiannouncement">
-        <span class="Actualit H2---26---Semi-Bold">
-          Enquête de satisfaction
-        </span>
-        <br>
-        <br>
-       
-      </div>
-      
-    </div>
-    
-    <div class="Property-1Hors-Cockpit">
-      <span class="Pierre-Laforet-GAI-NORD-TOUR1 Body---16---Regular">
-        La Direction des Achats Groupe vous sollicite pour recueillir votre niveau de satisfaction concernant l’acte
-        d’achat qui a été mené pour vos besoins sur l'achat suivant :
-    
-      <ul>
-        <li>
-          Référence Cockpit : {{cockpitId}}
-        </li>
-        <li *ngIf="!!daPGI">
-          Numéro de DA PGI : {{daPGI}}
-        </li>
-      </ul>
+<div class="sat-page">
+  <app-breadcrumb></app-breadcrumb>
 
-      <span
-      class="Lorem-ipsum-dolor-sit-amet-consectetur-nesta-adipiscing-elit-lectus-nunc-commodo-in-at-ultricies-id Body---16---Semi-Bold---Underlined">
-      A des fins d'amélioration de nos processus, nous vous remercions de bien vouloir prendre quelques instants pour
-      répondre à cette enquête de satisfaction.
-    </span>
-    </span>
-     
+  <!-- En-tête : icône + titre + sous-titre -->
+  <header class="sat-header">
+    <div class="sat-header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+      </svg>
     </div>
-  </div>
-<br>
-  <div class="row">
-    <div>
-      <div class="Frame-315" >
-        <alert class="Actualit Body---16---Semi-Bold" type="warning" *ngIf="warning && postedNni == user.nni">
-          Vous avez déjà répondu à ce questionnaire.
-        </alert>
-        <alert class="Actualit Body---16---Semi-Bold" type="warning" *ngIf="warning && postedNni != user.nni">
-          Une réponse a déjà été validée pour cette enquête.
-        </alert>
-        <alert  class="Actualit Body---16---Semi-Bold" type="success" *ngIf="success">
-          <p>Merci pour votre participation.</p>
-        </alert>
+    <div class="sat-header-titles">
+      <h1 class="sat-header-title">Enquête de satisfaction</h1>
+      <p class="sat-header-sub">
+        La Direction des Achats Groupe vous sollicite pour recueillir votre niveau de satisfaction concernant l'acte
+        d'achat qui a été mené pour vos besoins.
+      </p>
+    </div>
+  </header>
+
+  <!-- Carte info : référence cockpit / DA PGI -->
+  <section class="sat-info">
+    <h2 class="sat-info-title">Achat concerné</h2>
+    <div class="sat-info-grid">
+      <div class="sat-info-item">
+        <span class="sat-info-label">Référence cockpit</span>
+        <span class="sat-info-value">{{ cockpitId || '—' }}</span>
+      </div>
+      <div class="sat-info-item" *ngIf="!!daPGI">
+        <span class="sat-info-label">Numéro de DA PGI</span>
+        <span class="sat-info-value">{{ daPGI }}</span>
       </div>
     </div>
+    <p class="sat-info-note">
+      À des fins d'amélioration de nos processus, nous vous remercions de bien vouloir prendre quelques instants pour
+      répondre à cette enquête.
+    </p>
+  </section>
+
+  <!-- Alertes -->
+  <div class="sat-alert sat-alert-warning" *ngIf="warning && user && postedNni == user.nni">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+    </svg>
+    <span>Vous avez déjà répondu à ce questionnaire.</span>
   </div>
-  <div class="row"  [hidden]="warning && postedNni != user.nni">
-    <ul>
-      <li>
-        Les questions dont les réponses sont obligatoires sont indiquées en <strong>gras</strong> et avec <strong>*</strong>.
-      </li>
-      <li>
-        Attention : une fois le formulaire validé, vous ne pourrez plus le modifier.
-      </li>
-    </ul>
+  <div class="sat-alert sat-alert-warning" *ngIf="warning && user && postedNni != user.nni">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+    </svg>
+    <span>Une réponse a déjà été validée pour cette enquête.</span>
   </div>
-
-  <div class="row" [hidden]="warning && postedNni != user.nni">
-    <div >
-      <form *ngIf="loginForm" [formGroup]="loginForm"  (ngSubmit)="submit()">
-        <div class="Frame-315">
-          <span class="Actualit Body---16---Semi-Bold">
-            Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce dossier ? (*)
-          </span>
-        </div>
-        <div class="form-group ">
-          <div class="btn-group" btnRadioGroup [formControl]="accompaniement" name="accompaniement">
-            <label btnRadio="0" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value >=1 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 1)" >★</label>
-            <label btnRadio="2" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value >= 2 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 2)" >★</label>
-            <label btnRadio="6" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value >= 3 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 3)" >★</label>
-            <label btnRadio="8" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': accompaniement.value == 4 , 'readonly': disabled}" (click)="changeStarColor('accompaniement', 4)" >★</label>
-          </div>
-        </div>
-        <div class="Frame-315">
-          <span class="Actualit Body---16---Semi-Bold">
-            Les clauses contractuelles validées sont-elles pertinentes ? (*)
-          </span>
-        </div>
-        <div class="form-group mb-3">
-          <div class="btn-group" btnRadioGroup [formControl]="contractual" name="contractual">
-            <label btnRadio="0" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value >= 1, 'readonly': disabled}" (click)="changeStarColor('contractual', 1)">★</label>
-            <label btnRadio="2" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value >= 2 , 'readonly': disabled}" (click)="changeStarColor('contractual', 2)">★</label>
-            <label btnRadio="6" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value >= 3 , 'readonly': disabled}" (click)="changeStarColor('contractual', 3)">★</label>
-            <label btnRadio="8" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': contractual.value == 4 , 'readonly': disabled}" (click)="changeStarColor('contractual', 4)">★</label>
-          </div>
-        </div>
-
-
-        <div class="Frame-315">
-          <span class="Actualit Body---16---Semi-Bold">
-            Le marché a-t-il été mis à disposition au bon moment ? (*)
-          </span>
-        </div>
-        <div class="form-group mb-3">
-          <div class="btn-group" btnRadioGroup [formControl]="timing" name="timing">
-            <label btnRadio="0" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value >= 1 , 'readonly': disabled}" (click)="changeStarColor('timing', 1)">★</label>
-            <label btnRadio="2" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value >= 2 , 'readonly': disabled}" (click)="changeStarColor('timing', 2)">★</label>
-            <label btnRadio="6" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value >= 3 , 'readonly': disabled}" (click)="changeStarColor('timing', 3)">★</label>
-            <label btnRadio="8" class="btn  btn-outline-primary btn-space btn-star" [ngClass]="{'selected': timing.value == 4 , 'readonly': disabled}" (click)="changeStarColor('timing', 4)">★</label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Quels sont les points forts à souligner (notre collaboration, nos
-            conseils en amont de la consultation, la connaissance du segment, les initiatives en matières de RSE,
-            d'innovation, etc...) </label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="strong_points"
-            [formControl]="strong_points" [attr.disabled]="disabled ? '' : null"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Avez-vous des axes d'amélioration à nous soumettre ? </label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="improvement"
-            [formControl]="improvement" [attr.disabled]="disabled ? '' : null"></textarea>
-        </div>
-        <div class="col-12">
-          <div class="col text-center">
-            <button type="submit" [disabled]="!loginForm.valid || disabled" class="btn btn-secondary btn-submit-stf">Valider mes réponses</button>
-          </div>
-          <div class="col text-center">
-          <span class="Publi-le-02022023 Body---16---Semi-Bold">
-            Attention: une fois vos réponses validées, vous ne pourrez plus les modifier
-          </span>
-          
-          </div>
-          <br>
-        </div>
-      </form>
+  <!-- Confirmation de succès (bien visible) -->
+  <div class="sat-success" *ngIf="success" role="status">
+    <div class="sat-success-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
     </div>
+    <h2 class="sat-success-title">Merci pour votre participation !</h2>
+    <p class="sat-success-text">Vos réponses ont bien été enregistrées. Elles ne pourront plus être modifiées.</p>
   </div>
-</div>
-<!--
-<div class="container justify-content-center">
-  <form novalidate class="form my-form-connection" [formGroup]="loginForm" (ngSubmit)="submit()">
-    <alert type="warning" *ngIf="warning">
-      <h4 class="alert-heading">Bonjour.</h4>
-      <p>Vous avez déjà répondu à ce questionnaire.</p>
-    </alert>
-    <alert type="success" *ngIf="success">
-      <p>Merci pour votre participation.</p>
-    </alert>
-    <div class="row">
-      <div class="col-12">
-        <h2> La Direction des Achats Groupe vous sollicite pour recueillir votre niveau de satisfaction concernant l’acte d’achat cockpit {{cockpitId}} <span *ngIf="!!daPGI">(DA PGI : {{daPGI}})</span>  </h2>
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce
-            dossier?</label>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
-                value="special" [attr.disabled]="disabled ? '' : null">Mention spéciale
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
-                value="good_job" [attr.disabled]="disabled ? '' : null">Bon travail, professionnalisme à la hauteur
-            </label>
-          </div>
-          <div class="form-check ">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
-                value="complicated" [attr.disabled]="disabled ? '' : null">Dossier compliqué à faire aboutir
-            </label>
-          </div>
-          <div class="form-check ">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="accompaniement" [formControl]="accompaniement"
-                value="not_expected" [attr.disabled]="disabled ? '' : null">Ce n'est pas à l'attendu
-            </label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Les clauses contractuelles validées sont-elles pertinentes ? </label>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
-                value="special" [attr.disabled]="disabled ? '' : null">Mention spéciale
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
-                value="good_job" [attr.disabled]="disabled ? '' : null">Bon travail, professionnalisme à la hauteur
-            </label>
-          </div>
-          <div class="form-check ">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
-                value="complicated" [attr.disabled]="disabled ? '' : null">Dossier compliqué à faire aboutir
-            </label>
-          </div>
-          <div class="form-check ">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="contractual" [formControl]="contractual"
-                value="not_expected" [attr.disabled]="disabled ? '' : null">Ce n'est pas à l'attendu
-            </label>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Le marché a-t-il été mis à disposition au bon moment ? </label>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="special"
-                [attr.disabled]="disabled ? '' : null">Mention spéciale
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="good_job"
-                [attr.disabled]="disabled ? '' : null">Bon travail, professionnalisme à la hauteur
-            </label>
-          </div>
-          <div class="form-check ">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="complicated"
-                [attr.disabled]="disabled ? '' : null">Dossier compliqué à faire aboutir
-            </label>
-          </div>
-          <div class="form-check ">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="timing" [formControl]="timing" value="not_expected"
-                [attr.disabled]="disabled ? '' : null">Ce n'est pas à l'attendu
-            </label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Quels sont les points forts à souligner (notre collaboration, nos
-            conseils en amont de la consultation, la connaissance du segment, les initiatives en matières de RSE,
-            d'innovation, etc...) </label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="strong_points"
-            [formControl]="strong_points" [attr.disabled]="disabled ? '' : null"></textarea>
-        </div>
+  <!-- Alerte d'erreur (échec d'enregistrement) -->
+  <div class="sat-alert sat-alert-error" *ngIf="error">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+    </svg>
+    <span>Une erreur est survenue lors de l'enregistrement. Veuillez réessayer.</span>
+  </div>
 
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Avez-vous des axes d'amélioration à nous soumettre ? </label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="improvement"
-            [formControl]="improvement" [attr.disabled]="disabled ? '' : null"></textarea>
-        </div>
+  <!-- Note champs obligatoires -->
+  <p class="sat-required-note" *ngIf="!(warning && user && postedNni != user.nni)">
+    Les questions obligatoires sont marquées d'un astérisque <strong>(*)</strong>. Une fois validé, le formulaire ne pourra plus être modifié.
+  </p>
 
+  <!-- Formulaire -->
+  <form *ngIf="loginForm && !(warning && user && postedNni != user.nni)"
+        [formGroup]="loginForm"
+        (ngSubmit)="submit()"
+        class="sat-form"
+        novalidate>
+
+    <!-- Question 1 -->
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">1</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Avez-vous le sentiment d'avoir bien été accompagné par la DAG sur ce dossier ? <span class="sat-required">*</span></h3>
+        </div>
       </div>
-      <div class="col-12">
-        <button type="submit" [disabled]="!loginForm.valid || disabled" class="btn btn-secondary">
-          Je donne mon avis
-        </button>
+      <div class="sat-stars" btnRadioGroup [formControl]="accompaniement" name="accompaniement" [class.is-disabled]="disabled">
+        <label *ngFor="let i of [1,2,3,4]"
+               [btnRadio]="starValues[i-1]"
+               class="sat-star"
+               [class.is-active]="accompaniement.value >= i || (i === 4 && accompaniement.value == 4)"
+               (click)="changeStarColor('accompaniement', i)"
+               [attr.aria-label]="i + ' étoile(s)'">
+          ★
+        </label>
       </div>
+    </section>
+
+    <!-- Question 2 -->
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">2</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Les clauses contractuelles validées sont-elles pertinentes ? <span class="sat-required">*</span></h3>
+        </div>
+      </div>
+      <div class="sat-stars" btnRadioGroup [formControl]="contractual" name="contractual" [class.is-disabled]="disabled">
+        <label *ngFor="let i of [1,2,3,4]"
+               [btnRadio]="starValues[i-1]"
+               class="sat-star"
+               [class.is-active]="contractual.value >= i || (i === 4 && contractual.value == 4)"
+               (click)="changeStarColor('contractual', i)"
+               [attr.aria-label]="i + ' étoile(s)'">
+          ★
+        </label>
+      </div>
+    </section>
+
+    <!-- Question 3 -->
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">3</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Le marché a-t-il été mis à disposition au bon moment ? <span class="sat-required">*</span></h3>
+        </div>
+      </div>
+      <div class="sat-stars" btnRadioGroup [formControl]="timing" name="timing" [class.is-disabled]="disabled">
+        <label *ngFor="let i of [1,2,3,4]"
+               [btnRadio]="starValues[i-1]"
+               class="sat-star"
+               [class.is-active]="timing.value >= i || (i === 4 && timing.value == 4)"
+               (click)="changeStarColor('timing', i)"
+               [attr.aria-label]="i + ' étoile(s)'">
+          ★
+        </label>
+      </div>
+    </section>
+
+    <!-- Question 4 -->
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">4</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Quels sont les points forts à souligner ?</h3>
+          <p class="adm-section-sub">Notre collaboration, conseils en amont de la consultation, connaissance du segment, initiatives RSE, innovation, etc.</p>
+        </div>
+      </div>
+      <textarea class="sat-textarea"
+                rows="4"
+                name="strong_points"
+                [formControl]="strong_points"
+                placeholder="Décrivez les points forts…"></textarea>
+    </section>
+
+    <!-- Question 5 -->
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">5</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Avez-vous des axes d'amélioration à nous soumettre ?</h3>
+        </div>
+      </div>
+      <textarea class="sat-textarea"
+                rows="4"
+                name="improvement"
+                [formControl]="improvement"
+                placeholder="Suggérez des pistes d'amélioration…"></textarea>
+    </section>
+
+    <!-- Submit -->
+    <div class="sat-submit" *ngIf="!success && !warning">
+      <p class="sat-submit-warn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="flex-shrink: 0">
+          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </svg>
+        Une fois validées, vos réponses ne pourront plus être modifiées.
+      </p>
+      <button type="submit"
+              class="adm-btn adm-btn-edf"
+              [disabled]="!loginForm.valid || disabled || submitting">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <svg *ngIf="!submitting" xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+        </svg>
+        {{ submitting ? 'Validation…' : 'Valider mes réponses' }}
+      </button>
     </div>
   </form>
 </div>
-
--->

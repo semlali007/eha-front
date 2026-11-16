@@ -1,0 +1,19 @@
+<div class="adm-form-group">
+  <label for="entitesBeneficiairesEdfEnedis" class="adm-label">
+    Entités bénéficiaires EDF SA / ENEDIS
+  </label>
+  <textarea id="entitesBeneficiairesEdfEnedis"
+            [formControl]="entitesBeneficiairesEdfEnedis"
+            class="adm-textarea"
+            rows="2"
+            placeholder="Ex : CNPE Golfech"
+            autocorrect="off"
+            autocomplete="off"></textarea>
+  <span class="adm-field-hint">
+    Précisez les entités spécifiques à EDF SA / ENEDIS. Si c'est uniquement l'un ou l'autre,
+    indiquez-le dans le champ "Bénéficiaires".
+  </span>
+  <span *ngIf="entitesBeneficiairesEdfEnedis.errors && entitesBeneficiairesEdfEnedis.touched" class="adm-field-error">
+    <ng-container *ngIf="entitesBeneficiairesEdfEnedis.errors.required">Entités bénéficiaires requises.</ng-container>
+  </span>
+</div>

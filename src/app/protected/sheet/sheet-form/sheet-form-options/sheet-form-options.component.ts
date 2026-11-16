@@ -12,12 +12,18 @@ export class SheetFormOptionsComponent implements OnInit, OnDestroy {
 
 	@Input() options: FormArray;
 	@Input() sheetForm: FormGroup;
+	@Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
 	private valueChangesSubscription: Subscription;
 
 	constructor(private fb: FormBuilder) { }
 
 	ngOnInit() {
-		this.loadOptionsFromLocalStorage();
+		// Ne charger le localStorage QUE si :
+		// 1. On n'est PAS en mode création ET
+		// 2. Le FormArray des options est vide (pas de données existantes)
+		if (this.mode !== 'create' && this.options.length === 0) {
+			this.loadOptionsFromLocalStorage();
+		}
 		this.subscribeToValueChanges();
 	}
 
@@ -46,8 +52,6 @@ export class SheetFormOptionsComponent implements OnInit, OnDestroy {
 
 	
 	private subscribeToValueChanges(): void {
-		let latestOptions: any[];
-
 		this.valueChangesSubscription = this.options.valueChanges.subscribe(value => {
 
 			if (value !== null && value !== undefined) {
@@ -57,14 +61,13 @@ export class SheetFormOptionsComponent implements OnInit, OnDestroy {
 					endDate: option.endDate? new Date(option.endDate).toISOString() : '',
 				}));
 
-				latestOptions = stringifiedValue;
+				// Sauvegarder dans localStorage - mais pas en mode création
+				if (this.mode !== 'create') {
+					localStorage.setItem('latestOptions', JSON.stringify(stringifiedValue));
+				}
 			}
 			
 		});
-
-		if (latestOptions !== undefined) {
-			localStorage.setItem('latestOptions', JSON.stringify(latestOptions));
-		  }
 	}
 
 	private unsubscribeFromValueChanges(): void {

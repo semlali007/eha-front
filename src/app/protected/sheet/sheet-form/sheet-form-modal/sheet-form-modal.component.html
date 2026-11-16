@@ -1,126 +1,189 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
+<div class="adm-modal-header">
+  <h4 class="adm-modal-title">{{ title }}</h4>
+  <button type="button" class="adm-modal-close" aria-label="Fermer" (click)="bsModalRef.hide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
+</div>
+
+<div class="adm-modal-body sheet-modal-body">
+
+  <!-- 1. Sélection actuelle -->
+  <section class="sfm-section" *ngIf="selectedItems">
+    <div class="sfm-section-head">
+      <span class="sfm-section-title">Sélection actuelle</span>
+      <span class="adm-chip" [class.adm-chip--orange]="selectedCount > 0" [class.adm-chip--muted]="selectedCount === 0">
+        {{ selectedCount }} sélectionné{{ selectedCount > 1 ? 's' : '' }}
+      </span>
+    </div>
+
+    <div class="sfm-chips" *ngIf="selectedCount > 0; else noSelection">
+      <span class="sfm-chip" *ngFor="let sel of selectedItems.value">
+        <span class="sfm-chip-label" [title]="sel.label">{{ sel.label }}</span>
+        <button type="button" class="sfm-chip-remove" aria-label="Retirer" (click)="removeItemFromList(sel.code)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+          </svg>
+        </button>
+      </span>
+    </div>
+    <ng-template #noSelection>
+      <p class="sfm-empty-sel">Aucun élément sélectionné — ajoutez-en ci-dessous ou choisissez dans les résultats.</p>
+    </ng-template>
+  </section>
+
+  <!-- 2. Ajouter un nouvel élément -->
+  <section class="sfm-section">
+    <span class="sfm-section-title">Ajouter un élément</span>
+    <form novalidate [formGroup]="sheetModalForm" (ngSubmit)="submit()" class="sheet-modal-add">
+      <div class="sheet-modal-search-row">
+        <input id="sheet-modal-title"
+               type="text"
+               class="adm-input"
+               [formControl]="$any(newItem)"
+               placeholder="Commencez à taper pour rechercher…"
+               autocorrect="off"
+               autocomplete="off"
+               [typeahead]="names"
+               [typeaheadOptionsLimit]="7"
+               [typeaheadMinLength]="2"
+               (typeaheadOnSelect)="onSelect($event)">
+        <button type="submit" class="adm-btn adm-btn-edf" [disabled]="newItem?.disabled || !(newItem?.value || '').trim()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+          </svg>
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- 3. Recherche -->
+  <section class="sfm-section">
+    <span class="sfm-section-title">Rechercher</span>
+    <label class="adm-search sfm-search mb-0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             [formControl]="$any(search)"
+             placeholder="Filtrer la liste…"
+             autocorrect="off"
+             autocomplete="off"
+             (keydown.enter)="$event.preventDefault()">
+      <button *ngIf="search.value" type="button" class="sfm-search-clear" aria-label="Effacer" (click)="clearSearch()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+        </svg>
+      </button>
+    </label>
+  </section>
+
+  <!-- 4. Liste des résultats -->
+  <section class="sfm-section" *ngIf="items?.length > 0">
+    <div class="sfm-section-head">
+      <span class="sfm-section-title">Résultats</span>
+      <span class="adm-toolbar-count"><strong>{{ total }}</strong> élément(s)</span>
+    </div>
+
+    <div class="sheet-modal-list">
+      <div class="sfm-item" [class.is-selected]="isSelected(item)" *ngFor="let item of items">
+        <span class="sfm-item-label" [title]="item.label">{{ item.label }}</span>
+        <div class="sfm-item-actions">
+          <button *ngIf="!isSelected(item)"
+                  type="button"
+                  class="adm-btn adm-btn-edf adm-btn-sm"
+                  (click)="addItemToList(item)">
+            Sélectionner
+          </button>
+          <button *ngIf="isSelected(item)"
+                  type="button"
+                  class="adm-btn adm-btn-ghost adm-btn-sm sfm-btn-selected"
+                  (click)="removeItemFromList(item.code)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+            </svg>
+            Sélectionné
+          </button>
+          <button *ngIf="type == 'provider' || type == 'beneficiary'"
+                  type="button"
+                  class="adm-btn adm-btn-danger adm-btn-sm"
+                  title="Supprimer"
+                  (click)="remove(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empty state -->
+  <div class="sheet-modal-empty" *ngIf="!items || items.length === 0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p *ngIf="search.value">Aucun élément ne correspond à <strong>« {{ search.value }} »</strong>.</p>
+    <p *ngIf="!search.value">Aucun élément à afficher.</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="adm-pagination-bar" *ngIf="total > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage de <strong>{{ items?.length || 0 }}</strong> sur <strong>{{ total }}</strong>
+    </p>
+    <form class="adm-pagination-wrap" [formGroup]="sheetModalForm">
+      <pagination [boundaryLinks]="true"
+                  [totalItems]="total"
+                  [itemsPerPage]="itemsPerPage"
+                  [formControl]="$any(currentPage)"
+                  (pageChanged)="pageChanged($event)"
+                  [maxSize]="maxSize"
+                  (numPages)="smallnumPages = $event"
+                  previousText="&lsaquo;"
+                  nextText="&rsaquo;"
+                  firstText="&laquo;"
+                  lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>
+
+<div class="adm-modal-footer sfm-footer">
+  <span class="sfm-footer-info">{{ selectedCount }} élément(s) sélectionné(s)</span>
+  <div class="sfm-footer-actions">
+    <button type="button" class="adm-btn adm-btn-ghost" (click)="bsModalRef.hide()">Annuler</button>
+    <button type="button" class="adm-btn adm-btn-edf" (click)="validateModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+      </svg>
+      Enregistrer
     </button>
+  </div>
 </div>
-<div class="modal-body"> 
-    <div class="row justify-content-center">
-        <div class="col-11">
-            <!-- <div class="row" *ngIf="type == 'domain' || type=='subdomain'">
-                <div class="col-lg-12">
-                    <form novalidate [formGroup]="searchModalForm" (ngSubmit)="submitSearch()">
-                        <div class="form-group row">
 
-                            <div class="col-6 col-sm-7">
-                                <input id="title" [formControl]="search"  class="form-control" placeholder="Le titre" autocorrect="off" 
-        
-                 />
-
-                            </div>
-                            <div class="col-4 col-sm-4">
-                                <button type="submit" name="submit" class="btn btn-edf" >Rechercher</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div> -->
-
-
-            <!-- <div class="row" *ngIf="type != 'domain' && type!='subdomain'"> -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <form novalidate [formGroup]="sheetModalForm" (ngSubmit)="submit()">
-                        <div class="form-group row">
-
-                            <div class="col-6 col-sm-7">
-                                <input id="title" [formControl]="newItem" type="title" class="form-control" placeholder="Le titre" autocorrect="off" 
-        autocomplete="off"
-                [typeahead]="names"
-                [typeaheadOptionsLimit]="7"
-                [typeaheadMinLength]="2"
-                (typeaheadOnSelect)="onSelect($event)"
-                 />
-
-                            </div>
-                            <div class="col-4 col-sm-4">
-                                <button type="submit" name="submit" class="btn btn-edf" >Ajouter</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <div class="tab-content">
-                        <div class="active">
-                            <div>
-                                <div class="list-group my-items-for-trainings">
-                                    <div class="list-group-item" *ngFor="let item of items">
-                                        <div>
-                                            <strong>{{ item.label }}</strong>
-                                            <span style="float:right">
-                                                <button type="button" class="btn btn-danger float-left initial" *ngIf="type == 'provider' || type=='beneficiary' " (click)="remove(item)" >
-                                                    Supprimer
-                                                </button></span>
-                                                <span>&nbsp;</span>
-                                                <span style="float:right"> <button
-                                                    class="btn btn-edf" (click)="addItemToList(item)" *ngIf="!isSelected(item)">Sélectionner</button>
-                                            </span>
-                                                <span style="float:right"> <button
-                                                class="btn btn-edf" (click)="removeItemFromList(item.code)" *ngIf="isSelected(item)">Retirer</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <form class="col-xs-12 col-12" [formGroup]="sheetModalForm">
-                                    <nav aria-label="pagination" >
-                                    <pagination [boundaryLinks]="true" [totalItems]="total" [itemsPerPage]="itemsPerPage" (numPages)="smallnumPages = $event" [formControl]="currentPage"
-                                    (pageChanged)="pageChanged($event)"  previousText="&lsaquo;" [maxSize]="maxSize"
-                                    nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-                                  </pagination>
-                                  </nav>
-                                </form>
-                              </div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            <div>
-                <nav class="d-flex justify-content-center">
-                    <div class="bs-component">
-                        <tag-input [formControl]="selectedItems" [placeholder]="''" [onTextChangeDebounce]="500"
-                            [secondaryPlaceholder]="''" [onlyFromAutocomplete]="true">
-                            <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems" [minimumTextLength]="3"
-                                [identifyBy]="'code'" [displayBy]="'label'"    [zIndex]="1099">
-                            </tag-input-dropdown>
-                        </tag-input>
-                    </div>
-                </nav>
-            </div>
+<!-- Modal de confirmation imbriqué (suppression provider/beneficiary) -->
+<div *ngIf="isModalShown"
+     [config]="{ show: true }"
+     (onHidden)="onHidden()"
+     bsModal
+     #autoShownModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="adm-modal-body" style="text-align: center">
+        <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">{{ modalMessage }}</p>
+        <div style="display: flex; justify-content: center; gap: 8px">
+          <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+          <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
         </div>
+      </div>
     </div>
-    <br>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-success" type="button" (click)="validateModal()">Enregistrer</button>
-    <button class="btn btn-danger" type="button" (click)="bsModalRef.hide()">Annuler</button>
-
-</div>
-
-
-<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
-    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <p>{{modalMessage}}</p>
-                <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
-                <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>

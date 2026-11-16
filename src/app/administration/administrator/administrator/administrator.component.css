@@ -1,0 +1,26 @@
+/* Styles spécifiques à la page administrateurs */
+
+.adm-admin-inline-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.adm-admin-submit {
+  height: fit-content;
+  padding: 9px 16px;
+}
+
+/* Avatar rond avec icône user devant l'e-mail */
+.adm-admin-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 99px;
+  background: #e8eef8;
+  color: #001a70;
+  margin-right: 8px;
+  vertical-align: middle;
+}

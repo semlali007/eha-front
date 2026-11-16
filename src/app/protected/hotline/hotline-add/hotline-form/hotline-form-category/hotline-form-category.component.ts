@@ -11,7 +11,8 @@ export class HotlineFormCategoryComponent implements OnInit {
   @Input() category: any;
   @Input() familiesList: any;
   @Input() family: any;
-  selectedCategories: any;
+  @Input() submitted: boolean = false;
+  selectedCategories: any[] = [];
   constructor() { }
   @Input() hotlineForm: FormGroup;
 

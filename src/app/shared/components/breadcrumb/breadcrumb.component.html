@@ -1,8 +1,30 @@
-<nav aria-label="Vous êtes ici :" role="navigation">
-    <ol class="breadcrumb my-items-for-contacts">
-        <li *ngFor="let row of breadcrumbs" class="breadcrumb-item{{(row.route == null) ? ' active' : ''}} link"  [attr.aria-current]="row.route == null">
-            <a (click)="navigate(row.route)" *ngIf="row.route != null" class="blue_link">{{row.label}}</a>
-            <span *ngIf="row.route == null">{{row.label}}</span>
-        </li>
-    </ol>
+<nav class="bc" *ngIf="!!breadcrumbs && breadcrumbs.length > 0" aria-label="Vous êtes ici">
+  <ng-container *ngFor="let row of breadcrumbs; let i = index; let last = last">
+
+    <!-- Séparateur chevron entre items -->
+    <span *ngIf="i > 0" class="bc-sep" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </span>
+
+    <!-- Item cliquable -->
+    <button *ngIf="row.route != null"
+            type="button"
+            class="bc-link"
+            (click)="navigate(row.route)">
+      <svg *ngIf="i === 0 && isHomeLabel(row.label)" xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.125 1.125 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75"/>
+      </svg>
+      {{ row.label }}
+    </button>
+
+    <!-- Item courant (non cliquable) -->
+    <span *ngIf="row.route == null"
+          class="bc-current"
+          [attr.aria-current]="last ? 'page' : null">
+      {{ row.label }}
+    </span>
+
+  </ng-container>
 </nav>

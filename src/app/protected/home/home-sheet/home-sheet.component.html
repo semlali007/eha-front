@@ -1,16 +1,14 @@
 
 <div class="list-group my-items-for-contacts cadre">
-  <p class="titre-cadre"><img src="../../../../assets/img/icon-marche-cadre.png"> Vitrine de l'offre</p>
-  <table style="width:100%;margin-bottom:-28px">
-    <tr>
-      <!-- <td style="width:25%"><p [hidden]="!page?.active" class="label ">NOUVEAU</p></td> -->
-      <td><p class="savoir-plus link" [hidden]="!page?.active" (click)="openModalWithComponent()"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p></td>
-    </tr>
-  </table>
+  <div class="mb-2">
+    <p class="titre-cadre"><img src="../../../../assets/img/icon-marche-cadre.png"> Vitrine de l'offre</p>
+    <p class="sous-titre-cadre">Ensemble des contrats de la direction des achats EDF</p>
+  </div>
+  <p class="savoir-plus link" (click)="openModalWithComponent()"><img src="../../../../assets/img/icon-savoir-plus.png">&nbsp;en savoir plus</p>
   <p class="p">
     Consultez le catalogue des accords-cadres transverses portés par la Direction des Achats Groupe.
   </p>
-  <button class="btn btn-blanc" (click)="call(sheetPath)" >
-    Accéder à la Vitrine de l'Offre de la Direction des Achats
+  <button class="btn btn-blanc btn-contrat-groupe mt-3" (click)="call(sheetPath)">
+    Accéder à la Vitrine de l'offre de l'ensemble des contrats de la Direction des Achats EDF
   </button>
 </div>

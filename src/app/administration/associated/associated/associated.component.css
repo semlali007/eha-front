@@ -1,0 +1,26 @@
+/* Styles spécifiques à la page "Mots à associer" (reste = ui-kit.css) */
+
+.adm-word {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.adm-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #6b7280;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.adm-icon-btn:hover {
+  background: #fff4ef;
+  color: #fe5815;
+  border-color: #fde3d4;
+}

@@ -15,7 +15,7 @@ export class SearchFormLineComponent implements OnInit {
     this.lineList = (new Line()).getLineList();
     this.lineList.unshift({
       code: '',
-      label: 'tous les mandants PGI',
+      label: 'Tous les mandants PGI',
       tooltip: '',
   });
   }

@@ -1,52 +1,102 @@
-<h1>Gérer les groupes:</h1>
-<div class="row">
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
-        </div>
-    </div>
-</div>
-<p>{{groups.length}} entrées :</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                id
-            </th>
-            <th>
-                label
-            </th>
-            <th>
-                living
-            </th>
-            <th>
-                Changer le statut
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let group of groups">
-            <td>
-                {{group.id}}
-            </td>
-            <td>
-                {{group.label}}
-            </td>
-            <td>
-                {{group.living | showBooleanText}}
-            </td>
-            <td>
-                <!-- <button class="btn btn-primary" (click)="openAdd(group.id)">Modifier</button> -->
-                <button class="btn btn-primary" (click)="openAdd(group.id.toString())">Modifier</button>
+<div class="adm-page">
 
-            </td>
-        </tr>
-    </tbody>
-</table>
-<ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >true</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >false</button>
+  <div class="adm-header">
+    <h1 class="adm-title">Groupes de hotline</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter un groupe
+      </button>
     </div>
-  </ng-template>
+  </div>
+
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> groupe{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ groups.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher un groupe…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th style="width: 80px">ID</th>
+          <th>Libellé</th>
+          <th style="width: 140px">Statut</th>
+          <th style="width: 140px; text-align: right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let group of paged">
+          <td class="adm-table-col-muted">#{{ group.id }}</td>
+          <td><span class="adm-word">{{ group.label }}</span></td>
+          <td>
+            <span *ngIf="group.living" class="adm-chip adm-chip--green">Actif</span>
+            <span *ngIf="!group.living" class="adm-chip adm-chip--muted">Inactif</span>
+          </td>
+          <td style="text-align: right">
+            <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="openAdd(group.id.toString())">
+              Modifier
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p class="adm-empty-title">Aucun groupe trouvé</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucun groupe défini — ajoutez-en un avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>
+
+<ng-template #template>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer ce groupe ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
+    </div>
+  </div>
+</ng-template>

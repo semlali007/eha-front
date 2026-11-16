@@ -27,7 +27,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.matomoInjector.init(this.config.appConfig.padaoneURL || 'https://padaone-ux.edf.fr/', this.config.appConfig.padaoneSiteId || 156);
+    // Initialiser Matomo avant de l'utiliser
+    try {
+      this.matomoInjector.init(this.config.appConfig.padaoneURL || 'https://padaone-ux.edf.fr/', this.config.appConfig.padaoneSiteId || 156);
+    } catch (error) {
+      console.warn('Matomo initialization failed:', error);
+    }
+    
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

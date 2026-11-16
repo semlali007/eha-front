@@ -1,0 +1,102 @@
+/* Aligné avec le design parent (ViewEncapsulation.None sur le parent) */
+
+.filter-date-body {
+  padding: 8px 12px 12px;
+}
+
+.filter-date-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    min-width: 36px;
+    margin: 0;
+  }
+}
+
+.filter-date-input {
+  flex: 1;
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 12px;
+  border: 1px solid #e0e4ea;
+  border-radius: 6px;
+  background: #fff;
+  color: #1e293b;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: #b0b7c3;
+    font-style: normal;
+  }
+
+  &:focus {
+    border-color: #001a70;
+    box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1);
+    outline: none;
+  }
+}
+
+.filter-date-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: #059669;
+  background: #ecfdf5;
+  border-radius: 99px;
+  padding: 1px 7px;
+  margin-left: 4px;
+}
+
+.filter-date-error {
+  font-size: 11px;
+  color: #dc2626;
+  padding: 4px 0;
+}
+
+.filter-date-clear {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 2px;
+  font-size: 11px;
+  color: #6b7280;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: #dc2626;
+  }
+}
+
+// Datepicker EDF theme
+:host ::ng-deep {
+  .bs-datepicker-container {
+    z-index: 1060 !important;
+    padding: 0 !important;
+  }
+
+  .theme-edf {
+    .bs-datepicker-head {
+      background-color: #001a70;
+    }
+
+    .bs-datepicker-body table td span.selected {
+      background-color: #001a70;
+    }
+
+    .bs-datepicker-body table td.selected span {
+      background-color: #001a70;
+    }
+
+    .bs-datepicker-body table td span[class*="select-"]:after {
+      background-color: #001a70;
+    }
+  }
+}

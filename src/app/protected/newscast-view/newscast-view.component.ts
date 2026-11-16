@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NewsCastService } from 'src/app/core/services/newscast.service';
 @Component({
   selector: 'app-newscast-view',
   templateUrl: './newscast-view.component.html',
-  styleUrls: ['./newscast-view.component.css']
+  styleUrls: ['./newscast-view.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NewsCastViewComponent implements OnInit, OnDestroy {
   public id: string;

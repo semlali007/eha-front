@@ -37,7 +37,22 @@
             ],
             "scripts": [
             ],
-            "allowedCommonJsDependencies": ["file-saver", "crypto-browserify", "ansible-vault"]
+            "allowedCommonJsDependencies": [
+              "file-saver", 
+              "crypto-browserify", 
+              "ansible-vault", 
+              "xlsx", 
+              "stream-browserify", 
+              "util", 
+              "buffer", 
+              "process",
+              "crypto",
+              "canvg",
+              "core-js",
+              "raf",
+              "pdfjs-dist/build/pdf",
+              "pdfjs-dist/web/pdf_viewer"
+            ]
           },
           "configurations": {
             "development": {
@@ -46,7 +61,23 @@
                            "buildOptimizer": false,
                             "sourceMap": true,
                             "optimization": false,
-                            "namedChunks": true
+                            "namedChunks": true,
+                            "allowedCommonJsDependencies": [
+                              "file-saver", 
+                              "crypto-browserify", 
+                              "ansible-vault", 
+                              "xlsx", 
+                              "stream-browserify", 
+                              "util", 
+                              "buffer", 
+                              "process",
+                              "crypto",
+                              "canvg",
+                              "core-js",
+                              "raf",
+                              "pdfjs-dist/build/pdf",
+                              "pdfjs-dist/web/pdf_viewer"
+                            ]
                           },
             "local": {
               "fileReplacements": [
@@ -78,8 +109,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "20kb",
+                  "maximumError": "24kb"
                 }
               ]
             }

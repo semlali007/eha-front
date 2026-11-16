@@ -18,6 +18,7 @@ export class SheetFormDirectionsComponent implements OnInit {
   @Input() directions: FormControl;
   @Input() sheetForm: FormGroup;
   @Input() alldirections: [];
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   private page: number;
   private items: Direction[];
   private total: number;
@@ -35,13 +36,20 @@ export class SheetFormDirectionsComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
-    const savedDirections = localStorage.getItem('directions');
-    if (savedDirections) {
-      this.directions.setValue(JSON.parse(savedDirections));
+    
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedDirections = localStorage.getItem('directions');
+      if (savedDirections) {
+        this.directions.setValue(JSON.parse(savedDirections));
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.directions.valueChanges.subscribe(value => {
-      localStorage.setItem('directions', JSON.stringify(value));
+      if (this.mode !== 'create') {
+        localStorage.setItem('directions', JSON.stringify(value));
+      }
     });
   }
 
@@ -94,7 +102,8 @@ export class SheetFormDirectionsComponent implements OnInit {
       this.bsModalRef.content.eventPaginate.subscribe(res => {
         this.directionService.getList({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.directions;
           this.bsModalRef.content.total = data.total;

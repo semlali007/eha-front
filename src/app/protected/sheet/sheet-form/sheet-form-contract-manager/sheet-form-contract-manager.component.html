@@ -1,0 +1,12 @@
+<div class="adm-form-group">
+  <label for="contractManager" class="adm-label">Contract manager</label>
+  <input id="contractManager"
+         type="text"
+         class="adm-input"
+         [formControl]="contractManager"
+         placeholder="Nom du contract manager">
+  <span class="adm-field-hint">Si aucun n'est nommé, indiquez "N/A".</span>
+  <span *ngIf="contractManager?.errors?.['minlength'] && contractManager?.touched" class="adm-field-error">
+    Minimum 2 caractères requis.
+  </span>
+</div>

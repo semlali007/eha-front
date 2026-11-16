@@ -1,53 +1,107 @@
-<h1>Fiches pratiques</h1>
+<div class="adm-page">
 
-<div class="row">
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
-        </div>
+  <div class="adm-header">
+    <h1 class="adm-title">Fiches pratiques</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter une fiche
+      </button>
     </div>
+  </div>
+
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> fiche{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ factsheets.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher une fiche…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th style="width: 80px">ID</th>
+          <th>Nom</th>
+          <th>URL</th>
+          <th style="width: 220px; text-align: right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let factsheet of paged">
+          <td class="adm-table-col-muted">#{{ factsheet.id }}</td>
+          <td>
+            <a class="adm-link" [href]="'app/media/view/' + factsheet.id" target="_blank" rel="noopener noreferrer">
+              {{ factsheet.name }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+              </svg>
+            </a>
+          </td>
+          <td class="adm-table-col-muted">app/media/view/{{ factsheet.id }}</td>
+          <td style="text-align: right">
+            <div style="display: flex; justify-content: flex-end; gap: 6px; flex-wrap: nowrap">
+              <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="openAdd(factsheet.id)">Modifier</button>
+              <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="openModal(template, factsheet.id)">Supprimer</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+    </svg>
+    <p class="adm-empty-title">Aucune fiche trouvée</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">Aucune fiche définie — ajoutez-en une avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Nom
-            </th>
-            <th>
-                URL
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let factsheet of factsheets$ | async">
-            <td>
-                {{factsheet.id}}
-            </td>
-            <td>
-                <a href="app/media/view/{{factsheet.id}}" target="_blank">{{factsheet.name}}</a>
-                
-            </td>
-            <td>
-                app/media/view/{{factsheet.id}}
-            </td>
-            
-            <td>
-                <button class="btn btn-primary" (click)="openAdd(factsheet.id)">Modifier</button>
-                <button class="btn btn-danger" (click)="openModal(template, factsheet.id)" >Supprimer</button>
-            </td>
-        </tr> 
-
-    </tbody>
-</table>
-
 <ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer cette fiche ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
     </div>
-  </ng-template>
+  </div>
+</ng-template>

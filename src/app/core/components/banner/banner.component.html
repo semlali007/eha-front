@@ -1,124 +1,179 @@
-<header class="my-header" role="banner">
-  <div class="container-fluid">
-    <div class="row align-items-center">
-       
-      <div class="col-md-12 col-sm-12">
-        <table id="desktop-header" width="108%" border="0">
-          <tr>
-            <td style="width:14%">
-              <a  (click)="navigate(homePath)"><img src="../../../../assets/img/logo-edf-blanc.png" class="my-logo link"></a>
-            </td>
-            <td style="padding-top: 8px;"><b style="font-size:26px;">Achatpédia</b><small>&nbsp;&nbsp;-&nbsp;&nbsp;Votre espace de documentation, de recherche et de contacts sur les achats</small></td>
-            <td style="padding-top: 8px;" *ngIf="!!user && user.nni" >
-              <table border="0">
-                <tr>
-                  <td>
-                <img src="../../../../assets/img/icon-profil.png"  style="margin-top:7px;width:24px">
-              </td>
-              <td style="padding-top: 23px;">
-                <p class="bold">&nbsp;{{ user.name }} </p>
-              </td>
-              </tr>
-              </table>
-              
-            </td>
-            <td style="padding-top: 8px;" *ngIf="!!user && user.nni">
-              <a (click)="logout()" style="margin-left:12px" type="button"><img class="logout-icon" src="../../../../assets/img/se_deconnecter.png"></a>
-              <ng-container *ngIf="numberOfNotifications > 0 ; else noNotification">
+<header class="banner" role="banner">
+  <!-- Desktop header -->
+  <div class="banner-desktop">
+    <!-- Ligne 1 : Logo + titre + user -->
+    <div class="banner-top">
+      <a (click)="navigate(homePath)" class="banner-brand">
+        <img
+          src="assets/img/logo-edf-blanc.png"
+          alt="EDF"
+          class="banner-logo"
+        />
+      </a>
 
-                <span (click)="openModal()" style="cursor:pointer">
-                <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
-                <span style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">
-                  {{ numberOfNotifications }}
-                </span>
-              </span>
-              </ng-container>
-              
-              <ng-template #noNotification>
-                <span (click)="openModal()" style="cursor:pointer">
-                <img class="mt-1" src="../../../../assets/img/icone-notification-blanc.png" style="cursor:pointer;width: 37px" /> 
-                <span style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">
-                </span>
-              </span>
-              </ng-template>
-            </td>
-          </tr>
-          <tr *ngIf="!!user && user.nni" >
-            <td>
-            <button (click)="navigate(homePath)" class="home-btn"><img src="../../../../assets/img/icon-home.png"> Accueil</button>
-            </td>
-            <td colspan="3">
-              <table>
-                <tr>
-                  <td>
-                    <a (click)="forceNavigate('search_component')" class="title-header link"><img src="../../../../assets/img/icon-search-header.png">&nbsp;Rechercher&nbsp;<img src="../../../../assets/img/caret.png"></a>
-                  </td>
-                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                  <td>
-                    <a class="title-header link" (click)="navigate(purchasePath)"><img src="../../../../assets/img/icon-panier-header.png">&nbsp;Ma situation achat</a>
-                  </td>
-                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                  <td>
-                    <a class="title-header link" (click)="navigate(sheetPath)"><img src="../../../../assets/img/icon-marches-cadres.png">&nbsp;Vitrine de l'offre (ex Net@chat)</a>
-                  </td>
-                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                  <td>
-                    <a class="title-header link" (click)="forceNavigate('documentation')" ><img src="../../../../assets/img/icon-se-documenter-header.png">&nbsp;Se documenter&nbsp;<img src="../../../../assets/img/caret.png"></a>
-                  </td>
-                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                  <td>
-                    <a class="title-header link" (click)="forceNavigate('contact_component')" ><img src="../../../../assets/img/icon-contacter-header.png">&nbsp;Contacter&nbsp;<img src="../../../../assets/img/caret.png"></a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-        <div id="mobile-header" class="row responsive-header fixed-top">
-          <div class="col-md-1 menu-header-mobile">
-                <img type="button" (click)="isCollapsed = !isCollapsed"
-                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic"  src="../../../../assets/img/menu-icon-mobile.png">
-          </div>
-          <div class="logo-edf-mobile">
-            <div class="row left-header-mobile">
-              <div class="col-6">
-                <table border="0">
-                  <tr>
-                    <td><img src="../../../../assets/img/logo-edf-mobile.png"></td>
-                    <td class="title-mobile">&nbsp;&nbsp;&nbsp;&nbsp;Accueil</td>                
-                  </tr>
-                </table>
-              </div>
-              <div>
-                <span *ngIf="(notification$ | async) as notification" (click)="openModal()" style="cursor:pointer">
-                  <img  class="icone-notif-mobile" src="../../../../assets/img/icone-notification-blanc-mobile.png">
-                  <span  *ngIf="notification.count > 0" style="font-weight:bold;color: RGBA(255, 143, 0, 0.81);">  {{ notification.count }}</span>
-                </span>
-              </div>
-          </div>
-        </div>
-           
-        <!---------------- Navbar list elements--------------->
-        <div *ngIf="!!user && user.nni"  id="collapseBasic" [collapse]="isCollapsed" class="collapse-custom" [isAnimated]="true">
-                   <div class="card card-block card-header">
-            <a (click)="forceNavigate('search_component')" class="title-header link"><img src="../../../../assets/img/icon-search-header.png">&nbsp;Rechercher&nbsp;<img src="../../../../assets/img/caret.png"></a>
-          </div>
-          <div class="card card-block card-header">
-            <a class="title-header link" (click)="navigate(purchasePath)"><img src="../../../../assets/img/icon-panier-header.png">&nbsp;Mes demandes d'achat</a>
-          </div>
-          <div class="card card-block card-header">
-            <a class="title-header link" (click)="navigate(sheetPath)"><img src="../../../../assets/img/icon-marches-cadres.png">&nbsp;Vitrine de l'offre (ex Net@chat)</a>
-          </div>
-          <div class="card card-block card-header">
-            <a class="title-header link" (click)="forceNavigate('documentation')" ><img src="../../../../assets/img/icon-se-documenter-header.png">&nbsp;Se documenter&nbsp;<img src="../../../../assets/img/caret.png"></a>
-          </div>
-          <div class="card card-block card-header">
-            <a class="title-header link" (click)="forceNavigate('contact_component')" ><img src="../../../../assets/img/icon-contacter-header.png">&nbsp;Contacter&nbsp;<img src="../../../../assets/img/caret.png"></a>
-          </div>
-        </div>
-        <!--------------- End of navbar --------------->
-        </div>
+      <div class="banner-center">
+        <strong class="banner-app-name">Achatpédia</strong>
+        <span class="banner-app-desc mr-2"
+          >Votre espace de documentation, de recherche et de contacts sur les
+          achats</span
+        >
       </div>
+
+      <div class="banner-user" *ngIf="!!user && user.nni">
+        <div class="banner-user-info">
+          <img src="assets/img/icon-profil.png" class="banner-user-icon" />
+          <span class="banner-user-name">{{ user.name }}</span>
+        </div>
+        <button
+          class="banner-icon-btn"
+          (click)="logout()"
+          title="Se déconnecter"
+        >
+          <img src="assets/img/se_deconnecter.png" class="banner-action-icon" />
+        </button>
+        <button
+          class="banner-icon-btn banner-notif-btn"
+          (click)="openModal()"
+          title="Notifications"
+        >
+          <img
+            src="assets/img/icone-notification-blanc.png"
+            class="banner-action-icon"
+          />
+          <span class="banner-notif-badge" *ngIf="numberOfNotifications > 0">{{
+            numberOfNotifications
+          }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Ligne 2 : Navigation -->
+    <nav class="banner-nav" *ngIf="!!user && user.nni">
+      <a (click)="navigate(homePath)" class="banner-nav-item banner-nav-home">
+        <img src="assets/img/icon-home.png" class="banner-nav-icon" /> Accueil
+      </a>
+      <div class="banner-nav-links">
+        <a (click)="forceNavigate('search_component')" class="banner-nav-item">
+          <img
+            src="assets/img/icon-search-header.png"
+            class="banner-nav-icon"
+          />
+          Rechercher <img src="assets/img/caret.png" class="banner-nav-caret" />
+        </a>
+        <a (click)="navigate(purchasePath)" class="banner-nav-item">
+          <img
+            src="assets/img/icon-panier-header.png"
+            class="banner-nav-icon"
+          />
+          Ma situation achat
+        </a>
+        <a (click)="navigate(sheetPath)" class="banner-nav-item">
+          <img
+            src="assets/img/icon-marches-cadres.png"
+            class="banner-nav-icon"
+          />
+          Vitrine de l'offre
+        </a>
+        <a (click)="forceNavigate('documentation')" class="banner-nav-item">
+          <img
+            src="assets/img/icon-se-documenter-header.png"
+            class="banner-nav-icon"
+          />
+          Se documenter
+          <img src="assets/img/caret.png" class="banner-nav-caret" />
+        </a>
+        <a (click)="forceNavigate('contact_component')" class="banner-nav-item">
+          <img
+            src="assets/img/icon-contacter-header.png"
+            class="banner-nav-icon"
+          />
+          Contacter <img src="assets/img/caret.png" class="banner-nav-caret" />
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile header -->
+  <div class="banner-mobile">
+    <div class="banner-mobile-top">
+      <button
+        class="banner-mobile-menu"
+        (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="mobileNav"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <a (click)="navigate(homePath)" class="banner-mobile-brand">
+        <img src="assets/img/logo-edf-mobile.png" alt="EDF" />
+        <span>Accueil</span>
+      </a>
+      <button
+        class="banner-icon-btn"
+        *ngIf="!!user && user.nni"
+        (click)="openModal()"
+      >
+        <img
+          src="assets/img/icone-notification-blanc-mobile.png"
+          class="banner-action-icon"
+        />
+        <span class="banner-notif-badge" *ngIf="numberOfNotifications > 0">{{
+          numberOfNotifications
+        }}</span>
+      </button>
+    </div>
+    <div
+      id="mobileNav"
+      [collapse]="isCollapsed"
+      [isAnimated]="true"
+      *ngIf="!!user && user.nni"
+    >
+      <nav class="banner-mobile-nav">
+        <a
+          (click)="forceNavigate('search_component')"
+          class="banner-mobile-nav-item"
+        >
+          <img
+            src="assets/img/icon-search-header.png"
+            class="banner-nav-icon"
+          />
+          Rechercher
+        </a>
+        <a (click)="navigate(purchasePath)" class="banner-mobile-nav-item">
+          <img
+            src="assets/img/icon-panier-header.png"
+            class="banner-nav-icon"
+          />
+          Ma situation achat
+        </a>
+        <a (click)="navigate(sheetPath)" class="banner-mobile-nav-item">
+          <img
+            src="assets/img/icon-marches-cadres.png"
+            class="banner-nav-icon"
+          />
+          Vitrine de l'offre
+        </a>
+        <a
+          (click)="forceNavigate('documentation')"
+          class="banner-mobile-nav-item"
+        >
+          <img
+            src="assets/img/icon-se-documenter-header.png"
+            class="banner-nav-icon"
+          />
+          Se documenter
+        </a>
+        <a
+          (click)="forceNavigate('contact_component')"
+          class="banner-mobile-nav-item"
+        >
+          <img
+            src="assets/img/icon-contacter-header.png"
+            class="banner-nav-icon"
+          />
+          Contacter
+        </a>
+      </nav>
     </div>
   </div>
 </header>

@@ -1,40 +1,82 @@
-<app-breadcrumb></app-breadcrumb>
-<div class="row justify-content-center">
-	<div class="col-11 col-md-10" *ngIf="!!dauphin && !!dauphin.info">
+<div class="adm-page-wrap">
 
-	<h1 class="cover-heading">
-		Article sous <span class="text-primary">Dauphin</span>
-	</h1>
-	<p style="text-align:right">
-		<a href="{{dauphin.info.url}}" target="_blank" class="btn btn-primary">
-			J'ai un compte Dauphin et je veux acheter ce produit
-		</a>
-	</p>
-	<h1 class="cover-heading">
-		Informations générales :
-	</h1>
-	<table class="table table-hover">
-		<tr>
-			<th scope="row">Code</th>
-			<td class="font-weight-bold text-primary">{{dauphin.info.code}}</td>
-		</tr>
-		<tr>
-			<th scope="row">Libellé</th>
-			<td class="font-weight-bold text-primary">{{dauphin.info.label}}</td>
-		</tr>
-		<tr>
-			<th scope="row">Contrat</th>
-			<td class="font-weight-bold text-primary">{{dauphin.info.contract}}</td>
-		</tr>
-		<tr>
-			<th scope="row">Date de début du contrat</th>
-			<td class="font-weight-bold text-primary">{{dauphin.info.contract_begin_date | customDate }}</td>
-		</tr>
-		<tr>
-			<th scope="row">Date de fin du contrat</th>
-			<td class="font-weight-bold text-primary">{{dauphin.info.contract_end_date | customDate }}</td>
-		</tr>
-	</table>
-</div>
+  <app-breadcrumb></app-breadcrumb>
 
+  <ng-container *ngIf="!!dauphin && !!dauphin.info">
+
+    <!-- Action bar : retour -->
+    <div class="adm-detail-actions">
+      <button class="adm-back" type="button" (click)="back()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+        Retour
+      </button>
+    </div>
+
+    <!-- Header card avec icône + code dauphin + statut -->
+    <div class="adm-detail-header">
+      <div class="adm-detail-header-left">
+        <div class="adm-detail-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+          </svg>
+        </div>
+        <div class="adm-detail-titles">
+          <p class="adm-detail-eyebrow">Article sous Dauphin</p>
+          <h1 class="adm-detail-name">{{ dauphin.info.code }}</h1>
+          <p class="adm-detail-sub" *ngIf="dauphin.info.label">{{ dauphin.info.label }}</p>
+        </div>
+      </div>
+      <span class="adm-status-badge adm-status-active" *ngIf="isContractActive()">Actif</span>
+      <span class="adm-status-badge adm-status-expired" *ngIf="!isContractActive()">Échu</span>
+    </div>
+
+    <!-- CTA Dauphin -->
+    <a *ngIf="dauphin.info.url"
+       [href]="dauphin.info.url"
+       target="_blank"
+       rel="noopener"
+       class="dv-cta">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+      </svg>
+      J'ai un compte Dauphin et je veux acheter ce produit
+    </a>
+
+    <!-- Section : Informations générales -->
+    <section class="adm-section">
+      <div class="adm-section-head">
+        <span class="adm-section-number">1</span>
+        <div class="adm-section-titles">
+          <h3 class="adm-section-title">Informations générales</h3>
+          <p class="adm-section-sub">Caractéristiques principales de l'article</p>
+        </div>
+      </div>
+
+      <div class="adm-fields">
+        <div class="adm-field">
+          <span class="adm-field-label">Code</span>
+          <span class="adm-field-value">{{ dauphin.info.code || '—' }}</span>
+        </div>
+        <div class="adm-field">
+          <span class="adm-field-label">Libellé</span>
+          <span class="adm-field-value">{{ dauphin.info.label || '—' }}</span>
+        </div>
+        <div class="adm-field">
+          <span class="adm-field-label">Contrat</span>
+          <span class="adm-field-value">{{ dauphin.info.contract || '—' }}</span>
+        </div>
+        <div class="adm-field">
+          <span class="adm-field-label">Date de début du contrat</span>
+          <span class="adm-field-value">{{ (dauphin.info.contract_begin_date | customDate) || '—' }}</span>
+        </div>
+        <div class="adm-field">
+          <span class="adm-field-label">Date de fin du contrat</span>
+          <span class="adm-field-value">{{ (dauphin.info.contract_end_date | customDate) || '—' }}</span>
+        </div>
+      </div>
+    </section>
+
+  </ng-container>
 </div>

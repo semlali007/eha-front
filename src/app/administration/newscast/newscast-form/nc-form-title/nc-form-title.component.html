@@ -1,13 +1,14 @@
-<div class="form-group">
-    <label for="title" ><strong>Titre :</strong><span class="required">*</span></label>
-    <input id="title" [formControl]="title" type="title" class="form-control" placeholder="Le titre" autocorrect="off"
-        autocomplete="off" />
-    <small *ngIf="title.errors" class="form-text text-danger">
-        <span [hidden]="!title.errors.required">
-            Titre requis.
-        </span>
-        <span [hidden]="!title.errors.minlength">
-            Titre doit faire plus de 4 caractères.
-        </span>
-    </small>
+<div class="adm-form-group">
+  <label for="nc-title" class="adm-label">
+    Titre<span class="adm-required">*</span>
+  </label>
+  <input id="nc-title"
+         class="adm-input"
+         type="text"
+         [formControl]="$any(title)"
+         placeholder="Le titre de l'actualité"
+         autocorrect="off"
+         autocomplete="off">
+  <span *ngIf="title?.errors?.required && title?.dirty" class="adm-field-error">Titre requis.</span>
+  <span *ngIf="title?.errors?.minlength && title?.dirty" class="adm-field-error">Le titre doit faire au moins 4 caractères.</span>
 </div>

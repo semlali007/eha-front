@@ -1,27 +1,25 @@
-<div class="row">
-<hr class="ligne-table">
-<div class="col-2">
-    <p class="text" *ngIf="!isOpened;else opened"><img src='../../../../assets/img/element-table.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" class="light-blue">&nbsp;&nbsp;&nbsp;{{item.need_system_id}}</p>
+<div class="ps-row" [class.ps-row-open]="isOpened">
+  <div class="ps-row-col ps-col-code">
+    <span class="ps-row-chevron" [class.ps-row-chevron-open]="isOpened">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </span>
+    <span class="ps-row-code">{{ item.need_system_id }}</span>
+  </div>
+  <div class="ps-row-col ps-col-label" [title]="slicedLabel">
+    <span class="ps-row-label">{{ slicedLabel | slice:0:60 }}<span *ngIf="slicedLabel?.length > 60">…</span></span>
+  </div>
+  <div class="ps-row-col ps-col-date">
+    <span class="ps-row-text">{{ item.need_system_validation_date | customDate }}</span>
+  </div>
+  <div class="ps-row-col ps-col-status">
+    <span class="ps-status-badge" [attr.data-status]="item.main_mtb_status_label">{{ item.main_mtb_status_label }}</span>
+  </div>
+  <div class="ps-row-col ps-col-modified">
+    <span class="ps-row-text">{{ item.main_mtb_status_last_event_date | customDate }}</span>
+  </div>
+  <div class="ps-row-col ps-col-owner">
+    <span class="ps-row-text">{{ item.owner_label }}</span>
+  </div>
 </div>
-<div class="col-3" style="padding: 0;">
-    <p class="text">{{item.need_mtb_desc|slice:0:35}}<span *ngIf="item.need_mtb_desc.length >35">...</span></p>
-</div>
-<div class="col-1">
-    <p class="text">{{item.need_system_validation_date|customDate}}</p>
-</div>
-
-<div class="col-2"  style="font-size:15px;">
-    <p style="margin-left: 15px;"> {{item.main_mtb_status_label}}
-    </p>
-</div>
-<div class="col-2">
-    <p class="text">{{item.main_mtb_status_last_event_date|customDate}}</p>
-</div>
-<div class="col-2">
-    <p class="text">{{item.owner_label}}</p>
-</div>
-<div class="col-2">
-    <p class="text">{{item.last_status_date|customDate}}</p>
-</div>
-</div>
-<ng-template #opened><p class="text"><img src='../../../../assets/img/element-table-bas.png' class="dark-blue"><img src="../../../../assets/img/element-table-hover.png" [ngClass]="{'light-blue' : true, 'light-blue-rotate':isOpened}">&nbsp;&nbsp;&nbsp;{{item.need_system_id}}</p></ng-template>

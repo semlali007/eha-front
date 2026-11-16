@@ -13,17 +13,18 @@ export class SheetListFilterEdfOpenComponent implements OnInit,OnChanges {
   @Input() edfOpen: FormControl;
   @Output() changedFilter = new EventEmitter<Object>();
   @Input() list: any = [];
-  isTotalCollapsed = false;
+  isTotalCollapsed = true;
+  private initialized = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-   // this.edfOpen.setValue('all');
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (this.edfOpen.value != 'all') {
+    if (!this.initialized && this.edfOpen.value != 'all') {
       this.isTotalCollapsed = false;
     }
+    this.initialized = true;
   }
   changeFilter(code){
     this.edfOpen.setValue(code);
@@ -34,6 +35,6 @@ export class SheetListFilterEdfOpenComponent implements OnInit,OnChanges {
   }
 
   public isActive(code): boolean {
-    return this.edfOpen.value == code;
+    return this.edfOpen.value === code;
   }
 }

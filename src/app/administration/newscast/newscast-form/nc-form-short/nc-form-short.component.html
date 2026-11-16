@@ -1,5 +1,10 @@
-<div class="form-group">
-    <label for="short_description" ><strong>Description courte :</strong></label>
-
-        <editor [formControl]="short_description" id="short_description" [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins : 'advlist autolink link lists charmap print preview table',branding: false}"></editor>
+<div class="adm-form-group">
+  <label for="nc-short" class="adm-label">Description courte</label>
+  <div class="adm-editor-wrap">
+    <editor id="nc-short"
+            [formControl]="$any(short_description)"
+            [init]="{base_url: '/tinymce', suffix: '.min', language: 'fr_FR', plugins: 'advlist autolink link lists charmap print preview table', branding: false, menubar: false, height: 160}">
+    </editor>
+  </div>
+  <span class="adm-field-hint">Affichée dans la liste et dans les aperçus.</span>
 </div>

@@ -1,0 +1,80 @@
+<div class="adm-modal-header">
+  <h4 class="adm-modal-title">{{ mode === 'edit' ? 'Éditer le fournisseur' : 'Ajouter un fournisseur' }}</h4>
+  <button type="button" class="adm-modal-close" aria-label="Fermer" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+    </svg>
+  </button>
+</div>
+
+<div class="adm-modal-body">
+  <form novalidate [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="adm-form-group">
+      <label for="provider-form-label" class="adm-label">
+        Raison sociale<span class="adm-required">*</span>
+      </label>
+      <input id="provider-form-label"
+             type="text"
+             class="adm-input"
+             formControlName="label"
+             placeholder="Ex : Accenture"
+             autocomplete="off">
+      <span *ngIf="label.errors && (label.touched || submitted)" class="adm-field-error">
+        <ng-container *ngIf="label.errors.required">Raison sociale requise.</ng-container>
+      </span>
+    </div>
+
+    <div class="adm-form-group">
+      <label for="provider-form-siren" class="adm-label">SIREN</label>
+      <input id="provider-form-siren"
+             type="text"
+             class="adm-input"
+             formControlName="siren"
+             placeholder="Ex : 732075312"
+             autocomplete="off">
+      <span class="adm-field-hint">9 chiffres. Laisser vide si inconnu.</span>
+      <span *ngIf="siren.errors && (siren.touched || submitted)" class="adm-field-error">
+        <ng-container *ngIf="siren.errors.pattern">Le SIREN doit comporter 9 chiffres.</ng-container>
+      </span>
+    </div>
+
+    <div class="adm-form-group">
+      <label for="provider-form-tva" class="adm-label">N° TVA intracommunautaire</label>
+      <input id="provider-form-tva"
+             type="text"
+             class="adm-input"
+             formControlName="numeroTva"
+             placeholder="Ex : FR60732075312"
+             autocomplete="off">
+      <span class="adm-field-hint">Format « FR » + clé + SIREN (13 caractères).</span>
+      <span *ngIf="numeroTva.errors && (numeroTva.touched || submitted)" class="adm-field-error">
+        <ng-container *ngIf="numeroTva.errors.pattern">Format attendu : FR suivi de 11 caractères (ex : FR60732075312).</ng-container>
+      </span>
+    </div>
+
+    <div class="adm-form-group">
+      <label for="provider-form-naf" class="adm-label">Code NAF / APE</label>
+      <input id="provider-form-naf"
+             type="text"
+             class="adm-input"
+             formControlName="codeNaf"
+             placeholder="Ex : 62.02A"
+             autocomplete="off">
+      <span class="adm-field-hint">Format NN.NNL (ex : 62.02A).</span>
+      <span *ngIf="codeNaf.errors && (codeNaf.touched || submitted)" class="adm-field-error">
+        <ng-container *ngIf="codeNaf.errors.pattern">Format attendu : 62.02A.</ng-container>
+      </span>
+    </div>
+
+    <div class="adm-modal-footer">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="onCancel()">Annuler</button>
+      <button type="submit" class="adm-btn adm-btn-edf">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+        </svg>
+        {{ mode === 'edit' ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,5 +1,5 @@
 import { SelectorListContext } from '@angular/compiler';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { Observable} from 'rxjs';
@@ -10,7 +10,8 @@ import { NotificationDeletedService } from  'src/app/core/services/notification-
 @Component({
   selector: 'modal-notification',
   templateUrl: './modal-notification.component.html',
-  styleUrls: ['./modal-notification.component.css']
+  styleUrls: ['./modal-notification.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalNotificationComponent implements OnInit {
   title?: string;

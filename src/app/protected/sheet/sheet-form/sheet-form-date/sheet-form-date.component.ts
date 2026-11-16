@@ -7,12 +7,13 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sheet-form-date',
   templateUrl: './sheet-form-date.component.html',
-  styles: []
+  styleUrls: ['./sheet-form-date.component.css']
 })
 export class SheetFormDateComponent implements OnInit, OnDestroy {
   @Input() startDate: FormControl;
   @Input() endDate: FormControl;
   @Input() sheetForm: FormGroup;
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
 
   private startDateSubscription: Subscription;
   private endDateSubscription: Subscription;
@@ -22,7 +23,12 @@ export class SheetFormDateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.startDate && this.endDate && this.sheetForm) {
       this.localeService.use('fr');
-      this.loadDatesFromLocalStorage();
+      
+      // Ne charger le localStorage QUE si on n'est PAS en mode création
+      if (this.mode !== 'create') {
+        this.loadDatesFromLocalStorage();
+      }
+      
       this.subscribeToDateChanges();
     } else {
       console.error('FormControls startDate, endDate, or sheetForm are not initialized.');
@@ -47,13 +53,15 @@ export class SheetFormDateComponent implements OnInit, OnDestroy {
 
   private subscribeToDateChanges(): void {
     this.startDateSubscription = this.startDate.valueChanges.subscribe(value => {
-      if (value) {
+      // Sauvegarder seulement si on n'est PAS en mode création
+      if (value && this.mode !== 'create') {
         localStorage.setItem('startDate', new Date(value).toISOString());
       }
     });
 
     this.endDateSubscription = this.endDate.valueChanges.subscribe(value => {
-      if (value) {
+      // Sauvegarder seulement si on n'est PAS en mode création
+      if (value && this.mode !== 'create') {
         localStorage.setItem('endDate', new Date(value).toISOString());
       }
     });

@@ -18,6 +18,7 @@ export class SheetFormBeneficiariesComponent implements OnInit {
   @Input() beneficiaries: FormControl;
   @Input() sheetForm: FormGroup;
   @Input() allbeneficiaries: [];
+  @Input() mode: 'create' | 'edit' = 'edit'; // Nouveau: mode passé par le parent
   private page: number;
   private items: Beneficiary[];
   private total: number;
@@ -35,13 +36,20 @@ export class SheetFormBeneficiariesComponent implements OnInit {
     this.items = [];
     this.total = 0;
     this.itemsPerPage = 5;
-    const savedBeneficiaries = localStorage.getItem('beneficiaries');
-    if (savedBeneficiaries) {
-      this.beneficiaries.setValue(JSON.parse(savedBeneficiaries));
+    
+    // Ne charger le localStorage QUE si on n'est PAS en mode création
+    if (this.mode !== 'create') {
+      const savedBeneficiaries = localStorage.getItem('beneficiaries');
+      if (savedBeneficiaries) {
+        this.beneficiaries.setValue(JSON.parse(savedBeneficiaries));
+      }
     }
 
+    // Sauvegarder les changements dans localStorage - mais pas en mode création
     this.beneficiaries.valueChanges.subscribe(value => {
-      localStorage.setItem('beneficiaries', JSON.stringify(value));
+      if (this.mode !== 'create') {
+        localStorage.setItem('beneficiaries', JSON.stringify(value));
+      }
     });
   }
 
@@ -102,7 +110,8 @@ export class SheetFormBeneficiariesComponent implements OnInit {
         this.page = res.data.page;
         this.beneficiaryService.getList({
           page: res.data.page,
-          perPage: this.itemsPerPage
+          perPage: this.itemsPerPage,
+          search: res.data?.search
         }).subscribe(data => {
           this.bsModalRef.content.items = data.beneficiaries;
           this.bsModalRef.content.total = data.total;

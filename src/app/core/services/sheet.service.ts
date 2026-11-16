@@ -19,7 +19,7 @@ import { DateService } from 'src/app/core/services/date.service';
 import { Status } from 'src/app/shared/models/status';
 import { Committee } from 'src/app/shared/models/committee';
 import { Option } from 'src/app/shared/models/option';
-import { Domain } from 'src/app/shared/models/domain';
+import { EhaDomain } from 'src/app/shared/models/eha-domain';
 import { Category } from 'src/app/shared/models/category';
 @Injectable({
   providedIn: 'root'
@@ -62,12 +62,14 @@ export class SheetService {
         return of(data);
       }),
 
-      tap(_ => 
+      tap(_ =>
         this.toastrService.showToastr({
         category: 'success',
         message: message
       })),
-      catchError(error => this.errorService.handleError(error)),
+      // Sauvegarde de fiche : erreur serveur affichée en modale détaillée
+      // (message complet, centré) plutôt qu'un toast en haut de page.
+      catchError(error => this.errorService.handleError(error, true)),
       finalize(() => this.loaderService.setLoading(false))
     );
   }
@@ -119,11 +121,14 @@ export class SheetService {
     fd.append('model', JSON.stringify(data));
 
     return this.http.post(url, fd).pipe(
-      tap(_ => this.toastrService.showToastr({
-        category: 'success',
-        message: message
-      })),
-      catchError(error => this.errorService.handleError(error)),
+      tap(_ =>
+        this.toastrService.showToastr({
+          category: 'success',
+          message: message
+        })),
+      // Sauvegarde de fiche : erreur serveur affichée en modale détaillée
+      // (message complet, centré) plutôt qu'un toast en haut de page.
+      catchError(error => this.errorService.handleError(error, true)),
       finalize(() => this.loaderService.setLoading(false))
     );
   }
@@ -135,8 +140,12 @@ export class SheetService {
     const stipulationAutrui: Object = this.getStipulationListForApi(sheet.stipulationAutrui);//
     const areas: Object = this.getAreasListForApi(sheet.areas);
     const directions: Object = this.getDirectionsListForApi(sheet.directions);
-    return {
+    
+    const result = {
       label: sheet.title,
+      supplier_vat_number: sheet.supplierVatNumber,
+      contract_manager: sheet.contractManager,
+      pcm_link: sheet.pcmLink,
       description: sheet.comments,
       words: sheet.words,
       status: sheet.status,
@@ -160,8 +169,16 @@ export class SheetService {
       showcase: sheet.showcase,
       options: sheet.options,
       domains: sheet.domains,
-      subdomains: sheet.subDomains
-    }
+      subdomains: sheet.subDomains,
+      contrat_groupe: sheet.contratGroupe || 'false',
+      mise_a_jour_donnee: sheet.miseAJourDonnee || 'non',
+      id_supplier_size: sheet.supplierSize?.id || null,
+      entites_beneficiaires_edf_enedis: sheet.entitesBeneficiairesEdfEnedis || null,
+      geographic_detail: sheet.geographicDetail || null,
+      acheteur: sheet.acheteur || null
+    };
+    
+    return result;
   }
 
   private getDeletedFilesForApi(documents: Document[]): any {
@@ -189,10 +206,13 @@ export class SheetService {
     return pList;
   }
 
-  private getAreasListForApi(areas: Area[]): any {
+  private getAreasListForApi(areas: Area[] | Area): any {
     let areaList = [];
 
-    areas.forEach(p => {
+    // Normaliser vers array pour traitement uniforme
+    const areasArray = Array.isArray(areas) ? areas : [areas];
+    
+    areasArray.forEach(p => {
       if (!!p.code && p.code.length != 0) {
         areaList.push({
           id: p.code,
@@ -295,7 +315,11 @@ export class SheetService {
 
     options.search = params.search || { searchText: '', status: '', searchProvider:'' };
     options.search.providers = !!options.search.providers? options.search.providers: [];
-    options.search.searchText= this.clear(options.search.searchText)
+    options.search.searchText= this.clear(options.search.searchText);
+    
+    // Ajouter les paramètres de date pour le filtrage
+    options.search.dateStart = params.search?.dateStart || '';
+    options.search.dateEnd = params.search?.dateEnd || '';
 
     switch (params.sortBy) {
       case 'date':
@@ -346,8 +370,12 @@ export class SheetService {
             areas: sheetData.filter.areas,
             providers: sheetData.filter.providers,
             directions: sheetData.filter.directions,
+            categories: sheetData.filter.categories,
             committees: sheetData.filter.committees,
-            showcase: sheetData.filter.showcase
+            showcase: sheetData.filter.showcase,
+            contratGroupe: sheetData.filter.contratGroupe,
+            miseAJourDonnee: sheetData.filter.miseAJourDonnee,
+            supplierSize: sheetData.filter.supplierSize || []
           }
         });
       }),
@@ -497,9 +525,9 @@ export class SheetService {
       category = new Category();
     }
 
-    const domains: Domain[] = [];
+    const domains: EhaDomain[] = [];
     fields.domain.forEach(data => {
-      const dom: Domain = new Domain({
+      const dom: EhaDomain = new EhaDomain({
         code: data.id,
         label: data.name,
         type: data.type
@@ -507,9 +535,9 @@ export class SheetService {
       domains.push(dom);
     });
 
-    const subDomains: Domain[] = [];
+    const subDomains: EhaDomain[] = [];
     fields.subdomain.forEach(data => {
-      const subdom: Domain = new Domain({
+      const subdom: EhaDomain = new EhaDomain({
         code: data.id,
         label: data.name,
         type: data.type
@@ -520,6 +548,9 @@ export class SheetService {
     return new Sheet({
       id: fields.id,
       title: fields.label,
+      supplierVatNumber: fields.supplier_vat_number,
+      contractManager: fields.contract_manager,
+      pcmLink: fields.pcm_link,
       comments: fields.description,
       words: fields.search_words,
       startDate: fields.start_date,
@@ -549,9 +580,20 @@ export class SheetService {
       content: fields.content,
       domains: domains,
       subDomains: subDomains,
-      history: fields.history
+      history: fields.history,
+      contratGroupe: fields.contrat_groupe,
+      miseAJourDonnee: fields.mise_a_jour_donnee,
+      entitesBeneficiairesEdfEnedis: fields.entites_beneficiaires_edf_enedis,
+      geographicDetail: fields.geographic_detail,
+      acheteur: fields.acheteur,
+      auto_created: fields.auto_created,
+      supplierSize: fields.supplier_size ? {
+        id: fields.supplier_size.id,
+        name: fields.supplier_size.name
+      } : null
     });
   }
+
 
 
   public remove(params): Observable<any> {
@@ -570,18 +612,14 @@ export class SheetService {
     public sheetSubscribe(params): Observable<any> {
     const url = `${this.appConfigService.basePath}/sheets/subscribe`;
     return this.http.post(url, params).pipe(
-      tap(_ => console.log('success')),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => console.log('ok'))
+      catchError(error => this.errorService.handleError(error))
     );
   }
 
   public sheetUnsubscribe(params): Observable<any> {
     const url = `${this.appConfigService.basePath}/sheets/unsubscribe`;
     return this.http.post(url, params).pipe(
-      tap(_ => console.log('success')),
-      catchError(error => this.errorService.handleError(error)),
-      finalize(() => console.log('ok'))
+      catchError(error => this.errorService.handleError(error))
     );
   }
 
@@ -624,5 +662,11 @@ export class SheetService {
     }
   }
 
+  /**
+   * Nettoie le cache du service - utilisé lors de la création de nouvelles fiches
+   */
+  clearCache(): void {
+    // Cette méthode peut être étendue pour nettoyer des caches spécifiques si nécessaire
+  }
 }
 

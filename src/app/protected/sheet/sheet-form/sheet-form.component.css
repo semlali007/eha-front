@@ -1,0 +1,820 @@
+/* ═══════════════════════════════════════════════════════════
+   SHEET FORM — Page de création/édition d'une fiche marché
+   (ViewEncapsulation.None + classes .adm-* globales)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Wrapper page : padding identique à sheet-view (.sv-page) pour alignement uniforme */
+.sheet-form-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Les inputs restent blancs pour ressortir sur le fond gris des cards */
+app-sheet-form .adm-section .adm-input,
+app-sheet-form .adm-section .adm-textarea,
+app-sheet-form .adm-section .adm-select,
+app-sheet-form .adm-section .ng2-tag-input,
+app-sheet-form .adm-section .adm-editor-wrap,
+app-sheet-form .adm-section .form-control {
+  background: #fff !important;
+}
+
+
+/* ─── Overrides pour les sous-composants existants ────────── */
+/* Normalise les classes Bootstrap (.form-group, .form-control, .btn...) pour
+   qu'elles s'intègrent visuellement aux .adm-section sans réécrire chaque
+   template de sous-composant. */
+
+app-sheet-form .adm-section .form-group {
+  margin-bottom: 14px;
+}
+app-sheet-form .adm-section .form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Labels (ex: <label><strong>Titre :</strong></label>) */
+app-sheet-form .adm-section label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 6px;
+}
+app-sheet-form .adm-section label strong { font-weight: 600; color: #1f2937; }
+app-sheet-form .adm-section .required { color: #fe5815; margin-left: 2px; }
+
+/* Inputs Bootstrap → style .adm-input */
+app-sheet-form .adm-section .form-control {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: #1f2937;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  line-height: 1.4;
+}
+app-sheet-form .adm-section .form-control:focus {
+  border-color: #001a70;
+  box-shadow: 0 0 0 3px rgba(0, 26, 112, 0.12);
+}
+app-sheet-form .adm-section select.form-control { cursor: pointer; }
+app-sheet-form .adm-section textarea.form-control { min-height: 80px; resize: vertical; }
+
+/* Erreurs */
+app-sheet-form .adm-section .text-danger,
+app-sheet-form .adm-section .form-text.text-danger,
+app-sheet-form .adm-section .form-text {
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+  display: block;
+}
+app-sheet-form .adm-section .text-muted {
+  color: #6b7280 !important;
+  font-size: 12px;
+}
+
+/* Checkboxes form-check de Bootstrap */
+app-sheet-form .adm-section .form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+app-sheet-form .adm-section .form-check-input {
+  position: static;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #001a70;
+  cursor: pointer;
+}
+app-sheet-form .adm-section .form-check-label {
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Radios */
+app-sheet-form .adm-section .radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 14px;
+}
+app-sheet-form .adm-section input[type="radio"] {
+  accent-color: #001a70;
+  cursor: pointer;
+}
+
+/* Tables dans les sous-composants (lots, contrats, options) */
+app-sheet-form .adm-section table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+app-sheet-form .adm-section table thead th {
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+app-sheet-form .adm-section table tbody td {
+  padding: 10px 14px;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+app-sheet-form .adm-section table tbody tr:last-child td { border-bottom: none; }
+app-sheet-form .adm-section table tbody tr:hover td { background: #fafbfc; }
+
+/* Boutons Bootstrap → style cohérent */
+app-sheet-form .adm-section .btn-edf,
+app-sheet-form .adm-section .btn.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #001a70;
+  background: #001a70;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+app-sheet-form .adm-section .btn-edf:hover:not(:disabled),
+app-sheet-form .adm-section .btn.btn-primary:hover:not(:disabled) {
+  background: #00237a;
+  border-color: #00237a;
+  box-shadow: 0 3px 8px rgba(0, 26, 112, 0.25);
+}
+app-sheet-form .adm-section .btn-edf:disabled,
+app-sheet-form .adm-section .btn.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+app-sheet-form .adm-section .btn.btn-danger {
+  background: #fff;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+app-sheet-form .adm-section .btn.btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+}
+app-sheet-form .adm-section .btn.btn-secondary {
+  background: #fff;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+app-sheet-form .adm-section .btn.btn-secondary:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* Simplifier les wrappers Bootstrap row/col internes */
+app-sheet-form .adm-section > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Éditeur TinyMCE */
+app-sheet-form .adm-section .tox-tinymce {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+/* Typeahead (ngx-bootstrap) & dropdowns */
+app-sheet-form .adm-section .dropdown-menu {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px !important;
+}
+app-sheet-form .adm-section .dropdown-item {
+  padding: 8px 10px !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  cursor: pointer;
+}
+app-sheet-form .adm-section .dropdown-item:hover,
+app-sheet-form .adm-section .dropdown-item.active {
+  background: #f0f4ff !important;
+  color: #001a70 !important;
+}
+
+/* Tags / chips pour multi-selects dans les form (providers, beneficiaries, etc.) */
+app-sheet-form .adm-section .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0f4ff;
+  color: #001a70;
+  border: 1px solid #dfe3e8;
+  border-radius: 99px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 2px 4px 2px 0;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+/* Datepicker input */
+app-sheet-form .adm-section input[bsDatepicker],
+app-sheet-form .adm-section input[daterangepicker] {
+  cursor: pointer;
+}
+
+/* Ligne d'action en bas d'une sous-section (ex: bouton "Ajouter un lot") */
+app-sheet-form .adm-section .form-group > .btn + .btn,
+app-sheet-form .adm-section .btn + .btn {
+  margin-left: 6px;
+}
+
+/* ─── Tag input (ngx-chips) ───────────────────────────────── */
+.adm-tag-input-row {
+  display: flex !important;
+  align-items: stretch !important;     /* tag-input & bouton à hauteur égale */
+  gap: 8px !important;
+  width: 100% !important;
+}
+.adm-tag-input {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  display: flex !important;             /* permet à ng2-tag-input d'occuper toute la hauteur */
+  align-items: stretch !important;
+}
+.adm-tag-input-row > .adm-btn {
+  flex: none !important;
+  min-width: 130px !important;          /* largeur min uniforme pour les 3 boutons */
+  justify-content: center !important;
+  align-self: stretch !important;        /* étire le bouton à la hauteur du tag-input */
+  height: 40px !important;
+  padding: 0 14px !important;
+}
+app-sheet-form .adm-tag-input tag-input-form form {
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+app-sheet-form .adm-tag-input,
+app-sheet-form .adm-tag-input tag-input,
+app-sheet-form .adm-tag-input tag-input-form,
+app-sheet-form .adm-tag-input tag-input-form > form {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+app-sheet-form .adm-tag-input .ng2-tag-input {
+  background: #fff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 0 8px !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  overflow: hidden !important;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+/* Le VRAI container des tags (interne de ngx-chips) — c'est lui qui avait flex-wrap: wrap */
+app-sheet-form .adm-tag-input .ng2-tags-container {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: thin !important;
+  padding: 0 !important;
+}
+app-sheet-form .adm-tag-input .ng2-tags-container::-webkit-scrollbar {
+  height: 4px !important;
+}
+app-sheet-form .adm-tag-input .ng2-tags-container::-webkit-scrollbar-thumb {
+  background: #d1d5db !important;
+  border-radius: 4px !important;
+}
+/* tag-input-form prend tout l'espace dispo dans le wrapper */
+app-sheet-form .adm-tag-input tag-input-form {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+/* L'input lui-même : on cible TOUS les sélecteurs possibles de ngx-chips */
+app-sheet-form .adm-tag-input input.ng2-tag-input__text-input,
+app-sheet-form .adm-tag-input .ng2-tag-input__text-input,
+app-sheet-form .adm-tag-input .tag-input-form-inputText,
+app-sheet-form .adm-tag-input tag-input-form input,
+app-sheet-form .adm-tag-input tag-input-form input[type="text"] {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  font-family: inherit !important;
+  font-size: 13.5px !important;          /* identique à .adm-input */
+  color: #1f2937 !important;
+  line-height: 1.4 !important;
+  box-shadow: none !important;
+}
+app-sheet-form .adm-tag-input input.ng2-tag-input__text-input::placeholder,
+app-sheet-form .adm-tag-input .ng2-tag-input__text-input::placeholder,
+app-sheet-form .adm-tag-input .tag-input-form-inputText::placeholder,
+app-sheet-form .adm-tag-input tag-input-form input::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+  font-size: 13.5px !important;
+  font-family: inherit !important;
+}
+
+/* Forcer les mêmes propriétés visuelles sur TOUS les inputs/select/textarea
+   pour garantir une homogénéité parfaite entre .adm-input et tag-inputs */
+app-sheet-form .adm-section input.adm-input,
+app-sheet-form .adm-section textarea.adm-textarea,
+app-sheet-form .adm-section select.adm-select,
+app-sheet-form .adm-section .ng2-tag-input {
+  font-family: inherit !important;
+  font-size: 13.5px !important;
+  color: #1f2937 !important;
+  line-height: 1.4 !important;
+  background: #fff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+app-sheet-form .adm-section input.adm-input,
+app-sheet-form .adm-section select.adm-select {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 12px !important;
+}
+/* Exception : input dans un datepicker wrap → réserve la place de l'icône à gauche */
+app-sheet-form .adm-section .adm-datepicker-wrap > .adm-input,
+app-sheet-form .adm-section .adm-datepicker-wrap > input {
+  padding-left: 36px !important;
+}
+app-sheet-form .adm-section input::placeholder,
+app-sheet-form .adm-section textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+  font: 400 13.5px inherit !important;
+  font-style: normal !important;
+  letter-spacing: normal !important;
+}
+app-sheet-form .adm-section input,
+app-sheet-form .adm-section textarea,
+app-sheet-form .adm-section select {
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-family: inherit !important;
+}
+app-sheet-form .adm-section input.adm-input:focus,
+app-sheet-form .adm-section textarea.adm-textarea:focus,
+app-sheet-form .adm-section select.adm-select:focus,
+app-sheet-form .adm-section .ng2-tag-input.ng2-tag-input--focused {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 3px rgba(0, 26, 112, 0.12) !important;
+  outline: none !important;
+}
+/* ═══════════════════════════════════════════════════════════
+   Tag (badge) ngx-chips — design outline navy, propre & aligné
+   Reset + flex strict sur TOUTE la hiérarchie DOM interne
+   ═══════════════════════════════════════════════════════════ */
+
+/* Tag racine : flex container centré */
+app-sheet-form .adm-tag-input tag {
+  background: #fff !important;
+  color: #001a70 !important;
+  border: 1.5px solid #001a70 !important;
+  border-radius: 6px !important;
+  height: 28px !important;
+  padding: 0 4px 0 10px !important;
+  margin: 0 !important;
+  font-family: inherit !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex: none !important;
+  box-sizing: border-box !important;
+  cursor: default !important;
+  white-space: nowrap !important;
+  transition: background 0.12s, border-color 0.12s !important;
+  vertical-align: middle !important;
+}
+app-sheet-form .adm-tag-input tag:hover {
+  background: #f0f4ff !important;
+}
+
+/* TOUS les éléments internes (sauf delete-icon) — reset complet
+   Cela couvre .tag-wrapper, .tag__text, span, div internes ngx-chips */
+app-sheet-form .adm-tag-input tag .tag-wrapper,
+app-sheet-form .adm-tag-input tag .tag__text,
+app-sheet-form .adm-tag-input tag > div,
+app-sheet-form .adm-tag-input tag > span,
+app-sheet-form .adm-tag-input tag > p {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  line-height: 1 !important;
+  font-family: inherit !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #001a70 !important;
+  background: transparent !important;
+  border: 0 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+app-sheet-form .adm-tag-input tag .tag-wrapper > *,
+app-sheet-form .adm-tag-input tag .tag__text > * {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  height: auto !important;
+  font: inherit !important;
+  color: inherit !important;
+}
+
+/* Croix : verrouillée 14×14 — taille identique en normal et au hover.
+   Pas de pastille de fond au hover, juste un changement de couleur (sobre). */
+app-sheet-form .adm-tag-input tag delete-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  max-width: 14px !important;
+  max-height: 14px !important;
+  color: #6b7280 !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  line-height: 1 !important;
+  flex: none !important;
+  box-sizing: border-box !important;
+  transform: none !important;             /* bloque tout scale potentiel d'origine ngx-chips */
+  transition: background 0.12s, color 0.12s !important;
+  vertical-align: middle !important;
+}
+app-sheet-form .adm-tag-input tag delete-icon:hover {
+  background: #dc2626 !important;
+  color: #fff !important;
+  transform: none !important;
+}
+/* SVG / texte interne de la croix : taille verrouillée */
+app-sheet-form .adm-tag-input tag delete-icon * {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  width: 10px !important;
+  height: 10px !important;
+  min-width: 10px !important;
+  min-height: 10px !important;
+  max-width: 10px !important;
+  max-height: 10px !important;
+  fill: currentColor !important;
+  color: inherit !important;
+  font-size: 10px !important;
+  vertical-align: middle !important;
+  transform: none !important;
+}
+app-sheet-form .adm-tag-input .tag-input-form-inputText {
+  font-family: inherit !important;
+  font-size: 13px !important;
+  color: #1f2937 !important;
+}
+app-sheet-form .adm-tag-input .ng2-dropdown-menu {
+  border-radius: 8px !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ─── FormArrays (contracts, lots, options) ──────────────── */
+.adm-array-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.adm-array-add { margin-top: 10px; }
+.adm-array-empty {
+  padding: 16px;
+  background: #fafbfc;
+  border: 1px dashed #e5e7eb;
+  border-radius: 8px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  font-style: italic;
+}
+.adm-array-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+.adm-array-item-fields {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.adm-lot-name { font-weight: 600; }
+.adm-btn-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  justify-content: center !important;
+  flex: none !important;
+  align-self: stretch !important;
+}
+
+/* Option item (avec 2 dates + remove) */
+.adm-option-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.adm-option-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #001a70;
+}
+.adm-option-date-group { display: flex; align-items: center; gap: 8px; }
+.adm-option-date-group .adm-datepicker-wrap { flex: 1; }
+.adm-option-date-sep { font-size: 13px; color: #6b7280; font-weight: 500; min-width: 22px; }
+.adm-option-errors {
+  padding-left: 88px;
+  margin-top: 4px;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+@media (max-width: 780px) {
+  .adm-option-item { grid-template-columns: 1fr; }
+  .adm-option-errors { padding-left: 0; }
+}
+
+/* Contract card (complexe) */
+.adm-contract-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.adm-contract-card.is-readonly { background: #fafbfc; }
+.adm-contract-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 200px;
+  gap: 14px;
+  align-items: start;
+}
+.adm-contract-fields .adm-form-group { margin: 0; }
+.adm-contract-fields textarea.adm-textarea {
+  min-height: 40px;
+  height: 40px;
+  resize: vertical;
+}
+.adm-contract-contacts { grid-column: 1 / -1; margin-top: 4px; }
+.adm-contract-contacts-readonly {
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  min-height: 40px;
+  color: #1f2937;
+  font-size: 13.5px;
+}
+.adm-contract-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+@media (max-width: 780px) {
+  .adm-contract-fields { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Overrides agressifs pour les 3 problèmes alignement
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Switch : pastille + texte centrés avec gap ────────── */
+app-sheet-form .adm-switch {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  cursor: pointer;
+  margin: 0 !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+}
+app-sheet-form .adm-switch input[type="checkbox"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+app-sheet-form .adm-switch-track {
+  position: relative !important;
+  display: inline-block !important;
+  flex: none !important;
+  width: 38px !important;
+  height: 22px !important;
+  background: #d1d5db !important;
+  border-radius: 99px !important;
+  transition: background 0.15s !important;
+  vertical-align: middle !important;
+}
+app-sheet-form .adm-switch-track::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+  width: 18px !important;
+  height: 18px !important;
+  background: #fff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+  transition: transform 0.15s !important;
+}
+app-sheet-form .adm-switch input:checked + .adm-switch-track {
+  background: #001a70 !important;
+}
+app-sheet-form .adm-switch input:checked + .adm-switch-track::after {
+  transform: translateX(16px) !important;
+}
+app-sheet-form .adm-switch-label {
+  display: inline-block !important;
+  font-size: 13px !important;
+  color: #1f2937 !important;
+  font-weight: 500 !important;
+  line-height: 22px !important;       /* match track height = parfait centrage */
+  vertical-align: middle !important;
+  margin: 0 !important;
+}
+
+/* ─── Radio pills : radio + texte centrés avec gap ────── */
+app-sheet-form .adm-radio-group {
+  display: flex !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+app-sheet-form .adm-radio {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 16px !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  color: #4b5563 !important;
+  background: #fff !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+app-sheet-form .adm-radio:hover {
+  border-color: #d1d5db !important;
+}
+app-sheet-form .adm-radio input[type="radio"] {
+  accent-color: #001a70 !important;
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: none !important;
+  vertical-align: middle !important;
+  cursor: pointer !important;
+}
+app-sheet-form .adm-radio > span {
+  display: inline-block !important;
+  line-height: 16px !important;       /* match radio height */
+  vertical-align: middle !important;
+}
+
+/* ─── Dates : 2 colonnes 50/50 strictes via flexbox ─────── */
+app-sheet-form .adm-form-row {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 14px !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+app-sheet-form .adm-form-row > .adm-form-group {
+  flex: 1 1 0 !important;       /* chaque colonne prend la moitié */
+  min-width: 0 !important;       /* permet la rétractation */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+app-sheet-form .adm-form-row .adm-datepicker-wrap {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+app-sheet-form .adm-form-row .adm-datepicker-wrap input {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 9px 12px 9px 34px !important;
+  margin: 0 !important;
+}
+@media (max-width: 780px) {
+  app-sheet-form .adm-form-row {
+    flex-direction: column !important;
+  }
+  app-sheet-form .adm-form-row > .adm-form-group {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+  }
+}

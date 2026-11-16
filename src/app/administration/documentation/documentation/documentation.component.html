@@ -1,94 +1,131 @@
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h1 style="color:#3276B1"><strong>Gérer la partie « Se documenter »</strong></h1>
-        </div>
-    </div>
-</div>
-<nav aria-label="Vous êtes ici :" role="navigation">
-    <ol class="breadcrumb my-items">
-        <li class="breadcrumb-item">
-            <a  (click)="showSubItems(0)"  class="blue_link"><span>Accueil</span></a>
-        </li>
-        
-        <li *ngFor="let row of parents" class="breadcrumb-item{{(row.id == id) ? ' active' : ''}} link">
-            <a (click)="showSubItems(row.id)" *ngIf="row.id != id" class="blue_link"><span
-                [innerHtml]="row.breadcrumb"></span></a>
-        </li>
+<div class="adm-page">
 
-        <li class="breadcrumb-item active" aria-current="true">
-            <span [innerHtml]="breadcrumb"></span>
-        </li>
-    </ol>
-</nav>
-<form [formGroup]="fileForm" >
-    <div class="form-group">
-        <label>Sélectionner un fichier CSV :</label>
-        <input type="file" class="form-control-file" id="file" [formControl]="file" (change)="onFileChange($event)">
-        <small *ngIf="file.errors && file.dirty" class="form-text text-muted">
-            <span [hidden]="!file.errors.required">le fichier est obligatoire.</span>
-        </small>
+  <div class="adm-header">
+    <h1 class="adm-title">Se documenter — Administration</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd(id)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter un élément
+      </button>
     </div>
-    <div class="form-group">
-        <button type="button" class="btn btn-primary" [disabled]="!fileForm.valid" (click)="import()">Importer</button>
-    </div>
-</form>
-<button type="button" (click)="export()" class="btn btn-danger">Exporter</button>
-<div class="row">
-    <div class="col-9 margin-tb">
-        <div class="pull-left" style="padding-top:30px">
-            <button type="button" class="btn btn-primary" value="1" (click)="saveChange()">Enregistrer les
-                modifications</button>
-        </div>
-    </div>
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd(id)">Ajouter un élement</button>
-        </div>
-    </div>
-</div>
+  </div>
 
+  <!-- Fil d'ariane arborescence documentation -->
+  <nav class="adm-treebar" aria-label="Vous êtes ici">
+    <a class="adm-treebar-item" (click)="showSubItems(0)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"/>
+      </svg>
+      Racine
+    </a>
+    <ng-container *ngFor="let row of parents">
+      <span class="adm-treebar-sep">›</span>
+      <a *ngIf="row.id != id" class="adm-treebar-item" (click)="showSubItems(row.id)">
+        <span [innerHtml]="row.breadcrumb"></span>
+      </a>
+    </ng-container>
+    <span *ngIf="breadcrumb" class="adm-treebar-sep">›</span>
+    <span *ngIf="breadcrumb" class="adm-treebar-current" [innerHtml]="breadcrumb"></span>
+  </nav>
 
-<table class="table">
-    <thead>
+  <!-- Toolbar secondaire : import / export -->
+  <div class="adm-card adm-io-card">
+    <div class="adm-io-left">
+      <h3 class="adm-io-title">Import / Export</h3>
+      <p class="adm-muted" style="margin:0">Importez un fichier CSV pour créer des éléments en masse ou exportez l'arborescence.</p>
+    </div>
+    <div class="adm-io-actions" [formGroup]="fileForm">
+      <label class="adm-btn adm-btn-ghost adm-file-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l-3 3m3-3l3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/>
+        </svg>
+        <span>Choisir un CSV</span>
+        <input type="file" [formControl]="$any(file)" (change)="onFileChange($event)">
+      </label>
+      <button type="button" class="adm-btn adm-btn-edf" [disabled]="!fileForm.valid" (click)="import()">
+        Importer
+      </button>
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="export()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+        </svg>
+        Exporter
+      </button>
+    </div>
+  </div>
+
+  <!-- Toolbar : compteur + save position -->
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ items.length }}</strong> élément{{ items.length > 1 ? 's' : '' }}
+      </span>
+      <span *ngIf="hasOrderChanges" class="adm-chip adm-chip--orange">Ordre modifié</span>
+    </div>
+    <button *ngIf="hasOrderChanges" type="button" class="adm-btn adm-btn-edf" (click)="saveChange()">
+      Enregistrer l'ordre
+    </button>
+  </div>
+
+  <div class="adm-table-card" *ngIf="items.length > 0">
+    <table class="adm-table adm-doc-table">
+      <thead>
         <tr>
-            <th>
-                Titre
-            </th>
-            <th>
-                Description courte
-            </th>
-            <th>
-                lien
-            </th>
-            <th>
-                Action
-            </th>
+          <th style="width: 40px"></th>
+          <th>Titre</th>
+          <th>Description courte</th>
+          <th>Lien</th>
+          <th style="width: 360px; text-align: right">Actions</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of items; let i = index" class="draggable" [class.active]="draggedOverIndex == i" draggable="true" (dragover)="allowDrop($event, i)" (dragstart)="onDragStart(i)"
-        (drop)="onDrop($event, i)">
-            <td [innerHtml]="item.label">
-            </td>
-            <td>
-                {{item.shortdescription}}
-            </td>
-            <td>
-                {{item.link}}
-            </td>
-            <td>
-                <button class="btn btn-primary"  (click)="openEdit(item.id)">Modifier</button>
-                <button (click)="showSubItems(item.id)" class="btn btn-secondary">Sous éléments</button>
-                <button class="btn btn-danger" (click)="openModal(template, item.id)">Supprimer</button>
-            </td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items; let i = index"
+            class="adm-doc-row"
+            [class.is-dragover]="draggedOverIndex === i"
+            draggable="true"
+            (dragover)="allowDrop($event, i)"
+            (dragstart)="onDragStart(i)"
+            (drop)="onDrop($event, i)">
+          <td class="adm-doc-drag-cell" title="Glisser pour réordonner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            </svg>
+          </td>
+          <td [innerHtml]="item.label"></td>
+          <td class="adm-table-col-muted">{{ item.shortdescription }}</td>
+          <td class="adm-table-col-muted">{{ item.link || '—' }}</td>
+          <td style="text-align: right">
+            <div style="display:flex; justify-content:flex-end; gap:6px; flex-wrap:nowrap">
+              <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="openEdit(item.id)">Modifier</button>
+              <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="showSubItems(item.id)">Sous-éléments</button>
+              <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="openModal(template, item.id)">Supprimer</button>
+            </div>
+          </td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="items.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+    </svg>
+    <p class="adm-empty-title">Aucun élément ici</p>
+    <p class="adm-empty-desc">Ajoutez un élément avec le bouton en haut ou importez un CSV.</p>
+  </div>
+
+</div>
+
 <ng-template #template>
-    <div class="modal-body text-center">
-      <p>Voulez-vous supprimer l'élément?</p>
-      <button type="button" class="btn btn-default" (click)="confirm()" >Oui</button>
-      <button type="button" class="btn btn-primary" (click)="decline()" >Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer cet élément ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, supprimer</button>
     </div>
-  </ng-template>
+  </div>
+</ng-template>

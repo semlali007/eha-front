@@ -1,0 +1,194 @@
+/* ═══════════════════════════════════════════════════════════
+   DOCUMENTATION — Arborescence des aides et ressources
+   ═══════════════════════════════════════════════════════════ */
+
+.doc-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px 24px 32px;
+  font-family: 'Work Sans', sans-serif;
+  color: #1f2937;
+}
+
+/* ── Contenu (description) ─────────────────────────────────── */
+.doc-content {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1f2937;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.doc-content :first-child { margin-top: 0; }
+.doc-content :last-child  { margin-bottom: 0; }
+.doc-content h1, .doc-content h2, .doc-content h3 {
+  color: #001a70;
+  font-weight: 700;
+  margin: 18px 0 8px 0;
+  line-height: 1.3;
+}
+.doc-content h1 { font-size: 22px; }
+.doc-content h2 { font-size: 18px; }
+.doc-content h3 { font-size: 16px; }
+.doc-content p { margin: 0 0 10px 0; }
+.doc-content a {
+  color: #001a70;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.doc-content a:hover { color: #fe5815; }
+.doc-content ul, .doc-content ol {
+  margin: 10px 0;
+  padding-left: 22px;
+}
+.doc-content li { margin: 4px 0; }
+
+/* ── Avertissement ─────────────────────────────────────────── */
+.doc-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-left: 4px solid #f97316;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.doc-warning-icon {
+  flex-shrink: 0;
+  color: #c2410c;
+  margin-top: 1px;
+}
+.doc-warning-content {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #7c2d12;
+}
+.doc-warning-content :first-child { margin-top: 0; }
+.doc-warning-content :last-child  { margin-bottom: 0; }
+.doc-warning-content strong { color: #7c2d12; }
+
+/* ── Liste des sous-sections ───────────────────────────────── */
+.doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.12s, box-shadow 0.12s, transform 0.12s;
+}
+.doc-item:hover {
+  border-color: #001a70;
+  box-shadow: 0 2px 8px rgba(0, 26, 112, 0.08);
+  transform: translateY(-1px);
+}
+.doc-item-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.4;
+}
+.doc-item:hover .doc-item-label { color: #001a70; }
+.doc-item-chevron {
+  color: #9ca3af;
+  flex-shrink: 0;
+  transition: color 0.12s, transform 0.12s;
+}
+.doc-item:hover .doc-item-chevron {
+  color: #fe5815;
+  transform: translateX(3px);
+}
+
+/* ── Section feuille (pas de sous-section, pas de contenu) ─ */
+.doc-leaf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  color: #6b7280;
+}
+.doc-leaf svg {
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+.doc-leaf p {
+  font-size: 13.5px;
+  margin: 0;
+}
+
+/* ── État : section introuvable ────────────────────────────── */
+.doc-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+.doc-empty svg {
+  color: #9ca3af;
+  margin-bottom: 14px;
+}
+.doc-empty-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4b5563;
+  margin: 0 0 6px 0;
+}
+.doc-empty-desc {
+  font-size: 13.5px;
+  color: #9ca3af;
+  margin: 0 0 18px 0;
+  max-width: 380px;
+}
+.doc-empty-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  background: #001a70;
+  color: #fff;
+  border: 1px solid #001a70;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s, box-shadow 0.12s;
+}
+.doc-empty-btn:hover {
+  background: #00237a;
+  box-shadow: 0 4px 12px rgba(0, 26, 112, 0.22);
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .doc-page { padding: 12px 16px 24px; }
+  .doc-content { padding: 16px 18px; }
+  .doc-item { padding: 12px 14px; }
+}

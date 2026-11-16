@@ -1,13 +1,22 @@
 <div>
-    <p>Date de mise à jour: {{updatedDate | date:'dd/MM/YYYY'}}, source : DataLake.</p>
-    <div class="alert alert-warning" *ngIf="item.count == 30">
-        Liste des agences achats les plus susceptibles d'utiliser ce code article.
+  <p class="search-result-source">
+    Date de mise à jour&nbsp;: {{ updatedDate | date:'dd/MM/YYYY' }} · Source&nbsp;: DataLake
+  </p>
+
+  <div class="search-result-warn" *ngIf="item.count == 30">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="flex-shrink: 0">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+    </svg>
+    Liste des agences achats les plus susceptibles d'utiliser ce code article.
+  </div>
+
+  <div class="search-result-list">
+    <div class="search-result-item" *ngFor="let result of item.items | slice:startItem:endItem" (click)="showAgency(result)">
+      <div class="search-result-item-line">
+        <span class="search-result-item-code">{{ result.code }}</span>
+        <span class="search-result-item-label">{{ result.label }}</span>
+      </div>
+      <p class="search-result-item-other" *ngIf="result.other">{{ result.other }}</p>
     </div>
-    <div class="list-group my-items-for-searches">
-        <div class="list-group-item link" *ngFor="let result  of item.items | slice:startItem:endItem;" (click)="showAgency(result)">
-            {{result.code}} <b>{{result.label}}</b>
-            <br>
-            <small>{{result.other}}</small>
-        </div>
-    </div>
+  </div>
 </div>

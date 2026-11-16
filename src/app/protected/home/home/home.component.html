@@ -1,15 +1,17 @@
-<div class="container">
+<div class="home-page">
   <app-home-information></app-home-information>
   <app-home-newscast></app-home-newscast>
-  <div class="row">
-    <app-home-search class="col-12 col-md-4" id="search_component"></app-home-search>
-    <app-home-purchase-form class="col-12 col-md-4" ></app-home-purchase-form>
-    <app-home-sheet class="col-12 col-md-4" ></app-home-sheet>
+
+  <div class="home-cards-row">
+    <app-home-search class="home-card-col" id="search_component"></app-home-search>
+    <app-home-contrat-groupe class="home-card-col"></app-home-contrat-groupe>
+    <app-home-sheet class="home-card-col"></app-home-sheet>
   </div>
-  <div class="row">
-    <app-home-documentation class="col-md-6" id="documentation"></app-home-documentation>
-    <app-home-contact class="col-md-6" id="contact_component"></app-home-contact>
-    <p>&nbsp;</p>
+
+  <div class="home-cards-row home-cards-row-2">
+    <app-home-documentation class="home-card-col-half" id="documentation"></app-home-documentation>
+    <app-home-contact class="home-card-col-half" id="contact_component"></app-home-contact>
   </div>
+
   <app-home-modal></app-home-modal>
 </div>

@@ -1,0 +1,63 @@
+<div class="list-group card">
+  <button class="list-group-item filter-header smaller-text"
+    (click)="isTotalCollapsed = !isTotalCollapsed"
+    [attr.aria-expanded]="!isTotalCollapsed"
+    aria-controls="dateFilterList">
+    <span class="filter-header-label">Période <span class="filter-active-badge" *ngIf="hasActiveFilter()">1</span></span>
+    <i class="fleche fleche-droite" [class.fleche-bas]="!isTotalCollapsed"></i>
+  </button>
+
+  <div id="dateFilterList" [collapse]="isTotalCollapsed" [isAnimated]="true">
+    <div class="filter-date-body">
+      <form [formGroup]="dateForm">
+        <div class="filter-date-field">
+          <label for="dateStart">Début</label>
+          <input
+            type="text"
+            id="dateStart"
+            formControlName="dateStart"
+            class="filter-date-input"
+            placeholder="jj/mm/aaaa"
+            bsDatepicker
+            [bsConfig]="{
+              dateInputFormat: 'DD/MM/YYYY',
+              containerClass: 'theme-edf',
+              showWeekNumbers: false,
+              adaptivePosition: true
+            }"
+            readonly>
+        </div>
+
+        <div class="filter-date-field">
+          <label for="dateEnd">Fin</label>
+          <input
+            type="text"
+            id="dateEnd"
+            formControlName="dateEnd"
+            class="filter-date-input"
+            placeholder="jj/mm/aaaa"
+            bsDatepicker
+            [bsConfig]="{
+              dateInputFormat: 'DD/MM/YYYY',
+              containerClass: 'theme-edf',
+              showWeekNumbers: false,
+              adaptivePosition: true
+            }"
+            readonly>
+        </div>
+
+        <div class="filter-date-error" *ngIf="dateRangeError">
+          La date de fin doit être postérieure à la date de début.
+        </div>
+
+        <button
+          *ngIf="hasActiveFilter()"
+          type="button"
+          class="filter-date-clear"
+          (click)="clearFilters()">
+          Effacer les dates
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

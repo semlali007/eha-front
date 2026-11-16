@@ -1,33 +1,22 @@
-<div class="list-group-item">
-    <div>
-        <table border="0">
-            <tr>
-                <td>
-                    <span class="badge {{news.categ_code|newsCastCategoryColor}}" style="float:left"> {{ news.categ }}</span>
-                </td>
-               
-            </tr>
-            <tr>
-                <td>
-                    <a (click)="onSubmittedGetSheet(news.id)" class="link blue_link">
-                        <strong>{{ news.title }}</strong>
-                    </a>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a [innerHtml]="news.short_description">
-                    </a>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <span style="font-size:0.8em; color: black;"> Crée le
-        {{news.created_date | customDate}}</span>
-    <span class="badge {{status.code|sheetStatusColor}}" style="float:right">{{status.label}}</span>
-
-</div>
+<article class="adm-nc-card" (click)="onSubmittedGetSheet(news.id)">
+  <div class="adm-nc-card-head">
+    <span [class]="'adm-cat-badge ' + (news.categ_code | newsCastCategoryColor)">
+      {{ news.categ }}
+    </span>
+    <span class="adm-nc-card-date">
+      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+      </svg>
+      {{ news.created_date | customDate }}
+    </span>
+    <span *ngIf="status?.code == 1" class="adm-chip adm-chip--green">{{ status.label }}</span>
+    <span *ngIf="status?.code == 0" class="adm-chip adm-chip--muted">{{ status.label }}</span>
+    <span *ngIf="news.is_home" class="adm-chip adm-chip--orange">Page d'accueil</span>
+  </div>
+  <h3 class="adm-nc-card-title">{{ news.title }}</h3>
+  <p class="adm-nc-card-desc" [innerHtml]="news.short_description"></p>
+  <div class="adm-nc-card-foot">
+    <span class="adm-muted" style="font-size: 12px">Cliquez pour voir le détail</span>
+    <span class="adm-nc-card-arrow">→</span>
+  </div>
+</article>

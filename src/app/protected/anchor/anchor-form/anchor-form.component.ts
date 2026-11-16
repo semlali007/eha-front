@@ -101,7 +101,7 @@ export class AnchorFormComponent implements OnInit, OnDestroy {
         selected: selected
       };
 
-      this.bsModalRef = this.modalService.show(AnchorCodesComponent, { initialState });
+      this.bsModalRef = this.modalService.show(AnchorCodesComponent, { initialState, class: 'modal-lg' });
       this.bsModalRef.content.closeBtnName = 'Fermer';
     });
   }

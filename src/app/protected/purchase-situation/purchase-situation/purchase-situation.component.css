@@ -1,198 +1,299 @@
-.titre{
-    font-family: Segoe UI;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 43px;
-    letter-spacing: 0em;
-    text-align: left;
-    margin-left: 15px;
-    margin-bottom: 20px;
+/* ═══════════════════════════════════════════════════════════
+   PURCHASE SITUATION — Ma situation achat
+   ═══════════════════════════════════════════════════════════ */
+
+.ps-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+  font-family: 'Work Sans', sans-serif;
 }
 
-.titre-result{ 
-    width: 1110px;
-    height: 36px;
-    left: 0px;
-    top: 1px;
-    
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 29px;
-    
-    /* Noir (Charte) */
-    color: #000000; 
+/* ── Header ────────────────────────────────────────────────── */
+.ps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.ps-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #001a70;
+  margin: 0;
 }
 
-.open-da{
-    width: 100%;
-    height: 21px;
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
-    /* Bleu fonce (Charte) */
-    color: #001A70;
+/* ── Toolbar ───────────────────────────────────────────────── */
+.ps-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #e8eaed;
+}
+.ps-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ps-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ps-result-count {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+.ps-result-criteria {
+  font-size: 13px;
+  color: #6b7280;
+}
+.ps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #001a70;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.12s;
+}
+.ps-link:hover {
+  color: #fe5815;
+}
+.ps-per-page {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #6b7280;
+}
+.ps-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  min-width: 60px;
+  justify-content: space-between;
+  transition: border-color 0.12s;
+}
+.ps-dropdown-btn:hover {
+  border-color: #001a70;
+}
+.ps-dropdown-btn-sm {
+  min-width: auto;
+  padding: 4px 8px;
 }
 
-.text-simple{
-    position: static;
-left: 0px;
-right: 80px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-
-/* or 138% */
-display: flex;
-align-items: center;
-text-align: right;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 0px 10px;
+/* Dropdown statut dans le header : mêmes dimensions que les inputs */
+.ps-col-status .btn-group {
+  width: 100% !important;
+}
+.ps-col-status .ps-dropdown-btn-sm {
+  width: 100% !important;
+  height: 28px !important;
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #374151 !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
 }
 
-.hr{ 
-    width: 100%;
-    height: 0px;
-    /* Noir (Charte) */
-    border: 1px solid #000000;
+/* Dropdown menu */
+app-purchase-situation .dropdown-menu {
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px !important;
+  min-width: 160px !important;
 }
-.row{
-    margin-left:0 ;
+app-purchase-situation .dropdown-item {
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
 }
-
-
-
-.titre-result{ 
-    width: 1110px;
-    height: 36px;
-    left: 0px;
-    top: 1px;
-    
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 29px;
-    
-    /* Noir (Charte) */
-    color: #000000; 
+app-purchase-situation .dropdown-item:hover {
+  background: #eef2fb !important;
+  color: #001a70 !important;
 }
 
-.open-da{
-    width: 100%;
-    height: 21px;
-    font-family: 'Segoe UI';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
-    /* Bleu fonce (Charte) */
-    color: #001A70;
+/* ── Table header ──────────────────────────────────────────── */
+.ps-table-header {
+  display: flex;
+  background: #f9fafb;
+  border-left: 1px solid #dfe3e8;
+  border-right: 1px solid #dfe3e8;
+  border-bottom: 1px solid #dfe3e8;
+}
+.ps-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-right: 1px solid #e8eaed;
+  min-width: 0;
+}
+.ps-col:last-child { border-right: none; }
+
+.ps-col-code     { flex: 0 0 14%; }
+.ps-col-label    { flex: 0 0 24%; }
+.ps-col-date     { flex: 0 0 10%; }
+.ps-col-status   { flex: 0 0 16%; }
+.ps-col-modified { flex: 0 0 16%; }
+.ps-col-owner    { flex: 0 0 20%; }
+
+.ps-col-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #001a70;
+  white-space: nowrap;
+}
+.ps-sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  margin-left: 2px;
+}
+.ps-sort-arrows svg {
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.12s;
+}
+.ps-sort-arrows svg:hover {
+  color: #001a70;
 }
 
-.text-simple{
-    position: static;
-left: 0px;
-right: 80px;
-top: 0px;
-
-font-family: 'Segoe UI';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-
-/* or 138% */
-display: flex;
-align-items: center;
-text-align: right;
-
-/* Noir (Charte) */
-color: #000000;
-
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-margin: 0px 10px;
+.ps-filter-input {
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #374151 !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  width: 100% !important;
+  font-family: inherit !important;
+  transition: border-color 0.12s, box-shadow 0.12s !important;
+}
+.ps-filter-input::placeholder {
+  color: #9ca3af !important;
+}
+.ps-filter-input:focus {
+  border-color: #001a70 !important;
+  box-shadow: 0 0 0 2px rgba(0, 26, 112, 0.1) !important;
+  outline: none !important;
 }
 
-.ddown-per-page{ 
-    height: 37px;
-    left: 0px;
-    right: 0px;
-    /* Blanc (Charte) */
-    background: #FFFFFF;
-    
-    /* Noir (Charte) */
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    border-radius: 5px;
-    text-align:left;
-
-    flex:none;
+/* Checkbox dropdown statut */
+.ps-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  margin: 0;
+  border-radius: 4px;
+  transition: background 0.12s;
+}
+.ps-checkbox-item input[type="checkbox"] {
+  accent-color: #001a70;
+  cursor: pointer;
+}
+.ps-checkbox-item:hover {
+  background: #eef2fb;
 }
 
+.clickable { cursor: pointer; }
 
-
-.dropdown-toggle::after{
-    position: absolute;
-    right: 10px;
-    top:17px;
+/* ── Reset des accordion-group ngx-bootstrap ──────────────── */
+app-purchase-situation .ps-accordion accordion-group .panel,
+app-purchase-situation .ps-accordion accordion-group .card {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+app-purchase-situation .ps-accordion accordion-group:not(:last-child) .card {
+  border-bottom: 1px solid #e8eaed !important;
+}
+app-purchase-situation .ps-accordion accordion-group .panel-heading,
+app-purchase-situation .ps-accordion accordion-group .card-header {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+app-purchase-situation .ps-accordion accordion-group .btn-link,
+app-purchase-situation .ps-accordion accordion-group button[accordion-heading] {
+  display: block !important;
+  width: 100% !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  text-align: left !important;
+}
+app-purchase-situation .ps-accordion accordion-group .panel-body,
+app-purchase-situation .ps-accordion accordion-group .card-body {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
 }
 
-.checkbox{
-    position: absolute;
-    left: 6px;
-    margin-top: 6px;
-    pointer-events:all;
+/* ── État vide ─────────────────────────────────────────────── */
+.ps-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  background: #f9fafb;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  margin-top: 16px;
 }
-
-.noClick{
-    pointer-events: none;
+.ps-empty-state svg {
+  margin-bottom: 16px;
+  color: #9ca3af;
 }
-
-.clickable{
-    cursor: pointer;
+.ps-empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+  max-width: 540px;
 }
-
-.status{
-    height:40px;
-    width: 50%;
+.ps-empty-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
 }
-
-@media screen and (max-width: 1280px)
-{
-    .critere{
-        margin-left: 10%;
-    }
-
-    .status{
-        height:40px;
-        width: 100%;
-    }
-}
-
-img.Icone---Mes-DA {
-    width: 24px;
-    height: 24px;
-    flex-grow: 0;
-    object-fit: contain;
-  }

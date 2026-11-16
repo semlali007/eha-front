@@ -5,7 +5,7 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-purchase',
   templateUrl: './purchase.component.html',
   styleUrls: ['./purchase.component.css']
 })

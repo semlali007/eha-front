@@ -1,20 +1,12 @@
-
-<div class="col-11 no-content" *ngIf="purchases.length<=0">
-    <table>
-        <tr>
-
-            <td ><img class="icon-no-content" src="../../../../assets/img/no-content.png"></td>
-            <td>
-                <p *ngIf="params?.words?.length>0" class="p-no-content">Nous sommes désolés, nous n’avons pas trouvé
-                    de
-                    demande d’achat avec le numéro que vous avez saisi :
-                    {{params?.words}}
-                </p>
-                <p *ngIf="params?.words?.length==0 || !params?.words" class="p-no-content">Nous sommes
-                    désolés,
-                    nous n’avons pas trouvé de demandes d’achat associées à votre profil
-                </p>
-            </td>
-        </tr>
-    </table>
+<div class="ps-empty-state" *ngIf="purchases.length <= 0">
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+  </svg>
+  <p class="ps-empty-title" *ngIf="params?.words?.length > 0">
+    Nous sommes désolés, nous n'avons pas trouvé de demande d'achat avec le numéro que vous avez saisi : {{ params?.words }}
+  </p>
+  <p class="ps-empty-title" *ngIf="!params?.words || params?.words?.length === 0">
+    Nous sommes désolés, nous n'avons pas trouvé de demandes d'achat associées à votre profil
+  </p>
+  <p class="ps-empty-sub">Essayez de modifier vos critères de recherche.</p>
 </div>

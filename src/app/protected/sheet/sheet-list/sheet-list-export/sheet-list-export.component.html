@@ -1,7 +1,7 @@
-
-    <div class="col-9 col-sm-9">
-    </div>
-    <div class="col-3 col-sm-3" >
-        <a (click)="export()" class="btn btn-sheet-search"><i class="fas fa-plus"></i>
-            Exporter le resultat</a>
-    </div>
+<button (click)="export()"
+  class="search-btn search-btn-outline"
+  [disabled]="isExporting">
+  <span *ngIf="isExporting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <i *ngIf="!isExporting" class="fas fa-download"></i>
+  {{ isExporting ? 'Export...' : 'Exporter' }}
+</button>

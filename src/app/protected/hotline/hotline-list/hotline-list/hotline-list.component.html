@@ -1,44 +1,75 @@
-<div class="container">
-    <app-breadcrumb></app-breadcrumb>
-    <app-hotline-change-informations [email]="email" [currentEmail]="currentEmail" (exported)="onExported($event)"></app-hotline-change-informations>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-4">
-            <p>
-                <span>{{currentEmail}}</span>
-                <br>
-                <button *ngIf="!!user && (user.hasRole('EHA_GESTIONNAIRE') || user.hasRole('EHA_ADMIN'))" type="button" class="btn btn-link" (click) = "resetMail()">Réinitialiser email</button>
-                <br>
-                <button *ngIf="!!user && (user.hasRole('EHA_GESTIONNAIRE') || user.hasRole('EHA_ADMIN'))" type="button" class="btn btn-link" (click) = "balMail()">BAL Achatpédia</button>
-            </p>
-        </div>
-        <div class="col-12 col-md-8">
-            <app-hotline-list-filter-form [categories]="categories" (submittedFilter)="onsSubmittedFilter($event)"></app-hotline-list-filter-form>
-            <p>
-                <label>Rechercher par numéro de question:<input [formControl]="codeFilter" type="text"></label>
-            </p>
-            <p>Liste de vos demandes sur les 12 derniers mois :</p>
-            <nav>
-                <div class="nav nav-tabs my-items-for-contacts" id="nav-tab">
-                    <a class="nav-item nav-link link" [ngClass]="{'active' : isActive('new')}" (click)="setActive('new')">
-                        Nouvelles demandes <span class="badge badge-primary">{{new.length}}</span>
-                    </a>
-                    <a class="nav-item nav-link link" [ngClass]="{'active' : isActive('progress') }"
-                        (click)="setActive('progress')">
-                        Demandes en cours <span class="badge badge-primary">{{progress.length}}</span>
-                    </a>
-                    <a class="nav-item nav-link link" [ngClass]="{'active' : isActive('end')}" (click)="setActive('end')">
-                        Demandes fermées <span class="badge badge-primary">{{end.length}}</span>
-                    </a>
-                </div>
-            </nav>
-            <div class="tab-content">
-                <app-hotline-list-items [items]="new" class="tab-pane fade"
-                    [ngClass]="{show: isActive('new'), active: isActive('new')}"  [filterCode]="codeFilter.value"></app-hotline-list-items>
-                <app-hotline-list-items [items]="progress" class="tab-pane fade"
-                    [ngClass]="{show: isActive('progress'), active: isActive('progress')}" [filterCode]="codeFilter.value"></app-hotline-list-items>
-                <app-hotline-list-items [items]="end" class="tab-pane fade"
-                    [ngClass]="{show: isActive('end'), active: isActive('end')}" [filterCode]="codeFilter.value"></app-hotline-list-items>
-            </div>
-        </div>
+<div class="adm-page-wrap hl-list">
+  <app-breadcrumb></app-breadcrumb>
+
+  <!-- Header : titre + actions -->
+  <header class="hl-list-header">
+    <div class="hl-list-header-left">
+      <h1 class="hl-list-title">Mes demandes à la hotline</h1>
+      <p class="hl-list-sub">Liste de vos demandes sur les 12 derniers mois.</p>
     </div>
+    <app-hotline-change-informations
+      [email]="email"
+      [currentEmail]="currentEmail"
+      (exported)="onExported($event)">
+    </app-hotline-change-informations>
+  </header>
+
+  <!-- Bandeau email courant + actions admin/gestionnaire -->
+  <div class="hl-list-email-card">
+    <div class="hl-list-email-info">
+      <span class="hl-list-email-label">Demandes affichées pour</span>
+      <span class="hl-list-email-value">{{ currentEmail }}</span>
+    </div>
+    <div class="hl-list-email-actions" *ngIf="!!user && (user.hasRole('EHA_GESTIONNAIRE') || user.hasRole('EHA_ADMIN'))">
+      <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="resetMail()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.181-3.183m-4.991-2.69h4.99v4.991M2.985 4.356V9.35m0 0h4.992M2.985 9.35l3.181-3.182a8.25 8.25 0 0111.668 0l3.181 3.182"/>
+        </svg>
+        Réinitialiser email
+      </button>
+      <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="balMail()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+        </svg>
+        BAL Achatpédia
+      </button>
+    </div>
+  </div>
+
+  <!-- Toolbar : filtres -->
+  <div class="hl-list-filters">
+    <label class="adm-search hl-list-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text" placeholder="Rechercher par numéro de question…" [formControl]="codeFilter">
+    </label>
+    <app-hotline-list-filter-form
+      [categories]="categories"
+      (submittedFilter)="onsSubmittedFilter($event)">
+    </app-hotline-list-filter-form>
+  </div>
+
+  <!-- Tabs : statut -->
+  <nav class="hl-list-tabs">
+    <button type="button" class="hl-list-tab" [class.is-active]="isActive('new')" (click)="setActive('new')">
+      Nouvelles demandes
+      <span class="hl-list-tab-badge">{{ new.length }}</span>
+    </button>
+    <button type="button" class="hl-list-tab" [class.is-active]="isActive('progress')" (click)="setActive('progress')">
+      Demandes en cours
+      <span class="hl-list-tab-badge">{{ progress.length }}</span>
+    </button>
+    <button type="button" class="hl-list-tab" [class.is-active]="isActive('end')" (click)="setActive('end')">
+      Demandes fermées
+      <span class="hl-list-tab-badge">{{ end.length }}</span>
+    </button>
+  </nav>
+
+  <!-- Contenu des onglets -->
+  <div class="hl-list-tab-content">
+    <app-hotline-list-items *ngIf="isActive('new')" [items]="new" [filterCode]="codeFilter.value"></app-hotline-list-items>
+    <app-hotline-list-items *ngIf="isActive('progress')" [items]="progress" [filterCode]="codeFilter.value"></app-hotline-list-items>
+    <app-hotline-list-items *ngIf="isActive('end')" [items]="end" [filterCode]="codeFilter.value"></app-hotline-list-items>
+  </div>
 </div>

@@ -1,15 +1,68 @@
-<form novalidate [formGroup]="hotlineForm" (ngSubmit)="submit()">
-    <p>Tous les champs sont obligatoires.</p>
-    <app-hotline-form-theme [theme]='theme' [themesList] = 'themesList'></app-hotline-form-theme>
-    <app-hotline-form-category [category]='category' [familiesList] = 'familiesList' [family]='family'></app-hotline-form-category>
-    <app-hotline-form-question [question]='question'></app-hotline-form-question>
-    <app-hotline-form-entity [entity]='entity'></app-hotline-form-entity>
-    <div class="form-group">
-        <label>5/ Il ne vous reste plus qu'à <b>valider</b> :</label>
-        <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit" [disabled]="!hotlineForm.valid">valider</button>
-            </div>
-        </div>
+<form novalidate [formGroup]="hotlineForm" (ngSubmit)="submit()" class="hl-form">
+
+  <!-- Bandeau d'erreur global (visible uniquement après tentative de sauvegarde) -->
+  <div class="adm-form-error-banner" *ngIf="submitted && hotlineForm.invalid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+    </svg>
+    <span>Certains champs ne sont pas correctement renseignés. Vérifiez les champs marqués d'une étoile (<strong>*</strong>).</span>
+  </div>
+
+  <!-- 1. Thème -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">1</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Thème de votre question</h3>
+        <p class="adm-section-sub">Sélectionnez le domaine concerné.</p>
+      </div>
     </div>
+    <app-hotline-form-theme [theme]="theme" [themesList]="themesList" [submitted]="submitted"></app-hotline-form-theme>
+  </section>
+
+  <!-- 2. Catégorie -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">2</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Catégorie d'achat</h3>
+        <p class="adm-section-sub">Choisissez la famille puis la catégorie d'achat.</p>
+      </div>
+    </div>
+    <app-hotline-form-category [category]="category" [familiesList]="familiesList" [family]="family" [submitted]="submitted"></app-hotline-form-category>
+  </section>
+
+  <!-- 3. Question -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">3</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Votre question</h3>
+        <p class="adm-section-sub">Au moins 5 mots. Soyez précis pour une réponse plus rapide.</p>
+      </div>
+    </div>
+    <app-hotline-form-question [question]="question" [submitted]="submitted"></app-hotline-form-question>
+  </section>
+
+  <!-- 4. Entité -->
+  <section class="adm-section">
+    <div class="adm-section-head">
+      <span class="adm-section-number">4</span>
+      <div class="adm-section-titles">
+        <h3 class="adm-section-title">Entité de rattachement</h3>
+        <p class="adm-section-sub">Renseigné automatiquement à partir de votre profil.</p>
+      </div>
+    </div>
+    <app-hotline-form-entity [entity]="entity"></app-hotline-form-entity>
+  </section>
+
+  <!-- Submit -->
+  <div class="hl-submit">
+    <button class="adm-btn adm-btn-edf" type="submit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
+      </svg>
+      Envoyer ma demande
+    </button>
+  </div>
 </form>

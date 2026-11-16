@@ -1,24 +1,73 @@
+/* Liste drag & drop des actualités de la page d'accueil */
 
-.page-item.active .page-link { 
-  background-color:var(--my-color-blue);
-  border-color: var(--my-color-blue);
-   }
-   .page-link {
-      color: var(--my-color-blue);
-  }
-  .sidenav {
-   min-height: 100vh;
- }
- .card {
-   margin-bottom: 10px;
+.adm-nc-home-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
-.noSub{
-margin-left: 20%; 
-margin-bottom: 10%;
+.adm-nc-home-row {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
-
-.filter-header{
-background-color: rgba(0, 0, 0, 0.03);
+.adm-nc-home-row:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+.adm-nc-home-row.is-dragover {
+  border-color: #fe5815;
+  background: #fff4ef;
+  border-top: 2px dashed #fe5815;
+}
+.adm-nc-home-drag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  flex: none;
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: grab;
+  border-right: 1px solid #f3f4f6;
+}
+.adm-nc-home-drag:active { cursor: grabbing; }
+.adm-nc-home-row:hover .adm-nc-home-drag { color: #fe5815; }
 
+.adm-nc-home-body {
+  flex: 1;
+  padding: 14px 18px;
+  cursor: pointer;
+}
+.adm-nc-home-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.adm-nc-home-position {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  margin-left: auto;
+}
+.adm-nc-home-title {
+  margin: 2px 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+.adm-nc-home-desc {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #6b7280;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.adm-nc-home-desc p { margin: 0; }

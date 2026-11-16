@@ -1,0 +1,33 @@
+/* Alignement horizontal du label et de l'icône info */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Style de l'icône d'information */
+.info-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../../../assets/img/info-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Style pour le tooltip */
+bs-tooltip-container .tooltip-inner {
+    max-width: 300px;
+    text-align: left;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+}

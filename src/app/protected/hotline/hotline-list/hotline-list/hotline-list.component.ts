@@ -1,18 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { HotlineService } from 'src/app/core/services/hotline.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HotlineListEmailComponent } from '../hotline-list-email/hotline-list-email.component';
 import { User } from 'src/app/shared/models/user';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ExcelService } from 'src/app/core/services/excel.service';
-import {  ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-hotline-list',
   templateUrl: './hotline-list.component.html',
-  styles: [
-  ]
+  styleUrls: ['./hotline-list.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HotlineListComponent implements OnInit, OnDestroy {
   codesForm: FormGroup;

@@ -1,6 +1,10 @@
-<div class="form-group">
-    <div class="form-check">
-        <input type="checkbox" [formControl]="protected_sector" id="protected_sector" class="form-check-input" />
-        <label class="form-check-label"><strong>Secteur protégé</strong></label>
-    </div>
+<div class="adm-form-group">
+  <label class="adm-switch">
+    <input type="checkbox" [formControl]="protected_sector">
+    <span class="adm-switch-track"></span>
+    <span class="adm-switch-label">Secteur protégé</span>
+  </label>
+  <span class="adm-field-hint">
+    Le marché est réservé à des fournisseurs du secteur protégé (ESAT, EA…).
+  </span>
 </div>

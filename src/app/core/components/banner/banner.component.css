@@ -1,239 +1,354 @@
+/* ═══════════════════════════════════════════════════════════
+   BANNER — En-tête Achatpédia (restyle moderne)
+   ═══════════════════════════════════════════════════════════ */
 
-
-
-.my-header {
-  /* background-color: var(--my-color-darkblue); */
-  background-image: url('../../../../assets/img/bandeau.png');
-  background-size: cover;
-  color: white;
+.banner {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: linear-gradient(115deg, #001a70 0%, #012a8f 46%, #06154f 100%);
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  box-shadow: 0 6px 22px rgba(2, 12, 45, 0.28);
+}
+/* Liseré orange EDF en bas du bandeau */
+.banner::after {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, #fe5815 0%, #ff8a4d 28%, rgba(255, 138, 77, 0) 68%);
 }
 
-.text-header{
-  width: 50%;
+/* ── Desktop ──────────────────────────────────────────────── */
+.banner-desktop {
+  display: block;
 }
 
-.link{
-  cursor:pointer ;
+/* Ligne 1 : Logo à gauche, titre au centre, user à droite */
+.banner-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 32px;
+  position: relative;
 }
 
-
-.container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
-  width: 100%;
-  padding-right: 137px;
-  padding-left: -13px;
-  margin-right: auto;
-  margin-left: auto;
-  height: 144px;
+.banner-brand {
+  cursor: pointer;
+  flex-shrink: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.banner-brand:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
 }
 
-
-.title-header{
- 
-height: 24px;
-
-/* Body - 16 - Regular */
-font-family: 'Work Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-
-/* identical to box height, or 150% */
-display: flex;
-align-items: center;
-
-/* Blanc (Charte) */
-color: #FFFFFF;
-margin-top: 26px;
-margin-left: 8px;
+.banner-logo {
+  height: 34px;
+  width: auto;
 }
 
-
-.home-btn{
-/* Onglet - Achatpedia - Accueil */
-
-box-sizing: border-box;
-
-/* Auto layout */
-display: flex;
-flex-direction: row;
-align-items: center;
-padding: 8px 10px;
-gap: 10px;
-
-width: 104px;
-height: 40px;
-color:#fff;
-/* Bleu clair (Charte) */
-background: #005BBB;
-
-/* Blanc (Charte) */
-border: 1px solid #FFFFFF;
-border-radius: 5px;
-margin-top: 10px;
-margin-left: 8px;
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+.banner-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
 }
-.bold{
-  font-family: 'Work Sans';
-  font-style: normal;
+
+.banner-app-name {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  background: linear-gradient(90deg, #ffffff 0%, #cfe0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 10px rgba(80, 130, 255, 0.25);
+}
+
+.banner-app-desc {
+  position: relative;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.62);
+  padding-left: 12px;
+}
+.banner-app-desc::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Zone utilisateur ─────────────────────────────────────── */
+.banner-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.banner-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px 3px 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 99px;
+  backdrop-filter: blur(4px);
+}
+
+.banner-user-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 3px;
+  opacity: 0.95;
+}
+
+.banner-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.banner-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+.banner-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.banner-action-icon {
+  width: 18px;
+  height: auto;
+  opacity: 0.92;
+}
+
+/* Badge notifications */
+.banner-notif-btn {
+  position: relative;
+}
+.banner-notif-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  background: #fe5815;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #021a63;
+  box-shadow: 0 0 0 0 rgba(254, 88, 21, 0.55);
+  animation: banner-notif-pulse 2.4s ease-out infinite;
+}
+@keyframes banner-notif-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(254, 88, 21, 0.5); }
+  60%, 100% { box-shadow: 0 0 0 7px rgba(254, 88, 21, 0); }
+}
+
+/* ── Navigation (ligne 2) ─────────────────────────────────── */
+.banner-nav {
+  display: flex;
+  align-items: center;
+  padding: 2px 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.banner-nav-home {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 6px 16px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.banner-nav-home::after {
+  display: none !important;
+}
+.banner-nav-home:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+
+.banner-nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 2px;
+}
+
+.banner-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 2px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.banner-nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-decoration: none;
+}
+/* Soulignement animé au survol */
+.banner-nav-item::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: #fe5815;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+.banner-nav-item:hover::after {
+  transform: scaleX(1);
+}
+
+.banner-nav-icon {
+  height: 15px;
+  width: auto;
+  opacity: 0.85;
+}
+
+.banner-nav-caret {
+  height: 8px;
+  width: auto;
+  opacity: 0.55;
+  margin-left: 1px;
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+.banner-mobile {
+  display: none;
+}
+
+.banner-mobile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: linear-gradient(115deg, #001a70 0%, #012a8f 100%);
+  border-bottom: 3px solid #fe5815;
+}
+
+.banner-mobile-menu {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.banner-mobile-menu:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.banner-mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
   font-weight: 600;
   font-size: 16px;
-  line-height: 24px;
-  /* identical to box height, or 150% */
-  text-align: right;
+}
+.banner-mobile-brand img {
+  height: 28px;
 }
 
-.logout-icon{
-  width: 36px;
-  margin-right: 9px;
-  margin-top: 5px;
+.banner-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  background: #021a63;
+}
+.banner-mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.banner-mobile-nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: #fe5815;
+  color: #fff;
+  text-decoration: none;
+}
+.banner-mobile-nav-item .banner-nav-icon {
+  height: 18px;
+  opacity: 0.75;
 }
 
-.my-logo {
-  width: 120px;
-  height: auto;
-  margin-top: 1%;
-}
-
-
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: #001A70;
-  color:#fff ;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-}
-
-@media (max-width: 600px) {
-  .title-header{
-    height: 12px;
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-    color: #FFFFFF;
-    margin-top: 6px;
-    margin-left: 0px;
-}
-
-  .collapse-custom{
-    margin-top: 50px;
-    margin-left: -49px;
-  }
-  .title-mobile{
-    width: 58px;
-    height: 24px;
-    margin-top:7px;
-    /* Body - 16 - Semi Bold */
-    font-family: 'Work Sans';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-
-    /* identical to box height, or 150% */
-    display: flex;
-    align-items: center;
-
-    /* Noir (Charte) */
-    color: #000000;
-  }
-  .container-fluid{
-    width: 100%;
-    padding-right: 137px;
-    padding-left: -13px;
-    margin-right: auto;
-    margin-left: auto;
-    height: 80px;
-  }
-  
-  .responsive-header{
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 156%;
-    height: 50px;
-
-    /* Bleu très clair (AAA, Alice Blue) */
-    background: #F1F3F9;
-
-    /* Bleu fonce (Charte) */
-    border-bottom: 1px solid #001A70;
-  }
-
-  .left-header-mobile{
-    position: absolute;
-    right: 69%;
-  }
-
-  .icone-notif-mobile{
-    position: absolute;
-    left: 200%;
-    right: 0%;
-    top: 0%;
-    bottom: 0%;
-  }
-
-  .menu-header-mobile{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    margin-left: 14px;
-    width: 50px;
-    height: 50px;
-  
-    /* Bleu fonce (Charte) */
-    background: #001A70;
-  }
-
-  .logo-edf-mobile{
-    position: absolute;
-    left: 22%;
-    right: 47.59%;
-    top: 17.99%;
-    bottom: 0%;
-  }
-
-  .my-header {
-    background-image: url('../../../../assets/img/white-bakhgroud.png');
-    background-color: #fff;
-    background-size: cover;
-    color: rgb(0, 0, 0);
-  }
-  #desktop-header{
-    display:none ;
-  }
-  #desktop-mobile{
-    display:block ;
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 992px) {
+  .banner-app-desc {
+    display: none;
   }
 }
-
-
-
-@media screen and (min-width: 599px) {
-  
-  .menu-header-mobile{
-    display:none;
+@media (max-width: 768px) {
+  .banner-desktop {
+    display: none;
   }
-  .responsive-header{
-    display:none;
-  }
-  #desktop-mobile{
-    display:none ;
+  .banner-mobile {
+    display: block;
   }
 }
-

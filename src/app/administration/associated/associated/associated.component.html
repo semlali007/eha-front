@@ -1,63 +1,141 @@
-<h1>Mot à associer</h1>
-<div class="row">
-    <div class="col-3 margin-tb text-right">
-        <div class="pull-right" style="padding-top:30px" style="padding-right:30px">
-            <button type="button" class="btn btn-primary" (click)="openAdd()">Ajouter un élement</button>
-        </div>
+<div class="adm-page">
+
+  <div class="adm-header">
+    <h1 class="adm-title">Mots à associer</h1>
+    <div class="adm-header-actions">
+      <button type="button" class="adm-btn adm-btn-edf" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        Ajouter un mot
+      </button>
     </div>
-</div>
-<table class="table">
-    <thead>
+  </div>
+
+  <div class="adm-toolbar">
+    <div class="adm-toolbar-left">
+      <span class="adm-toolbar-count">
+        <strong>{{ filtered.length }}</strong> entrée{{ filtered.length > 1 ? 's' : '' }}
+        <ng-container *ngIf="searchText">(sur {{ entries.length }})</ng-container>
+      </span>
+    </div>
+
+    <label class="adm-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+      </svg>
+      <input type="text"
+             placeholder="Rechercher un mot ou synonyme…"
+             [value]="searchText"
+             (input)="onSearchChange($any($event.target).value)">
+    </label>
+  </div>
+
+  <div class="adm-table-card" *ngIf="filtered.length > 0">
+    <table class="adm-table">
+      <thead>
         <tr>
-
-            <th style="width:30%">
-                Texte
-            </th>
-            <th style="width:60%">
-                Synonymes
-            </th>
-            <th>
-            </th>
+          <th style="width: 25%">Mot</th>
+          <th>Synonymes</th>
+          <th style="width: 260px; text-align: right">Actions</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let factsheet of logs$ | async">
-            <td >
-                <div>
-                    {{factsheet.word}} <button class="edit" type="button"
-                        (click)="openAdd(factsheet.id, factsheet.word)"><i>&#9998;</i></button>
-                </div>
-            </td>
-            <td>
-                <div *ngFor="let syn of factsheet.synonymous" style="display: inline;">
-                   {{syn.synonymous}} <button class="remove"
-                            (click)="openModalRemoveSynonymous(template, syn.id)" type="button">-</button>
-                   
-                </div>
-            </td>
-            <td>
-                <div class="row">
-                    <button class="remove col" (click)="openModalRemoveAssociated(template_associated, factsheet.id)" type="button">-</button>
-
-                    <button class="add col " (click)="openAddSynonyous(factsheet.id)" type="button">+ Synonyme</button>
-                </div>
-            </td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of pagedEntries">
+          <td>
+            <div class="adm-row" style="gap: 6px">
+              <span class="adm-word">{{ e.word }}</span>
+              <button type="button" class="adm-icon-btn" (click)="openAdd(e.id, e.word)" title="Modifier le mot">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/>
+                </svg>
+              </button>
+            </div>
+          </td>
+          <td>
+            <ng-container *ngIf="e.synonymous?.length > 0; else noSyn">
+              <span class="adm-tag" *ngFor="let syn of e.synonymous">
+                <span class="adm-tag-text">{{ syn.synonymous }}</span>
+                <button type="button"
+                        class="adm-tag-remove"
+                        (click)="openModalRemoveSynonymous(template, syn.id)"
+                        [title]="'Retirer ' + syn.synonymous">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/>
+                  </svg>
+                </button>
+              </span>
+            </ng-container>
+            <ng-template #noSyn><span class="adm-tag-empty">Aucun synonyme</span></ng-template>
+          </td>
+          <td style="text-align: right">
+            <div style="display: flex; justify-content: flex-end; gap: 6px; flex-wrap: nowrap">
+              <button type="button" class="adm-btn adm-btn-ghost adm-btn-sm" (click)="openAddSynonyous(e.id)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                Synonyme
+              </button>
+              <button type="button" class="adm-btn adm-btn-danger adm-btn-sm" (click)="openModalRemoveAssociated(template_associated, e.id)">
+                Supprimer
+              </button>
+            </div>
+          </td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="adm-empty adm-table-card" *ngIf="filtered.length === 0">
+    <svg class="adm-empty-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+    <p class="adm-empty-title">Aucune entrée trouvée</p>
+    <p class="adm-empty-desc" *ngIf="searchText">Essayez d'autres mots-clés ou effacez le filtre.</p>
+    <p class="adm-empty-desc" *ngIf="!searchText">La liste est vide — ajoutez un mot avec le bouton en haut.</p>
+  </div>
+
+  <div class="adm-pagination-bar" *ngIf="filtered.length > itemsPerPage">
+    <p class="adm-pagination-info">
+      Affichage {{ startIndex + 1 }} – {{ endIndex }} sur {{ filtered.length }}
+    </p>
+    <form [formGroup]="paginationForm" class="adm-pagination-wrap">
+      <pagination
+        [totalItems]="filtered.length"
+        [itemsPerPage]="itemsPerPage"
+        [formControl]="$any(currentPage)"
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="7"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </form>
+  </div>
+
+</div>
 
 <ng-template #template>
-    <div class="modal-body text-center">
-        <p>Voulez-vous supprimer l'élément?</p>
-        <button type="button" class="btn btn-default" (click)="confirm()">Oui</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous retirer ce synonyme ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirm()">Oui, retirer</button>
     </div>
+  </div>
 </ng-template>
 
 <ng-template #template_associated>
-    <div class="modal-body text-center">
-        <p>Voulez-vous supprimer l'élément?</p>
-        <button type="button" class="btn btn-default" (click)="confirmAssociated()">Oui</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">Non</button>
+  <div class="adm-modal-body" style="text-align:center">
+    <p style="margin: 0 0 14px 0; font-weight: 600; color: #1f2937">
+      Voulez-vous supprimer ce mot et tous ses synonymes ?
+    </p>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <button type="button" class="adm-btn adm-btn-ghost" (click)="decline()">Annuler</button>
+      <button type="button" class="adm-btn adm-btn-danger" (click)="confirmAssociated()">Oui, supprimer</button>
     </div>
+  </div>
 </ng-template>

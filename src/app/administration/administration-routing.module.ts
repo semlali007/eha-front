@@ -99,7 +99,15 @@ const routes: Routes = [
         path: 'satisfactions',
         loadChildren: () => import('./satisfaction/satisfaction.module').then(m => m.SatisfactionModule),
       },
-      
+      {
+        path: 'hlk-sync',
+        loadChildren: () => import('./hlk-sync/hlk-sync.module').then(m => m.HlkSyncModule),
+      },
+      {
+        path: 'hlk-import',
+        loadChildren: () => import('./hlk-import/hlk-import.module').then(m => m.HlkImportModule),
+      },
+
     ]
   }
 ];
